@@ -1,0 +1,185 @@
+==========================================
+|simpylogo| LIST OF MODELS using SimPy
+==========================================
+
+:Authors:  - Tony Vignaux <Vignaux@users.sourceforge.net>,
+           - Klaus Muller <Muller@users.sourceforge.net>
+:SimPy version: 1.9
+:Web-site: http://simpy.sourceforge.net/
+:Python-Version: 2.3+
+
+These models are examples of SimPy use written by several authors and
+usually developed for other purposes, such as teaching and
+consulting. They are in a variety of styles. Some have been converted
+to the new script structure accepted by the SimPy users. These are
+listed first.
+
+Command Line input and output
+------------------------------
+
+new program structure
++++++++++++++++++++++++++
+
+MMC.py	
+        M/M/c (multiple server queue model. This demonstrates both the
+	multiple capacity Resource class and the observe method of the
+	Monitor class. Random arrivals, exponential
+	service-times. (TV)
+
+bcc.py 
+        Determine the probability of rejection of random arrivals to a
+	2-server system with different service-time distributions. No
+	queues allowed, blocked customers are rejected
+	(BCC). Distributions are Erlang, exponential, and
+	hyperexponential. The theoretical probability is also
+	calculated.  (TV)
+
+callCenter.py
+        A call center with agents with different skills.  The model
+        returns the frequency distribution of client waiting times,
+        the percentage of reneging clients, and the load on the
+        agents.  This model demonstrates the use of yield get with a
+        filter function. (KGM)
+
+cellphone.py 
+	A cellphone cell with blocking (that is BCC discipline). The
+	program simulates the operation for 10 observation periods and
+	measures the mean and variance of the total time blockedr and
+	the number of times blocking occur in each hour. An
+	observational gap occurs between the observation periods to
+	make each one's measurement independent.  (TV)
+
+centralserver.py
+	A primitive central-server model with a single CPU and a
+	single disk. A fixed number of users send "tasks" to the
+	system which are processed and sent back to the user who then
+	thinks for a time before sending a task back. Service times
+	are exponential. This system can be solved analytically.
+	Trace statements have been removed. (TV)
+
+jacksonnetwork.py 
+	A Jackson network with 3 nodes, exponential service times and
+	probability switching. The simulation measures the delay for
+	jobs moving through the system.  (TV)
+
+
+
+
+Miscellaneous Models
++++++++++++++++++++++
+
+bank08renege.py (partial conversion)
+	Use of reneging (compound ``yield request``) based on ``bank08.py``
+	of the tutorial TheBank. Customers leave if they lose patience
+	with waiting.
+
+Carwash.py
+        Using a Store object for implementing master/slave cooperation
+        between processes.  Scenario is a carwash installation with
+        multiple machines. Two model implementations are shown, one
+        with the carwash as master in the cooperation, and the other
+        with the car as master.
+
+CellularAutomata.py
+	A two-dimensional cellular automaton. Does the game of
+	Life. (KGM)
+
+
+demoSimPyEvents.py
+	Demo of the event signalling constructs introduced in SimPy
+	1.5. Three small simulations are included: Pavlov's drooling
+	dogs, an activity simulation where a job is completed after a
+	number of parallel activities, and the simulation of a
+	US-style 4-way stop intersection.
+	
+
+shortestPath_SimPy.py
+	A fun example of using SimPy for non-queuing work. It
+	simulates a searcher through a graph, seeking the shortest
+	path. (KGM) 
+
+Machineshop.py
+	An example of the use of the ``interrupt()`` method. It
+	simulates a workshop with ``n`` machines which break down and one
+	or more repairmen which have to repair them. (KGM)
+
+    
+Market.py
+	A supermarket checkout with multiple counters and extended
+	Monitor objects.  Written and analysed by David Mertz in an
+	article for developerWorks (). (MM)
+
+Movie_renege.py
+
+	Use of reneging (compound ``yield request``) constructs for
+	reneging at occurrence of an event. Scenario is a movie ticket
+	counter with a limited number of tickets for three movies.
+    
+needResources.py
+	Demo of ``waitUntil`` capability introduced in SimPy 1.5. It
+	simulates three workers each requiring a set of tools to do
+	their jobs. Tools are shared, scarce resources for which they
+	compete.
+
+SimPy_worker_extend.py
+        Factory making widgets with queues for machines. (MM)
+
+
+
+WidgetPacking.py
+        Using buffers for producer/consumer scenarios. Scenario is a
+        group of widget producing machines and a widget packer,
+        synchronized via a buffer. Two models are shown: the first
+        uses a Level for buffering non-distinguishable items
+        (widgets), and the second a Store for distinguishable items
+        (widgets of different weight).
+    
+GUI Input
+-----------
+
+MM1.py
+	M/M/1 random-arrivals, exponential service time queue with GUI input.
+	(MM)
+
+GUIdemo.py
+	A firework show.
+
+bank11GUI.py
+	A modification of the bank11 simulation with GUI input.
+
+SimGUIStep.py
+	A modification of the bank11 simulation with the ability to
+	step between events
+
+Plot
+----------------
+
+bakery.py
+        A bakery with three ovens to answer the following questions:
+        a) What is the mean waiting time for retail and restaurant
+        buyers?  b) What is their maximum waiting time?  c) What
+        percentage of customer has to wait longer than 15 minutes?
+        This graphs the number of baguettes over time using
+        SimPy.SimPlot. (KGM)
+
+
+bank11Plot.py
+	A Modification of the bank11 simulation with graphical
+	output. It plots service and waiting times 
+
+
+:Created: 2002-December
+:Date: $Date: 2007/12/02 06:11:06 $
+:Revision: $Revision: 1.1.1.18 $
+
+ 
+.. |simpylogo| image:: ../SimPyDocs/images/sm_SimPy_Logo.png
+
+
+..
+   Local Variables:
+   mode: rst
+   indent-tabs-mode: nil
+   sentence-end-double-space: t
+   fill-column: 70 
+   End:

@@ -1,0 +1,20 @@
+/*
+:Author: G A Vignaux
+:Contact: Tony Vignaux <Vignaux@users.sourceforge.net>
+:Copyright: This stylesheet has been placed in the public domain.
+:SimPy version: 1.8
+:Revision: $Revision: 1.1.2.1 $ 
+:Date: $Date: 2007/02/13 03:27:36 $
+
+Stylesheet for use with Docutils.  Based on the standard but 
+ensuring that computer listings are backed by grey.
+*/
+
+@import url(html4css1.css);
+
+/* Your customizations go here.  For example: */
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }

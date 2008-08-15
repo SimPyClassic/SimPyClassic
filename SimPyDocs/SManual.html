@@ -1,0 +1,1210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<title>SimPy  Simplified</title>
+<meta name="authors" content="G A Vignaux and Klaus Muller" />
+<meta name="date" content="2008 March 15" />
+<meta content="Simplified Manual SimPy Python Simulation Language" name="description" />
+<meta content="simulation python stochastic" name="keywords" />
+<style type="text/css">
+
+/*
+:Author: G A Vignaux
+:Contact: Tony Vignaux <Vignaux@users.sourceforge.net>
+:Copyright: This stylesheet has been placed in the public domain.
+:SimPy version: 1.8
+:Revision: $Revision: 1.1.2.12 $ 
+:Date: $Date: 2008/03/15 04:23:17 $
+
+Stylesheet for use with Docutils.  Based on the standard but 
+ensuring that computer listings are backed by grey.
+*/
+
+@import url(html4css1.css);
+
+/* Your customizations go here.  For example: */
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+</style>
+</head>
+<body>
+<div class="document" id="simpy-simplified">
+<h1 class="title">SimPy  Simplified</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Authors:</th>
+<td>G A Vignaux and Klaus Muller</td></tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>2008 March 15</td></tr>
+</tbody>
+</table>
+<!-- $Revision: 1.1.2.12 $ $Date: 2008/03/15 04:23:17 $ -->
+<!-- REPLACEMENTS ==================== -->
+<!-- ================================= -->
+<div class="contents topic">
+<p class="topic-title first"><a id="contents" name="contents">Contents</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#introduction" id="id3" name="id3">1&nbsp;&nbsp;&nbsp;Introduction</a></li>
+<li><a class="reference" href="#simulation-with-simpy" id="id4" name="id4">2&nbsp;&nbsp;&nbsp;Simulation with SimPy</a></li>
+<li><a class="reference" href="#processes" id="id5" name="id5">3&nbsp;&nbsp;&nbsp;Processes</a></li>
+<li><a class="reference" href="#resources" id="id6" name="id6">4&nbsp;&nbsp;&nbsp;Resources</a></li>
+<li><a class="reference" href="#levels" id="id7" name="id7">5&nbsp;&nbsp;&nbsp;Levels</a></li>
+<li><a class="reference" href="#stores" id="id8" name="id8">6&nbsp;&nbsp;&nbsp;Stores</a></li>
+<li><a class="reference" href="#random-number-generation" id="id9" name="id9">7&nbsp;&nbsp;&nbsp;Random Number Generation</a></li>
+<li><a class="reference" href="#monitors-and-recording-simulation-results" id="id10" name="id10">8&nbsp;&nbsp;&nbsp;Monitors and Recording Simulation Results</a></li>
+<li><a class="reference" href="#simpy-contacts" id="id11" name="id11">9&nbsp;&nbsp;&nbsp;SimPy Contacts</a></li>
+<li><a class="reference" href="#appendices" id="id12" name="id12">10&nbsp;&nbsp;&nbsp;Appendices</a></li>
+</ul>
+</div>
+<!-- 1  Introduction
+2  Simulation with SimPy
+3  Processes
+  3.1  Defining a procss
+  3.2  Creating a process object
+  3.3  Starting SimPy Process Objects
+    3.3.1  activate
+    3.3.2  start
+    3.3.3  The standard PEM name, ACTIONS
+  3.4  Elapsing time in a Process
+    3.4.1  yield hold
+  3.5  What is not mentioned about Processes
+  3.6  A SimPy Program
+4   Resources
+  4.1  Defining a Resource object
+  4.2  Requesting and releasing a unit of a Resource
+    4.2.1  yield request
+    4.2.2  yield release
+  4.3  Resource Example
+5   Levels
+  5.1  Defining a Level
+  5.2  Putting amounts into  a Level
+  5.3  Getting amounts from a Level
+6   Stores
+  6.1  Defining a Store
+  6.2  Putting objects into a Store
+  6.3  Getting objects from  a Store
+7   Random Number Generation
+8   Monitors and Recording Simulation Results
+  8.1  Defining Monitors
+  8.2  Observing data
+  8.3  Data summaries
+  8.4  Monitoring Resource Queues
+  8.5  More on Monitors
+9   SimPy Contacts
+10  Appendices
+  10.1  The Resource Example with Tracing -->
+<div class="section">
+<h1><a class="toc-backref" href="#id3" id="introduction" name="introduction">1&nbsp;&nbsp;&nbsp;Introduction</a></h1>
+<p>SimPy is a free, open-source discrete-event simulation system written
+in Python. It provides a number of tools for programmers writing
+simulation programs. This document is a simplified manual for a
+simplified version of SimPy. It describes a subset of SimPy's
+capabilities - sufficient, we think, to develop standard
+simulations. You may also find <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/TheBank.html">The Bank</a> tutorial included in
+SimPy's distribution helpful in the early stages.  The full <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a>
+included int eh distribution is much more detailed.</p>
+<p>The active elements (or <em>entities</em>) of a SimPy model are objects of a
+SimPy Process class defined by the programmer (see <a class="reference" href="#processes">Processes</a>, section
+3). Each entity has a standard method, a Process Execution Method
+(referred to by SimPy programmers as a PEM) which specifies its
+actions in detail.  Each PEM runs in parallel with (and may interact
+with) the PEMs of other entities.</p>
+<p>The activity of an entity may be delayed for fixed or random times,
+queued at resource facilities, and may be interrupted by or interact
+in different ways with other entities and components. For example in a
+gas station model, automobile entities (objects of an Automobile
+Class) may have to wait at the gas station for a pump to become
+available. On obtaining a pump it takes time to fill the tank. The
+pump is then released for the next automobile in the queue.</p>
+<!-- A SimPy program contains the declaration of one or more Process
+classes and the creation and activating of objects from them. -->
+<p>SimPy has three kinds of resource facilities (Resources, Levels, and
+Stores). Each type models a congestion point where entities queue
+while waiting to acquire or, in some cases, to deposit a
+resource.SimPy automatically handles the queueing.</p>
+<ul class="simple">
+<li><a class="reference" href="#resources">Resources</a> have one or more identical resource units, each of which
+can be held by entities. Extending the example above, the gas
+station might be modelled as a Resource with its pumps as resource
+units. When a car requests a pump the gas station resource
+automatically queues it until a pump becomes available (perhaps
+immediately). The car holds the pump until it finishes refuealling
+and then releases it for use by the next car.</li>
+<li><a class="reference" href="#levels">Levels</a> model the supply and consumption of a homogeneous
+undifferentiated &quot;material&quot;. The Level holds an amount that is fully
+described by a non-negative number which can be increased or decreased
+by entities. For example, a gas station stores gas in large storage
+tanks. The tanks can be filled by tankers and emptied by cars
+refuelling. In contrast to the operation of a Resource, a car need
+not return the gas to the gas station.</li>
+<li><a class="reference" href="#stores">Stores</a> model the production and consumption of distinguishable
+items. A Store holds a list of items. Entities can insert or remove
+items from the list and these can be of any type. They can even be
+SimPy process objects. For example, the gas station holds spares of
+different types. A car might request a set of spares from the
+Store. The store is replenished by deliveries from a warehouse.</li>
+</ul>
+<p>SimPy also supplies Monitors to record simulation events. <a class="reference" href="#monitors-and-recording-simulation-results">Monitors</a>
+are used to compile summary statistics such as waiting times and queue
+lengths. These statistics includes simple averages and variances,
+time-weighted averages, or histograms. In particular, data can be
+gathered on the queues associated with Resources, Levels and
+Stores. For example we may collect data on the average number of cars
+waiting at the gas station and the distribution of their waiting
+times. Monitors preserve complete time-series records that may later
+be used for more advanced post-simulation analyses.</p>
+<p>You need to write Python code to develop a SimPy model. In
+particular, you will have to define and use classes and their
+objects. Python is free and open-source and is available on most
+platforms.  You can find out more about it and download it from the
+<a class="reference" href="http://www.Python.org">Python web-site</a> where there is full documentation and
+tutorials. SimPy requires Python version 2.3 or later.</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id4" id="simulation-with-simpy" name="simulation-with-simpy">2&nbsp;&nbsp;&nbsp;Simulation with SimPy</a></h1>
+<p>To use the SimPy simulation system in your Python program you must import its
+<tt class="docutils literal"><span class="pre">Simulation</span></tt> module using:</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">from</span> <span class="pre">SimPy.Simulation</span> <span class="pre">import</span> <span class="pre">*</span></tt></blockquote>
+<p>We recommend that new users instead  import <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Tracing.html">SimPy.SimulationTrace</a>,
+which works the same but also automatically produces a timed listing of
+events as the model executes. (An example of such a trace is shown in
+<a class="reference" href="#the-resource-example-with-tracing">The Resource Example with Tracing</a>):</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">from</span> <span class="pre">SimPy.SimulationTrace</span> <span class="pre">import</span> <span class="pre">*</span></tt></blockquote>
+<p>Discrete-event simulation programs automatically maintain the current
+simulation time in a software clock. This cannot be directly changed
+by the user.  In SimPy the current clock value is returned by the
+<tt class="docutils literal"><span class="pre">now()</span></tt> function. At the start of the simulation it is set to 0.0.
+While the simulation program runs, simulation time steps forward from
+one <em>event</em> to the next. An event occurs whenever the state of the
+simulated system changes. For example, an event might be the arrival
+or departure of a car from the gas station.</p>
+<p>The <tt class="docutils literal"><span class="pre">initialize</span></tt> statement initialises global simulation variables and
+sets the software clock to 0.0. It must appear in your program before
+any SimPy process objects are activated.</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">initialize()</span></tt></blockquote>
+<p>This is followed by SimPy statements creating and activating entities
+(that is, SimPy process objects). Activation of entities adds events
+to the simulation event schedule. Execution of the simulation itself
+starts with the following statement:</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">simulate(until=</span></tt><em>endtime</em><tt class="docutils literal"><span class="pre">)</span></tt></blockquote>
+<p>The simulation then starts, and SimPy seeks and executes the first event in
+the schedule.  Having executed that event, the simulation seeks and
+executes the next event, and so on.</p>
+<p>Typically a simulation terminates when there ae no moe events to
+execute or when the <em>endtime</em> is reached but it can be stopped at any
+time by the command:</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">stopSimulation(</span> <span class="pre">)</span></tt></blockquote>
+<p>After the simulation stops, further statements can be executed.
+<tt class="docutils literal"><span class="pre">now()</span></tt> will retain the time of stopping and data held in Monitors
+will be available for display or further analysis.</p>
+<p>The following fragment shows only the <em>main</em> block in a simulation
+program to illustrate the general structure. A complete <a class="reference" href="#example-program">Example
+Program</a> is shown later. Here <tt class="docutils literal"><span class="pre">Car</span></tt> is a Process class with a
+<tt class="docutils literal"><span class="pre">go</span></tt> as its PEM (described later) and <tt class="docutils literal"><span class="pre">m</span></tt> is defined as an entity
+of that class, that is, a particular car. Activating <tt class="docutils literal"><span class="pre">m</span></tt> has the
+effect of scheduling at least one event by starting <tt class="docutils literal"><span class="pre">m</span></tt>'s PEM.
+The <tt class="docutils literal"><span class="pre">simulate(until=1000.0)</span></tt> statement starts the simulation
+itself. This immediately jumps to the first scheduled event. It will
+continue until it runs out of events to execute or the simulation time
+reaches <tt class="docutils literal"><span class="pre">1000.0</span></tt>. When the simulation stops the <tt class="docutils literal"><span class="pre">Report</span></tt> function
+is called to display the results:</p>
+<pre class="literal-block">
+Process Car(Process):
+   def go(self):
+      # PEM for a Car
+      ...
+
+def Report():
+   # print results when finished
+   ...
+
+initialize()
+c = Car(name=&quot;Car23&quot;)
+activate(c,  c.go(), at=0.0)
+simulate(until=1000.0)
+
+Report()
+</pre>
+<p>In addition to <em>SimPy.Simulation</em> there are three alternative
+simulation libraries with special facilities. Beside
+<a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Tracing.html">SimPy.SimulationTrace</a>, already mentioned, there are
+<a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/SimRTManual.html">SimPy.SimulationRT</a> for real time synchronisation and
+<a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/SimStepManual/SimStepManual.html">SimPy.SimulationStep</a> for event-stepping through a simulation. See
+the <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a> for more information.</p>
+<!-- ================================================================== -->
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="processes" name="processes">3&nbsp;&nbsp;&nbsp;Processes</a></h1>
+<p>SimPy's active objects (entities) are process objects -- instances of
+a class written by the user that inherits from SimPy's Process class.</p>
+<p>For example, if we are simulating a gas station we might model each
+car as an object of the class <tt class="docutils literal"><span class="pre">Car</span></tt>. A car arrives at the gas
+station (modelled as a Resource with <tt class="docutils literal"><span class="pre">pump</span></tt>s) it requests a pump
+and may need to wait for it. Then it fills its tank and releases the
+pump. It might also buy an item from the station store. The <tt class="docutils literal"><span class="pre">Car</span></tt>
+class specifies the logic of these actions in its Process Execution
+Method (PEM). The simulation creates individual cars as it runs and
+their evolutions are directed by the <tt class="docutils literal"><span class="pre">Car</span></tt> class's PEM.</p>
+<div class="section">
+<h2><a id="defining-a-process" name="defining-a-process">3.1&nbsp;&nbsp;&nbsp;Defining a process</a></h2>
+<p>Each Process class inherits from SimPy's <tt class="docutils literal"><span class="pre">Process</span></tt> class. For example
+the header of the definition of a <tt class="docutils literal"><span class="pre">Car</span></tt> Process class would
+be:</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">class</span> <span class="pre">Car(Process):</span></tt></blockquote>
+<p>At least one Process Execution Method (PEM) must be defined in each
+Process class (though an entity can have only one PEM active).  A PEM
+may have arguments in addition to the required <tt class="docutils literal"><span class="pre">self</span></tt> argument
+needed by all Python class methods. Naturally, other methods and, in
+particular, an <tt class="docutils literal"><span class="pre">__init__</span></tt>, may be defined.</p>
+<ul id="pem">
+<li><p class="first"><tt class="docutils literal"><span class="pre">A</span> <span class="pre">Process</span> <span class="pre">Execution</span> <span class="pre">Method</span> <span class="pre">(PEM)</span></tt> defines the actions that are
+performed by its process objects. <em>Each PEM must contain at least
+one of the special ``yield`` statements, described later</em>. This
+makes the PEM  a Python generator function so that it has resumable
+execution -- it can be restarted again after the yield statement
+without losing its current state.  A PEM may have any name of your
+choice. For example it may be called <tt class="docutils literal"><span class="pre">execute(</span> <span class="pre">)</span></tt> or <tt class="docutils literal"><span class="pre">run(</span>
+<span class="pre">)</span></tt>. However, if a PEM is called <tt class="docutils literal"><span class="pre">ACTIONS</span></tt>, SimPy recognises this
+as a PEM. This can simplify the <tt class="docutils literal"><span class="pre">start</span></tt> method as explained below.</p>
+<p>The <tt class="docutils literal"><span class="pre">yield</span></tt> statements are simulation commands which affect an
+ongoing life cycle of Process objects. These statements control the
+execution and synchronisation of multiple processes. They can delay
+a process, put it to sleep, request a shared resource or provide a
+resource. They can add new events to the simulation event schedule,
+cancel existing ones, or cause processes to wait for a change in the
+simulated system's state.</p>
+<p>For example, here is a  Process Execution Method, <tt class="docutils literal"><span class="pre">go(self)</span></tt>,
+for the simple <tt class="docutils literal"><span class="pre">Car</span></tt> class that does no more than delay for a
+time.  As soon as it is activated it prints out the current time,
+the car object's name and the word <tt class="docutils literal"><span class="pre">Starting</span></tt>. After a
+simulated delay of 100.0 time units (in the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold,</span> <span class="pre">...</span></tt>
+statement) it announces that this car has &quot;Arrived&quot;:</p>
+<pre class="literal-block">
+def go(self):
+    print now(), self.name, 'Starting'
+    yield hold,self,100.0
+    print now(), self.name, 'Arrived'
+</pre>
+<p>A process object's PEM starts execution when the object is
+activated, provided the <tt class="docutils literal"><span class="pre">simulate(until=</span></tt><em>endtime</em><tt class="docutils literal"><span class="pre">)</span></tt>
+statement has been executed.</p>
+</li>
+<li><p class="first"><strong>__init__(self, ...)</strong>, where <em>...</em> indicates other arguments. This
+method is optional but is useful to initialise the process object,
+setting values for its attributes.  As for any sub-class in Python,
+the first line of this method must call the <tt class="docutils literal"><span class="pre">Process</span></tt> class's
+<tt class="docutils literal"><span class="pre">__init__(</span> <span class="pre">)</span></tt> method in the form:</p>
+<blockquote>
+<p><tt class="docutils literal"><span class="pre">Process.__init__(self)</span></tt></p>
+</blockquote>
+<p>You can then use additional commands to initialise attributes of the
+Process class's objects. You can also override the standard <tt class="docutils literal"><span class="pre">name</span></tt>
+attribute of the object.</p>
+<p>If present, the <tt class="docutils literal"><span class="pre">__init__(</span> <span class="pre">)</span></tt> method is always called whenever
+you create a new process object. If you do not wish to provide for
+any attributes other than a <tt class="docutils literal"><span class="pre">name</span></tt>, the <tt class="docutils literal"><span class="pre">__init__</span></tt> method may be
+dispensed with. An example of an <tt class="docutils literal"><span class="pre">__init__(</span> <span class="pre">)</span></tt> method is shown in
+the <a class="reference" href="#example-program">Example Program</a>.</p>
+</li>
+</ul>
+</div>
+<div class="section">
+<h2><a id="creating-a-process-object" name="creating-a-process-object">3.2&nbsp;&nbsp;&nbsp;Creating a process object</a></h2>
+<p>An entity (process object) is created in the usual Python manner by
+calling the Class. Process classes have a single argument, <tt class="docutils literal"><span class="pre">name</span></tt>
+which can be specified even if no <tt class="docutils literal"><span class="pre">__init__</span></tt> method is defined. It defaults to
+<tt class="docutils literal"><span class="pre">'a_process'</span></tt> unless the user specified a different name.</p>
+<p>For example to create a new <tt class="docutils literal"><span class="pre">Car</span></tt> object with a name <tt class="docutils literal"><span class="pre">Car23</span></tt>:</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">Car(name=&quot;Car23&quot;)</span></tt></blockquote>
+<!-- ================================================================= -->
+</div>
+<div class="section">
+<h2><a id="starting-simpy-process-objects" name="starting-simpy-process-objects">3.3&nbsp;&nbsp;&nbsp;Starting SimPy Process Objects</a></h2>
+<p>An entity (process object) is &quot;passive&quot; when first created, i.e., it
+has no scheduled events. It must be <em>activated</em> to start its Process
+Execution Method. To do this you can use either the <tt class="docutils literal"><span class="pre">activate</span></tt>
+function or the <tt class="docutils literal"><span class="pre">start</span></tt> method of the Process.</p>
+<div class="section">
+<h3><a id="activate" name="activate">activate</a></h3>
+<p>Activating an entity by using the SimPy <tt class="docutils literal"><span class="pre">activate</span></tt> function:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">activate(</span></tt><em>p, p.pemname([args])</em><tt class="docutils literal"><span class="pre">[,{at=</span></tt><em>t</em><tt class="docutils literal"><span class="pre">|delay=</span></tt><em>period</em><tt class="docutils literal"><span class="pre">}])</span></tt></p>
+<p>activates process object <em>p</em>, provides its Process Execution
+Method <em>p.pemname( )</em> with the arguments <em>args</em> and possibly assigns
+values to the other optional parameters. You must choose one (or
+neither) of <tt class="docutils literal"><span class="pre">at=</span></tt><em>t</em> and <tt class="docutils literal"><span class="pre">delay=</span></tt><em>period</em>. The default is
+to activate at the current time (<tt class="docutils literal"><span class="pre">at=now(</span> <span class="pre">)</span></tt>) and with no delay
+(<tt class="docutils literal"><span class="pre">delay=0</span></tt>).</p>
+<p>For example: to activate an entity, <tt class="docutils literal"><span class="pre">cust</span></tt> at time 10.0
+using its PEM called <tt class="docutils literal"><span class="pre">lifetime</span></tt>:</p>
+<pre class="literal-block">
+cust = Customer()
+activate(cust, cust.lifetime(), at=10.0)
+</pre>
+</li>
+</ul>
+</div>
+<div class="section">
+<h3><a id="start" name="start">start</a></h3>
+<p>An alternative to the <tt class="docutils literal"><span class="pre">activate()</span></tt> function is the <tt class="docutils literal"><span class="pre">start</span></tt> method
+of Process objects:</p>
+<ul>
+<li><p class="first"><em>p.</em><tt class="docutils literal"><span class="pre">start(</span></tt><em>p.pemname([args])</em><tt class="docutils literal"><span class="pre">[,{at=</span></tt><em>t</em><tt class="docutils literal"><span class="pre">|delay=</span></tt><em>period</em><tt class="docutils literal"><span class="pre">}])</span></tt></p>
+<p><em>p</em> is a Process object.  The PEM, <em>pemname</em>, can have arguments
+<em>args</em> and any identifier (such as <tt class="docutils literal"><span class="pre">run</span></tt>, <tt class="docutils literal"><span class="pre">lifecycle</span></tt>, etc).</p>
+<p>For example, to activate the process object <tt class="docutils literal"><span class="pre">cust</span></tt> using the PEM
+with identifier <tt class="docutils literal"><span class="pre">lifetime</span></tt> at time 10.0 we would use:</p>
+<pre class="literal-block">
+cust.start(cust.lifetime(),at=10.0)
+</pre>
+</li>
+</ul>
+</div>
+<div class="section">
+<h3><a id="the-standard-pem-name-actions" name="the-standard-pem-name-actions">The standard PEM name, ACTIONS</a></h3>
+<p>The identifier <tt class="docutils literal"><span class="pre">ACTIONS</span></tt> is recognised by SimPy as a PEM name and
+can be used (or implied) in the <tt class="docutils literal"><span class="pre">start</span></tt> method.</p>
+<ul>
+<li><p class="first"><em>p.</em><tt class="docutils literal"><span class="pre">start([</span></tt><em>p.</em><tt class="docutils literal"><span class="pre">ACTIONS()]</span></tt> <tt class="docutils literal"><span class="pre">[,{at=</span></tt><em>t</em><tt class="docutils literal"><span class="pre">|delay=</span></tt><em>period</em><tt class="docutils literal"><span class="pre">}])</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">ACTIONS</span></tt> <em>cannot</em> have parameters. The call <em>p.</em><tt class="docutils literal"><span class="pre">ACTIONS()</span></tt>
+is optional but may make your code clearer.</p>
+<p>For example, to activate the Process object <tt class="docutils literal"><span class="pre">cust</span></tt> with a PEM
+called <tt class="docutils literal"><span class="pre">ACTIONS</span></tt> at time 10.0, the following are equivalent
+(and the second version more convenient):</p>
+<pre class="literal-block">
+cust.start(cust.ACTIONS(), at=10.0)
+cust.start(at=10.0)
+</pre>
+</li>
+</ul>
+<p><em>A reminder</em>: Even activated process objects will not start operating until the
+<tt class="docutils literal"><span class="pre">simulate()</span></tt> statement is executed.</p>
+</div>
+</div>
+<div class="section">
+<h2><a id="elapsing-time-in-a-process" name="elapsing-time-in-a-process">3.4&nbsp;&nbsp;&nbsp;Elapsing time in a Process</a></h2>
+<p>A <a class="reference" href="#pem">PEM</a> uses the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold</span></tt> command to temporarily delay a process
+object's operations. This might represent a service time for the
+entity. (Waiting is handled automatically by the resource facilities
+and is not modelled by <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold</span></tt>)</p>
+<div class="section">
+<h3><a id="yield-hold" name="yield-hold">yield hold</a></h3>
+<blockquote>
+<p><tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold,self,</span></tt><em>t</em></p>
+<p>Causes the entity to delay <em>t</em> time units.  After the delay, it
+continues  with the next statement in its PEM.  During the <tt class="docutils literal"><span class="pre">hold</span></tt> the
+entity's operations are suspended.</p>
+</blockquote>
+<p>Paradoxically, in the model world, the entity is considered to be
+<em>busy</em> during this simulated time. For example, it might be involved
+in filling up with gas or driving.  In this state it can be
+interrupted by other entities.</p>
+</div>
+</div>
+<div class="section">
+<h2><a id="more-about-processes" name="more-about-processes">3.5&nbsp;&nbsp;&nbsp;More about Processes</a></h2>
+<p>An entity (Process object) can be &quot;put to sleep&quot; or passivated using
+<tt class="docutils literal"><span class="pre">yield</span> <span class="pre">passivate,self</span></tt> (and it can be reactivated by another entity
+using <tt class="docutils literal"><span class="pre">reactivate</span></tt>), or permanently reoved from the future event
+queue by the command <tt class="docutils literal"><span class="pre">self.cancel()</span></tt>. Active entities can be
+<tt class="docutils literal"><span class="pre">interrupt</span></tt>ed by other entities. Examine the full <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a> for
+details.</p>
+</div>
+<hr class="docutils" />
+<div class="section">
+<h2><a id="a-simpy-program" name="a-simpy-program">3.6&nbsp;&nbsp;&nbsp;A SimPy Program</a></h2>
+<p id="example-program">This is a complete SimPy script. We define a <tt class="docutils literal"><span class="pre">Car</span></tt> class with a
+PEM called <tt class="docutils literal"><span class="pre">go(</span> <span class="pre">)</span></tt>. We also (for interest) define an <tt class="docutils literal"><span class="pre">__init__(</span> <span class="pre">)</span></tt>
+method to provide individual cars with an identification name and  engine size, <tt class="docutils literal"><span class="pre">cc</span></tt>. The <tt class="docutils literal"><span class="pre">cc</span></tt> attribute is not used in this very
+simple example.</p>
+<p>Two cars, <tt class="docutils literal"><span class="pre">p1</span></tt> and <tt class="docutils literal"><span class="pre">p2</span></tt> are created. <tt class="docutils literal"><span class="pre">p1</span></tt> and <tt class="docutils literal"><span class="pre">p2</span></tt> are
+activated to start at simulation times 0.6 and 0.0, respectively. Note
+that these will <em>not</em> start in the same order they appear in the
+program listing. <tt class="docutils literal"><span class="pre">p2</span></tt> actually starts first in the simulation. Nothing
+happens until the <tt class="docutils literal"><span class="pre">simulate(until=200)</span></tt> statement. When both cars
+have finished (at time <tt class="docutils literal"><span class="pre">6.0+100.0=106.0</span></tt>) there will be no more
+events so the simulation will stop at that time:</p>
+<pre class="literal-block">
+from SimPy.Simulation import *
+
+class Car(Process):
+  def __init__(self,name,cc):
+     Process.__init__(self,name=name)
+     self.cc = cc
+
+  def go(self):
+     print now( ), self.name, &quot;Starting&quot;
+     yield hold,self,100.0
+     print now( ), self.name, &quot;Arrived&quot;
+
+initialize( )
+c1  = Car(&quot;Car1&quot;,2000)       # a new car
+activate(c1,c1.go( ),at=6.0) # activate at time 6.0
+c2  = Car(&quot;Car2&quot;,1600)
+activate(c2,c2.go( ))        # activate at time 0
+simulate(until=200)
+print 'Current time is ',now( ) # will print 106.0
+
+</pre>
+<p>Running this program gives the following output:</p>
+<pre class="literal-block">
+0 Car2 Starting
+6.0 Car1 Starting
+100.0 Car2 Arrived
+106.0 Car1 Arrived
+Current time is  106.0
+</pre>
+<p>If, instead one chose to import <tt class="docutils literal"><span class="pre">SimPy.SimulateTrace</span></tt> at the start
+of the program one would obtain the following output. (The meaning of
+the phrase <tt class="docutils literal"><span class="pre">prior</span> <span class="pre">:</span> <span class="pre">False</span></tt> in the first two lines is described in
+the full <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a>. <tt class="docutils literal"><span class="pre">prior</span></tt> is an advanced technique for fine control
+of PEM priorities but seldom affects simulated operations and so
+normally can be ignored/)</p>
+<pre class="literal-block">
+0 activate &lt;Car1&gt; at time: 6.0 prior: False
+0 activate &lt;Car2&gt; at time: 0 prior: False
+0 Car2 Starting
+0 hold &lt;Car2&gt; delay: 100.0
+6.0 Car1 Starting
+6.0 hold &lt;Car1&gt; delay: 100.0
+100.0 Car2 Arrived
+100.0 &lt;Car2&gt; terminated
+106.0 Car1 Arrived
+106.0 &lt;Car1&gt; terminated
+Current time is  106.0
+
+</pre>
+<hr class="docutils" />
+<!-- ================================================================== -->
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="resources" name="resources">4&nbsp;&nbsp;&nbsp;Resources</a></h1>
+<p>The three resource facilities provided by SimPy are <a class="reference" href="#resources">Resources</a>,
+<a class="reference" href="#levels">Levels</a> and <a class="reference" href="#stores">Stores</a>. Each models a congestion point where process
+objects may have to queue up to access resources. This section
+describes the Resource type of resource facility.</p>
+<p>An example of queueing for a Resource might be a manufacturing plant
+in which a <tt class="docutils literal"><span class="pre">Task</span></tt> (modelled as an entity or <em>Process object</em>) needs
+work done by a <tt class="docutils literal"><span class="pre">Machine</span></tt> (modelled as a <em>Resource object</em>). If all
+of the <tt class="docutils literal"><span class="pre">Machines</span></tt> are currently being used, the <tt class="docutils literal"><span class="pre">Task</span></tt> must wait
+until one becomes free. A SimPy Resource can have a number of
+identical <tt class="docutils literal"><span class="pre">units</span></tt>, such as a number of identical <tt class="docutils literal"><span class="pre">machine</span></tt>
+units. An entity obtains a unit of the Resource by <tt class="docutils literal"><span class="pre">requesting</span></tt> it
+and, when it is finished, <tt class="docutils literal"><span class="pre">releasing</span></tt> it. A Resource maintains a
+list (the <tt class="docutils literal"><span class="pre">waitQ</span></tt>) of entities that have requested but not yet
+received one of the Resource's units, and another list (the
+<tt class="docutils literal"><span class="pre">activeQ</span></tt>) of entities that are currently using a unit.  SimPy
+creates and updates these queues itself -- the user can read their
+values, but should not change them.</p>
+<div class="section">
+<h2><a id="defining-a-resource-object" name="defining-a-resource-object">4.1&nbsp;&nbsp;&nbsp;Defining a Resource object</a></h2>
+<p>A Resource object, <tt class="docutils literal"><span class="pre">r</span></tt>,  is established by the following statement:</p>
+<pre class="literal-block">
+r = Resource(capacity=1, name='a_resource', unitName='units', monitored=False)
+</pre>
+<p>where</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">capacity</span></tt> (positive integer) specifies the total
+number of identical units in Resource object <tt class="docutils literal"><span class="pre">r</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">name</span></tt> (string) the name for this Resource object (e.g.,
+<tt class="docutils literal"><span class="pre">'gasStation'</span></tt>).</li>
+<li><tt class="docutils literal"><span class="pre">unitName</span></tt> (string) the name for a unit of the resource (e.g.,
+<tt class="docutils literal"><span class="pre">'pump'</span></tt>).</li>
+<li><tt class="docutils literal"><span class="pre">monitored</span></tt> (<tt class="docutils literal"><span class="pre">False</span></tt> or <tt class="docutils literal"><span class="pre">True</span></tt>) If set to <tt class="docutils literal"><span class="pre">True</span></tt>, then
+information is gathered on the sizes of <tt class="docutils literal"><span class="pre">r</span></tt>'s <tt class="docutils literal"><span class="pre">waitQ</span></tt> and
+<tt class="docutils literal"><span class="pre">activeQ</span></tt>, otherwise not.</li>
+</ul>
+<p>For example, in the model of a 2-pump gas-station we might define:</p>
+<pre class="literal-block">
+gasstation = Resource(capacity=2,name='gasStation',unitName='pump')
+</pre>
+<p>Each Resource object, <tt class="docutils literal"><span class="pre">r</span></tt>,  has the following additional attributes:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">r.n</span></tt>,  the number of units that are currently free.</li>
+<li><tt class="docutils literal"><span class="pre">r.waitQ</span></tt>, a queue (list) of processes that have requested but
+not yet received a unit of <tt class="docutils literal"><span class="pre">r</span></tt>, so <tt class="docutils literal"><span class="pre">len(r.waitQ)</span></tt> is the
+number of process objects currently waiting.</li>
+<li><tt class="docutils literal"><span class="pre">r.activeQ</span></tt>, a queue (list) of process objects currently using
+one of the Resource's units, so <tt class="docutils literal"><span class="pre">len(r.activeQ)</span></tt> is the number of
+units that are currently in use.</li>
+<li><tt class="docutils literal"><span class="pre">r.waitMon</span></tt>, the record (made by a <tt class="docutils literal"><span class="pre">Monitor</span></tt> whenever
+<tt class="docutils literal"><span class="pre">monitored==True</span></tt>) of the activity in <tt class="docutils literal"><span class="pre">r.waitQ</span></tt>. So, for
+example, <tt class="docutils literal"><span class="pre">r.waitMon.timeaverage()</span></tt> is the average number of
+processes in <tt class="docutils literal"><span class="pre">r.waitQ</span></tt>.  See <a class="reference" href="#data-summaries">Data Summaries</a>
+for an example.</li>
+<li><tt class="docutils literal"><span class="pre">r.actMon</span></tt>, the record (made by a <tt class="docutils literal"><span class="pre">Monitor</span></tt> whenever
+<tt class="docutils literal"><span class="pre">monitored==True</span></tt>) of the activity in <tt class="docutils literal"><span class="pre">r.activeQ</span></tt>.</li>
+</ul>
+</div>
+<div class="section">
+<h2><a id="requesting-and-releasing-a-unit-of-a-resource" name="requesting-and-releasing-a-unit-of-a-resource">4.2&nbsp;&nbsp;&nbsp;Requesting and releasing a unit of a Resource</a></h2>
+<p>A process can request and later release a unit of the Resource object,
+<tt class="docutils literal"><span class="pre">r</span></tt>, by using the following yield commands in a Process Execution
+Method:</p>
+<div class="section">
+<h3><a id="yield-request" name="yield-request">yield request</a></h3>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">yield</span> <span class="pre">request,self,</span></tt><em>r</em></p>
+<p>requests a unit of Resource <em>r</em></p>
+</li>
+</ul>
+<p>If a Resource unit is free when the request is made, the requesting
+entity takes it and moves on to the next statement in its PEM. If no
+Resource unit is available when the request is made, the requesting
+entity is appended to the Resource's <tt class="docutils literal"><span class="pre">waitQ</span></tt> and suspended.  The
+next time a unit becomes available the first entity in the
+<tt class="docutils literal"><span class="pre">r.waitQ</span></tt> takes it and continues its execution.</p>
+<p>For example, a <tt class="docutils literal"><span class="pre">Car</span></tt> might request a <tt class="docutils literal"><span class="pre">pump</span></tt>:</p>
+<pre class="literal-block">
+yield request,self,gasstation
+</pre>
+<p>(It is actually requesting a <em>unit</em> of the <tt class="docutils literal"><span class="pre">gasstation</span></tt>, i.e. a
+<tt class="docutils literal"><span class="pre">pump</span></tt>.) An entity holds a resource unit until it releases it.</p>
+<p>Entities can use a priority system for queueing. They can also preempt
+(that is, interrupt) others already in the system. They can also
+<em>renege</em> from the <tt class="docutils literal"><span class="pre">waitQ</span></tt> (that is, abandon the queue if it takes
+too long). This is achieved by an extension to the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">request</span></tt>
+command. See the main <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a>.</p>
+</div>
+<div class="section">
+<h3><a id="yield-release" name="yield-release">yield release</a></h3>
+<blockquote>
+<p><tt class="docutils literal"><span class="pre">yield</span> <span class="pre">release,self,r</span></tt></p>
+<p>releases the  unit of <em>r</em>.</p>
+</blockquote>
+<p>For example the  <tt class="docutils literal"><span class="pre">Car</span></tt> might  release the <tt class="docutils literal"><span class="pre">pump</span></tt>:</p>
+<pre class="literal-block">
+yield release,self,gasstation
+</pre>
+<p>If, when the unit of <em>r</em> is released, another entity is waiting (in
+<tt class="docutils literal"><span class="pre">waitQ</span></tt>) it will take the unit, leave the <tt class="docutils literal"><span class="pre">waitQ</span></tt> and move into
+the <tt class="docutils literal"><span class="pre">activeQ</span></tt> and go one with its PEM.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section">
+<h2><a id="resource-example" name="resource-example">4.3&nbsp;&nbsp;&nbsp;Resource Example</a></h2>
+<p>In this complete script, the <tt class="docutils literal"><span class="pre">gasstation</span></tt> Resource object
+is given two resource units (<tt class="docutils literal"><span class="pre">capacity=2</span></tt>). Four cars arrive at the
+times specified in the program (not in the order they are
+listed). They all request a <tt class="docutils literal"><span class="pre">pump</span></tt> and use it for 100 time units:</p>
+<pre class="literal-block">
+from SimPy.Simulation import *
+
+class Car(Process):
+  def __init__(self,name,cc):
+     Process.__init__(self,name=name)
+     self.cc = cc
+
+  def go(self):
+     print now( ), self.name, &quot;Starting&quot;
+     yield request,self,gasstation
+     print now( ), self.name, &quot;Got a pump&quot;
+     yield hold,self,100.0
+     yield release,self,gasstation
+     print now( ), self.name, &quot;Leaving&quot;
+
+
+gasstation = Resource(capacity=2,
+                      name='gasStation',unitName='pump')
+initialize( )
+c1  = Car(&quot;Car1&quot;,2000)
+c2  = Car(&quot;Car2&quot;,1600)
+c3  = Car(&quot;Car3&quot;,3000)
+c4  = Car(&quot;Car4&quot;,1600)
+activate(c1,c1.go( ),at=4.0) # activate at time 4.0
+activate(c2,c2.go( ))        # activate at time 0.0
+activate(c3,c3.go( ),at=3.0) # activate at time 3.0
+activate(c4,c4.go( ),at=3.0) # activate at time 2.0
+simulate(until=300)
+print 'Current time is ',now( )
+
+</pre>
+<p>This program results in the following output:</p>
+<pre class="literal-block">
+0 Car2 Starting
+0 Car2 Got a pump
+3.0 Car3 Starting
+3.0 Car3 Got a pump
+3.0 Car4 Starting
+4.0 Car1 Starting
+100.0 Car2 Leaving
+100.0 Car4 Got a pump
+103.0 Car3 Leaving
+103.0 Car1 Got a pump
+200.0 Car4 Leaving
+203.0 Car1 Leaving
+Current time is  203.0
+
+</pre>
+<p>And, if we use <tt class="docutils literal"><span class="pre">SimPy.SimulationTrace</span></tt> to get an automatic trace we
+get the result shown in Appendix <a class="reference" href="#the-resource-example-with-tracing">The Resource Example with Tracing</a>.
+(It is rather long to be inserted here).</p>
+<hr class="docutils" />
+<!-- ========================================================================== -->
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="levels" name="levels">5&nbsp;&nbsp;&nbsp;Levels</a></h1>
+<p>A <tt class="docutils literal"><span class="pre">Level</span></tt> holds an amount of a homogeneous undifferentiated
+&quot;material.&quot; Thus the currently-available amount of material in a Level
+can be fully described by a real or integer number. One important
+difference from a Resource is that the amount a Level holds can be
+increased as well as decreased by entities.  For example, a gas
+station stores petrol in large tanks. Tankers increase and refuelling
+cars decrease the amount of gas in the station's storage tanks.</p>
+<div class="section">
+<h2><a id="defining-a-level" name="defining-a-level">5.1&nbsp;&nbsp;&nbsp;Defining a Level</a></h2>
+<p>You define the Level resource facility <tt class="docutils literal"><span class="pre">lev</span></tt> by a statement like this:</p>
+<pre class="literal-block">
+lev = Level(name='a_level', unitName='units',
+            capacity='unbounded', initialBuffered=0, monitored=False)
+</pre>
+<p>where</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">name</span></tt> (string) is a descriptive name for the Level object
+<tt class="docutils literal"><span class="pre">lev</span></tt> (e.g., <tt class="docutils literal"><span class="pre">'inventory'</span></tt>).</li>
+<li><tt class="docutils literal"><span class="pre">unitName</span></tt> (string) is a descriptive name for the units in which the
+amount of material in <tt class="docutils literal"><span class="pre">lev</span></tt> is measured (e.g., <tt class="docutils literal"><span class="pre">'kilograms'</span></tt>).</li>
+<li><tt class="docutils literal"><span class="pre">capacity</span></tt> (positive real or integer) is the capacity of the Level
+object <tt class="docutils literal"><span class="pre">lev</span></tt>.  The default value is <tt class="docutils literal"><span class="pre">'unbounded'</span></tt> which is
+interpreted as <tt class="docutils literal"><span class="pre">sys.maxint</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">initialBuffered</span></tt> (positive real or integer) is the initial amount of
+material in the Level object <tt class="docutils literal"><span class="pre">lev</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">monitored</span></tt> (<tt class="docutils literal"><span class="pre">`True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt>) specifies whether the queues
+and the amount of material in <tt class="docutils literal"><span class="pre">lev</span></tt> will be recorded by a
+<tt class="docutils literal"><span class="pre">Monitor</span></tt>.</li>
+</ul>
+</blockquote>
+<p>For example, in the model of the  gas-station we might define:</p>
+<pre class="literal-block">
+tank = Level(capacity=10000,initialBuffered=5000,
+                name='Gas Tank',unitName='litres')
+</pre>
+<p>Every Level resource object, such as <tt class="docutils literal"><span class="pre">lev</span></tt>, also has the following
+additional attributes:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">lev.amount</span></tt> is the amount currently held in <tt class="docutils literal"><span class="pre">lev</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">lev.putQ</span></tt> is the queue of processes waiting to add amounts to <tt class="docutils literal"><span class="pre">lev</span></tt>,
+so <tt class="docutils literal"><span class="pre">len(lev.putQ)</span></tt> is the number of processes waiting to add
+amounts.</li>
+<li><tt class="docutils literal"><span class="pre">lev.getQ</span></tt> is the queue of processes waiting to get amounts from
+<tt class="docutils literal"><span class="pre">lev</span></tt>, so <tt class="docutils literal"><span class="pre">len(lev.getQ)</span></tt> is the number of processes waiting to
+get amounts.</li>
+<li><tt class="docutils literal"><span class="pre">lev.monitored</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt> if the queues are to be recorded. In
+this case <tt class="docutils literal"><span class="pre">lev.putQMon</span></tt>, <tt class="docutils literal"><span class="pre">lev.getQMon</span></tt>, and <tt class="docutils literal"><span class="pre">lev.bufferMon</span></tt>
+exist. See <a class="reference" href="#monitoring-resource-queues">Monitoring Resource Queues</a></li>
+<li><tt class="docutils literal"><span class="pre">lev.putQMon</span></tt> is a Monitor observing <tt class="docutils literal"><span class="pre">lev.putQ</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">lev.getQMon</span></tt> is a Monitor observing <tt class="docutils literal"><span class="pre">lev.getQ</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">lev.bufferMon</span></tt> is a Monitor observing <tt class="docutils literal"><span class="pre">lev.amount</span></tt>,.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="putting-amounts-into-a-level" name="putting-amounts-into-a-level">5.2&nbsp;&nbsp;&nbsp;Putting amounts into  a Level</a></h2>
+<p>An entity can offer an amount <em>give</em> to a Level,
+<em>lev</em>, by a <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt> statement:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put,self,</span></tt><em>lev,give</em></li>
+</ul>
+<p>Here <em>give</em> must be a positive number (real or integer). If the amount
+offered would lead to an overflow (that is, <em>lev.</em><tt class="docutils literal"><span class="pre">amount</span></tt> + <em>give
+&gt; lev.</em><tt class="docutils literal"><span class="pre">capacity</span></tt>) the offering entity is queued (in
+<em>lev</em><tt class="docutils literal"><span class="pre">.putQ</span></tt>). It will be reactivated when there is enough space to
+hold the amount offered.</p>
+<p>For example a tanker might offer to top up the gas station's <tt class="docutils literal"><span class="pre">tank</span></tt>
+with 6000 litres:</p>
+<pre class="literal-block">
+yield put,self,tank,6000
+</pre>
+<p>(If this was attempted when the <tt class="docutils literal"><span class="pre">tank</span></tt> contained 5000 litres as in
+the example in <a class="reference" href="#defining-a-level">Defining a Level</a>, the tanker would be queued in the
+<tt class="docutils literal"><span class="pre">tank.putQ</span></tt> until there was room. In a practical simulation one
+would first check that there was space for it or only top up
+sufficient to fill the <tt class="docutils literal"><span class="pre">tank</span></tt>.)</p>
+<p>Entities can use a priority system for queueing. They can also preempt
+(that is, interrupt) others already in the system. They can also
+<em>renege</em> from the <tt class="docutils literal"><span class="pre">putQ</span></tt> (that is, they can abandon the wait if it
+takes too long). This is achieved by an extension to the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt>
+command. See the main <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a> for more information on these options.</p>
+</div>
+<div class="section">
+<h2><a id="getting-amounts-from-a-level" name="getting-amounts-from-a-level">5.3&nbsp;&nbsp;&nbsp;Getting amounts from a Level</a></h2>
+<p>An entity can request material from the Level <em>lev</em>, by a <tt class="docutils literal"><span class="pre">yield</span>
+<span class="pre">get</span></tt> statement.:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">yield</span> <span class="pre">get,self,</span></tt><em>lev,take</em></li>
+</ul>
+<p>Here <em>take</em> must be a positive number (real or integer). If <em>lev</em>
+does not hold enough to satisfy the request (that is, <em>take &gt; lev</em><tt class="docutils literal"><span class="pre">.amount</span></tt>) the requesting process is queued (in <em>lev</em><tt class="docutils literal"><span class="pre">.getQ</span></tt>). It will be reactivated when there is enough to satisfy the
+request.</p>
+<p><tt class="docutils literal"><span class="pre">self.got</span></tt> holds the amount actually received by the requester.</p>
+<p>For example a <tt class="docutils literal"><span class="pre">Car</span></tt> might extract gas from the <tt class="docutils literal"><span class="pre">tank</span></tt> after it has
+obtained the <tt class="docutils literal"><span class="pre">pump</span></tt>:</p>
+<pre class="literal-block">
+yield get,self,tank,50
+</pre>
+<p>You might incorporate this in the following structure where a pump is
+first requested, then the gas is extracted, and finally  the pump is
+released:</p>
+<pre class="literal-block">
+yield request,self,gasstation # get a pump
+yield get,self,tank,50        # extract 50 litres from the tank
+yield release,self,gasstation # release the pump
+</pre>
+<p>Entities can use a priority system for queueing. They can also preempt
+(that is, interrupt) others already in the system. They can also
+<em>renege</em> from the <tt class="docutils literal"><span class="pre">waitQ</span></tt> (that is, they can abandon the wait if it
+takes too long). This is achieved by an extension to the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">get</span></tt>
+command. See the main <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a> for these options.</p>
+<!-- ================================================================= -->
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="stores" name="stores">6&nbsp;&nbsp;&nbsp;Stores</a></h1>
+<p>A <tt class="docutils literal"><span class="pre">Store</span></tt> holds a list of individual items of any Python type.
+Entities can insert or remove specific items, or a number of items,
+from the Store. The items held in a Store may even be Process objects
+(Entities).</p>
+<p>For example, the gas station might hold some spares of different types
+and sizes. A car might need a spare of a specific size.</p>
+<div class="section">
+<h2><a id="defining-a-store" name="defining-a-store">6.1&nbsp;&nbsp;&nbsp;Defining a Store</a></h2>
+<p>The Store object <tt class="docutils literal"><span class="pre">sObj</span></tt> is established by a statement
+like the following:</p>
+<pre class="literal-block">
+sObj = Store(name='a_store', unitName='units',
+             capacity='unbounded', initialBuffered=[ ], monitored=False)
+</pre>
+<p>where</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">name</span></tt> (string) is a descriptive name for <tt class="docutils literal"><span class="pre">sObj</span></tt> (e.g.,
+<tt class="docutils literal"><span class="pre">'Inventory'</span></tt>).</li>
+<li><tt class="docutils literal"><span class="pre">unitName</span></tt> (string) is a descriptive name for the items
+in <tt class="docutils literal"><span class="pre">sObj</span></tt> (e.g., <tt class="docutils literal"><span class="pre">'widgets'</span></tt>).</li>
+<li><tt class="docutils literal"><span class="pre">capacity</span></tt> (positive integer) is the maximum number of
+individual items that can be held in <tt class="docutils literal"><span class="pre">sObj</span></tt>.
+The default value is <tt class="docutils literal"><span class="pre">'unbounded'</span></tt> which is
+interpreted as <tt class="docutils literal"><span class="pre">sys.maxint</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">initialBuffered</span></tt> (a list of individual items) is <tt class="docutils literal"><span class="pre">sObj</span></tt>'s initial content.</li>
+<li><tt class="docutils literal"><span class="pre">monitored</span></tt> (<tt class="docutils literal"><span class="pre">`True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt>) specifies whether <tt class="docutils literal"><span class="pre">sObj</span></tt>'s
+queues and contents are to be recorded.</li>
+</ul>
+</blockquote>
+<p>For example a store with a limited capacity of 10 items:</p>
+<pre class="literal-block">
+spare = Store(name='Spares',unitName='SKU',
+             capacity=10,initialBuffered=[plug1,plug2,belt3])
+</pre>
+<p>A Store object such as <tt class="docutils literal"><span class="pre">sObj</span></tt> also has the following additional
+attributes:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sObj.theBuffer</span></tt> is a queue (list) of the individual items in
+<tt class="docutils literal"><span class="pre">sObj</span></tt>.  This list is in FIFO order unless the user's program
+specifies a particular order.</li>
+<li><tt class="docutils literal"><span class="pre">sObj.nrBuffered</span></tt> is the current number of objects in <tt class="docutils literal"><span class="pre">sObj</span></tt>.
+This is read-only and not directly changeable by the user.</li>
+<li><tt class="docutils literal"><span class="pre">sObj.putQ</span></tt> is the queue of processes waiting to add items to <tt class="docutils literal"><span class="pre">sObj</span></tt>,
+so that <tt class="docutils literal"><span class="pre">len(sObj.putQ)</span></tt> is the number of processes waiting to add items.</li>
+<li><tt class="docutils literal"><span class="pre">sObj.getQ</span></tt> is the queue of processes waiting to get items from
+<tt class="docutils literal"><span class="pre">sObj</span></tt>, so that <tt class="docutils literal"><span class="pre">len(sObj.getQ)</span></tt> is the number of processes waiting to
+get items.</li>
+<li>If <tt class="docutils literal"><span class="pre">sObj.monitored</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt> then the queues are to be
+recorded.  In this case <tt class="docutils literal"><span class="pre">sObj.putQMon</span></tt>, <tt class="docutils literal"><span class="pre">sObj.getQMon</span></tt>, and
+<tt class="docutils literal"><span class="pre">sObj.bufferMon</span></tt> exist. See <a class="reference" href="#monitoring-resource-queues">Monitoring Resource Queues</a></li>
+<li><tt class="docutils literal"><span class="pre">sObj.putQMon</span></tt> is a Monitor observing <tt class="docutils literal"><span class="pre">sObj.putQ</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">sObj.getQMon</span></tt> is a Monitor observing <tt class="docutils literal"><span class="pre">sObj.getQ</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">sObj.bufferMon</span></tt>  is a Monitor observing <tt class="docutils literal"><span class="pre">sObj.nrBuffered</span></tt>.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="putting-objects-into-a-store" name="putting-objects-into-a-store">6.2&nbsp;&nbsp;&nbsp;Putting objects into a Store</a></h2>
+<p>Entities (process objects) can request items from a Store and the same
+or other entities can offer items to it. First look at the simpler of
+these operations, the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt>.</p>
+<p>An entity, the <em>offerer</em>, which is usually but not necessarily
+different from the <em>requester</em>, can offer a list of items to <em>sObj</em> by
+a <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt> statement:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put,self,</span></tt><em>sObj,give</em></li>
+</ul>
+<p>Here <tt class="docutils literal"><span class="pre">give</span></tt> is a <em>list</em> of any Python objects. If this statement would
+lead to an overflow (that is, <tt class="docutils literal"><span class="pre">sObj.nrBuffered</span> <span class="pre">+</span> <span class="pre">len(give)</span> <span class="pre">&gt;</span>
+<span class="pre">sObj.capacity</span></tt>) the putting entity is passivated and queued (in
+<tt class="docutils literal"><span class="pre">sObj.putQ</span></tt>) until there is sufficient room.</p>
+<p>Entities can use a priority system for queueing. They can also preempt
+(that is, interrupt) others already in the system. They can also
+<em>renege</em> from the <tt class="docutils literal"><span class="pre">putQ</span></tt> (that is, they can abandon the wait if it
+takes too long). This is achieved by an extension to the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt>
+command. Normally the items in a Store are kept in the order they were
+put in but it is possible to store them in a user-defined order. See
+the main <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a> for these options.</p>
+</div>
+<div class="section">
+<h2><a id="getting-objects-from-a-store" name="getting-objects-from-a-store">6.3&nbsp;&nbsp;&nbsp;Getting objects from  a Store</a></h2>
+<p>An entity , the <em>requester</em>, can extract the first <tt class="docutils literal"><span class="pre">n</span></tt> objects from
+<em>sObj</em> as a list.  Getting the first <em>n</em> items in <em>sObj</em>, the buffer,
+is achieved by the following statement:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">yield</span> <span class="pre">get,self,</span></tt><em>sObj,n</em></li>
+</ul>
+<p>Here <em>n</em> must be a positive integer.  If <em>sObj</em> does not currently
+hold enough objects to satisfy this request (that is, <tt class="docutils literal"><span class="pre">n</span> <span class="pre">&gt;</span>
+<span class="pre">sObj.nrBuffered</span></tt>) then the requesting entity is passivated and
+queued (in <tt class="docutils literal"><span class="pre">sObj.getQ</span></tt>). It will be reactivated when the request can
+be satisfied. The retrieved objects are returned in the list attribute
+<tt class="docutils literal"><span class="pre">got</span></tt> of the requesting process.</p>
+<p>Entities can use a priority system for queueing. They can also preempt
+(that is, interrupt) others already in the system. They can also
+<em>renege</em> from the <tt class="docutils literal"><span class="pre">waitQ</span></tt> (that is, they can abandon the wait if it
+takes too long). This is achieved by an extension to the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">get</span></tt>
+command. It is also possible to get a list of objects from a store
+using a &quot;filter function&quot; that chooses only those that satisfy user-specified
+conditions. See the main <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a> for these options.</p>
+<!-- ========================================================================== -->
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="random-number-generation" name="random-number-generation">7&nbsp;&nbsp;&nbsp;Random Number Generation</a></h1>
+<p>Simulations usually need random numbers. By design, SimPy does not
+provide its own random number generators, so users need to import them
+from some other source.  Perhaps the most convenient is the standard
+<a class="reference" href="http://www.python.org/doc/current/lib/module-random.html">Python random module</a>.  It can generate random variates from the
+following continuous distributions: uniform, beta, exponential, gamma,
+normal, log-normal, Weibull, and vonMises.  It can also generate
+random variates from some discrete distributions. Consult the module's
+documentation for details.  Excellent brief descriptions of these
+distributions, and many others, can be found in the <a class="reference" href="http://www.wikipedia.com/">Wikipedia</a>.)</p>
+<p>Python's <tt class="docutils literal"><span class="pre">random</span></tt> module can be used in two ways: you can import the
+methods directly or you can import the <tt class="docutils literal"><span class="pre">Random</span></tt> class and make your
+own random objects. In the second method, each object gives a
+different random number sequence, thus providing multiple random
+streams as in some other simulation languages such as Simscript and
+ModSim.</p>
+<p>Here the first method is illustrated. A single pseudo-random sequence
+is used for all calls. You <tt class="docutils literal"><span class="pre">import</span></tt> the methods you need from the
+<tt class="docutils literal"><span class="pre">random</span></tt> module. For example:</p>
+<pre class="literal-block">
+from random import seed, random, expovariate, normalvariate
+</pre>
+<p>In simulation it is good practice to set the initial <tt class="docutils literal"><span class="pre">seed</span></tt> for the
+pseudo-random sequence at the start of each run. You then have good
+control over the random numbers used. Replications and comparisons are
+easier and, together with variance reduction techniques, can provide
+more accurate estimates. In the following code snippet we set the
+initial seed to <tt class="docutils literal"><span class="pre">333555</span></tt>.  <tt class="docutils literal"><span class="pre">X</span></tt> and <tt class="docutils literal"><span class="pre">Y</span></tt> are pseudo-random
+variates from the two distributions. Both distributions have the same
+mean:</p>
+<pre class="literal-block">
+from random import seed, expovariate, normalvariate
+
+seed(333555)
+X = expovariate(0.1)
+Y = normalvariate(10.0, 1.0)
+</pre>
+<!-- ============================================================================ -->
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="monitors-and-recording-simulation-results" name="monitors-and-recording-simulation-results">8&nbsp;&nbsp;&nbsp;Monitors and Recording Simulation Results</a></h1>
+<p>A Monitor enables us to observe a variable of interest and to hold a
+time series of its values. It can return a simple data summary either
+during or at the completion of a simulation run.</p>
+<p>It uses the <tt class="docutils literal"><span class="pre">observe</span></tt> method to record the variable's value at a
+particular time. For example we might use one Monitor to record the
+waiting time for each of a series of customers and another to record
+the total number of customers in the shop. In a discrete-event system
+the number of customers changes only at arrival or departure events
+and it is at those events that the number in the shop must be
+observed. A Monitor provides simple statistics useful either alone or
+as the start of a more sophisticated statistical analysis.</p>
+<p>When Resources, Levels, and Stores are defined, a Monitor can be set
+up to automatically observe the lengths of each of their queues.</p>
+<div class="section">
+<h2><a id="defining-monitors" name="defining-monitors">8.1&nbsp;&nbsp;&nbsp;Defining Monitors</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Monitor</span></tt> class preserves a complete time-series of the observed
+data values, <em>y</em>, and their associated times, <em>t</em>. The data are held
+in a list of two-item sub-lists, <em>[t,y]</em>. Monitors calculate data
+summaries using this time-series when your program requests them. In
+long simulations their memory demands may be a disadvantage</p>
+<p>To define a new Monitor object:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m</span> <span class="pre">=</span> <span class="pre">Monitor(name='a_Monitor')</span></tt></p>
+<p>where <tt class="docutils literal"><span class="pre">name</span></tt> is a descriptive name for the Monitor object. The
+descriptive name is used when the data is graphed or tabulated.</p>
+</li>
+</ul>
+<p>For example, to record the waiting times of cars in the gas station we
+might use a Monitor:</p>
+<pre class="literal-block">
+waittimes = Monitor(name='Waiting times')
+</pre>
+</div>
+<div class="section">
+<h2><a id="observing-data" name="observing-data">8.2&nbsp;&nbsp;&nbsp;Observing data</a></h2>
+<p>Monitors use their <tt class="docutils literal"><span class="pre">observe</span></tt> method to record data.  Here and in the
+next section, <tt class="docutils literal"><span class="pre">m</span></tt> is a Monitor object:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.observe(y</span> <span class="pre">[,</span></tt><em>t</em><tt class="docutils literal"><span class="pre">])</span></tt></p>
+<p>records the current value of the variable, <tt class="docutils literal"><span class="pre">y</span></tt> and time <em>t</em> (or
+the current time, <tt class="docutils literal"><span class="pre">now()</span></tt>, if <em>t</em> is missing). A Monitor retains
+the two values as a sub-list <tt class="docutils literal"><span class="pre">[t,y]</span></tt>.</p>
+</li>
+</ul>
+<p>For example, using the Monitor in the previous example, we might
+record the waiting times of the cars as shown in the following
+fragment of the PEM of a <tt class="docutils literal"><span class="pre">Car</span></tt>:</p>
+<pre class="literal-block">
+startwaiting = now()             # start wait
+yield request,self,gasstation
+waitingtime = now()-startwaiting # time spent waiting
+
+waittimes.observe(waitingtime)
+</pre>
+<p>The first three lines measure the waiting time (from the time of the
+request to the time the <tt class="docutils literal"><span class="pre">pump</span></tt> is obtained). The last records the
+waiting time in the <tt class="docutils literal"><span class="pre">waittimes</span></tt> Monitor.</p>
+<p>The data recording can be <tt class="docutils literal"><span class="pre">reset</span></tt> to start at any time in the
+simulation:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.reset([</span></tt><em>t</em><tt class="docutils literal"><span class="pre">])</span></tt></p>
+<p>resets the observations. The recorded data is re-initialised, and
+the observation starting time is set to <em>t</em>, or to the current
+simulation time, <tt class="docutils literal"><span class="pre">now(</span> <span class="pre">)</span></tt>, if <em>t</em> is missing.</p>
+</li>
+</ul>
+</div>
+<div class="section">
+<h2><a id="data-summaries" name="data-summaries">8.3&nbsp;&nbsp;&nbsp;Data summaries</a></h2>
+<p>The following simple data summaries are available from Monitors at
+any time during or after the simulation run:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m[i]</span></tt> holds the <tt class="docutils literal"><span class="pre">i</span></tt>-th observation as a two-item list, <em>[ti,
+yi]</em></p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.yseries(</span> <span class="pre">)</span></tt> is a list of the recorded data values, <em>yi</em></p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.tseries(</span> <span class="pre">)</span></tt> is a list of the recorded times, <em>ti</em></p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.count(</span> <span class="pre">)</span></tt>, the current number of observations. (This is the
+same as <tt class="docutils literal"><span class="pre">len(r)</span></tt>).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.total(</span> <span class="pre">)</span></tt>, the sum of the <tt class="docutils literal"><span class="pre">y</span></tt> values</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.mean(</span> <span class="pre">)</span></tt>, the simple numerical average of the observed <em>y</em>
+values, <em>ignoring the times at which they were made</em>.  This is
+<tt class="docutils literal"><span class="pre">m.total(</span> <span class="pre">)/m.count(</span> <span class="pre">)</span></tt>.</p>
+<div align="center" class="figure" style="width: 400px">
+<img alt="Standard mean value" src="images/Mon004.png" />
+<p class="caption"><tt class="docutils literal"><span class="pre">m.mean</span></tt> is the simple average of the <em>y</em> values observed.</p>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.var(</span> <span class="pre">)</span></tt> the <em>sample</em> variance of the observations, ignoring the
+times at which they were made. If an unbiased estimate of the
+<em>population</em> variance is desired, the sample variance should be
+multiplied by <em>n/(n-1)</em>, where <em>n = m.count( )</em>.  In either case the
+standard deviation is, of course, the square-root of the variance</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.timeAverage(</span></tt><em>[t]</em><tt class="docutils literal"><span class="pre">)</span></tt> the time-weighted average of <tt class="docutils literal"><span class="pre">y</span></tt>,
+calculated from time 0 (or the last time <tt class="docutils literal"><span class="pre">m.reset(</span></tt><em>[t]</em><tt class="docutils literal"><span class="pre">)</span></tt>
+was called) to time <em>t</em> (or to the current simulation time,
+<tt class="docutils literal"><span class="pre">now()</span></tt>, if <em>t</em> is missing).</p>
+<p>This is intended to measure the average of a quantity that always
+exists, such as the length of a queue or the amount in a Level <a class="footnote-reference" href="#id2" id="id1" name="id1">[1]</a>.
+In discrete-event simulation such quantity changes are always
+instantaneous jumps occurring at events. The recorded times and new
+levels are sufficient information to calculate the average over
+time. The graph shown in the figure below illustrates the calculation. The
+total area under the line is calculated and divided by the total
+time of observation.  For accurate time-average results <em>y</em> must be
+piecewise constant like this and observed <em>just after</em> each change
+in its value. That is, the <em>y</em> value observed must be the <em>new</em>
+value after the state change.</p>
+<div align="center" class="figure" style="width: 400px">
+<img alt="Time Average" src="images/Mon005.png" />
+<p class="caption"><tt class="docutils literal"><span class="pre">m.timeAverage([t])</span></tt> is the time-weighted average of the observed
+<tt class="docutils literal"><span class="pre">y</span></tt> values. Each <tt class="docutils literal"><span class="pre">y</span></tt> value is weighted by the time for which
+it exists. The average is the area under the above curve divided
+by the total time, <em>t</em>.</p>
+</div>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1" name="id2">[1]</a></td><td><p class="first last"><tt class="docutils literal"><span class="pre">timeAverage</span></tt> is not intended to measure instantaneous
+values such as a service time or a waiting time. <tt class="docutils literal"><span class="pre">m.mean()</span></tt>
+is used for that.</p>
+</td></tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.timeVariance([t])</span></tt> the time-weighted variance of the <tt class="docutils literal"><span class="pre">y</span></tt>
+values calculated from time 0 (or the last time <tt class="docutils literal"><span class="pre">m.reset([t])</span></tt> was
+called) to time <em>t</em> (or to the current simulation time, <tt class="docutils literal"><span class="pre">now()</span></tt>,
+if <em>t</em> is missing).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">m.__str__(</span> <span class="pre">)</span></tt> is a string that briefly describes the current state
+of the monitor. This can be used in a print statement.</p>
+</li>
+</ul>
+</div>
+<div class="section">
+<h2><a id="monitoring-resource-queues" name="monitoring-resource-queues">8.4&nbsp;&nbsp;&nbsp;Monitoring Resource Queues</a></h2>
+<p>If a Resource, <tt class="docutils literal"><span class="pre">m</span></tt>, (and similarly for a Level or a Store) is
+defined with <tt class="docutils literal"><span class="pre">monitored=True</span></tt>, SimPy automatically records the
+lengths of its associated queues (i.e. <tt class="docutils literal"><span class="pre">waitQ</span></tt> and <tt class="docutils literal"><span class="pre">activeQ</span></tt> for
+Resources, and the analogous queues for Levels and Stores). These
+records are kept in Monitors <tt class="docutils literal"><span class="pre">m.waitMon</span></tt> for the <tt class="docutils literal"><span class="pre">waitQ</span></tt> and
+<tt class="docutils literal"><span class="pre">m.actMon</span></tt> for the <tt class="docutils literal"><span class="pre">activeQ</span></tt> (and analogously for the other
+resource types). This solves a problem, particularly for the <tt class="docutils literal"><span class="pre">waitQ</span></tt>
+which cannot easily be recorded externally to the resource.</p>
+<p>Complete time series for queue lengths are maintained and can be used
+for advanced post-simulation statistical analyses and to display
+summary statistics.</p>
+</div>
+<div class="section">
+<h2><a id="more-on-monitors" name="more-on-monitors">8.5&nbsp;&nbsp;&nbsp;More on Monitors</a></h2>
+<p>When a Monitor is defined it is automatically entered into a global
+list <tt class="docutils literal"><span class="pre">allMonitors</span></tt>. Each Monitor also has a descriptive label for
+its variable values, <em>y</em>, and their corresponding times, <em>t</em>, that can
+be used when the data are plotted.  The function <tt class="docutils literal"><span class="pre">startCollection()</span></tt>
+can be called to initialise all the Monitors in <tt class="docutils literal"><span class="pre">allMonitors</span></tt> at a
+certain simulation time. This is helpful when a simulation needs a
+'warmup' period to achieve steady state before measurements are
+started.  A Monitor can also generate a <tt class="docutils literal"><span class="pre">Histogram</span></tt> of the data
+The <tt class="docutils literal"><span class="pre">Tally</span></tt> is an alternative to <tt class="docutils literal"><span class="pre">Monitor</span></tt> that does essentially
+the same job but uses less storage space at some cost of speed and
+flexibility. See the <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a> for more information on these options.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="simpy-contacts" name="simpy-contacts">9&nbsp;&nbsp;&nbsp;SimPy Contacts</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">SimPy Web-site:</th><td class="field-body"><a class="reference" href="http://simpy.sourceforge.net/">http://simpy.sourceforge.net/</a></td>
+</tr>
+<tr class="field"><th class="field-name">SimPy wiki:</th><td class="field-body"><a class="reference" href="http://www.mcs.vuw.ac.nz/cgi-bin/wiki/SimPy">http://www.mcs.vuw.ac.nz/cgi-bin/wiki/SimPy</a></td>
+</tr>
+<tr class="field"><th class="field-name">Python-Version:</th><td class="field-body">2.3+</td>
+</tr>
+<tr class="field"><th class="field-name">SimPy version:</th><td class="field-body">1.9</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="appendices" name="appendices">10&nbsp;&nbsp;&nbsp;Appendices</a></h1>
+<div class="section">
+<h2><a id="the-resource-example-with-tracing" name="the-resource-example-with-tracing">10.1&nbsp;&nbsp;&nbsp;The Resource Example with Tracing</a></h2>
+<p>This is the trace produced in the Resource example when
+<tt class="docutils literal"><span class="pre">SimPy.SimulationTrace</span></tt> is imported at the head of the program. The
+relevance of the phrases <tt class="docutils literal"><span class="pre">`prior:</span> <span class="pre">False`</span></tt> and <tt class="docutils literal"><span class="pre">`priority:</span>
+<span class="pre">default`</span></tt> refer to advanced but seldom-needed methods for
+fine-grained control of event timing, as explained in the <a class="reference" href="http://simpy.sourceforge.net/SimPyDocs/Manual.html">Manual</a>. The
+trace contains the results of all the <tt class="docutils literal"><span class="pre">print</span></tt> output specifically
+called for by the user's program (for example, line 5) but adds a line
+for every event executed. (The <tt class="docutils literal"><span class="pre">request</span></tt> at time <tt class="docutils literal"><span class="pre">3.0</span></tt>, for
+example, lists the contents of the <tt class="docutils literal"><span class="pre">waitQ</span></tt> and the <tt class="docutils literal"><span class="pre">activeQ</span></tt> for
+the <tt class="docutils literal"><span class="pre">gasstation</span></tt>.)</p>
+<pre class="literal-block">
+0 activate &lt;Car1&gt; at time: 4.0 prior: False
+0 activate &lt;Car2&gt; at time: 0 prior: False
+0 activate &lt;Car3&gt; at time: 3.0 prior: False
+0 activate &lt;Car4&gt; at time: 3.0 prior: False
+0 Car2 Starting
+0 request &lt;Car2&gt; &lt;gasStation&gt;  priority: default 
+. . .waitQ: [] 
+. . .activeQ: ['Car2']
+0 Car2 Got a pump
+0 hold &lt;Car2&gt; delay: 100.0
+3.0 Car3 Starting
+3.0 request &lt;Car3&gt; &lt;gasStation&gt;  priority: default 
+. . .waitQ: [] 
+. . .activeQ: ['Car2', 'Car3']
+3.0 Car3 Got a pump
+3.0 hold &lt;Car3&gt; delay: 100.0
+3.0 Car4 Starting
+3.0 request &lt;Car4&gt; &lt;gasStation&gt;  priority: default 
+. . .waitQ: ['Car4'] 
+. . .activeQ: ['Car2', 'Car3']
+4.0 Car1 Starting
+4.0 request &lt;Car1&gt; &lt;gasStation&gt;  priority: default 
+. . .waitQ: ['Car4', 'Car1'] 
+. . .activeQ: ['Car2', 'Car3']
+100.0 reactivate &lt;Car4&gt; time: 100.0 prior: 1
+100.0 release &lt;Car2&gt; &lt;gasStation&gt; 
+. . .waitQ: ['Car1'] 
+. . .activeQ: ['Car3', 'Car4']
+100.0 Car2 Leaving
+100.0 &lt;Car2&gt; terminated
+100.0 Car4 Got a pump
+100.0 hold &lt;Car4&gt; delay: 100.0
+103.0 reactivate &lt;Car1&gt; time: 103.0 prior: 1
+103.0 release &lt;Car3&gt; &lt;gasStation&gt; 
+. . .waitQ: [] 
+. . .activeQ: ['Car4', 'Car1']
+103.0 Car3 Leaving
+103.0 &lt;Car3&gt; terminated
+103.0 Car1 Got a pump
+103.0 hold &lt;Car1&gt; delay: 100.0
+200.0 release &lt;Car4&gt; &lt;gasStation&gt; 
+. . .waitQ: [] 
+. . .activeQ: ['Car1']
+200.0 Car4 Leaving
+200.0 &lt;Car4&gt; terminated
+203.0 release &lt;Car1&gt; &lt;gasStation&gt; 
+. . .waitQ: [] 
+. . .activeQ: []
+203.0 Car1 Leaving
+203.0 &lt;Car1&gt; terminated
+Current time is  203.0
+
+</pre>
+<!-- $Revision: 1.1.2.12 $ $Date: 2008/03/15 04:23:17 $ -->
+<!-- .. image:: http://sourceforge.net/sflogo.php?group_id=62366&type=4
+   :width: 125
+   :alt:  SourceForge Logo
+   :height: 37 -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- some useful stuff used above -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- Local Variables:
+mode: rst
+indent-tabs-mode: nil
+sentence-end-double-space: t
+fill-column: 70
+End: -->
+</div>
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+<a class="reference" href="SManual.txt">View document source</a>.
+Generated on: 2008-03-15 00:25 UTC.
+Generated by <a class="reference" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
+
+</div>
+</body>
+</html>

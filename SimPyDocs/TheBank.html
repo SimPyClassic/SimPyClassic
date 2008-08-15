@@ -1,0 +1,1210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<title>The Bank: an example of a SimPy Simulation</title>
+<meta name="author" content="G A Vignaux" />
+<meta name="date" content="2007-12-18" />
+<style type="text/css">
+
+/*
+:Author: G A Vignaux
+:Contact: Tony Vignaux <Vignaux@users.sourceforge.net>
+:Copyright: This stylesheet has been placed in the public domain.
+:SimPy version: 1.8
+:Revision: $Revision: 1.1.1.17 $ 
+:Date: $Date: 2007/12/22 06:39:26 $
+
+Stylesheet for use with Docutils.  Based on the standard but 
+ensuring that computer listings are backed by grey.
+*/
+
+@import url(html4css1.css);
+
+/* Your customizations go here.  For example: */
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+</style>
+</head>
+<body>
+<div class="document" id="the-bank-an-example-of-a-simpy-simulation">
+<h1 class="title">The Bank: an example of a SimPy Simulation</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>G A Vignaux</td></tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>2007-12-18</td></tr>
+<tr><th class="docinfo-name">Revision:</th>
+<td>1.31</td></tr>
+</tbody>
+</table>
+<!-- .. image:: images/sm_SimPy_Logo.png
+:align: left -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- 2002 gav 079.131.13 -->
+<!-- $Author: vignaux $ -->
+<!-- $Revision: 1.1.1.17 $ -->
+<!-- $Date: 2007/12/22 06:39:26 $ -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<div class="contents topic">
+<p class="topic-title first"><a id="table-of-contents" name="table-of-contents">Table Of Contents</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#introduction" id="id3" name="id3">1&nbsp;&nbsp;&nbsp;Introduction</a><ul class="auto-toc">
+<li><a class="reference" href="#id1" id="id4" name="id4">1.1&nbsp;&nbsp;&nbsp;SimPy</a></li>
+<li><a class="reference" href="#python" id="id5" name="id5">1.2&nbsp;&nbsp;&nbsp;Python</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#the-bank" id="id6" name="id6">2&nbsp;&nbsp;&nbsp;The Bank</a><ul class="auto-toc">
+<li><a class="reference" href="#a-customer-arriving-at-a-fixed-time" id="id7" name="id7">2.1&nbsp;&nbsp;&nbsp;A Customer arriving at a fixed time</a></li>
+<li><a class="reference" href="#a-customer-arriving-at-random" id="id8" name="id8">2.2&nbsp;&nbsp;&nbsp;A Customer arriving at random</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#more-customers" id="id9" name="id9">3&nbsp;&nbsp;&nbsp;More Customers</a><ul class="auto-toc">
+<li><a class="reference" href="#many-customers" id="id10" name="id10">3.1&nbsp;&nbsp;&nbsp;Many Customers</a></li>
+<li><a class="reference" href="#many-random-customers" id="id11" name="id11">3.2&nbsp;&nbsp;&nbsp;Many Random Customers</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#a-service-counter" id="id12" name="id12">4&nbsp;&nbsp;&nbsp;A Service counter</a><ul class="auto-toc">
+<li><a class="reference" href="#one-service-counter" id="id13" name="id13">4.1&nbsp;&nbsp;&nbsp;One Service counter</a></li>
+<li><a class="reference" href="#a-server-with-a-random-service-time" id="id14" name="id14">4.2&nbsp;&nbsp;&nbsp;A server with a random service time</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#several-service-counters" id="id15" name="id15">5&nbsp;&nbsp;&nbsp;Several Service Counters</a><ul class="auto-toc">
+<li><a class="reference" href="#several-counters-but-a-single-queue" id="id16" name="id16">5.1&nbsp;&nbsp;&nbsp;Several Counters but a Single Queue</a></li>
+<li><a class="reference" href="#several-counters-with-individual-queues" id="id17" name="id17">5.2&nbsp;&nbsp;&nbsp;Several Counters with individual queues</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#monitors-and-gathering-statistics" id="id18" name="id18">6&nbsp;&nbsp;&nbsp;Monitors and Gathering Statistics</a><ul class="auto-toc">
+<li><a class="reference" href="#the-bank-with-a-monitor" id="id19" name="id19">6.1&nbsp;&nbsp;&nbsp;The Bank with a Monitor</a></li>
+<li><a class="reference" href="#multiple-runs" id="id20" name="id20">6.2&nbsp;&nbsp;&nbsp;Multiple runs</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#final-remarks" id="id21" name="id21">7&nbsp;&nbsp;&nbsp;Final Remarks</a></li>
+<li><a class="reference" href="#acknowledgements" id="id22" name="id22">8&nbsp;&nbsp;&nbsp;Acknowledgements</a></li>
+<li><a class="reference" href="#references" id="id23" name="id23">9&nbsp;&nbsp;&nbsp;References</a></li>
+</ul>
+</div>
+<!-- 1  Introduction
+  1.1  SimPy
+  1.2  Python
+2  The Bank
+  2.1  A Customer arriving at a fixed time
+  2.2  A Customer arriving at random
+3  More Customers
+  3.1  Many Customers
+  3.2  Many Random Customers
+4  A Service counter
+  4.1  One Service counter
+  4.2  A server with a random service time
+5  Several Service Counters
+  5.1  Several Counters but a Single Queue
+  5.2  Several Counters with individual queues
+6  Monitors and Gathering Statistics
+  6.1  The Bank with a Monitor
+  6.2  Multiple runs
+7  Final Remarks
+8  Acknowledgements
+9  References -->
+<div class="section">
+<h1><a class="toc-backref" href="#id3" id="introduction" name="introduction">1&nbsp;&nbsp;&nbsp;Introduction</a></h1>
+<p><a class="reference" href="http://simpy.sourceforge.net/">SimPy</a> is used to develop a simple simulation of a bank with a
+number of tellers.  This Python package provides <em>Processes</em> to model
+active components such as messages, customers, trucks, and planes. It
+has three classes to model facilities where congestion might occur:
+<em>Resources</em> for ordinary queues, <em>Levels</em> for the supply of quantities
+of material, and <em>Stores</em> for collections of individual items. Only
+examples of <em>Resources</em> are described here.</p>
+<p>SimPy also provides <em>Monitors</em> and <em>Tallys</em> to record data like queue
+lengths and delay times and to calculate simple averages.  It uses the
+standard Python random package to generate random numbers.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id4" id="id1" name="id1">1.1&nbsp;&nbsp;&nbsp;SimPy</a></h2>
+<p>SimPy can be obtained from: <a class="reference" href="http://sourceforge.net/projects/simpy">http://sourceforge.net/projects/simpy</a>.
+The examples run with SimPy version 1.5 and later.  This tutorial is
+best read with the SimPy <a class="reference" href="Manual.html">Manual</a> or <a class="reference" href="cheatsheet.html">Cheatsheet</a> at your side for
+reference. These are supplied with the distribution in both <tt class="docutils literal"><span class="pre">html</span></tt>
+and <tt class="docutils literal"><span class="pre">pdf</span></tt> formats.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id5" id="python" name="python">1.2&nbsp;&nbsp;&nbsp;Python</a></h2>
+<p>Before attempting to use SimPy you should be familiar with the <a class="reference" href="http://www.Python.org">Python</a>
+language. In particular you should be able to use <em>classes</em>. Python is
+free and available for most machine types. You can find out more about
+it at the <a class="reference" href="http://www.Python.org">Python web site</a>.  SimPy is compatible with Python version
+2.3 and later.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="the-bank" name="the-bank">2&nbsp;&nbsp;&nbsp;The Bank</a></h1>
+<p>In this tutorial we model a simple bank with customers arriving at
+random. We develop the model step-by-step, starting out simply, and
+producing a running program at each stage. The programs are available
+without line numbers and ready to go, in the <tt class="docutils literal"><span class="pre">bankprograms</span></tt>
+directory. Please copy them, run them and improve them - and in the
+tradition of open-source software suggest your modifications to the
+SimPy users list.</p>
+<p>A simulation should always be developed to answer a specific question;
+in these models we investigate how changing the number of bank servers
+or tellers affects the waiting time for customers.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id7" id="a-customer-arriving-at-a-fixed-time" name="a-customer-arriving-at-a-fixed-time">2.1&nbsp;&nbsp;&nbsp;A Customer arriving at a fixed time</a></h2>
+<p>We first model a single customer who arrives at the bank for a visit,
+looks around at the decor for a time and then leaves.  There is no
+queueing. First we will assume his arrival time and the time he spends
+in the bank are fixed.</p>
+<p>We define a <tt class="docutils literal"><span class="pre">Customer</span></tt> class derived from the SimPy <tt class="docutils literal"><span class="pre">Process</span></tt>
+class. We create a <tt class="docutils literal"><span class="pre">Customer</span></tt> object, <tt class="docutils literal"><span class="pre">c</span></tt> who arrives at the bank
+at simulation time <tt class="docutils literal"><span class="pre">5.0</span></tt> and leaves after a fixed time of <tt class="docutils literal"><span class="pre">10.0</span></tt>
+minutes.</p>
+<p>Examine the following listing which is a complete runnable Python
+script, except for the line numbers.  We use comments to divide the
+script up into sections. This makes for clarity later when the
+programs get more complicated.  Line 1 is a normal Python
+documentation string; line 2 imports the SimPy simulation code.</p>
+<p>The <tt class="docutils literal"><span class="pre">Customer</span></tt> class definition, lines 6-12, defines our
+customer class and has the required generator method (called
+<tt class="docutils literal"><span class="pre">visit</span></tt>) (line 9) having a <tt class="docutils literal"><span class="pre">yield</span></tt> statement (line
+11)). Such a method is called a Process Execution Method (PEM) in
+SimPy.</p>
+<p>The customer's <tt class="docutils literal"><span class="pre">visit</span></tt> PEM, lines 9-12, models his
+activities.  When he arrives (it will turn out to be a 'he' in this
+model), he will print out the simulation time, <tt class="docutils literal"><span class="pre">now()</span></tt>, and his name
+(line 10). The function <tt class="docutils literal"><span class="pre">now()</span></tt> can be used at any time in the
+simulation to find the current simulation time though it cannot be
+changed by the programmer. The customer's name will be set when the
+customer is created later in the script (line 22).</p>
+<p>He then stays in the bank for a fixed simulation time <tt class="docutils literal"><span class="pre">timeInBank</span></tt>
+(line 11).  This is achieved by the <tt class="docutils literal"><span class="pre">yield</span>
+<span class="pre">hold,self,timeInBank</span></tt> statement.  This is the first of the special
+simulation commands that <tt class="docutils literal"><span class="pre">SimPy</span></tt> offers.</p>
+<p>After a simulation time of <tt class="docutils literal"><span class="pre">timeInBank</span></tt>, the program's execution
+returns to the line after the <tt class="docutils literal"><span class="pre">yield</span></tt> statement, line 12. The
+customer then prints out the current simulation time and his
+name. This completes the declaration of the <tt class="docutils literal"><span class="pre">Customer</span></tt> class.</p>
+<p>Line 21 calls <tt class="docutils literal"><span class="pre">initialize()</span></tt> which sets up the simulation
+system ready to receive <tt class="docutils literal"><span class="pre">activate</span></tt> calls. In line 22, we create
+a customer, <tt class="docutils literal"><span class="pre">c</span></tt>, with name <tt class="docutils literal"><span class="pre">Klaus</span></tt>. All SimPy Processes have a
+<tt class="docutils literal"><span class="pre">name</span></tt> attribute. We <tt class="docutils literal"><span class="pre">activate</span></tt> <tt class="docutils literal"><span class="pre">Klaus</span></tt> in line 23
+specifying the object (<tt class="docutils literal"><span class="pre">c</span></tt>) to be activated, the call of the action
+routine (<tt class="docutils literal"><span class="pre">c.visit(timeInBank</span> <span class="pre">=</span> <span class="pre">10.0)</span></tt>) and that it is to be activated
+at time  5 (<tt class="docutils literal"><span class="pre">at</span> <span class="pre">=</span> <span class="pre">5.0</span></tt>). This will activate
+<tt class="docutils literal"><span class="pre">Klaus</span></tt> exactly <tt class="docutils literal"><span class="pre">5</span></tt> minutes after the current time, in this case
+after the start of the simulation at <tt class="docutils literal"><span class="pre">0.0</span></tt>. The call of an action
+routine such as <tt class="docutils literal"><span class="pre">c.visit</span></tt> can specify the values of arguments, here
+the <tt class="docutils literal"><span class="pre">timeInBank</span></tt>.</p>
+<p>Finally the call of <tt class="docutils literal"><span class="pre">simulate(until=maxTime)</span></tt> in line 24 will
+start the simulation. This will run until the simulation time is
+<tt class="docutils literal"><span class="pre">maxTime</span></tt> unless stopped beforehand either by the
+<tt class="docutils literal"><span class="pre">stopSimulation()</span></tt> command or by running out of events to execute
+(as will happen here). <tt class="docutils literal"><span class="pre">maxTime</span></tt> was set to <tt class="docutils literal"><span class="pre">100.0</span></tt> in line
+16.</p>
+<!-- Though we do not do it here, it is also possible to define an
+``__init__()`` method for a ``Process`` if you need to give the
+customer any attributes.  Bear in mind that such an ``__init__``
+method must first call ``Process.__init__(self)`` and can then
+initialize any instance variables needed. -->
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank01: The single non-random Customer &quot;&quot;&quot;           
+  2 from SimPy.Simulation import *                           
+  3 
+  4 ## Model components -----------------------------        
+  5 
+  6 class Customer(Process):                                 
+  7     &quot;&quot;&quot; Customer arrives, looks around and leaves &quot;&quot;&quot;
+  8         
+  9     def visit(self,timeInBank):                          
+ 10         print now(),self.name,&quot; Here I am&quot;               
+ 11         yield hold,self,timeInBank                       
+ 12         print now(),self.name,&quot; I must leave&quot;            
+ 13 
+ 14 ## Experiment data ------------------------------
+ 15 
+ 16 maxTime = 100.0     # minutes                            
+ 17 timeInBank = 10.0   # mean, minutes
+ 18 
+ 19 ## Model/Experiment ------------------------------
+ 20 
+ 21 initialize()                                             
+ 22 c = Customer(name=&quot;Klaus&quot;)                               
+ 23 activate(c,c.visit(timeInBank),at=5.0)                   
+ 24 simulate(until=maxTime)                                  
+
+</pre>
+<p>The short trace printed out by the <tt class="docutils literal"><span class="pre">print</span></tt> statements shows the
+result. The program finishes at simulation time <tt class="docutils literal"><span class="pre">15.0</span></tt> because there are
+no further events to be executed. At the end of the <tt class="docutils literal"><span class="pre">visit</span></tt> routine,
+the customer has no more actions and no other objects or customers are
+active.</p>
+<pre class="literal-block">
+5.0 Klaus  Here I am
+15.0 Klaus  I must leave
+
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id8" id="a-customer-arriving-at-random" name="a-customer-arriving-at-random">2.2&nbsp;&nbsp;&nbsp;A Customer arriving at random</a></h2>
+<p>Now we extend the model to allow our customer to arrive at a random
+simulated time though we will keep the time in the bank at 10.0, as
+before.</p>
+<p>The change occurs in line 3 of the program and in lines 22,
+25, and 26. In line 3 we import from the standard
+Python <tt class="docutils literal"><span class="pre">random</span></tt> module to give us <tt class="docutils literal"><span class="pre">expovariate</span></tt> to generate the
+random time of arrival. We also import the <tt class="docutils literal"><span class="pre">seed</span></tt> function to
+initialize the random number stream to allow control of the random
+numbers.  In line 22 we provide an initial seed of <tt class="docutils literal"><span class="pre">99999</span></tt>. An
+exponential random variate, <tt class="docutils literal"><span class="pre">t</span></tt>, is generated in line 25. Note
+that the Python Random module's <tt class="docutils literal"><span class="pre">expovariate</span></tt> function uses the rate
+(that is, <tt class="docutils literal"><span class="pre">1.0/mean</span></tt>) as the argument. The generated random variate,
+<tt class="docutils literal"><span class="pre">t</span></tt>, is used in Line 26 as the <tt class="docutils literal"><span class="pre">at</span></tt> argument to the
+<tt class="docutils literal"><span class="pre">activate</span></tt> call.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank05: The single Random Customer &quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 from random import expovariate, seed                     
+  4 
+  5 ## Model components ------------------------           
+  6 
+  7 class Customer(Process):
+  8     &quot;&quot;&quot; Customer arrives at a random time,
+  9         looks around  and then leaves &quot;&quot;&quot;
+ 10     
+ 11     def visit(self,timeInBank):       
+ 12         print now(), self.name,&quot; Here I am&quot;             
+ 13         yield hold,self,timeInBank
+ 14         print now(), self.name,&quot; I must leave&quot;          
+ 15 
+ 16 ## Experiment data -------------------------
+ 17 
+ 18 maxTime = 100.0    # minutes                                    
+ 19 timeInBank = 10.0
+ 20 ## Model/Experiment ------------------------------
+ 21 
+ 22 seed(99999)                                            
+ 23 initialize()
+ 24 c = Customer(name = &quot;Klaus&quot;)
+ 25 t = expovariate(1.0/5.0)                               
+ 26 activate(c,c.visit(timeInBank),at=t)                 
+ 27 simulate(until=maxTime)
+
+</pre>
+<p>The result is shown below. The customer now arrives at time
+10.5809. Changing the seed value would change that time.</p>
+<pre class="literal-block">
+10.5809228279 Klaus  Here I am
+20.5809228279 Klaus  I must leave
+
+</pre>
+<p>The display looks pretty untidy. In the next example I will try and
+make it tidier.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="more-customers" name="more-customers">3&nbsp;&nbsp;&nbsp;More Customers</a></h1>
+<p>Our simulation does little so far.  To consider a simulation with
+several customers we return to the simple deterministic model and add
+more <tt class="docutils literal"><span class="pre">Customers</span></tt>.</p>
+<p>The program is almost as easy as the first example (<a class="reference" href="#a-customer-arriving-at-a-fixed-time">A Customer
+arriving at a fixed time</a>). The main change is in lines
+22-27 where we create, name, and activate three
+customers. We also increase the maximum simulation time to <tt class="docutils literal"><span class="pre">400</span></tt>
+(line 16 and referred to in line 29). Observe that we need
+only one definition of the <tt class="docutils literal"><span class="pre">Customer</span></tt> class and create several
+objects of that class. These will act quite independently in this
+model.</p>
+<p>Each customer stays for a different <tt class="docutils literal"><span class="pre">timeinbank</span></tt> so, instead of
+setting a common value for this we set it for each customer. The
+customers are started at different times (using <tt class="docutils literal"><span class="pre">at=</span></tt>). <tt class="docutils literal"><span class="pre">Tony's</span></tt>
+activation time occurs before <tt class="docutils literal"><span class="pre">Klaus's</span></tt>, so <tt class="docutils literal"><span class="pre">Tony</span></tt> will arrive
+first even though his activation statement appears later in the
+script.</p>
+<p>As promised, the print statements have been changed to use Python
+string formatting (lines 10 and 12). The statements look
+complicated but the output is much nicer.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank02: More Customers &quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 
+  4 ## Model components ------------------------             
+  5 
+  6 class Customer(Process):
+  7     &quot;&quot;&quot; Customer arrives, looks around and leaves &quot;&quot;&quot;
+  8         
+  9     def visit(self,timeInBank=0):       
+ 10         print &quot;%7.4f %s: Here I am&quot;%(now(),self.name)   
+ 11         yield hold,self,timeInBank
+ 12         print &quot;%7.4f %s: I must leave&quot;%(now(),self.name) 
+ 13 
+ 14 ## Experiment data -------------------------
+ 15 
+ 16 maxTime = 400.0  # minutes                             
+ 17 
+ 18 ## Model/Experiment ------------------------------
+ 19 
+ 20 initialize()
+ 21 
+ 22 c1 = Customer(name=&quot;Klaus&quot;)                              
+ 23 activate(c1,c1.visit(timeInBank=10.0),at=5.0)
+ 24 c2 = Customer(name=&quot;Tony&quot;)
+ 25 activate(c2,c2.visit(timeInBank=7.0),at=2.0)
+ 26 c3 = Customer(name=&quot;Evelyn&quot;)
+ 27 activate(c3,c3.visit(timeInBank=20.0),at=12.0)         
+ 28 
+ 29 simulate(until=maxTime)                                
+
+</pre>
+<p>The trace produced by the program is shown below.  Again the
+simulation finishes before the <tt class="docutils literal"><span class="pre">400.0</span></tt> specified in the <tt class="docutils literal"><span class="pre">simulate</span></tt>
+call.</p>
+<pre class="literal-block">
+ 2.0000 Tony: Here I am
+ 5.0000 Klaus: Here I am
+ 9.0000 Tony: I must leave
+12.0000 Evelyn: Here I am
+15.0000 Klaus: I must leave
+32.0000 Evelyn: I must leave
+
+</pre>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<div class="section">
+<h2><a class="toc-backref" href="#id10" id="many-customers" name="many-customers">3.1&nbsp;&nbsp;&nbsp;Many Customers</a></h2>
+<p>Another change will allow us to have more customers. As it is
+tedious to give a specially chosen name to each one, we will
+call them <tt class="docutils literal"><span class="pre">Customer00,</span> <span class="pre">Customer01,...</span></tt> and use a separate
+<tt class="docutils literal"><span class="pre">Source</span></tt> class to create and activate them. To make things clearer
+we do not use the random numbers in this model.</p>
+<p>The following listing shows the new program. Lines 6-13
+define a <tt class="docutils literal"><span class="pre">Source</span></tt> class. Its PEM, here called <tt class="docutils literal"><span class="pre">generate</span></tt>, is
+defined in lines 9-13.  This PEM has a couple of arguments:
+the <tt class="docutils literal"><span class="pre">number</span></tt> of customers to be generated and the Time Between
+Arrivals, <tt class="docutils literal"><span class="pre">TBA</span></tt>. It consists of a loop that creates a sequence
+of numbered <tt class="docutils literal"><span class="pre">Customers</span></tt> from <tt class="docutils literal"><span class="pre">0</span></tt> to <tt class="docutils literal"><span class="pre">(number-1)</span></tt>, inclusive. We
+create a customer and give it a name in line 11. It is
+then activated at the current simulation time (the final argument of
+the <tt class="docutils literal"><span class="pre">activate</span></tt> statement is missing so that the default value of
+<tt class="docutils literal"><span class="pre">now()</span></tt> is used as the time). We also specify how long the customer
+is to stay in the bank. To keep it simple, all customers stay
+exactly <tt class="docutils literal"><span class="pre">12</span></tt> minutes.  After each new customer is activated, the
+<tt class="docutils literal"><span class="pre">Source</span></tt> holds for a fixed time (<tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold,self,TBA</span></tt>)
+before creating the next one (line 13).</p>
+<p>A <tt class="docutils literal"><span class="pre">Source</span></tt>, <tt class="docutils literal"><span class="pre">s</span></tt>, is created in line 32 and activated at line
+33 where the number of customers to be generated is set to
+<tt class="docutils literal"><span class="pre">maxNumber</span> <span class="pre">=</span> <span class="pre">5</span></tt> and the interval between customers to <tt class="docutils literal"><span class="pre">ARRint</span> <span class="pre">=</span>
+<span class="pre">10.0</span></tt>. Once started at time <tt class="docutils literal"><span class="pre">0.0</span></tt> it creates customers at intervals
+and each customer then operates independently of the others:</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank03: Many non-random Customers &quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 
+  4 ## Model components ------------------------
+  5 
+  6 class Source(Process):                              
+  7     &quot;&quot;&quot; Source generates customers regularly &quot;&quot;&quot;
+  8 
+  9     def generate(self,number,TBA):                  
+ 10         for i in range(number):
+ 11             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 12             activate(c,c.visit(timeInBank=12.0))
+ 13             yield hold,self,TBA                     
+ 14 
+ 15 class Customer(Process):
+ 16     &quot;&quot;&quot; Customer arrives, looks around and leaves &quot;&quot;&quot;
+ 17         
+ 18     def visit(self,timeInBank):       
+ 19         print &quot;%7.4f %s: Here I am&quot;%(now(),self.name)
+ 20         yield hold,self,timeInBank
+ 21         print &quot;%7.4f %s: I must leave&quot;%(now(),self.name)
+ 22 
+ 23 ## Experiment data -------------------------
+ 24 
+ 25 maxNumber = 5
+ 26 maxTime = 400.0 # minutes                                    
+ 27 ARRint = 10.0   # time between arrivals, minutes 
+ 28 
+ 29 ## Model/Experiment ------------------------------
+ 30 
+ 31 initialize()
+ 32 s = Source()                                             
+ 33 activate(s,s.generate(number=maxNumber,                   
+ 34                       TBA=ARRint),at=0.0)             
+ 35 simulate(until=maxTime)
+
+</pre>
+<p>The output is:</p>
+<pre class="literal-block">
+ 0.0000 Customer00: Here I am
+10.0000 Customer01: Here I am
+12.0000 Customer00: I must leave
+20.0000 Customer02: Here I am
+22.0000 Customer01: I must leave
+30.0000 Customer03: Here I am
+32.0000 Customer02: I must leave
+40.0000 Customer04: Here I am
+42.0000 Customer03: I must leave
+52.0000 Customer04: I must leave
+
+</pre>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id11" id="many-random-customers" name="many-random-customers">3.2&nbsp;&nbsp;&nbsp;Many Random Customers</a></h2>
+<p>We now extend this model to allow arrivals at random. In simulation this
+is usually interpreted as meaning that the times between customer
+arrivals are distributed as exponential random variates. There is
+little change in our program, we use a <tt class="docutils literal"><span class="pre">Source</span></tt> object, as before.</p>
+<p>The exponential random variate is generated in line 14 with
+<tt class="docutils literal"><span class="pre">meanTBA</span></tt> as the mean Time Between Arrivals and used in line
+15. Note that this parameter is not exactly intuitive. As already
+mentioned, the Python <tt class="docutils literal"><span class="pre">expovariate</span></tt> method uses the <em>rate</em> of
+arrivals as the parameter not the average interval between them. The
+exponential delay between two arrivals gives pseudo-random
+arrivals. In this model the first customer arrives at time <tt class="docutils literal"><span class="pre">0.0</span></tt>.</p>
+<p>The <tt class="docutils literal"><span class="pre">seed</span></tt> method is called to initialize the random number stream
+in the <tt class="docutils literal"><span class="pre">model</span></tt> routine (line 33).  It is possible to leave this
+call out but if we wish to do serious comparisons of systems, we must
+have control over the random variates and therefore control over the
+seeds. Then we can run identical models with different seeds or
+different models with identical seeds.  We provide the seeds as
+control parameters of the run. Here a seed is assigned in line 33
+but it is clear it could have been read in or manually entered on an
+input form.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank06: Many Random Customers &quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 from random import expovariate,seed            
+  4 
+  5 ## Model components ------------------------
+  6 
+  7 class Source(Process):
+  8     &quot;&quot;&quot; Source generates customers at random &quot;&quot;&quot;
+  9 
+ 10     def generate(self,number,meanTBA):       
+ 11         for i in range(number):
+ 12             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 13             activate(c,c.visit(timeInBank=12.0)) 
+ 14             t = expovariate(1.0/meanTBA)      
+ 15             yield hold,self,t                  
+ 16 
+ 17 class Customer(Process):
+ 18     &quot;&quot;&quot; Customer arrives, looks round and leaves &quot;&quot;&quot;
+ 19         
+ 20     def visit(self,timeInBank=0):       
+ 21         print &quot;%7.4f %s: Here I am&quot;%(now(),self.name)
+ 22         yield hold,self,timeInBank
+ 23         print &quot;%7.4f %s: I must leave&quot;%(now(),self.name)
+ 24 
+ 25 ## Experiment data -------------------------
+ 26 
+ 27 maxNumber = 5
+ 28 maxTime = 400.0 # minutes                                   
+ 29 ARRint = 10.0   # mean arrival interval, minutes  
+ 30 
+ 31 ## Model/Experiment ------------------------------
+ 32 
+ 33 seed(99999)                                    
+ 34 initialize()
+ 35 s = Source(name='Source')                      
+ 36 activate(s,s.generate(number=maxNumber,
+ 37                       meanTBA=ARRint),at=0.0)  
+ 38 simulate(until=maxTime)
+
+</pre>
+<p>with the following output:</p>
+<pre class="literal-block">
+ 0.0000 Customer00: Here I am
+12.0000 Customer00: I must leave
+21.1618 Customer01: Here I am
+32.8968 Customer02: Here I am
+33.1618 Customer01: I must leave
+33.3790 Customer03: Here I am
+36.3979 Customer04: Here I am
+44.8968 Customer02: I must leave
+45.3790 Customer03: I must leave
+48.3979 Customer04: I must leave
+
+</pre>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="a-service-counter" name="a-service-counter">4&nbsp;&nbsp;&nbsp;A Service counter</a></h1>
+<p>So far, the model has been more like an art gallery, the customers
+entering, looking around, and leaving. Now they are going to require
+service from the bank clerk. We extend the model to include a service
+counter which will be modelled as an object of SimPy's <tt class="docutils literal"><span class="pre">Resource</span></tt>
+class with a single resource unit.  The actions of a <tt class="docutils literal"><span class="pre">Resource</span></tt> are
+simple: a customer <tt class="docutils literal"><span class="pre">requests</span></tt> a unit of the resource (a clerk). If
+one is free he gets service (and removes the unit). If there is no
+free clerk the customer joins the queue (managed by the resource
+object) until it is their turn to be served. As each customer
+completes service and <tt class="docutils literal"><span class="pre">releases</span></tt> the unit, the clerk can start
+serving the next in line.</p>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<div class="section">
+<h2><a class="toc-backref" href="#id13" id="one-service-counter" name="one-service-counter">4.1&nbsp;&nbsp;&nbsp;One Service counter</a></h2>
+<p>The service counter is created as a <tt class="docutils literal"><span class="pre">Resource</span></tt> (<tt class="docutils literal"><span class="pre">k</span></tt>) in line
+38. This is provided as an argument to the <tt class="docutils literal"><span class="pre">Source</span></tt> (line
+45) which, in turn, provides it to each customer it creates and
+activates (line 14).</p>
+<p>The actions involving the <tt class="docutils literal"><span class="pre">counter</span></tt> in the customer's PEM are:</p>
+<ul class="simple">
+<li>the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">request</span></tt> statement in line 25. If the server is
+free then the customer can start service immediately and the code
+moves on to line  26. If the server is busy, the customer is
+automatically queued by the  Resource. When it eventually comes
+available the PEM moves on to line 26.</li>
+<li>the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold</span></tt> statement in line 28 where the operation of
+the service counter is modelled. Here the service time is a fixed
+<tt class="docutils literal"><span class="pre">timeInBank</span></tt>.  During this period the customer is being served.</li>
+<li>the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">release</span></tt> statement in line 29. The current
+customer completes service and the service counter becomes available
+for any remaining customers in the queue.</li>
+</ul>
+<p>Observe that the service counter is used with the pattern (<tt class="docutils literal"><span class="pre">yield</span>
+<span class="pre">request..</span></tt>; <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold..</span></tt>; <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">release..</span></tt>).</p>
+<p>To show the effect of the service counter on the activities of the
+customers, I have added line 22 to record when the customer
+arrived and line 26 to record the time between arrival in the
+bank and starting service. Line 26 is <em>after</em> the <tt class="docutils literal"><span class="pre">yield</span>
+<span class="pre">request</span></tt> command and will be reached only when the request is
+satisfied. It is <em>before</em> the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold</span></tt> that corresponds to the
+start of service. The variable <tt class="docutils literal"><span class="pre">wait</span></tt> will record how long the
+customer waited and will be 0 if he received service at once. This
+technique of saving the arrival time in a variable is common. So the
+<tt class="docutils literal"><span class="pre">print</span></tt> statement also prints out how long the customer waited in
+the bank before starting service.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank07: One Counter,random arrivals &quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 from random import expovariate, seed
+  4 
+  5 ## Model components ------------------------
+  6 
+  7 class Source(Process):
+  8     &quot;&quot;&quot; Source generates customers randomly &quot;&quot;&quot;
+  9 
+ 10     def generate(self,number,meanTBA,resource):     
+ 11         for i in range(number):
+ 12             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 13             activate(c,c.visit(timeInBank=12.0,
+ 14                                res=resource))          
+ 15             t = expovariate(1.0/meanTBA)
+ 16             yield hold,self,t
+ 17 
+ 18 class Customer(Process):
+ 19     &quot;&quot;&quot; Customer arrives, is served and  leaves &quot;&quot;&quot;
+ 20         
+ 21     def visit(self,timeInBank=0,res=None):       
+ 22         arrive = now()       # arrival time        
+ 23         print &quot;%8.3f %s: Here I am     &quot;%(now(),self.name)
+ 24 
+ 25         yield request,self,res                       
+ 26         wait = now()-arrive  # waiting time        
+ 27         print &quot;%8.3f %s: Waited %6.3f&quot;%(now(),self.name,wait)
+ 28         yield hold,self,timeInBank               
+ 29         yield release,self,res                     
+ 30         
+ 31         print &quot;%8.3f %s: Finished      &quot;%(now(),self.name)
+ 32 
+ 33 ## Experiment data -------------------------
+ 34 
+ 35 maxNumber = 5                                      
+ 36 maxTime = 400.0  # minutes                                
+ 37 ARRint = 10.0    # mean, minutes
+ 38 k = Resource(name=&quot;Counter&quot;,unitName=&quot;Clerk&quot;)     
+ 39 
+ 40 ## Model/Experiment ------------------------------
+ 41 seed(99999)
+ 42 initialize()
+ 43 s = Source('Source')
+ 44 activate(s,s.generate(number=maxNumber,            
+ 45                       meanTBA=ARRint, resource=k),at=0.0)        
+ 46 simulate(until=maxTime)
+
+</pre>
+<p>Examining the trace we see that the first two customers get instant service but the others
+have to wait. We still only have five customers (line 35) so we
+cannot draw general conclusions.</p>
+<pre class="literal-block">
+   0.000 Customer00: Here I am     
+   0.000 Customer00: Waited  0.000
+  12.000 Customer00: Finished      
+  21.162 Customer01: Here I am     
+  21.162 Customer01: Waited  0.000
+  32.897 Customer02: Here I am     
+  33.162 Customer01: Finished      
+  33.162 Customer02: Waited  0.265
+  33.379 Customer03: Here I am     
+  36.398 Customer04: Here I am     
+  45.162 Customer02: Finished      
+  45.162 Customer03: Waited 11.783
+  57.162 Customer03: Finished      
+  57.162 Customer04: Waited 20.764
+  69.162 Customer04: Finished      
+
+</pre>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id14" id="a-server-with-a-random-service-time" name="a-server-with-a-random-service-time">4.2&nbsp;&nbsp;&nbsp;A server with a random service time</a></h2>
+<p>This is a simple change to the model in that we retain the single
+service counter but make the customer service time a random variable. As
+is traditional in the study of simple queues we first assume an exponential service
+time and set the mean to <tt class="docutils literal"><span class="pre">timeInBank</span></tt>.</p>
+<p>The service time random variable, <tt class="docutils literal"><span class="pre">tib</span></tt>, is generated in line
+26 and used in line 27. The argument to be used in the call
+of <tt class="docutils literal"><span class="pre">expovariate</span></tt> is not the mean of the distribution,
+<tt class="docutils literal"><span class="pre">timeInBank</span></tt>, but is the rate <tt class="docutils literal"><span class="pre">1/timeInBank</span></tt>.</p>
+<p>We have also collected together a number of constants by defining a
+number of appropriate variables and giving them values. These are in
+lines 31 to 42.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank08: A counter with a random service time &quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 from random import expovariate, seed
+  4 
+  5 ## Model components ------------------------           
+  6 
+  7 class Source(Process):
+  8     &quot;&quot;&quot; Source generates customers randomly &quot;&quot;&quot;
+  9 
+ 10     def generate(self,number,meanTBA,resource):         
+ 11         for i in range(number):
+ 12             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 13             activate(c,c.visit(b=resource))              
+ 14             t = expovariate(1.0/meanTBA)               
+ 15             yield hold,self,t
+ 16 
+ 17 class Customer(Process):
+ 18     &quot;&quot;&quot; Customer arrives, is served and leaves &quot;&quot;&quot;
+ 19         
+ 20     def visit(self,b):                                
+ 21         arrive = now()
+ 22         print &quot;%8.4f %s: Here I am     &quot;%(now(),self.name)
+ 23         yield request,self,b                          
+ 24         wait = now()-arrive
+ 25         print &quot;%8.4f %s: Waited %6.3f&quot;%(now(),self.name,wait)
+ 26         tib = expovariate(1.0/timeInBank)            
+ 27         yield hold,self,tib                          
+ 28         yield release,self,b                         
+ 29         print &quot;%8.4f %s: Finished      &quot;%(now(),self.name)
+ 30 
+ 31 ## Experiment data -------------------------         
+ 32 
+ 33 maxNumber = 5
+ 34 maxTime = 400.0 # minutes                                     
+ 35 timeInBank=12.0 # mean, minutes                      
+ 36 ARRint = 10.0   # mean, minutes                      
+ 37 theseed= 12345                                       
+ 38 
+ 39 ## Model/Experiment ------------------------------
+ 40 
+ 41 seed(theseed)                                        
+ 42 k = Resource(name=&quot;Counter&quot;,unitName=&quot;Clerk&quot;)       
+ 43 
+ 44 initialize()
+ 45 s = Source('Source')
+ 46 activate(s,s.generate(number=maxNumber,meanTBA=ARRint, 
+ 47                       resource=k),at=0.0)           
+ 48 simulate(until=maxTime)
+
+</pre>
+<p>And the output:</p>
+<pre class="literal-block">
+  0.0000 Customer00: Here I am     
+  0.0000 Customer00: Waited  0.000
+  8.7558 Customer01: Here I am     
+ 10.6770 Customer02: Here I am     
+ 22.7622 Customer03: Here I am     
+ 32.7477 Customer04: Here I am     
+ 55.0607 Customer00: Finished      
+ 55.0607 Customer01: Waited 46.305
+ 61.8905 Customer01: Finished      
+ 61.8905 Customer02: Waited 51.213
+ 83.7556 Customer02: Finished      
+ 83.7556 Customer03: Waited 60.993
+108.7794 Customer03: Finished      
+108.7794 Customer04: Waited 76.032
+118.8254 Customer04: Finished      
+
+</pre>
+<p>This model with random arrivals and exponential service times is an
+example of an M/M/1 queue and could rather easily be solved
+analytically to calculate the steady-state mean waiting time and other
+operating characteristics. (But not so easily solved for its transient
+behavior.)</p>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id15" id="several-service-counters" name="several-service-counters">5&nbsp;&nbsp;&nbsp;Several Service Counters</a></h1>
+<p>When we introduce several counters we must decide on a queue
+discipline. Are customers going to make one queue or are they going to
+form separate queues in front of each counter? Then there are
+complications - will they be allowed to switch lines (jockey)? We
+first consider a single queue with several counters and later consider
+separate isolated queues. We will not look at jockeying.</p>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<div class="section">
+<h2><a class="toc-backref" href="#id16" id="several-counters-but-a-single-queue" name="several-counters-but-a-single-queue">5.1&nbsp;&nbsp;&nbsp;Several Counters but a Single Queue</a></h2>
+<p>Here we model a bank whos customers arrive randomly and are to be
+served at a group of counters, taking a random time for service, where
+we assume that waiting customers form a single first-in first-out
+queue.</p>
+<p>The <em>only</em> difference between this model and the single-server model
+is in line 42. We have provided two counters by increasing the
+capacity of the <tt class="docutils literal"><span class="pre">counter</span></tt> resource to 2. These <em>units</em> of the
+resource correspond to the two counters. Because both clerks cannot be
+called <tt class="docutils literal"><span class="pre">Karen</span></tt>, we have used a general name of <tt class="docutils literal"><span class="pre">Clerk</span></tt>.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank09: Several Counters but a Single Queue &quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 from random import expovariate, seed
+  4 
+  5 ## Model components ------------------------           
+  6 
+  7 class Source(Process):
+  8     &quot;&quot;&quot; Source generates customers randomly &quot;&quot;&quot;
+  9 
+ 10     def generate(self,number,meanTBA,resource):      
+ 11         for i in range(number):
+ 12             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 13             activate(c,c.visit(b=resource))            
+ 14             t = expovariate(1.0/meanTBA)              
+ 15             yield hold,self,t
+ 16 
+ 17 class Customer(Process):
+ 18     &quot;&quot;&quot; Customer arrives, is served and leaves &quot;&quot;&quot;
+ 19         
+ 20     def visit(self,b):                                
+ 21         arrive = now()
+ 22         print &quot;%8.4f %s: Here I am     &quot;%(now(),self.name)
+ 23         yield request,self,b                          
+ 24         wait = now()-arrive
+ 25         print &quot;%8.4f %s: Waited %6.3f&quot;%(now(),self.name,wait)
+ 26         tib = expovariate(1.0/timeInBank)            
+ 27         yield hold,self,tib                          
+ 28         yield release,self,b                         
+ 29         print &quot;%8.4f %s: Finished      &quot;%(now(),self.name)
+ 30 
+ 31 ## Experiment data -------------------------         
+ 32 
+ 33 maxNumber = 5
+ 34 maxTime = 400.0 # minutes                                      
+ 35 timeInBank = 12.0 # mean, minutes                      
+ 36 ARRint = 10.0   # mean, minutes                      
+ 37 theseed = 12345                                        
+ 38 
+ 39 ## Model/Experiment ------------------------------
+ 40 
+ 41 seed(theseed)                                        
+ 42 k = Resource(capacity=2,name=&quot;Counter&quot;,unitName=&quot;Clerk&quot;)  
+ 43 
+ 44 initialize()
+ 45 s = Source('Source')
+ 46 activate(s, s.generate(number=maxNumber,meanTBA=ARRint, 
+ 47                          resource=k),at=0.0)           
+ 48 simulate(until=maxTime)
+
+</pre>
+<p>The waiting times in this model are much shorter than those for the
+single service counter. For example, the waiting time for
+<tt class="docutils literal"><span class="pre">Customer02</span></tt> has been reduced from <tt class="docutils literal"><span class="pre">51.213</span></tt> to <tt class="docutils literal"><span class="pre">12.581</span></tt>
+minutes. Again we have too few customers processed to draw general
+conclusions.</p>
+<pre class="literal-block">
+  0.0000 Customer00: Here I am     
+  0.0000 Customer00: Waited  0.000
+  8.7558 Customer01: Here I am     
+  8.7558 Customer01: Waited  0.000
+ 10.6770 Customer02: Here I am     
+ 20.6626 Customer03: Here I am     
+ 23.2580 Customer01: Finished      
+ 23.2580 Customer02: Waited 12.581
+ 30.0878 Customer02: Finished      
+ 30.0878 Customer03: Waited  9.425
+ 37.0790 Customer04: Here I am     
+ 51.9528 Customer03: Finished      
+ 51.9528 Customer04: Waited 14.874
+ 55.0607 Customer00: Finished      
+ 61.9988 Customer04: Finished      
+
+</pre>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id17" id="several-counters-with-individual-queues" name="several-counters-with-individual-queues">5.2&nbsp;&nbsp;&nbsp;Several Counters with individual queues</a></h2>
+<p>Each counter is now assumed to have its own queue.  The programming is
+more complicated because the customer has to decide which queue to
+join. The obvious technique is to make each counter a separate
+resource and it is useful to make a list of resource objects (line
+56).</p>
+<p>In practice, a customer will join the shortest queue.  So we define
+the Python function, <tt class="docutils literal"><span class="pre">NoInSystem(R)</span></tt> (lines 17-19) which
+returns the sum of the number waiting and the number being served for
+a particular counter, <tt class="docutils literal"><span class="pre">R</span></tt>. This function is used in line 28 to
+list the numbers at each counter. It is then easy to find which
+counter the arriving customer should join. We have also modified the
+trace printout, line 29 to display the state of the system when
+the customer arrives. We choose the shortest queue in lines
+30-32 (the variable <tt class="docutils literal"><span class="pre">choice</span></tt>).</p>
+<p>The rest of the program is the same as before.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank10: Several Counters with individual queues&quot;&quot;&quot;
+  2 from SimPy.Simulation import *
+  3 from random import expovariate,seed
+  4 
+  5 ## Model components ------------------------
+  6 
+  7 class Source(Process):
+  8     &quot;&quot;&quot; Source generates customers randomly&quot;&quot;&quot;
+  9 
+ 10     def generate(self,number,interval,counters):                   
+ 11         for i in range(number):
+ 12             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 13             activate(c,c.visit(counters))
+ 14             t = expovariate(1.0/interval)
+ 15             yield hold,self,t
+ 16 
+ 17 def NoInSystem(R):                                                  
+ 18     &quot;&quot;&quot; Total number of customers in the resource R&quot;&quot;&quot;
+ 19     return (len(R.waitQ)+len(R.activeQ))                            
+ 20 
+ 21 class Customer(Process):
+ 22     &quot;&quot;&quot; Customer arrives, chooses the shortest queue
+ 23         is served and leaves
+ 24     &quot;&quot;&quot;
+ 25         
+ 26     def visit(self,counters):       
+ 27         arrive = now()
+ 28         Qlength = [NoInSystem(counters[i]) for i in range(Nc)]      
+ 29         print &quot;%7.4f %s: Here I am. %s&quot;%(now(),self.name,Qlength)   
+ 30         for i in range(Nc):                                         
+ 31             if Qlength[i] == 0 or Qlength[i] == min(Qlength):
+ 32                 choice = i  # the chosen queue number                
+ 33                 break
+ 34                 
+ 35         yield request,self,counters[choice]
+ 36         wait = now()-arrive
+ 37         print &quot;%7.4f %s: Waited %6.3f&quot;%(now(),self.name,wait)
+ 38         tib = expovariate(1.0/timeInBank)
+ 39         yield hold,self,tib
+ 40         yield release,self,counters[choice]
+ 41 
+ 42         print &quot;%7.4f %s: Finished&quot;%(now(),self.name)
+ 43 
+ 44 ## Experiment data -------------------------
+ 45 
+ 46 maxNumber = 5
+ 47 maxTime = 400.0 # minutes                                     
+ 48 timeInBank = 12.0 # mean, minutes                          
+ 49 ARRint = 10.0   # mean, minutes                          
+ 50 Nc = 2          # number of counters
+ 51 theseed = 12345                                           
+ 52                                     
+ 53 ## Model/Experiment ------------------------------
+ 54 
+ 55 seed(theseed)
+ 56 kk = [Resource(name=&quot;Clerk0&quot;),Resource(name=&quot;Clerk1&quot;)]   
+ 57 initialize()    
+ 58 s = Source('Source')
+ 59 activate(s,s.generate(number=maxNumber,interval=ARRint,
+ 60                       counters=kk),at=0.0)
+ 61 simulate(until=maxTime)
+
+</pre>
+<p>The results show how the customers choose the counter with the
+smallest number. Unlucky <tt class="docutils literal"><span class="pre">Customer02</span></tt> who joins the wrong queue has
+to wait until <tt class="docutils literal"><span class="pre">Customer00</span></tt> finishes at time <tt class="docutils literal"><span class="pre">55.067</span></tt>. There are,
+however, too few arrivals in these runs, limited as they are to five
+customers, to draw any general conclusions about the relative
+efficiencies of the two systems.</p>
+<pre class="literal-block">
+ 0.0000 Customer00: Here I am. [0, 0]
+ 0.0000 Customer00: Waited  0.000
+ 8.7558 Customer01: Here I am. [1, 0]
+ 8.7558 Customer01: Waited  0.000
+10.6770 Customer02: Here I am. [1, 1]
+20.6626 Customer03: Here I am. [2, 1]
+23.2580 Customer01: Finished
+23.2580 Customer03: Waited  2.595
+30.0878 Customer03: Finished
+37.0790 Customer04: Here I am. [2, 0]
+37.0790 Customer04: Waited  0.000
+55.0607 Customer00: Finished
+55.0607 Customer02: Waited 44.384
+62.1029 Customer04: Finished
+65.1067 Customer02: Finished
+
+</pre>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id18" id="monitors-and-gathering-statistics" name="monitors-and-gathering-statistics">6&nbsp;&nbsp;&nbsp;Monitors and Gathering Statistics</a></h1>
+<p>The traces of output that have been displayed so far are valuable for
+checking that the simulation is operating correctly but would become
+too much if we simulate a whole day. We do need to get results from
+our simulation to answer the original questions. What, then, is the
+best way to summarize the results?</p>
+<p>One way is to analyze the traces elsewhere, piping the trace output,
+or a modified version of it, into a <em>real</em> statistical program such as
+<em>R</em> for statistical analysis, or into a file for later examination by
+a spreadsheet. We do not have space to examine this thoroughly here.
+Another way of presenting the results is to provide graphical
+output.</p>
+<p>SimPy offers an easy way to gather a few simple statistics such as
+averages: the <tt class="docutils literal"><span class="pre">Monitor</span></tt> and <tt class="docutils literal"><span class="pre">Tally</span></tt> classes. The <tt class="docutils literal"><span class="pre">Monitor</span></tt>
+records the values of chosen variables as time series.
+(but see the comments in <a class="reference" href="#final-remarks">Final Remarks</a>).</p>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<div class="section">
+<h2><a class="toc-backref" href="#id19" id="the-bank-with-a-monitor" name="the-bank-with-a-monitor">6.1&nbsp;&nbsp;&nbsp;The Bank with a Monitor</a></h2>
+<p>We now demonstrate a <tt class="docutils literal"><span class="pre">Monitor</span></tt> that records the average waiting
+times for our customers. We return to the system with random arrivals,
+random service times and a single queue and remove the old trace
+statements.  In practice, we would make the printouts controlled by a
+variable, say, <tt class="docutils literal"><span class="pre">TRACE</span></tt> which is set in the experimental data (or
+read in as a program option - but that is a different story). This
+would aid in debugging and would not complicate the data analysis. We
+will run the simulations for many more arrivals.</p>
+<p>A Monitor, <tt class="docutils literal"><span class="pre">wM</span></tt>, is created in line 42. It <tt class="docutils literal"><span class="pre">observes</span></tt> the
+waiting time mentioned in line 24.  We run
+<tt class="docutils literal"><span class="pre">maxNumber=50</span></tt> customers (in the call of <tt class="docutils literal"><span class="pre">generate</span></tt> in line
+45) and have increased <tt class="docutils literal"><span class="pre">maxTime</span></tt> to <tt class="docutils literal"><span class="pre">1000</span></tt> minutes.</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank11: The bank with a Monitor&quot;&quot;&quot;
+  2 from SimPy.Simulation import *                          
+  3 from random import expovariate,seed
+  4 
+  5 ## Model components ------------------------
+  6 
+  7 class Source(Process):
+  8     &quot;&quot;&quot; Source generates customers randomly&quot;&quot;&quot;
+  9 
+ 10     def generate(self,number,interval,resource):       
+ 11         for i in range(number):
+ 12             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 13             activate(c,c.visit(b=resource))
+ 14             t = expovariate(1.0/interval)
+ 15             yield hold,self,t
+ 16 
+ 17 class Customer(Process):
+ 18     &quot;&quot;&quot; Customer arrives, is served and leaves &quot;&quot;&quot;
+ 19         
+ 20     def visit(self,b):       
+ 21         arrive = now()
+ 22         yield request,self,b
+ 23         wait = now()-arrive                       
+ 24         wM.observe(wait)                        
+ 25         tib = expovariate(1.0/timeInBank)
+ 26         yield hold,self,tib
+ 27         yield release,self,b
+ 28 
+ 29 ## Experiment data -------------------------
+ 30 
+ 31 maxNumber = 50
+ 32 maxTime = 1000.0 # minutes                                      
+ 33 timeInBank = 12.0  # mean, minutes                          
+ 34 ARRint = 10.0    # mean, minutes                          
+ 35 Nc = 2           # number of counters
+ 36 theseed = 12345                                            
+ 37                                      
+ 38 ## Model/Experiment   ----------------------
+ 39 
+ 40 seed(theseed)
+ 41 k = Resource(capacity=Nc,name=&quot;Clerk&quot;)                     
+ 42 wM = Monitor()                                             
+ 43 initialize()    
+ 44 s = Source('Source')
+ 45 activate(s,s.generate(number=maxNumber,interval=ARRint,   
+ 46                       resource=k),at=0.0)
+ 47 simulate(until=maxTime)                                    
+ 48 
+ 49 ## Result  ----------------------------------
+ 50 
+ 51 result = wM.count(),wM.mean()                             
+ 52 print &quot;Average wait for %3d completions was %5.3f minutes.&quot;% result 
+
+</pre>
+<p>The average waiting time for 50 customers in this 2-counter system is
+more reliable (i.e., less subject to random simulation effects) than
+the times we measured before but it is still not sufficiently reliable for
+real-world decisions. We should also replicate the runs using different
+random number seeds. The result of this run is:</p>
+<pre class="literal-block">
+Average wait for  50 completions was 2.466 minutes.
+
+</pre>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id20" id="multiple-runs" name="multiple-runs">6.2&nbsp;&nbsp;&nbsp;Multiple runs</a></h2>
+<p>To get a number of independent measurements we must replicate the runs
+using different random number seeds. Each replication must be
+independent of previous ones so the Monitor and Resources must be
+redefined for each run. We can no longer allow them to be global
+objects as we have before.</p>
+<p>We will define a function, <tt class="docutils literal"><span class="pre">model</span></tt> with a parameter <tt class="docutils literal"><span class="pre">runSeed</span></tt> so
+that the random number seed can be different for different runs (lines
+40-50). The contents of the function are the same as the
+<tt class="docutils literal"><span class="pre">Model/Experiment</span></tt> section in the previous program except for one
+vital change.</p>
+<p>This is required since the Monitor, <tt class="docutils literal"><span class="pre">wM</span></tt>, is defined inside the
+<tt class="docutils literal"><span class="pre">model</span></tt> function (line 43). A customer can no longer refer to
+it. In the spirit of quality computer programming we will pass <tt class="docutils literal"><span class="pre">wM</span></tt>
+as a function argument. Unfortunately we have to do this in two steps,
+first to the <tt class="docutils literal"><span class="pre">Source</span></tt> (line 48) and then from the <tt class="docutils literal"><span class="pre">Source</span></tt> to
+the <tt class="docutils literal"><span class="pre">Customer</span></tt> (line 13).</p>
+<p><tt class="docutils literal"><span class="pre">model()</span></tt> is run for four different random-number seeds to get a set
+of replications (lines 54-57).</p>
+<pre class="literal-block">
+  1 &quot;&quot;&quot; bank12: Multiple runs of the bank with a Monitor&quot;&quot;&quot; 
+  2 from SimPy.Simulation import * 
+  3 from random import expovariate,seed
+  4 
+  5 ## Model components ------------------------
+  6 
+  7 class Source(Process):
+  8     &quot;&quot;&quot; Source generates customers randomly&quot;&quot;&quot;
+  9 
+ 10     def generate(self,number,interval,resource,mon):       
+ 11         for i in range(number):
+ 12             c = Customer(name = &quot;Customer%02d&quot;%(i,))
+ 13             activate(c,c.visit(b=resource,M=mon))          
+ 14             t = expovariate(1.0/interval)
+ 15             yield hold,self,t
+ 16 
+ 17 class Customer(Process):
+ 18     &quot;&quot;&quot; Customer arrives, is served and leaves &quot;&quot;&quot;
+ 19         
+ 20     def visit(self,b,M):       
+ 21         arrive = now()
+ 22         yield request,self,b
+ 23         wait = now()-arrive
+ 24         M.observe(wait)                                
+ 25         tib = expovariate(1.0/timeInBank)
+ 26         yield hold,self,tib
+ 27         yield release,self,b
+ 28  
+ 29 ## Experiment data -------------------------
+ 30 
+ 31 maxNumber = 50
+ 32 maxTime = 2000.0  # minutes                                    
+ 33 timeInBank = 12.0   # mean, minutes
+ 34 ARRint = 10.0     # mean, minutes
+ 35 Nc = 2            # number of counters
+ 36 theSeed = 393939
+ 37 
+ 38 ## Model  ----------------------------------
+ 39 
+ 40 def model(runSeed=theSeed):                            
+ 41     seed(runSeed)
+ 42     k = Resource(capacity=Nc,name=&quot;Clerk&quot;)  
+ 43     wM = Monitor()                                   
+ 44 
+ 45     initialize()
+ 46     s = Source('Source')
+ 47     activate(s,s.generate(number=maxNumber,interval=ARRint, 
+ 48                           resource=k,mon=wM),at=0.0)         
+ 49     simulate(until=maxTime)
+ 50     return (wM.count(),wM.mean())                     
+ 51 
+ 52 ## Experiment/Result  ----------------------------------
+ 53 
+ 54 theseeds = [393939,31555999,777999555,319999771]         
+ 55 for Sd in theseeds:
+ 56     result = model(Sd)
+ 57     print &quot;Average wait for %3d completions was %6.2f minutes.&quot;% result  
+
+</pre>
+<p>The results show some variation. Remember, though, that the system is still
+only operating for 50 customers so the system may not be in
+steady-state.</p>
+<pre class="literal-block">
+Average wait for  50 completions was   2.75 minutes.
+Average wait for  50 completions was   6.01 minutes.
+Average wait for  50 completions was   5.53 minutes.
+Average wait for  50 completions was   3.76 minutes.
+
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id21" id="final-remarks" name="final-remarks">7&nbsp;&nbsp;&nbsp;Final Remarks</a></h1>
+<p>This introduction is too long and the examples are getting
+longer. There is much more to say about simulation with <em>SimPy</em> but no
+space. I finish with a list of topics for further study:</p>
+<ul class="simple">
+<li><strong>GUI input</strong>. Graphical input of simulation parameters could be an
+advantage in some cases. <em>SimPy</em> allows this and programs using
+these facilities have been developed (see, for example, program
+<tt class="docutils literal"><span class="pre">MM1.py</span></tt> in the examples in the <em>SimPy</em> distribution)</li>
+<li><strong>Graphical Output</strong>. Similarly, graphical output of results can
+also be of value, not least in debugging simulation programs and
+checking for steady-state conditions. SimPlot is useful here.</li>
+<li><strong>Statistical Output</strong>. The <tt class="docutils literal"><span class="pre">Monitor</span></tt> class is useful in
+presenting results but more powerful methods of analysis are often
+needed. One solution is to output a trace and read that into a
+large-scale statistical system such as <em>R</em>.</li>
+<li><strong>Priorities and Reneging in queues</strong>. <em>SimPy</em> allows processes to
+request units of resources under a priority queue discipline
+(preemptive or not). It also allows processes to renege from a queue.</li>
+<li><strong>Other forms of Resource Facilities</strong>. <em>SimPy</em> has two other
+resource structures: <tt class="docutils literal"><span class="pre">Levels</span></tt> to hold bulk commodities, and
+<tt class="docutils literal"><span class="pre">Stores</span></tt>   to contain an inventory of different object types.</li>
+<li><strong>Advanced synchronization/scheduling commands</strong>. <em>SimPy</em> allows
+process synchronization by events and signals.</li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id22" id="acknowledgements" name="acknowledgements">8&nbsp;&nbsp;&nbsp;Acknowledgements</a></h1>
+<p>I thank Klaus Muller, Bob Helmbold, Mukhlis Matti and other developers
+and users of SimPy for improving this document by sending their
+comments. I would be grateful for further suggestions or
+corrections. Please send them to: <em>vignaux</em> at
+<em>users.sourceforge.net</em>.</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id23" id="references" name="references">9&nbsp;&nbsp;&nbsp;References</a></h1>
+<ul class="simple">
+<li>Python website: <a class="reference" href="http://www.Python.org">http://www.Python.org</a></li>
+<li>SimPy website: <a class="reference" href="http://sourceforge.net/projects/simpy">http://sourceforge.net/projects/simpy</a></li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">Document Version:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">$Revision: 1.1.1.17 $</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body">$Date: 2007/12/22 06:39:26 $</td>
+</tr>
+</tbody>
+</table>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- Local Variables:
+mode: rst
+indent-tabs-mode: nil
+sentence-end-double-space: t
+fill-column: 70
+End: -->
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+<a class="reference" href="TheBank.txt">View document source</a>.
+Generated on: 2007-12-19 22:07 UTC.
+Generated by <a class="reference" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
+
+</div>
+</body>
+</html>

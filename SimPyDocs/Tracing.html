@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2007/12/16 13:27:30 $
+:Revision: $Revision: 1.1.1.9 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<img align="left" alt="images/sm_SimPy_Logo.png" class="align-left" src="images/sm_SimPy_Logo.png" />
+<div class="section">
+<h1><a id="simpy-tracing-utility-manual" name="simpy-tracing-utility-manual">SimPy Tracing Utility Manual</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Authors:</th><td class="field-body"><ul class="first simple">
+<li>Klaus Muller &lt;<a class="reference" href="mailto:Muller&#64;users.sourceforge.net">Muller&#64;users.sourceforge.net</a>&gt;</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">SimPy version:</th><td class="field-body"><p class="first">1.9</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Web-site:</th><td class="field-body"><p class="first"><a class="reference" href="http://simpy.sourceforge.net/">http://simpy.sourceforge.net/</a></p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Python-Version:</th><td class="field-body"><p class="first">2.3, 2.4, 2.5</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Revision:</th><td class="field-body"><p class="first">$Revision: 1.1.1.9 $</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body"><p class="first last">$Date: 2007/12/16 13:27:30 $</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="section">
+<h2><a id="introduction" name="introduction">Introduction</a></h2>
+<p>The tracing utility has been developed to give users insight into the
+dynamics of the execution of SimPy simulation programs. It can help
+developers with testing and users with explaining SimPy models to themselves
+and others (e.g. for documentation or teaching purposes).</p>
+</div>
+<div class="section">
+<h2><a id="tracing-simpy-programs" name="tracing-simpy-programs">Tracing <em>SimPy</em> programs</a></h2>
+<p>Tracing any <em>SimPy</em> program is as simple as replacing:</p>
+<pre class="literal-block">
+from SimPy.Simulation import *
+</pre>
+<p>with:</p>
+<pre class="literal-block">
+from SimPy.SimulationTrace import *
+</pre>
+<p>This will give a complete trace of all the scheduling statements
+executed during the program's execution.</p>
+<p>An even nicer way is to replace this import by:</p>
+<pre class="literal-block">
+if __debug__:
+        from SimPy.SimulationTrace import *
+else:
+        from SimPy.Simulation import *
+</pre>
+<p>This gives a trace during the development and debugging. If one then
+executes the program with
+<em>python -O myprog.py</em>, tracing is switched off, and no run-time
+overhead is incurred. (<em>__debug__</em> is a
+global Python constant which is set to False by commandline options -O
+and -OO.)</p>
+<p>For the same reason, any user call to <em>trace</em> methods should be written
+as:</p>
+<pre class="literal-block">
+if __debug__:
+        trace.ttext(&quot;This will only show during debugging&quot;)
+</pre>
+<p>Here is an example (bank02.py from the Bank Tutorial):</p>
+<!-- - - - - - - -example- - - - - - - - - - - -
+      #!/usr/bin/env python
+      """ Simulate a single customer """
+      from __future__ import generators
+      ##from SimPy.Simulation import *
+      from SimPy.SimulationTrace import * #   <== changed for tracing
+
+      class Customer(Process):
+         """ Customer arrives, looks around and leaves """
+         def __init__(self,name):
+          Process.__init__(self)
+          self.name = name
+
+         def visit(self,timeInBank=0):
+          print "%7.4f %s: Here I am"%(now(),self.name)
+              yield hold,self,timeInBank
+              print "%7.4f %s: I must leave"%(now(),self.name)
+
+         def model():
+              initialize()
+              c1=Customer(name="Klaus")
+              activate(c1,c1.visit(timeInBank=10.0),delay=5.0)
+              c2=Customer(name="Tony")
+              activate(c2,c2.visit(timeInBank=8.0),delay=2.0)
+              c3=Customer(name="Evelyn")
+          activate(c3,c3.visit(timeInBank=20.0),delay=12.0)
+          simulate(until=400.0)
+
+     model()
+
+     Produces this output:
+
+0 activate <Klaus> at time: 5.0 prior: 0
+0 activate <Tony> at time: 2.0 prior: 0
+0 activate <Evelyn> at time: 12.0 prior: 0
+ 2.0000 Tony: Here I am
+2.0 hold <Tony> delay: 8.0
+ 5.0000 Klaus: Here I am
+5.0 hold <Klaus> delay: 10.0
+10.0000 Tony: I must leave
+10.0 <Tony> terminated
+12.0000 Evelyn: Here I am
+12.0 hold <Evelyn> delay: 20.0
+15.0000 Klaus: I must leave
+15.0 <Klaus> terminated
+32.0000 Evelyn: I must leave
+32.0 <Evelyn> terminated -->
+<!-- - - - - - - -example- - - - - - - - - - - - -->
+<p>Another example:</p>
+<pre class="literal-block">
+#!/usr/bin/env python
+&quot;&quot;&quot; bank09.py: Simulate customers arriving
+    at random, using a Source requesting service
+    from several clerks but a single queue
+    with a random servicetime
+&quot;&quot;&quot;
+from __future__ import generators
+from SimPy.SimulationTrace  import *
+from random import Random
+
+class Source(Process):
+    &quot;&quot;&quot; Source generates customers randomly&quot;&quot;&quot;
+    def __init__(self,seed=333):
+        Process.__init__(self)
+        self.SEED = seed
+
+    def generate(self,number,interval):
+        rv = Random(self.SEED)
+        for i in range(number):
+            c = Customer(name = &quot;Customer%02d&quot;%(i,))
+            activate(c,c.visit(timeInBank=12.0))
+            t = rv.expovariate(1.0/interval)
+            yield hold,self,t
+
+class Customer(Process):
+    &quot;&quot;&quot; Customer arrives, is served and leaves &quot;&quot;&quot;
+    def __init__(self,name):
+        Process.__init__(self)
+        self.name = name
+
+    def visit(self,timeInBank=0):
+        arrive=now()
+        print &quot;%7.4f %s: Here I am &quot;%(now(),self.name)
+        yield request,self,counter
+        wait=now()-arrive
+        print &quot;%7.4f %s: Waited %6.3f&quot;%(now(),self.name,wait)
+        tib = counterRV.expovariate(1.0/timeInBank)
+        yield hold,self,tib
+        yield release,self,counter
+        print &quot;%7.4f %s: Finished&quot;%(now(),self.name)
+
+def model(counterseed=3939393):
+    global counter,counterRV
+    counter = Resource(name=&quot;Clerk&quot;,capacity = 2) #Lcapacity
+    counterRV = Random(counterseed)
+    initialize()
+    sourceseed = 1133
+    source = Source(seed = sourceseed)
+    activate(source,source.generate(5,10.0),0.0)
+    simulate(until=400.0)
+
+model()
+
+This produces:
+  0 activate &lt;a_process&gt; at time: 0 prior: 0
+0 activate &lt;Customer00&gt; at time: 0 prior: 0
+0 hold &lt;a_process&gt; delay: 8.73140489458
+ 0.0000 Customer00: Here I am
+0 request &lt;Customer00&gt; &lt;Clerk&gt;  priority: default
+. . .waitQ: []
+. . .activeQ: ['Customer00']
+ 0.0000 Customer00: Waited  0.000
+0 hold &lt;Customer00&gt; delay: 8.90355092634
+8.73140489458 activate &lt;Customer01&gt; at time: 8.73140489458 prior: 0
+8.73140489458 hold &lt;a_process&gt; delay: 8.76709801376
+ 8.7314 Customer01: Here I am
+8.73140489458 request &lt;Customer01&gt; &lt;Clerk&gt;  priority: default
+. . .waitQ: []
+. . .activeQ: ['Customer00', 'Customer01']
+ 8.7314 Customer01: Waited  0.000
+8.73140489458 hold &lt;Customer01&gt; delay: 21.6676883425
+8.90355092634 release &lt;Customer00&gt; &lt;Clerk&gt;
+. . .waitQ: []
+. . .activeQ: ['Customer01']
+ 8.9036 Customer00: Finished
+8.90355092634 &lt;Customer00&gt; terminated
+17.4985029083 activate &lt;Customer02&gt; at time: 17.4985029083 prior: 0
+
+. . . . .
+</pre>
+<p>And here is an example showing the trace output for compound yield statements:</p>
+<pre class="literal-block">
+from SimPy.SimulationTrace import *
+class Client(Process):
+    def __init__(self,name):
+        Process.__init__(self,name)
+    def getServed(self,tank):
+        yield (get,self,tank,10),(hold,self,1.5)
+        if self.acquired(tank):
+            print &quot;%s got 10 %s&quot;%(self.name,tank.unitName)
+        else:
+            print &quot;%s reneged&quot;%self.name
+class Filler(Process):
+    def __init__(self,name):
+        Process.__init__(self,name)
+    def fill(self,tank):
+        for i in range(3):
+            yield hold,self,1
+            yield put,self,tank,10
+initialize()
+tank=Level(name=&quot;Tank&quot;,unitName=&quot;gallons&quot;)
+for i in range(2):
+    c=Client(&quot;Client %s&quot;%i)
+    activate(c,c.getServed(tank))
+f=Filler(&quot;Tanker&quot;)
+activate(f,f.fill(tank))
+simulate(until=10)
+</pre>
+<p>It produces this output:</p>
+<pre class="literal-block">
+0 get &lt;Client 0&gt;to get: 10 gallons from &lt;Tank&gt;  priority: default
+. . .getQ: ['Client 0']
+. . .putQ: []
+. . .in buffer: 0
+|| RENEGE COMMAND:
+||  hold &lt;Client 0&gt; delay: 1.5
+0 get &lt;Client 1&gt;to get: 10 gallons from &lt;Tank&gt;  priority: default
+. . .getQ: ['Client 0', 'Client 1']
+. . .putQ: []
+. . .in buffer: 0
+|| RENEGE COMMAND:
+||  hold &lt;Client 1&gt; delay: 1.5
+0 hold &lt;Tanker&gt; delay: 1
+0 hold &lt;RENEGE-hold for Client 0&gt; delay: 1.5
+0 hold &lt;RENEGE-hold for Client 1&gt; delay: 1.5
+1 put &lt;Tanker&gt; to put: 10 gallons into &lt;Tank&gt;  priority: default
+. . .getQ: ['Client 1']
+. . .putQ: []
+. . .in buffer: 0
+1 hold &lt;Tanker&gt; delay: 1
+Client 0 got 10 gallons
+1 &lt;Client 0&gt; terminated
+1.5 &lt;RENEGE-hold for Client 1&gt; terminated
+Client 1 reneged
+1.5 &lt;Client 1&gt; terminated
+2 put &lt;Tanker&gt; to put: 10 gallons into &lt;Tank&gt;  priority: default
+. . .getQ: []
+. . .putQ: []
+. . .in buffer: 10
+2 hold &lt;Tanker&gt; delay: 1
+3 put &lt;Tanker&gt; to put: 10 gallons into &lt;Tank&gt;  priority: default
+. . .getQ: []
+. . .putQ: []
+. . .in buffer: 20
+3 &lt;Tanker&gt; terminated
+</pre>
+<p>In this example, the Client entities are requesting 10 gallons from the <em>tank</em> (a Level object).
+If they can't get them within 1.5 time units, they renege (give up waiting).
+The renege command parts of the compound statements (<em>hold,self,1.5</em>)are shown
+in the trace output with a prefix of || to indicate that they are being executed
+in parallel with the primary command part (<em>get,self,tank,10</em>). They are being
+executed by behind-the-scenes processes (e.g. <em>RENEGE-hold for Client 0</em>).</p>
+<p>The trace contains all calls of scheduling statements (<strong>yield . . .</strong>,
+<strong>activate()</strong>, <strong>reactivate()</strong>, <strong>cancel()</strong> and also the termination
+of processes (at completion of all their scheduling statements). For
+<strong>yield request</strong> and <strong>yield release</strong> calls, it provides also the queue
+status (waiting customers in <em>waitQ</em> and customers being served in <em>activeQ</em>.</p>
+</div>
+<div class="section">
+<h2><a id="trace-change-changing-the-tracing" name="trace-change-changing-the-tracing"><strong>trace.change()</strong>: Changing the tracing</a></h2>
+<p><strong>trace</strong> is an instance of the <strong>Trace</strong> class defined in <em>SimulationTrace.py</em>.
+This gets automatically initialized upon importing <em>SimulationTrace</em>..</p>
+<p>The tracing can be changed at runtime by calling <strong>trace.tchange()</strong> with one or
+more of the following named parameters:</p>
+<blockquote>
+<p><em>start</em>:</p>
+<blockquote>
+changes the tracing start time. Default is 0. Example: <strong>trace.tchange(start=222.2)</strong>
+to start tracing at simulation time 222.2.</blockquote>
+<p><em>end</em>  :</p>
+<blockquote>
+changes the tracing end time. Default is a very large number (hopefully past
+any simulation endtime you will ever use).
+Example: <strong>trace.tchange(end=33)</strong> to stop tracing at time 33.</blockquote>
+<p><em>toTrace</em>:</p>
+<blockquote>
+changes the commands to be traced. Default is
+<em>[&quot;hold&quot;,&quot;activate&quot;,&quot;cancel&quot;,&quot;reactivate&quot;,&quot;passivate&quot;,&quot;request&quot;,
+&quot;release&quot;,&quot;interrupt&quot;,&quot;waitevent&quot;,&quot;queueevent&quot;,
+&quot;signal&quot;,&quot;waituntil&quot;,&quot;put&quot;,&quot;get&quot;,&quot;terminated&quot;]</em>.
+Value must be a list containing
+one or more of those values in the default. Note: &quot;terminated&quot; causes
+tracing of all process terminations.
+Example: <strong>trace.tchange(toTrace=[&quot;hold&quot;,&quot;activate&quot;])</strong> traces only the
+<em>yield hold</em> and <em>activate()</em> statements.</blockquote>
+<p><em>outfile</em>:</p>
+<blockquote>
+redirects the trace out put to a file (default is <em>sys.stdout</em>). Value
+must be a file object open for writing.
+Example: <strong>trace.tchange(outfile=open(r&quot;c:\python25\bank02trace.txt&quot;,&quot;w&quot;))</strong></blockquote>
+</blockquote>
+<p>All these parameters can be combined.
+Example: <strong>trace.tchange(start=45.0,toTrace=[&quot;terminated&quot;])</strong> will trace all
+process terminations from time 45.0 till the end of the simulation.</p>
+<p>The changes become effective at the time <strong>trace.tchange()</strong> is called. This
+implies for example that, if the call <strong>trace.tchange(start=50)</strong> is made at time
+100, it has no effect before <em>now()==100</em>.</p>
+</div>
+<div class="section">
+<h2><a id="treset-resetting-the-trace-to-default-values" name="treset-resetting-the-trace-to-default-values"><strong>treset()</strong>: Resetting the trace to default values</a></h2>
+<p>The trace parameters can be reset to their default values by calling <strong>trace.treset()</strong>.</p>
+</div>
+<div class="section">
+<h2><a id="trace-tstart-trace-tstop-enabling-disabling-the-trace" name="trace-tstart-trace-tstop-enabling-disabling-the-trace"><strong>trace.tstart()</strong>, <strong>trace.tstop()</strong>: Enabling/disabling the trace</a></h2>
+<p>Calling <strong>trace.tstart()</strong> enables the tracing, and <strong>trace.tstop()</strong>
+disables it. Neither call changes any tracing parameters.</p>
+</div>
+<div class="section">
+<h2><a id="trace-ttext-annotating-the-trace" name="trace-ttext-annotating-the-trace"><strong>trace.ttext()</strong>: Annotating the trace</a></h2>
+<p>The event-by-event trace output is already very useful in showing the sequence
+in which SimPy's quasi-parallel processes are executed.</p>
+<p>For documentation, publishing or teaching purposes, it is even more useful
+if the trace output can be intermingled with output which not only
+shows the command executed, but also contextual information such as
+the values of state variables. If one outputs the reason <em>why</em> a specific
+scheduling command is executed, the trace can give a natural language description
+of the simulation scenario.</p>
+<p>For such in-line annotation, the <strong>trace.ttext(&lt;string&gt;)</strong> method is
+available. It provides a string which is output together with the trace of
+the next scheduling statement. This string is valid <em>only</em> for the scheduling
+statement following it.</p>
+<p>Example:</p>
+<pre class="literal-block">
+class Bus(Process):
+    def __init__(self,name):
+        Process.__init__(self,name)
+
+    def operate(self,repairduration=0):
+        tripleft = 1000
+        while tripleft &gt; 0:
+            trace.ttext(&quot;Try to go for %s&quot;%tripleft)
+            yield hold,self,tripleft
+            if self.interrupted():
+                tripleft=self.interruptLeft
+                self.interruptReset()
+                trace.ttext(&quot;Start repair taking %s time units&quot;%repairduration)
+                yield hold,self,repairduration
+            else:
+                break # no breakdown, ergo bus arrived
+        trace.ttext(&quot;&lt;%s&gt; has arrived&quot;%self.name)
+
+class Breakdown(Process):
+    def __init__(self,myBus):
+        Process.__init__(self,name=&quot;Breakdown &quot;+myBus.name)
+        self.bus=myBus
+
+    def breakBus(self,interval):
+
+        while True:
+            trace.ttext(&quot;Breakdown process waiting for %s&quot;%interval)
+            yield hold,self,interval
+            if self.bus.terminated(): break
+            trace.ttext(&quot;Breakdown of %s&quot;%self.bus.name)
+            self.interrupt(self.bus)
+
+print&quot;\n\n+++test_interrupt&quot;
+initialize()
+b=Bus(&quot;Bus 1&quot;)
+trace.ttext(&quot;Start %s&quot;%b.name)
+activate(b,b.operate(repairduration=20))
+br=Breakdown(b)
+trace.ttext(&quot;Start the Breakdown process for %s&quot;%b.name)
+activate(br,br.breakBus(200))
+trace.start=100
+print simulate(until=4000)
+
+This produces:
+
+0 activate &lt;Bus 1&gt; at time: 0 prior: 0
+---- Start Bus 1
+0 activate &lt;Breakdown Bus 1&gt; at time: 0 prior: 0
+---- Start the Breakdown process for Bus 1
+200 reactivate &lt;Bus 1&gt; time: 200 prior: 0
+200 interrupt by: &lt;Breakdown Bus 1&gt; of: &lt;Bus 1&gt;
+---- Breakdown of Bus 1
+200 hold &lt;Breakdown Bus 1&gt; delay: 200
+---- Breakdown process waiting for 200
+200 hold &lt;Bus 1&gt; delay: 20
+---- Start repair taking 20 time units
+220 hold &lt;Bus 1&gt; delay: 800
+---- Try to go for 800
+400 reactivate &lt;Bus 1&gt; time: 400 prior: 0
+400 interrupt by: &lt;Breakdown Bus 1&gt; of: &lt;Bus 1&gt;
+---- Breakdown of Bus 1
+400 hold &lt;Breakdown Bus 1&gt; delay: 200
+---- Breakdown process waiting for 200
+400 hold &lt;Bus 1&gt; delay: 20
+---- Start repair taking 20 time units
+420 hold &lt;Bus 1&gt; delay: 620
+
+ . . . . .
+</pre>
+<p>The line starting with &quot;----&quot; is the comment related to the command traced
+in the preceding output line.</p>
+</div>
+<div class="section">
+<h2><a id="nice-output-of-class-instances" name="nice-output-of-class-instances">Nice output of class instances</a></h2>
+<p>After the import of <em>SimPy.SimulationTrace</em>, all instances of classes
+<em>Process</em> and <em>Resource</em> (and all their subclasses) have a nice string
+representation like so:</p>
+<pre class="literal-block">
+   &gt;&gt;&gt; class Bus(Process):
+...         def __init__(self,id):
+...                 Process.__init__(self,name=id)
+...                 self.typ=&quot;Bus&quot;
+...
+&gt;&gt;&gt; b=Bus(&quot;Line 15&quot;)
+&gt;&gt;&gt; b
+&lt;Instance of Bus, id 21860960:
+     .name=Line 15
+     .typ=Bus
+&gt;
+&gt;&gt;&gt;
+</pre>
+<p>This can be handy in statements like <strong>trace.ttext(&quot;Status of %s&quot;%b)</strong>.</p>
+<!-- Local Variables:
+mode: rst
+indent-tabs-mode: nil
+sentence-end-double-space: t
+fill-column: 70
+End: -->
+</div>
+</div>
+</div>
+</body>
+</html>

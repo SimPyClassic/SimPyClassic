@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2007/12/16 13:48:34 $
+:Revision: $Revision: 1.1.1.10 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<img align="left" alt="../images/sm_SimPy_Logo.png" class="align-left" src="../images/sm_SimPy_Logo.png" />
+<div class="section">
+<h1><a id="simulationstep-manual" name="simulationstep-manual">SimulationStep Manual</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Authors:</th><td class="field-body"><ul class="first simple">
+<li>Klaus Muller &lt;<a class="reference" href="mailto:Muller&#64;users.sourceforge.net">Muller&#64;users.sourceforge.net</a>&gt;</li>
+<li>Tony Vignaux &lt;<a class="reference" href="mailto:Vignaux&#64;users.sourceforge.net">Vignaux&#64;users.sourceforge.net</a>&gt;</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">SimPy version:</th><td class="field-body"><p class="first">1.9</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Web-site:</th><td class="field-body"><p class="first"><a class="reference" href="http://simpy.sourceforge.net/">http://simpy.sourceforge.net/</a></p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Python-Version:</th><td class="field-body"><p class="first">2.3, 2.4, 2.5</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Revision:</th><td class="field-body"><p class="first">$Revision: 1.1.1.10 $</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body"><p class="first last">$Date: 2007/12/16 13:48:34 $</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="section">
+<h2><a id="a-manual-for-simulationstep" name="a-manual-for-simulationstep">A Manual for SimulationStep</a></h2>
+<p>This manual describes SimulationStep, a SimPy module which supports
+stepping through a simulation model event by event.</p>
+<div class="section">
+<h3><a id="introduction" name="introduction">Introduction</a></h3>
+<p>SimulationStep can assist with debugging models, interacting with them on
+an event-by-event basis, getting event-by-event output from a model (e.g.
+for plotting purposes), etc.</p>
+<p>SimulationStep is a derivative of the Simulation module. Over and above
+the capabilities provided by Simulation, SimulationStep supports stepping
+through a simulation model event by event. It caters for:</p>
+<blockquote>
+<ul class="simple">
+<li>running a simulation model, with calling a user-defined procedure after every event,</li>
+<li>running a simulation model one event at a time by repeated calls,</li>
+<li>starting and stopping the event stepping mode under program control.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h3><a id="simulationstep-overview" name="simulationstep-overview">SimulationStep overview</a></h3>
+<p>Here is a simple program which shows basic event stepping capabilities:</p>
+<pre class="literal-block">
+## Stepping1.py
+from __future__ import generators
+from SimPy.SimulationStep import *                  # (1)
+
+def callbackTimeTrace():                            # (2)
+    &quot;&quot;&quot;Prints event times
+    &quot;&quot;&quot;
+    print &quot;at time=%s&quot;%now()
+
+class Man(Process):
+    def walk(self):
+        print &quot;got up&quot;
+        yield hold,self,1
+        print &quot;got to door&quot;
+        yield hold,self,10
+        print &quot;got to mail box&quot;
+        yield hold,self,10
+        print &quot;got home again&quot;
+
+#trace event times
+initialize()
+otto=Man()
+activate(otto,otto.walk())
+startStepping()                                     # (3)
+simulate(callback=callbackTimeTrace,until=100)      # (4)
+</pre>
+<p>A trivial simulation model, but with event stepping:</p>
+<blockquote>
+<ul class="simple">
+<li><ol class="first arabic">
+<li>import the stepping version of Simulation</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="2">
+<li>define a procedure which gets called after any event</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="3">
+<li>switch into event stepping mode</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="4">
+<li>run the model with event callback to the procedure defined at (2); <em>simulate</em> in SimulationStep has an extra named parameter, <em>callback</em></li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p>Running it produces this output:</p>
+<pre class="literal-block">
+got up
+at time=0
+got to door
+at time=1
+got to mail box
+at time=11
+got home again
+at time=21
+at time=21
+</pre>
+<p>The callback outputs the simulation time after every event.</p>
+<p>Here is another example, the same model, but now with the user geting control back after every
+event:</p>
+<pre class="literal-block">
+## Stepping2.py
+from __future__ import generators
+from SimPy.SimulationStep import *
+
+def callbackUserControl():
+    &quot;&quot;&quot;Allows user to control stepping
+    &quot;&quot;&quot;
+    a=raw_input(&quot;[Time=%s] Select one: End run (e), Continue stepping (s), Run to end (r)= &quot;%now())
+    if a==&quot;e&quot;:
+        stopSimulation()
+    elif a==&quot;s&quot;:
+        return
+    else:
+        stopStepping()
+
+class Man(Process):
+    def walk(self):
+        print &quot;got up&quot;
+        yield hold,self,1
+        print &quot;got to door&quot;
+        yield hold,self,10
+        print &quot;got to mail box&quot;
+        yield hold,self,10
+        print &quot;got home again&quot;
+#allow user control
+initialize()
+otto=Man()
+activate(otto,otto.walk())
+startStepping()
+simulate(callback=callbackUserControl,until=100)
+</pre>
+<p>Its interactive output looks like this:</p>
+<pre class="literal-block">
+got up
+[Time=0] Select one: End run (e), Continue stepping (s), Run to end (r)= s
+got to door
+[Time=1] Select one: End run (e), Continue stepping (s), Run to end (r)= s
+got to mail box
+[Time=11] Select one: End run (e), Continue stepping (s), Run to end (r)= s
+got home again
+[Time=21] Select one: End run (e), Continue stepping (s), Run to end (r)= s
+[Time=21] Select one: End run (e), Continue stepping (s), Run to end (r)= s
+</pre>
+<p>or this (the user stopped stepping mode at time=1):</p>
+<pre class="literal-block">
+got up
+[Time=0] Select one: End run (e), Continue stepping (s), Run to end (r)= s
+got to door
+[Time=1] Select one: End run (e), Continue stepping (s), Run to end (r)= r
+got to mail box
+got home again
+</pre>
+<p>If one wants to run a tested/debugged model full speed, i.e. without stepping,
+one can write a program as folloes:</p>
+<pre class="literal-block">
+## Stepping2Fast.py
+from __future__ import generators
+if __debug__:
+        from SimPy.SimulationStep import *
+else:
+        from SimPy.Simulation import *
+
+def callbackUserControl():
+    &quot;&quot;&quot;Allows user to control stepping
+    &quot;&quot;&quot;
+    if __debug__:
+                a=raw_input(&quot;[Time=%s] Select one: End run (e), Continue stepping (s),\
+                     Run to end (r)= &quot;%now())
+                if a==&quot;e&quot;:
+                    stopSimulation()
+                elif a==&quot;s&quot;:
+                    return
+                else:
+                    stopStepping()
+
+class Man(Process):
+    def walk(self):
+        print &quot;got up&quot;
+        yield hold,self,1
+        print &quot;got to door&quot;
+        yield hold,self,10
+        print &quot;got to mail box&quot;
+        yield hold,self,10
+        print &quot;got home again&quot;
+#allow user control if debugging
+initialize()
+otto=Man()
+activate(otto,otto.walk())
+if __debug__:
+        startStepping()
+        simulate(callback=callbackUserControl,until=100)
+else:
+        simulate(until=100)
+</pre>
+<p>If one runs this with the Python command line option '-O', any
+statement starting with <em>if __debug__:</em> are ignored/skipped by the
+Python interpreter.</p>
+</div>
+<div class="section">
+<h3><a id="the-simulationstep-api" name="the-simulationstep-api">The SimulationStep API</a></h3>
+<div class="section">
+<h4><a id="structure" name="structure">Structure</a></h4>
+<p>Basically, SimulationStep has the same API as Simulation, but with
+the following additions and changes:</p>
+<pre class="literal-block">
+def startStepping()         **new**
+def stopStepping()          **new**
+def simulate()              **changed**
+def simulateStep()          **new**
+</pre>
+</div>
+<div class="section">
+<h4><a id="startstepping" name="startstepping"><strong>startStepping</strong></a></h4>
+<p>Starts the event-stepping.</p>
+<p>Call:</p>
+<blockquote>
+<strong>startStepping()</strong></blockquote>
+<dl class="docutils">
+<dt>Mandatory parameters:</dt>
+<dd>None.</dd>
+<dt>Optional parameters:</dt>
+<dd>None</dd>
+<dt>Return value:</dt>
+<dd>None.</dd>
+</dl>
+</div>
+<div class="section">
+<h4><a id="stopstepping" name="stopstepping"><strong>stopStepping</strong></a></h4>
+<p>Stops event-stepping.</p>
+<dl class="docutils">
+<dt>Call:</dt>
+<dd><strong>stopStepping()</strong></dd>
+<dt>Mandatory parameters:</dt>
+<dd>None</dd>
+<dt>Optional parameters:</dt>
+<dd>None</dd>
+<dt>Return value:</dt>
+<dd>None</dd>
+</dl>
+</div>
+<div class="section">
+<h4><a id="simulate" name="simulate"><strong>simulate</strong></a></h4>
+<p>Runs a simulation with callback to a user-defined function after each event, if stepping is turn on.
+By default, stepping is switched off.</p>
+<dl class="docutils">
+<dt>Call:</dt>
+<dd><strong>simulate(callback=&lt;proc&gt;,until=&lt;endtime&gt;)</strong></dd>
+<dt>Mandatory parameters:</dt>
+<dd>None</dd>
+<dt>Optional parameters:</dt>
+<dd><ul class="first last simple">
+<li><strong>until = 0</strong>: the simulation time until which the simulation is to run (positive floating point or integer number)</li>
+<li><strong>callback = lambda:None</strong>: the function to be called after every event (function reference)</li>
+</ul>
+</dd>
+<dt>Return value:</dt>
+<dd>The simulation status at exit (string)</dd>
+</dl>
+</div>
+<div class="section">
+<h4><a id="simulatestep" name="simulatestep"><strong>simulateStep</strong></a></h4>
+<p>Runs a simulation for one event, with (optional) callback to a user-defined function
+after the event, if stepping is turn on. By default, stepping is switched off.
+Thus, to execute the model to completion, <em>simulateStep</em> must be called repeatedly.</p>
+<p><strong>Note: it is not clear to the developers yet whether this part of the API offers any advantages
+or capabilities over and above the *simulate* function. The survival of this function
+in future versions depends on the feedback from the user community.</strong></p>
+<dl class="docutils">
+<dt>Call:</dt>
+<dd><strong>simulateStep(callback=&lt;proc&gt;,until=&lt;endtime&gt;)</strong></dd>
+<dt>Mandatory parameters:</dt>
+<dd>None</dd>
+<dt>Optional parameters:</dt>
+<dd><ul class="first last simple">
+<li><strong>until = 0</strong>: the simulation time until which the simulation is to run (positive floating point or integer number)</li>
+<li><strong>callback = lambda:None</strong>: the function to be called after every event (function reference)</li>
+</ul>
+</dd>
+<dt>Return value:</dt>
+<dd>The tuple <strong>(simulation status at exit (string),&lt;resumability flag&gt;)</strong>.
+&lt;resumability flag&gt; can have one of two string values: <strong>&quot;resumable&quot;</strong> if there
+are more events to be executed, and <strong>&quot;notResumable&quot;</strong> if all events have been exhausted
+or an error has occurred. <em>simulateStep</em> should normally only be called if
+&quot;resumable&quot; is returned.</dd>
+</dl>
+<p>$Revision: 1.1.1.10 $ $Date: 2007/12/16 13:48:34 $ kgm</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+""" cellphone.py
+
+Simulate the operation of a BCC cellphone system.
+
+Calls arrive at random to a cellphone hub with a fixed number of
+channels. Service times are assumed exponential. The objective
+is to determine the statistics of busy periods in the operation of a
+BCC cellphone system.
+
+The required measurements are
+(1) the total busy time (all channels full) in each 1-hour period and
+(2) the total number of busy times in a 1-hour period.
+
+The simulation is continuous but the observing Process, a
+Statistician, breaks the time into 1-hour observation periods
+separated by 15-minute gaps to reduce autocorrelation. The total busy
+time and number of busy times in each interval is printed.
+
+   """
+from SimPy.Simulation import *
+import random as ran
+
+
+## Model components ------------------------
+
+class CallSource(Process):
+ """ generates a sequence of calls """    
+      
+ def execute(self, maxN, lam,cell):
+    for i in range(maxN):
+         j = Call("Call%03d"%(i,))
+         activate(j,j.execute(cell))
+         yield hold,self,ran.expovariate(lam)
+
+
+class Call(Process):
+    """ Calls arrive at random at the cellphone hub"""
+    def execute(self,cell):
+        self.trace("arrived")
+        if cell.Nfree == 0: self.trace("blocked and left")
+        else:
+             self.trace("got a channel")
+             cell.Nfree -=  1
+             if cell.Nfree == 0:
+                 self.trace("start busy period======")
+                 cell.busyStartTime = now()
+                 cell.totalBusyVisits += 1
+                 interIdleTime = now() - cell.busyEndTime
+             yield hold,self,ran.expovariate(mu)
+             self.trace("finished")
+             if cell.Nfree == 0:
+                 self.trace("end   busy period++++++")
+                 cell.busyEndTime = now()
+                 busy = now() - cell.busyStartTime
+                 self.trace("         busy  = %9.4f"%(busy,))
+                 cell.totalBusyTime +=busy
+             cell.Nfree += 1
+
+    def trace(self,message):
+         if TRACING:
+             print "%7.4f %13s %s "%(now(), message, self.name)
+  
+class Cell:
+    """ Holds global measurements"""
+    Nfree   = 0
+    totalBusyTime   = 0.0
+    totalBusyVisits = 0
+    result=()
+    
+class Statistician(Process):
+     """ observes the system at intervals """
+     
+     def execute(self,Nperiods,obsPeriod,obsGap,cell):
+         cell.busyEndTime = now() # simulation start time
+         if STRACING: print "Busy time Number"
+         for i in range(Nperiods):
+             yield hold,self,obsGap
+             cell.totalBusyTime = 0.0
+             cell.totalBusyVisits = 0
+             if cell.Nfree == 0: cell.busyStartTime = now()
+             yield hold,self,obsPeriod
+             if cell.Nfree == 0: cell.totalBusyTime += now()-cell.busyStartTime
+             if STRACING:
+                 print "%7.3f %5d"%(cell.totalBusyTime,cell.totalBusyVisits)
+             m.tally(cell.totalBusyTime)
+             bn.tally(cell.totalBusyVisits)
+         stopSimulation()
+         cell.result= (m.mean(),m.var(),bn.mean(),bn.var())
+
+## Experiment data -------------------------
+
+NChannels =  4         # number of channels in the cell
+maxN    = 10000
+ranSeed = 3333333
+lam = 1.0              # per minute
+mu = 0.6667            # per minute
+meanLifeTime = 1.0/mu  # minute
+Nperiods  =  10
+obsPeriod = 60.0       # minutes
+obsGap    = 15.0       # gap between observation periods
+
+TRACING  = False
+STRACING = True
+
+
+## Experiment ------------------------------
+
+m = Monitor()
+bn =Monitor()
+ran.seed(ranSeed)
+
+cell=Cell()           # the cellphone tower
+cell.Nfree   = NChannels
+
+initialize()
+s = Statistician('Statistician')
+activate(s,s.execute(Nperiods,obsPeriod,obsGap,cell))
+g = CallSource('CallSource')
+activate(g,g.execute(maxN, lam,cell))
+simulate(until=10000.0)
+
+## Output -------------------------
+print 'cellphone'
+# input data:
+print "lambda    mu      s  Nperiods obsPeriod  obsGap"
+FMT= "%7.4f %6.4f %4d   %4d      %6.2f   %6.2f"
+print FMT%(lam,mu,NChannels,Nperiods,obsPeriod,obsGap)
+
+
+sr = cell.result
+print "Busy Time:   mean = %6.3f var= %6.3f"%sr[0:2]
+print "Busy Number: mean = %6.3f var= %6.3f"%sr[2:4]

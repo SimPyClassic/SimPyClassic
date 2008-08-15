@@ -1,0 +1,6 @@
+include *.*
+recursive-include LGPLlicense_files *
+recursive-include SimPyDocs *
+recursive-include SimPyModels *
+recursive-exclude *.pyc *.zip *.bak *.py.bak
+global-exclude *.bak *.py.bak *.pyc *.zip *.old

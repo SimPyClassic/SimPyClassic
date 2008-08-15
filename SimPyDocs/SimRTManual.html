@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2007/12/16 13:27:30 $
+:Revision: $Revision: 1.1.1.13 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<img align="left" alt="images/sm_SimPy_Logo.png" class="align-left" src="images/sm_SimPy_Logo.png" />
+<div class="section">
+<h1><a id="simulationrt-manual" name="simulationrt-manual">SimulationRT Manual</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Authors:</th><td class="field-body"><ul class="first simple">
+<li>Klaus Muller &lt;<a class="reference" href="mailto:Muller&#64;users.sourceforge.net">Muller&#64;users.sourceforge.net</a>&gt;</li>
+<li>Tony Vignaux &lt;<a class="reference" href="mailto:Vignaux&#64;users.sourceforge.net">Vignaux&#64;users.sourceforge.net</a>&gt;</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">SimPy version:</th><td class="field-body"><p class="first">1.9</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Web-site:</th><td class="field-body"><p class="first"><a class="reference" href="http://simpy.sourceforge.net/">http://simpy.sourceforge.net/</a></p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Python-Version:</th><td class="field-body"><p class="first">2.3, 2.4, 2.5</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Revision:</th><td class="field-body"><p class="first">$Revision: 1.1.1.13 $</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body"><p class="first last">$Date: 2007/12/16 13:27:30 $</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="section">
+<h2><a id="a-manual-for-simulationrt" name="a-manual-for-simulationrt">A Manual for SimulationRT</a></h2>
+<p>This manual describes SimulationRT, a SimPy module which supports
+synchronizing the execution of simulation models with real (wallclock) time.</p>
+<div class="section">
+<h3><a id="what-is-new-in-simpy-1-8" name="what-is-new-in-simpy-1-8">What is new in SimPy 1.8?</a></h3>
+<p>A capability has been added to SimulationRT to change the model execution speed during
+the run of a simulation model. This is useful for e.g. a simulation
+GUI which shows the progress of the simulation run and allows the
+user to interactively slow down or accelerate the model execution.</p>
+</div>
+<div class="section">
+<h3><a id="acknowledgement" name="acknowledgement">Acknowledgement</a></h3>
+<p>SimulationRT is based on an idea by Geoff Jarrad of CSIRO (Australia). He
+contributed a lot to its development and testing on Windows and Unix.</p>
+<p>The code for the adjustment of the execution speed during the simulation run
+was contributed by Robert C. Ramsdell.</p>
+</div>
+<div class="section">
+<h3><a id="introduction" name="introduction">Introduction</a></h3>
+<p>SimulationRT allows synchronizing simulation time and real (wallclock) time.
+This capability can be used to implement e.g. interactive game applications or
+to demonstrate a model's execution in real time.</p>
+<p>It is identical to Simulation, except for the <em>simulate</em> function which takes
+an additional parameter controlling real-time execution speed.</p>
+<p>Here is an example:</p>
+<pre class="literal-block">
+## RealTimeFireworks.py
+from __future__ import generators
+from SimPy.SimulationRT  import *
+from random import *
+import time
+class Launcher(Process):
+    def launch(self):
+        while True:
+            print &quot;Launch at %.1f; wallclock: %s&quot;%(now(),time.clock()-startTime)
+            yield hold,self,uniform(1,maxFlightTime)
+            print &quot;Boom!!! Aaaah!! at %.1f; wallclock: %s&quot;%(now(),time.clock()-startTime)
+def model():
+    initialize()
+    for i in range(nrLaunchers):
+        lau=Launcher()
+        activate(lau,lau.launch())
+    simulate(real_time=True,rel_speed=1,until=20) ##unit sim time = 1 sec clock
+nrLaunchers=2
+maxFlightTime=5.0
+startTime=time.clock()
+model()
+</pre>
+<p><em>rels_speed=1</em> sets the synchronization so that 1 simulation time unit
+is executed in approximately 1 second of wallclock time.
+Run under Python 2.2.2 on a Windows XP-box (1.7 GHz), this output resulted
+over about 18 seconds of wallclock time:</p>
+<pre class="literal-block">
+Launch at 0.0; wallclock: 0.000195555580376
+Launch at 0.0; wallclock: 0.00190107960634
+Boom!!! Aaaah!! at 1.8; wallclock: 1.78082661344
+Launch at 1.8; wallclock: 1.78274501368
+Boom!!! Aaaah!! at 2.8; wallclock: 2.84245930698
+Launch at 2.8; wallclock: 2.84435982785
+Boom!!! Aaaah!! at 4.1; wallclock: 4.08443978215
+Launch at 4.1; wallclock: 4.09004328762
+Boom!!! Aaaah!! at 5.2; wallclock: 5.14561822801
+Launch at 5.2; wallclock: 5.14878203794
+Boom!!! Aaaah!! at 7.0; wallclock: 6.99845622838
+Launch at 7.0; wallclock: 7.00175357483
+Boom!!! Aaaah!! at 7.4; wallclock: 7.39919794276
+Launch at 7.4; wallclock: 7.40245282571
+Boom!!! Aaaah!! at 9.7; wallclock: 9.69250728794
+Launch at 9.7; wallclock: 9.69912935862
+Boom!!! Aaaah!! at 10.6; wallclock: 10.5938587167
+Launch at 10.6; wallclock: 10.6006140445
+Boom!!! Aaaah!! at 13.8; wallclock: 13.8082362423
+Launch at 13.8; wallclock: 13.8134877477
+Boom!!! Aaaah!! at 14.1; wallclock: 14.1385670525
+Launch at 14.1; wallclock: 14.1438146468
+Boom!!! Aaaah!! at 16.4; wallclock: 16.411963811
+Launch at 16.4; wallclock: 16.4172373863
+Boom!!! Aaaah!! at 17.1; wallclock: 17.1429980626
+Launch at 17.1; wallclock: 17.1482308506
+Boom!!! Aaaah!! at 18.1; wallclock: 18.0742063586
+Launch at 18.1; wallclock: 18.0794469688
+</pre>
+<p>Clearly, the wallclock time does not deviate significantly from the simulation time.</p>
+</div>
+<div class="section">
+<h3><a id="changing-the-execution-speed-during-a-simulation-run-new-in-1-8" name="changing-the-execution-speed-during-a-simulation-run-new-in-1-8">Changing the execution speed during a simulation run (new in 1.8)</a></h3>
+<p>By calling method <em>rtset</em> with a parameter, the ratio simulated time to wallclock time
+can be changed during a run.</p>
+<p>Here is an example:</p>
+<pre class="literal-block">
+&quot;&quot;&quot;variableTimeRatio.py
+Shows the SimulationRT capability to change the ratio simulation
+time to wallclock time during the run of a simulation.
+&quot;&quot;&quot;
+from SimulationRT import *
+
+class Changer(Process):
+    def change(self,when,rat):
+        global ratio
+        yield hold,self,when
+        rtset(rat)
+        ratio=rat
+class Series(Process):
+    def tick(self,nrTicks):
+        oldratio=ratio
+        for i in range(nrTicks):
+            tLastSim=now()
+            tLastWallclock=wallclock()
+            yield hold,self,1
+            diffSim=now()-tLastSim
+            diffWall=wallclock()-tLastWallclock
+            print &quot;now(): %s, sim. time elapsed: %s, wall clock elapsed: &quot;\
+                &quot;%6.3f, sim/wall time ratio: %6.3f&quot;\
+                %(now(),diffSim,diffWall,diffSim/diffWall)
+            if not ratio==oldratio:
+                print &quot;At simulation time %s: ratio simulation/wallclock &quot;\
+                    &quot;time now changed to %s&quot;%(now(),ratio)
+                oldratio=ratio
+initialize()
+ticks=15
+s=Series()
+activate(s,s.tick(nrTicks=ticks))
+c=Changer()
+activate(c,c.change(5,5))
+c=Changer()
+activate(c,c.change(10,0.1))
+ratio=1
+print &quot;At simulation time %s: set ratio simulation/wallclock time to %s&quot;\
+       %(now(),ratio)
+simulate(until=100,real_time=True,rel_speed=ratio)
+</pre>
+<p>The program changes the time ratio twice, at simulation times 5 and 10.</p>
+<p>When run on a Windows XP computer under Python 2.3, this results in this output:</p>
+<blockquote>
+At simulation time 0: set ratio simulation/wallclock time to 1
+now(): 1, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+now(): 2, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+now(): 3, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+now(): 4, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+now(): 5, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+At simulation time 5: ratio simulation/wallclock time now changed to 5
+now(): 6, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.021
+now(): 7, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.020
+now(): 8, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.020
+now(): 9, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.020
+now(): 10, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.019
+At simulation time 10: ratio simulation/wallclock time now changed to 0.1
+now(): 11, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+now(): 12, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+now(): 13, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+now(): 14, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+now(): 15, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100</blockquote>
+</div>
+<div class="section">
+<h3><a id="limitations" name="limitations">Limitations</a></h3>
+<p>This module works much better under Windows than under Unix or Linux, i.e., it gives
+much closer synchronization.
+Unfortunately, the handling of time in Python is not platform-independent at all.
+Here is a quote from the documentation of the <em>time</em> module:</p>
+<pre class="literal-block">
+&quot;clock()
+On Unix, return the current processor time as a floating point number expressed in seconds.
+The precision, and in fact the very definition of the meaning of ``processor time'' , depends
+on that of the C function of the same name, but in any case, this is the function to use for
+benchmarking Python or timing algorithms.
+
+On Windows, this function returns wall-clock seconds elapsed since the first call to this
+function, as a floating point number, based on the Win32 function QueryPerformanceCounter().
+The resolution is typically better than one microsecond.
+&quot;
+</pre>
+</div>
+<div class="section">
+<h3><a id="the-simulationrt-api" name="the-simulationrt-api">The SimulationRT API</a></h3>
+<div class="section">
+<h4><a id="structure" name="structure">Structure</a></h4>
+<p>Basically, SimulationStep has the same API as Simulation, but with:</p>
+<blockquote>
+<ul class="simple">
+<li>a change in the definition of simulate, and</li>
+<li>an additional method to change execution speed during a simulation
+run.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h4><a id="simulate" name="simulate"><strong>simulate</strong></a></h4>
+<p>Executes the simulation model.</p>
+<p>Call:</p>
+<blockquote>
+<strong>simulate(&lt;optional parameters&gt;)</strong></blockquote>
+<dl class="docutils">
+<dt>Mandatory parameters:</dt>
+<dd>None.</dd>
+<dt>Optional parameters:</dt>
+<dd><ul class="first last simple">
+<li><strong>until=0</strong> : the maximum simulation (end) time (positive floating point number; default: 0)</li>
+<li><strong>real_time=False</strong> : flag to switch real time synchronization on or off (boolean; default: False, meaning no synchronization)</li>
+<li><strong>rel_speed=1</strong> : ratio simulation time over wallclock time; example: <em>rel_speed=200</em> executes 200 units of simulation time in about one second (positive floating point number; default: 1, i.e. 1 sec of simulation time is executed in about 1 sec of wallclock time)</li>
+</ul>
+</dd>
+<dt>Return value:</dt>
+<dd>Simulation status at exit.</dd>
+</dl>
+</div>
+<div class="section">
+<h4><a id="rtset" name="rtset"><strong>rtset</strong></a></h4>
+<p>Changes the ratio simulation time over wall clock time.</p>
+<p>Call:</p>
+<blockquote>
+<strong>rtset(&lt;new ratio&gt;)</strong></blockquote>
+<dl class="docutils">
+<dt>Mandatory parameters:</dt>
+<dd>None</dd>
+<dt>Optional parameters:</dt>
+<dd><ul class="first last simple">
+<li><strong>rel_speed=1</strong> : ratio simulation time over wallclock time; example: <em>rel_speed=200</em> executes 200 units of simulation time in about one second (positive floating point number; default: 1, i.e. 1 sec of simulation time is executed in about 1 sec of wallclock time)</li>
+</ul>
+</dd>
+<dt>Return value:</dt>
+<dd>None</dd>
+</dl>
+<p>$Revision: 1.1.1.13 $ $Date: 2007/12/16 13:27:30 $ kgm</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
