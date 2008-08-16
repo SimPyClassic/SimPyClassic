@@ -8,9 +8,9 @@ import new
 import random
 import inspect
 
-# $Revision: 1.1.1.28 $ $Date: 2008/03/03 13:53:42 $ kgm
+# $Revision: 1.1.1.29 $ $Date: 2008/04/02 12:04:55 $ kgm
 
-"""SimulationRT 1.9.1 Provides synchronization of real time and SimPy simulation time.
+"""SimulationRT 1.9.1 patched Provides synchronization of real time and SimPy simulation time.
 Implements SimPy Processes, resources, and the backbone simulation scheduling
 by coroutine calls. 
 Based on generators (Python 2.3 and later)
@@ -140,10 +140,12 @@ END OF LICENSE
     1 Mar 2008: - Start of 1.9.1 bugfix release
                 - Delete circular reference in Process instances when event 
                   notice has been processed (caused much circular garbage)
+                  
+    2 Apr 2008: - Repair of wallclock synchronisation algorithm
     
 """
 __TESTING=False
-version=__version__="1.9.1 $Revision: 1.1.1.28 $ $Date: 2008/03/03 13:53:42 $"
+version=__version__="1.9.1 patched $Revision: 1.1.1.29 $ $Date: 2008/04/02 12:04:55 $"
 if __TESTING: 
     print "SimPy.SimulationRT %s" %__version__,
     if __debug__:
@@ -493,10 +495,10 @@ class __Evlist(object):
         _t=_tnotice
         ## Calculate any wait time
         ## event clock time = rtlast + (sim_time - stlast)/rel_speed
+        ## delay=(1.0*earliest/self.rel_speed)-rtnow()
         if self.real_time:                                 
-            next_time = 1.0*(_t - self.stlast)/self.rel_speed 
-            next_time += self.rtlast
-            delay=next_time - wallclock()               
+##          delay=next_time - wallclock()
+            delay=(1.0*_t/self.rel_speed)-rtnow()
             if delay > 0:
             	time.sleep(delay)                  
             self.rtlast = wallclock()                   
