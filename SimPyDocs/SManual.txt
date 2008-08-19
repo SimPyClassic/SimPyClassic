@@ -1,40 +1,37 @@
 .. meta::
-  :description: Simplified Manual SimPy Python Simulation Language
+  :description: Basic Manual SimPy Python Simulation Language
   :keywords: simulation python stochastic
 
 ====================================
-SimPy  Simplified
+Basic  SimPy
 ====================================
 
 :Authors: G A Vignaux and Klaus Muller
 
-:Date: 2008 March 15
+:Date:  August 2008 
 
 
-.. $Revision: 1.1.2.13 $ $Date: 2008/03/15 04:23:17 $
+.. THIS WAS PUT UNDER SUBVERSION 2008/08/07
 
-.. minimal change dos2unx
-
-.. REPLACEMENTS ====================
-
+.. REPLACEMENTS ===================================================
+.. |svnversion| replace:: Revision 1.37 2008-08-07
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
 .. |init| replace:: ``__init__``
-.. =================================
+.. ================================================================
+
 
 .. contents:: Contents
    :depth: 1
 
-
 .. sectnum::
-   :depth: 2
-
+   :depth: 2 
 
 ..
     1  Introduction
     2  Simulation with SimPy
     3  Processes
-      3.1  Defining a procss
+      3.1  Defining a process
       3.2  Creating a process object
       3.3  Starting SimPy Process Objects
         3.3.1  activate
@@ -42,53 +39,49 @@ SimPy  Simplified
         3.3.3  The standard PEM name, ACTIONS
       3.4  Elapsing time in a Process
         3.4.1  yield hold
-      3.5  What is not mentioned about Processes
+      3.5  More about Processes
       3.6  A SimPy Program
-    4   Resources
+    4  Resources
       4.1  Defining a Resource object
       4.2  Requesting and releasing a unit of a Resource
         4.2.1  yield request
         4.2.2  yield release
       4.3  Resource Example
-    5   Levels
+    5  Levels
       5.1  Defining a Level
       5.2  Putting amounts into  a Level
       5.3  Getting amounts from a Level
-    6   Stores
-      6.1  Defining a Store
-      6.2  Putting objects into a Store
-      6.3  Getting objects from  a Store
-    7   Random Number Generation
-    8   Monitors and Recording Simulation Results
-      8.1  Defining Monitors
-      8.2  Observing data
-      8.3  Data summaries
-      8.4  Monitoring Resource Queues
-      8.5  More on Monitors
-    9   SimPy Contacts
-    10  Appendices
-      10.1  The Resource Example with Tracing
+    6  Random Number Generation
+    7  Monitors and Recording Simulation Results
+      7.1  Defining Monitors
+      7.2  Observing data
+      7.3  Data summaries
+      7.4  Monitoring Resource Queues
+      7.5  More on Monitors
+    8  Appendices
+      8.1  SimPy Contacts
+      8.2  The Resource Example with Tracing
 
-
+ 
 
 Introduction
 -------------------
 
 SimPy is a free, open-source discrete-event simulation system written
 in Python. It provides a number of tools for programmers writing
-simulation programs. This document is a simplified manual for a
-simplified version of SimPy. It describes a subset of SimPy's
-capabilities - sufficient, we think, to develop standard
-simulations. You may also find `The Bank`_ tutorial included in
-SimPy's distribution helpful in the early stages.  The full Manual_
-included int eh distribution is much more detailed.
+simulation programs. This document is a description of basic
+techniques of SimPy. It describes a subset of SimPy's capabilities -
+sufficient, we think, to develop standard simulations. You may also
+find `The Bank`_ tutorial included in SimPy's distribution helpful in
+the early stages.  The full Manual_, included in the distribution, is
+more detailed.
 
 The active elements (or *entities*) of a SimPy model are objects of a
-SimPy Process class defined by the programmer (see Processes_, section
-3). Each entity has a standard method, a Process Execution Method
-(referred to by SimPy programmers as a PEM) which specifies its
-actions in detail.  Each PEM runs in parallel with (and may interact
-with) the PEMs of other entities.
+class defined by the programmer (see Processes_, section 3). Each
+entity has a standard method, a Process Execution Method (referred to
+by SimPy programmers as a PEM) which specifies its actions in detail.
+Each PEM runs in parallel with (and may interact with) the PEMs of
+other entities. 
 
 The activity of an entity may be delayed for fixed or random times,
 queued at resource facilities, and may be interrupted by or interact
@@ -96,7 +89,8 @@ in different ways with other entities and components. For example in a
 gas station model, automobile entities (objects of an Automobile
 Class) may have to wait at the gas station for a pump to become
 available. On obtaining a pump it takes time to fill the tank. The
-pump is then released for the next automobile in the queue.
+pump is then released for the next automobile in the queue if there is
+one.
 
 .. A SimPy program contains the declaration of one or more Process
    classes and the creation and activating of objects from them.
@@ -112,24 +106,25 @@ resource.SimPy automatically handles the queueing.
   station might be modelled as a Resource with its pumps as resource
   units. When a car requests a pump the gas station resource
   automatically queues it until a pump becomes available (perhaps
-  immediately). The car holds the pump until it finishes refuealling
+  immediately). The car holds the pump until it finishes refuelling
   and then releases it for use by the next car.
 
-- Levels_ model the supply and consumption of a homogeneous
-  undifferentiated "material". The Level holds an amount that is fully
-  described by a non-negative number which can be increased or decreased
-  by entities. For example, a gas station stores gas in large storage
-  tanks. The tanks can be filled by tankers and emptied by cars
-  refuelling. In contrast to the operation of a Resource, a car need
-  not return the gas to the gas station.
+- ``Levels`` (not treated here) model the supply and consumption of a
+  homogeneous undifferentiated "material". The Level holds an amount
+  that is fully described by a non-negative number which can be
+  increased or decreased by entities. For example, a gas station
+  stores gas in large storage tanks. The tanks can be filled by
+  tankers and emptied by cars refuelling. In contrast to the operation
+  of a Resource, a car need not return the gas to the gas station.
 
 
-- Stores_ model the production and consumption of distinguishable
-  items. A Store holds a list of items. Entities can insert or remove
-  items from the list and these can be of any type. They can even be
-  SimPy process objects. For example, the gas station holds spares of
-  different types. A car might request a set of spares from the
-  Store. The store is replenished by deliveries from a warehouse.
+- ``Stores`` (not treated here) model the production and consumption of
+  distinguishable items. A Store holds a list of items. Entities can
+  insert or remove items from the list and these can be of any
+  type. They can even be SimPy process objects. For example, the gas
+  station holds spares of different types. A car might request a set
+  of spares from the Store. The store is replenished by deliveries
+  from a warehouse.
 
 SimPy also supplies Monitors to record simulation events. Monitors_
 are used to compile summary statistics such as waiting times and queue
@@ -168,11 +163,11 @@ events as the model executes. (An example of such a trace is shown in
 Discrete-event simulation programs automatically maintain the current
 simulation time in a software clock. This cannot be directly changed
 by the user.  In SimPy the current clock value is returned by the
-``now()`` function. At the start of the simulation it is set to 0.0.
-While the simulation program runs, simulation time steps forward from
-one *event* to the next. An event occurs whenever the state of the
-simulated system changes. For example, an event might be the arrival
-or departure of a car from the gas station.
+``now()`` function and you can access this or print it out. At the
+start of the simulation it is set to 0.0.  While the simulation
+program runs, simulation time steps forward from one *event* to the
+next. An event occurs whenever the state of the simulated system
+changes such as when a car arrives or departs from the gas station.
 
 The ``initialize`` statement initialises global simulation variables and
 sets the software clock to 0.0. It must appear in your program before
@@ -191,7 +186,7 @@ The simulation then starts, and SimPy seeks and executes the first event in
 the schedule.  Having executed that event, the simulation seeks and
 executes the next event, and so on.
 
-Typically a simulation terminates when there ae no moe events to
+Typically a simulation terminates when there are no more events to
 execute or when the *endtime* is reached but it can be stopped at any
 time by the command:
 
@@ -204,14 +199,14 @@ will be available for display or further analysis.
 The following fragment shows only the *main* block in a simulation
 program to illustrate the general structure. A complete `Example
 Program`_ is shown later. Here ``Car`` is a Process class with a
-``go`` as its PEM (described later) and ``m`` is defined as an entity
-of that class, that is, a particular car. Activating ``m`` has the
-effect of scheduling at least one event by starting ``m``\ 's PEM.
-The ``simulate(until=1000.0)`` statement starts the simulation
+``go`` as its PEM (described later) and ``c`` is made an entity of
+that class, that is, a particular car. Activating ``c`` has the effect
+of scheduling at least one event by starting ``c``\ 's PEM.  The
+``simulate(until=1000.0)`` statement starts the simulation
 itself. This immediately jumps to the first scheduled event. It will
-continue until it runs out of events to execute or the simulation time
-reaches ``1000.0``. When the simulation stops the ``Report`` function
-is called to display the results::
+continue executing events until it runs out of events to execute or
+the simulation time reaches ``1000.0``. When the simulation stops the
+``Report`` function is called to display the results::
 
   Process Car(Process):
      def go(self):
@@ -231,11 +226,11 @@ is called to display the results::
   
 
 In addition to *SimPy.Simulation* there are three alternative
-simulation libraries with special facilities. Beside
-`SimPy.SimulationTrace`_, already mentioned, there are
-`SimPy.SimulationRT`_ for real time synchronisation and
-`SimPy.SimulationStep`_ for event-stepping through a simulation. See
-the Manual_ for more information.
+simulation libraries with the same simulation capabilities but with
+special facilities. Beside `SimPy.SimulationTrace`_, already
+mentioned, there are `SimPy.SimulationRT`_ for real time
+synchronisation and `SimPy.SimulationStep`_ for event-stepping through
+a simulation. See the Manual_ for more information.
 
 
 .. ==================================================================
@@ -249,12 +244,13 @@ a class written by the user that inherits from SimPy's Process class.
 
 For example, if we are simulating a gas station we might model each
 car as an object of the class ``Car``. A car arrives at the gas
-station (modelled as a Resource with ``pump``\s) it requests a pump
-and may need to wait for it. Then it fills its tank and releases the
-pump. It might also buy an item from the station store. The ``Car``
-class specifies the logic of these actions in its Process Execution
-Method (PEM). The simulation creates individual cars as it runs and
-their evolutions are directed by the ``Car`` class's PEM.
+station (modelled as a Resource with ``pump``\s). It requests a pump
+and may need to wait for it. Then it fills its tank and when it has
+finished it releases the pump. It might also buy an item from the
+station store. The ``Car`` class specifies the logic of these actions
+in its Process Execution Method (PEM). The simulation creates a number
+of cars as it runs and their evolutions are directed by their ``Car``
+class's PEM.
 
 
 Defining a process
@@ -338,9 +334,9 @@ Creating a process object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An entity (process object) is created in the usual Python manner by
-calling the Class. Process classes have a single argument, ``name``
-which can be specified even if no |init| method is defined. It defaults to
-``'a_process'`` unless the user specified a different name. 
+calling the Class. Process classes have a single attribute, ``name``
+which can be specified even if no |init| method is defined. ``name``
+defaults to ``'a_process'`` unless the user specified a different one.
 
 For example to create a new ``Car`` object with a name ``Car23``:
 
@@ -357,9 +353,9 @@ Starting SimPy Process Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An entity (process object) is "passive" when first created, i.e., it
-has no scheduled events. It must be *activated* to start its Process
-Execution Method. To do this you can use either the ``activate``
-function or the ``start`` method of the Process.
+has no events scheduled for it. It must be *activated* to start its
+Process Execution Method. To do this you can use either the
+``activate`` function or the ``start`` method of the Process.
 
 
 activate
@@ -395,8 +391,9 @@ of Process objects:
 
 -    *p.*\ ``start(``\ *p.pemname([args])*\ |arguments3|
 
-     *p* is a Process object.  The PEM, *pemname*, can have arguments
-     *args* and any identifier (such as ``run``, ``lifecycle``, etc).
+     Here *p* is a Process object.  Its PEM, *pemname*, can have any
+     identifier (such as ``run``, ``lifecycle``, etc) and any
+     arguments *args*.
 
      For example, to activate the process object ``cust`` using the PEM
      with identifier ``lifetime`` at time 10.0 we would use::
@@ -421,8 +418,8 @@ can be used (or implied) in the ``start`` method.
        cust.start(cust.ACTIONS(), at=10.0)
        cust.start(at=10.0)
 
-*A reminder*: Even activated process objects will not start operating until the
-``simulate()`` statement is executed. 
+*A reminder*: Even activated process objects will not actually start
+operating until the ``simulate()`` statement is executed.
 
 
 
@@ -455,7 +452,7 @@ More about Processes
 
 An entity (Process object) can be "put to sleep" or passivated using
 ``yield passivate,self`` (and it can be reactivated by another entity
-using ``reactivate``), or permanently reoved from the future event
+using ``reactivate``), or permanently removed from the future event
 queue by the command ``self.cancel()``. Active entities can be
 ``interrupt``\ed by other entities. Examine the full Manual_ for
 details.
@@ -476,11 +473,12 @@ simple example.
 
 Two cars, ``p1`` and ``p2`` are created. ``p1`` and ``p2`` are
 activated to start at simulation times 0.6 and 0.0, respectively. Note
-that these will *not* start in the same order they appear in the
-program listing. ``p2`` actually starts first in the simulation. Nothing
-happens until the ``simulate(until=200)`` statement. When both cars
-have finished (at time ``6.0+100.0=106.0``) there will be no more
-events so the simulation will stop at that time:
+that these will *not* start in the order they appear in the program
+listing. ``p2`` actually starts first in the simulation. Nothing
+happens until the ``simulate(until=200)`` statement at which point the
+event scheduler starts operating by finding the first event to
+execute. When both cars have finished (at time ``6.0+100.0=106.0``)
+there will be no more events so the simulation will stop:
 
 .. include:: programs/car.py
    :literal:
@@ -515,9 +513,10 @@ Resources
 -------------------
 
 The three resource facilities provided by SimPy are Resources_,
-Levels_ and Stores_. Each models a congestion point where process
+``Levels`` and ``Stores``. Each models a congestion point where process
 objects may have to queue up to access resources. This section
-describes the Resource type of resource facility.
+describes the Resource type of resource facility. ``Levels`` and
+``Stores`` are not treated in this introduction.
 
 An example of queueing for a Resource might be a manufacturing plant
 in which a ``Task`` (modelled as an entity or *Process object*) needs
@@ -538,7 +537,9 @@ Defining a Resource object
 
 A Resource object, ``r``,  is established by the following statement::
 
- r = Resource(capacity=1, name='a_resource', unitName='units', monitored=False)
+ r = Resource(capacity=1, 
+              name='a_resource', unitName='units', 
+              monitored=False)
 
 where
 
@@ -600,11 +601,13 @@ yield request
   requests a unit of Resource *r*
 
 If a Resource unit is free when the request is made, the requesting
-entity takes it and moves on to the next statement in its PEM. If no
-Resource unit is available when the request is made, the requesting
-entity is appended to the Resource's ``waitQ`` and suspended.  The
-next time a unit becomes available the first entity in the
-``r.waitQ`` takes it and continues its execution. 
+entity takes it and moves on to the next statement in its PEM. It is
+added to the Resource's ``activeQ``. 
+
+If no Resource unit is available when the request is made, the
+requesting entity is appended to the Resource's ``waitQ`` and
+suspended.  The next time a unit becomes available the first entity in
+the ``r.waitQ`` takes it and continues its execution.
 
 For example, a ``Car`` might request a ``pump``::
 
@@ -624,16 +627,19 @@ yield release
 
   ``yield release,self,r``
 
-  releases the  unit of *r*.
+  releases the  unit of ``r``.
 
 
-For example the  ``Car`` might  release the ``pump``::
+The entity is removed from ``r.activeQ`` and continues with its next
+statement. If, when the unit of ``r`` is released, another entity is
+waiting (in ``waitQ``) it will take the unit, leave the ``waitQ`` and
+move into the ``activeQ`` and go one with its PEM.
+
+For example the ``Car`` might release the ``pump`` unit of the
+gasstation::
 
   yield release,self,gasstation
 
-If, when the unit of *r* is released, another entity is waiting (in
-``waitQ``) it will take the unit, leave the ``waitQ`` and move into
-the ``activeQ`` and go one with its PEM.
 
 
 ------------
@@ -641,10 +647,10 @@ the ``activeQ`` and go one with its PEM.
 Resource Example
 ~~~~~~~~~~~~~~~~~
 
-In this complete script, the ``gasstation`` Resource object
-is given two resource units (``capacity=2``). Four cars arrive at the
-times specified in the program (not in the order they are
-listed). They all request a ``pump`` and use it for 100 time units:
+In this complete script, the ``gasstation`` Resource object is given
+two resource units (``capacity=2``). Four cars arrive at the times
+specified in the program (not in the order they are listed). They all
+request a ``pump`` and use it for 100 time units:
 
 .. include:: programs/cars.py
    :literal:
@@ -659,282 +665,7 @@ And, if we use ``SimPy.SimulationTrace`` to get an automatic trace we
 get the result shown in Appendix `The Resource Example with Tracing`_.
 (It is rather long to be inserted here).
 
-------------
-
- 
-
-.. ==========================================================================
-
-
-
-
-Levels
------------
-
-A ``Level`` holds an amount of a homogeneous undifferentiated
-"material." Thus the currently-available amount of material in a Level
-can be fully described by a real or integer number. One important
-difference from a Resource is that the amount a Level holds can be
-increased as well as decreased by entities.  For example, a gas
-station stores petrol in large tanks. Tankers increase and refuelling
-cars decrease the amount of gas in the station's storage tanks.
-
-
-Defining a Level
-~~~~~~~~~~~~~~~~~~
-
-You define the Level resource facility ``lev`` by a statement like this::
-
- lev = Level(name='a_level', unitName='units',
-             capacity='unbounded', initialBuffered=0, monitored=False)
-
-where
-
- - ``name`` (string) is a descriptive name for the Level object
-   ``lev`` (e.g., ``'inventory'``).
- - ``unitName`` (string) is a descriptive name for the units in which the
-   amount of material in ``lev`` is measured (e.g., ``'kilograms'``).
- - ``capacity`` (positive real or integer) is the capacity of the Level
-   object ``lev``.  The default value is ``'unbounded'`` which is
-   interpreted as ``sys.maxint``.
- - ``initialBuffered`` (positive real or integer) is the initial amount of 
-   material in the Level object ``lev``.
- - ``monitored`` (```True`` or ``False``) specifies whether the queues
-   and the amount of material in ``lev`` will be recorded by a
-   ``Monitor``.
-
-For example, in the model of the  gas-station we might define::
-
-   tank = Level(capacity=10000,initialBuffered=5000,
-                   name='Gas Tank',unitName='litres')
-
-Every Level resource object, such as ``lev``, also has the following
-additional attributes:
-
- - ``lev.amount`` is the amount currently held in ``lev``.
-
- - ``lev.putQ`` is the queue of processes waiting to add amounts to ``lev``,
-   so ``len(lev.putQ)`` is the number of processes waiting to add
-   amounts.
-
- - ``lev.getQ`` is the queue of processes waiting to get amounts from
-   ``lev``, so ``len(lev.getQ)`` is the number of processes waiting to
-   get amounts.
-
- - ``lev.monitored`` is ``True`` if the queues are to be recorded. In
-   this case ``lev.putQMon``, ``lev.getQMon``, and ``lev.bufferMon``
-   exist. See `Monitoring Resource Queues`_
-
- - ``lev.putQMon`` is a Monitor observing ``lev.putQ``.
-
- - ``lev.getQMon`` is a Monitor observing ``lev.getQ``.
-
- - ``lev.bufferMon`` is a Monitor observing ``lev.amount``,.
-
-
-Putting amounts into  a Level
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-.. |yput| replace:: ``yield put,self,``\ *lev,give* 
-
-
-An entity can offer an amount *give* to a Level,
-*lev*, by a ``yield put`` statement:
-
-*  ``yield put,self,``\ *lev,give*
-
-Here *give* must be a positive number (real or integer). If the amount
-offered would lead to an overflow (that is, *lev.*\ ``amount`` + *give
-> lev.*\ ``capacity``) the offering entity is queued (in
-*lev*\ ``.putQ``). It will be reactivated when there is enough space to
-hold the amount offered.
-
-For example a tanker might offer to top up the gas station's ``tank``
-with 6000 litres::
-  
-   yield put,self,tank,6000
-
-(If this was attempted when the ``tank`` contained 5000 litres as in
-the example in `Defining a Level`_, the tanker would be queued in the
-``tank.putQ`` until there was room. In a practical simulation one
-would first check that there was space for it or only top up
-sufficient to fill the ``tank``.)
-
-
-Entities can use a priority system for queueing. They can also preempt
-(that is, interrupt) others already in the system. They can also
-*renege* from the ``putQ`` (that is, they can abandon the wait if it
-takes too long). This is achieved by an extension to the ``yield put``
-command. See the main Manual_ for more information on these options.
-
-
-Getting amounts from a Level
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-.. |yget| replace:: ``yield get,self,``\ *lev,take* 
-
-An entity can request material from the Level *lev*, by a ``yield
-get`` statement.:
-
-*  ``yield get,self,``\ *lev,take* 
-
-Here *take* must be a positive number (real or integer). If *lev*
-does not hold enough to satisfy the request (that is, *take > lev*\
-``.amount``) the requesting process is queued (in *lev*\
-``.getQ``). It will be reactivated when there is enough to satisfy the
-request.
-
-``self.got`` holds the amount actually received by the requester.
-
-For example a ``Car`` might extract gas from the ``tank`` after it has
-obtained the ``pump``::
-
-   yield get,self,tank,50
-
-You might incorporate this in the following structure where a pump is
-first requested, then the gas is extracted, and finally  the pump is
-released::
-
-   yield request,self,gasstation # get a pump
-   yield get,self,tank,50        # extract 50 litres from the tank
-   yield release,self,gasstation # release the pump
-
-Entities can use a priority system for queueing. They can also preempt
-(that is, interrupt) others already in the system. They can also
-*renege* from the ``waitQ`` (that is, they can abandon the wait if it
-takes too long). This is achieved by an extension to the ``yield get``
-command. See the main Manual_ for these options.
-
-
-.. =================================================================
-
-
-Stores
------------
-
-A ``Store`` holds a list of individual items of any Python type.
-Entities can insert or remove specific items, or a number of items,
-from the Store. The items held in a Store may even be Process objects
-(Entities).
-
-For example, the gas station might hold some spares of different types
-and sizes. A car might need a spare of a specific size.
-
-
-
-Defining a Store
-~~~~~~~~~~~~~~~~~~~
-
-The Store object ``sObj`` is established by a statement
-like the following::
-
- sObj = Store(name='a_store', unitName='units',
-              capacity='unbounded', initialBuffered=[ ], monitored=False)
-
-where
-
- - ``name`` (string) is a descriptive name for ``sObj`` (e.g.,
-   ``'Inventory'``).
- - ``unitName`` (string) is a descriptive name for the items 
-   in ``sObj`` (e.g., ``'widgets'``).
- - ``capacity`` (positive integer) is the maximum number of 
-   individual items that can be held in ``sObj``.
-   The default value is ``'unbounded'`` which is
-   interpreted as ``sys.maxint``.
- - ``initialBuffered`` (a list of individual items) is ``sObj``'s initial content.
- - ``monitored`` (```True`` or ``False``) specifies whether ``sObj``'s
-   queues and contents are to be recorded.
-
-For example a store with a limited capacity of 10 items::
-
-  spare = Store(name='Spares',unitName='SKU',
-               capacity=10,initialBuffered=[plug1,plug2,belt3])
-
-A Store object such as ``sObj`` also has the following additional
-attributes:
-
- - ``sObj.theBuffer`` is a queue (list) of the individual items in
-   ``sObj``.  This list is in FIFO order unless the user's program
-   specifies a particular order.
-   
- - ``sObj.nrBuffered`` is the current number of objects in ``sObj``.
-   This is read-only and not directly changeable by the user.
-   
- - ``sObj.putQ`` is the queue of processes waiting to add items to ``sObj``,
-   so that ``len(sObj.putQ)`` is the number of processes waiting to add items.
-   
- - ``sObj.getQ`` is the queue of processes waiting to get items from
-   ``sObj``, so that ``len(sObj.getQ)`` is the number of processes waiting to
-   get items.
-
- - If ``sObj.monitored`` is ``True`` then the queues are to be
-   recorded.  In this case ``sObj.putQMon``, ``sObj.getQMon``, and
-   ``sObj.bufferMon`` exist. See `Monitoring Resource Queues`_
-
- - ``sObj.putQMon`` is a Monitor observing ``sObj.putQ``.
- 
- - ``sObj.getQMon`` is a Monitor observing ``sObj.getQ``.
- 
- - ``sObj.bufferMon``  is a Monitor observing ``sObj.nrBuffered``.
-
-
-Putting objects into a Store
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Entities (process objects) can request items from a Store and the same
-or other entities can offer items to it. First look at the simpler of
-these operations, the ``yield put``.
-
-An entity, the *offerer*, which is usually but not necessarily
-different from the *requester*, can offer a list of items to *sObj* by
-a ``yield put`` statement:
-
-* ``yield put,self,``\ *sObj,give*
-
-Here ``give`` is a *list* of any Python objects. If this statement would
-lead to an overflow (that is, ``sObj.nrBuffered + len(give) >
-sObj.capacity``) the putting entity is passivated and queued (in
-``sObj.putQ``) until there is sufficient room. 
-
-Entities can use a priority system for queueing. They can also preempt
-(that is, interrupt) others already in the system. They can also
-*renege* from the ``putQ`` (that is, they can abandon the wait if it
-takes too long). This is achieved by an extension to the ``yield put``
-command. Normally the items in a Store are kept in the order they were
-put in but it is possible to store them in a user-defined order. See
-the main Manual_ for these options.
-
-
-
-Getting objects from  a Store
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-An entity , the *requester*, can extract the first ``n`` objects from
-*sObj* as a list.  Getting the first *n* items in *sObj*, the buffer,
-is achieved by the following statement:
-
-* ``yield get,self,``\ *sObj,n*
-
-Here *n* must be a positive integer.  If *sObj* does not currently
-hold enough objects to satisfy this request (that is, ``n >
-sObj.nrBuffered``) then the requesting entity is passivated and
-queued (in ``sObj.getQ``). It will be reactivated when the request can
-be satisfied. The retrieved objects are returned in the list attribute
-``got`` of the requesting process.
-
-
-
-Entities can use a priority system for queueing. They can also preempt
-(that is, interrupt) others already in the system. They can also
-*renege* from the ``waitQ`` (that is, they can abandon the wait if it
-takes too long). This is achieved by an extension to the ``yield get``
-command. It is also possible to get a list of objects from a store
-using a "filter function" that chooses only those that satisfy user-specified
-conditions. See the main Manual_ for these options.
-
-
+-------
 
 
 .. ==========================================================================
@@ -989,21 +720,20 @@ Monitors and Recording Simulation Results
 
 
 
-A Monitor enables us to observe a variable of interest and to hold a
-time series of its values. It can return a simple data summary either
-during or at the completion of a simulation run.
+A Monitor enables us to observe a particular variable of interest and
+to hold a time series of its values. It can return a simple data
+summary either during or at the completion of a simulation run.
 
-It uses the ``observe`` method to record the variable's value at a
-particular time. For example we might use one Monitor to record the
-waiting time for each of a series of customers and another to record
-the total number of customers in the shop. In a discrete-event system
-the number of customers changes only at arrival or departure events
-and it is at those events that the number in the shop must be
-observed. A Monitor provides simple statistics useful either alone or
-as the start of a more sophisticated statistical analysis.
+For example we might use one Monitor to record the waiting time for
+each of a series of customers and another to record the total number
+of customers in the shop. In a discrete-event system the number of
+customers changes only at arrival or departure events and it is at
+those events that the number in the shop must be observed. A Monitor
+provides simple statistics useful either alone or as the start of a
+more sophisticated statistical analysis.
 
-When Resources, Levels, and Stores are defined, a Monitor can be set
-up to automatically observe the lengths of each of their queues.
+When Resources are defined, a Monitor can be set up to automatically
+observe the lengths of each of their queues.
 
 
 
@@ -1013,8 +743,8 @@ Defining Monitors
 
 
 The ``Monitor`` class preserves a complete time-series of the observed
-data values, *y*, and their associated times, *t*. The data are held
-in a list of two-item sub-lists, *[t,y]*. Monitors calculate data
+data values, ``y``, and their associated times, ``t``. The data are held
+in a list of two-item sub-lists, ``[t,y]``. Monitors calculate data
 summaries using this time-series when your program requests them. In
 long simulations their memory demands may be a disadvantage
 
@@ -1175,31 +905,32 @@ More on Monitors
 
 When a Monitor is defined it is automatically entered into a global
 list ``allMonitors``. Each Monitor also has a descriptive label for
-its variable values, *y*, and their corresponding times, *t*, that can
+its variable values, ``y``, and their corresponding times, ``t``, that can
 be used when the data are plotted.  The function ``startCollection()``
 can be called to initialise all the Monitors in ``allMonitors`` at a
 certain simulation time. This is helpful when a simulation needs a
 'warmup' period to achieve steady state before measurements are
 started.  A Monitor can also generate a ``Histogram`` of the data
-The ``Tally`` is an alternative to ``Monitor`` that does essentially
+(The SimPy ``Tally`` is an alternative to ``Monitor`` that does essentially
 the same job but uses less storage space at some cost of speed and
-flexibility. See the Manual_ for more information on these options.
+flexibility. See the Manual_ for more information on these options.)
 
 
  
 
+Appendices
+---------------
 
-SimPy Contacts
-------------------------
+SimPy Information
+~~~~~~~~~~~~~~~~~
 
 :SimPy Web-site: http://simpy.sourceforge.net/
 :SimPy wiki: http://www.mcs.vuw.ac.nz/cgi-bin/wiki/SimPy
 :Python-Version: 2.3+
-:SimPy version: 1.9
+:SimPy version: 1.9.1
+:SVN:   |svnversion|
+:Date: 2008-08-07
 
-
-Appendices
----------------
 
 The Resource Example with Tracing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1218,18 +949,11 @@ the ``gasstation``.)
 .. include:: programs/carsT.OK
    :literal:
 
-
-.. $Revision: 1.1.2.13 $ $Date: 2008/03/15 04:23:17 $
-
-
-
-
-
 ..
- .. image:: http://sourceforge.net/sflogo.php?group_id=62366&type=4
-    :width: 125
-    :alt:  SourceForge Logo
-    :height: 37
+   .. image:: http://sourceforge.net/sflogo.php?group_id=62366&type=4
+      :width: 125
+      :alt:  SourceForge Logo
+      :height: 37
 
 .. ------------------------------------------------------------------------
 .. some useful stuff used above
@@ -1251,15 +975,16 @@ the ``gasstation``.)
 .. _Top: Contents_
 
 .. _monitors: `Monitors and Recording Simulation Results`_
-.. _monitor: `Monitors and Recording Simulation Results`_
 
 
 .. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
 .. _Python: http://www.Python.org
 .. _`SimPlot`: SimPlotManual/ManualPlotting.html
 
-
-
+.. ----------------------------------------------------------------------------
+.. CVS: was $Revision: 1.35 $ $Date: 2008/06/07 23:37:45 $
+.. the Mercurial (hg) version.
+.. SVN |svnversion|
 .. ----------------------------------------------------------------------------
 
 
@@ -1271,4 +996,3 @@ the ``gasstation``.)
   sentence-end-double-space: t
   fill-column: 70
   End:
-
