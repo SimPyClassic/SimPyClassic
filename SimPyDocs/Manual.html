@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.4.1: http://docutils.sourceforge.net/" />
 <title>The SimPy Manual</title>
 <meta name="authors" content="Tony Vignaux &lt;Vignaux&#64;users.sourceforge.net&gt;  Klaus Muller &lt;Muller&#64;users.sourceforge.net&gt;  Bob Helmbold" />
-<meta name="date" content="2008-03-12" />
+<meta name="date" content="2008-08-09" />
 <meta content="SimPy Python Simulation Language" name="description" />
 <meta content="simulation python stochastic" name="keywords" />
 <style type="text/css">
@@ -16,8 +16,8 @@
 :Contact: Tony Vignaux <Vignaux@users.sourceforge.net>
 :Copyright: This stylesheet has been placed in the public domain.
 :SimPy version: 1.8
-:Revision: $Revision: 1.1.1.37 $ 
-:Date: $Date: 2008/03/12 04:34:38 $
+:Revision: $Revision: 1.1.1.1 $ 
+:Date: $Date: 2007/09/26 05:15:21 $
 
 Stylesheet for use with Docutils.  Based on the standard but 
 ensuring that computer listings are backed by grey.
@@ -45,92 +45,87 @@ pre.literal-block, pre.doctest-block {
 <td>Tony Vignaux &lt;<a class="reference" href="mailto:Vignaux&#64;users.sourceforge.net">Vignaux&#64;users.sourceforge.net</a>&gt;
 <br />Klaus Muller &lt;<a class="reference" href="mailto:Muller&#64;users.sourceforge.net">Muller&#64;users.sourceforge.net</a>&gt;
 <br />Bob Helmbold</td></tr>
-<tr class="field"><th class="docinfo-name">SimPy version:</th><td class="field-body">1.9</td>
+<tr class="field"><th class="docinfo-name">SimPy version:</th><td class="field-body">1.9.1</td>
 </tr>
 <tr class="field"><th class="docinfo-name">SimPy Web-site:</th><td class="field-body"><a class="reference" href="http://simpy.sourceforge.net/">http://simpy.sourceforge.net/</a></td>
-</tr>
-<tr class="field"><th class="docinfo-name">SimPy wiki:</th><td class="field-body"><a class="reference" href="http://www.mcs.vuw.ac.nz/cgi-bin/wiki/SimPy">http://www.mcs.vuw.ac.nz/cgi-bin/wiki/SimPy</a></td>
 </tr>
 <tr class="field"><th class="docinfo-name">Python-Version:</th><td class="field-body">2.3+</td>
 </tr>
 <tr><th class="docinfo-name">Revision:</th>
-<td>1.21</td></tr>
+<td>23</td></tr>
 <tr><th class="docinfo-name">Date:</th>
-<td>2008-03-12</td></tr>
+<td>2008-08-09</td></tr>
 </tbody>
 </table>
-<!-- CHANGES NEEDED:
-
-SPELL CHECK
-
-Add a paragraph about the standard PEM name ACTIONS, line 352 -->
-<!-- REPLACEMENTS ==================== -->
-<!-- ================================= -->
+<!-- Derived from CVS 1.22 -->
+<!-- CHANGES NEEDED: -->
+<!-- REPLACEMENTS ============================================== -->
+<!-- =========================================================== -->
 <div class="contents topic">
 <p class="topic-title first"><a id="contents" name="contents">Contents</a></p>
 <ul class="auto-toc simple">
-<li><a class="reference" href="#introduction" id="id19" name="id19">1&nbsp;&nbsp;&nbsp;Introduction</a></li>
-<li><a class="reference" href="#simulation-with-simpy" id="id20" name="id20">2&nbsp;&nbsp;&nbsp;Simulation with SimPy</a><ul class="auto-toc">
-<li><a class="reference" href="#alternative-simpy-simulation-libraries" id="id21" name="id21">2.1&nbsp;&nbsp;&nbsp;Alternative SimPy simulation libraries</a></li>
+<li><a class="reference" href="#introduction" id="id20" name="id20">1&nbsp;&nbsp;&nbsp;Introduction</a></li>
+<li><a class="reference" href="#simulation-with-simpy" id="id21" name="id21">2&nbsp;&nbsp;&nbsp;Simulation with SimPy</a><ul class="auto-toc">
+<li><a class="reference" href="#alternative-simpy-simulation-libraries" id="id22" name="id22">2.1&nbsp;&nbsp;&nbsp;Alternative SimPy simulation libraries</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#processes" id="id22" name="id22">3&nbsp;&nbsp;&nbsp;Processes</a><ul class="auto-toc">
-<li><a class="reference" href="#defining-a-process" id="id23" name="id23">3.1&nbsp;&nbsp;&nbsp;Defining a process</a></li>
-<li><a class="reference" href="#creating-a-process-object" id="id24" name="id24">3.2&nbsp;&nbsp;&nbsp;Creating a process object</a></li>
-<li><a class="reference" href="#elapsing-time-in-a-process" id="id25" name="id25">3.3&nbsp;&nbsp;&nbsp;Elapsing time in a Process</a></li>
-<li><a class="reference" href="#starting-and-stopping-simpy-process-objects" id="id26" name="id26">3.4&nbsp;&nbsp;&nbsp;Starting and stopping SimPy Process Objects</a></li>
-<li><a class="reference" href="#asynchronous-interruptions" id="id27" name="id27">3.5&nbsp;&nbsp;&nbsp;Asynchronous interruptions</a></li>
-<li><a class="reference" href="#advanced-synchronization-scheduling-capabilities" id="id28" name="id28">3.6&nbsp;&nbsp;&nbsp;Advanced synchronization/scheduling capabilities</a></li>
+<li><a class="reference" href="#processes" id="id23" name="id23">3&nbsp;&nbsp;&nbsp;Processes</a><ul class="auto-toc">
+<li><a class="reference" href="#defining-a-process" id="id24" name="id24">3.1&nbsp;&nbsp;&nbsp;Defining a process</a></li>
+<li><a class="reference" href="#creating-a-process-object" id="id25" name="id25">3.2&nbsp;&nbsp;&nbsp;Creating a process object</a></li>
+<li><a class="reference" href="#elapsing-time-in-a-process" id="id26" name="id26">3.3&nbsp;&nbsp;&nbsp;Elapsing time in a Process</a></li>
+<li><a class="reference" href="#starting-and-stopping-simpy-process-objects" id="id27" name="id27">3.4&nbsp;&nbsp;&nbsp;Starting and stopping SimPy Process Objects</a></li>
+<li><a class="reference" href="#asynchronous-interruptions" id="id28" name="id28">3.5&nbsp;&nbsp;&nbsp;Asynchronous interruptions</a></li>
+<li><a class="reference" href="#advanced-synchronization-scheduling-capabilities" id="id29" name="id29">3.6&nbsp;&nbsp;&nbsp;Advanced synchronization/scheduling capabilities</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#resources" id="id29" name="id29">4&nbsp;&nbsp;&nbsp;Resources</a><ul class="auto-toc">
-<li><a class="reference" href="#defining-a-resource-object" id="id30" name="id30">4.1&nbsp;&nbsp;&nbsp;Defining a Resource object</a></li>
-<li><a class="reference" href="#requesting-and-releasing-a-unit-of-a-resource" id="id31" name="id31">4.2&nbsp;&nbsp;&nbsp;Requesting and releasing a unit of a Resource</a></li>
-<li><a class="reference" href="#queue-order" id="id32" name="id32">4.3&nbsp;&nbsp;&nbsp;Queue Order</a></li>
-<li><a class="reference" href="#reneging-leaving-a-queue-before-acquiring-a-resource" id="id33" name="id33">4.4&nbsp;&nbsp;&nbsp;Reneging -- leaving a queue before acquiring a resource</a></li>
-<li><a class="reference" href="#recording-resource-queue-lengths" id="id34" name="id34">4.5&nbsp;&nbsp;&nbsp;Recording Resource queue lengths</a></li>
+<li><a class="reference" href="#resources" id="id30" name="id30">4&nbsp;&nbsp;&nbsp;Resources</a><ul class="auto-toc">
+<li><a class="reference" href="#defining-a-resource-object" id="id31" name="id31">4.1&nbsp;&nbsp;&nbsp;Defining a Resource object</a></li>
+<li><a class="reference" href="#requesting-and-releasing-a-unit-of-a-resource" id="id32" name="id32">4.2&nbsp;&nbsp;&nbsp;Requesting and releasing a unit of a Resource</a></li>
+<li><a class="reference" href="#queue-order" id="id33" name="id33">4.3&nbsp;&nbsp;&nbsp;Queue Order</a></li>
+<li><a class="reference" href="#reneging-leaving-a-queue-before-acquiring-a-resource" id="id34" name="id34">4.4&nbsp;&nbsp;&nbsp;Reneging -- leaving a queue before acquiring a resource</a></li>
+<li><a class="reference" href="#recording-resource-queue-lengths" id="id35" name="id35">4.5&nbsp;&nbsp;&nbsp;Recording Resource queue lengths</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#levels" id="id35" name="id35">5&nbsp;&nbsp;&nbsp;Levels</a><ul class="auto-toc">
-<li><a class="reference" href="#defining-a-level" id="id36" name="id36">5.1&nbsp;&nbsp;&nbsp;Defining a Level</a></li>
-<li><a class="reference" href="#getting-amounts-from-a-level" id="id37" name="id37">5.2&nbsp;&nbsp;&nbsp;Getting amounts from a Level</a></li>
-<li><a class="reference" href="#putting-amounts-into-a-level" id="id38" name="id38">5.3&nbsp;&nbsp;&nbsp;Putting amounts into  a Level</a></li>
-<li><a class="reference" href="#reneging" id="id39" name="id39">5.4&nbsp;&nbsp;&nbsp;Reneging</a></li>
+<li><a class="reference" href="#levels" id="id36" name="id36">5&nbsp;&nbsp;&nbsp;Levels</a><ul class="auto-toc">
+<li><a class="reference" href="#defining-a-level" id="id37" name="id37">5.1&nbsp;&nbsp;&nbsp;Defining a Level</a></li>
+<li><a class="reference" href="#getting-amounts-from-a-level" id="id38" name="id38">5.2&nbsp;&nbsp;&nbsp;Getting amounts from a Level</a></li>
+<li><a class="reference" href="#putting-amounts-into-a-level" id="id39" name="id39">5.3&nbsp;&nbsp;&nbsp;Putting amounts into  a Level</a></li>
+<li><a class="reference" href="#reneging" id="id40" name="id40">5.4&nbsp;&nbsp;&nbsp;Reneging</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#stores" id="id40" name="id40">6&nbsp;&nbsp;&nbsp;Stores</a><ul class="auto-toc">
-<li><a class="reference" href="#defining-a-store" id="id41" name="id41">6.1&nbsp;&nbsp;&nbsp;Defining a Store</a></li>
-<li><a class="reference" href="#putting-objects-into-a-store" id="id42" name="id42">6.2&nbsp;&nbsp;&nbsp;Putting objects into a Store</a></li>
-<li><a class="reference" href="#getting-objects-from-a-store" id="id43" name="id43">6.3&nbsp;&nbsp;&nbsp;Getting objects from  a Store</a></li>
-<li><a class="reference" href="#using-the-get-filter-function" id="id44" name="id44">6.4&nbsp;&nbsp;&nbsp;Using the get filter function</a></li>
-<li><a class="reference" href="#id16" id="id45" name="id45">6.5&nbsp;&nbsp;&nbsp;Reneging</a></li>
-<li><a class="reference" href="#storing-objects-in-an-order" id="id46" name="id46">6.6&nbsp;&nbsp;&nbsp;Storing objects in an order</a></li>
-<li><a class="reference" href="#master-slave-modeling-with-a-store" id="id47" name="id47">6.7&nbsp;&nbsp;&nbsp;Master/Slave modeling with a Store</a></li>
+<li><a class="reference" href="#stores" id="id41" name="id41">6&nbsp;&nbsp;&nbsp;Stores</a><ul class="auto-toc">
+<li><a class="reference" href="#defining-a-store" id="id42" name="id42">6.1&nbsp;&nbsp;&nbsp;Defining a Store</a></li>
+<li><a class="reference" href="#putting-objects-into-a-store" id="id43" name="id43">6.2&nbsp;&nbsp;&nbsp;Putting objects into a Store</a></li>
+<li><a class="reference" href="#getting-objects-from-a-store" id="id44" name="id44">6.3&nbsp;&nbsp;&nbsp;Getting objects from  a Store</a></li>
+<li><a class="reference" href="#using-the-get-filter-function" id="id45" name="id45">6.4&nbsp;&nbsp;&nbsp;Using the get filter function</a></li>
+<li><a class="reference" href="#id16" id="id46" name="id46">6.5&nbsp;&nbsp;&nbsp;Reneging</a></li>
+<li><a class="reference" href="#storing-objects-in-an-order" id="id47" name="id47">6.6&nbsp;&nbsp;&nbsp;Storing objects in an order</a></li>
+<li><a class="reference" href="#master-slave-modeling-with-a-store" id="id48" name="id48">6.7&nbsp;&nbsp;&nbsp;Master/Slave modeling with a Store</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#random-number-generation" id="id48" name="id48">7&nbsp;&nbsp;&nbsp;Random Number Generation</a></li>
-<li><a class="reference" href="#recording-simulation-results" id="id49" name="id49">8&nbsp;&nbsp;&nbsp;Recording Simulation Results</a><ul class="auto-toc">
-<li><a class="reference" href="#defining-tallys-and-monitors" id="id50" name="id50">8.1&nbsp;&nbsp;&nbsp;Defining Tallys and Monitors</a></li>
-<li><a class="reference" href="#observing-data" id="id51" name="id51">8.2&nbsp;&nbsp;&nbsp;Observing data</a></li>
-<li><a class="reference" href="#data-summaries" id="id52" name="id52">8.3&nbsp;&nbsp;&nbsp;Data summaries</a></li>
-<li><a class="reference" href="#special-methods-for-monitor" id="id53" name="id53">8.4&nbsp;&nbsp;&nbsp;Special methods for Monitor</a></li>
-<li><a class="reference" href="#histograms" id="id54" name="id54">8.5&nbsp;&nbsp;&nbsp;Histograms</a></li>
+<li><a class="reference" href="#random-number-generation" id="id49" name="id49">7&nbsp;&nbsp;&nbsp;Random Number Generation</a></li>
+<li><a class="reference" href="#recording-simulation-results" id="id50" name="id50">8&nbsp;&nbsp;&nbsp;Recording Simulation Results</a><ul class="auto-toc">
+<li><a class="reference" href="#defining-tallys-and-monitors" id="id51" name="id51">8.1&nbsp;&nbsp;&nbsp;Defining Tallys and Monitors</a></li>
+<li><a class="reference" href="#observing-data" id="id52" name="id52">8.2&nbsp;&nbsp;&nbsp;Observing data</a></li>
+<li><a class="reference" href="#data-summaries" id="id53" name="id53">8.3&nbsp;&nbsp;&nbsp;Data summaries</a></li>
+<li><a class="reference" href="#special-methods-for-monitor" id="id54" name="id54">8.4&nbsp;&nbsp;&nbsp;Special methods for Monitor</a></li>
+<li><a class="reference" href="#histograms" id="id55" name="id55">8.5&nbsp;&nbsp;&nbsp;Histograms</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#other-links" id="id55" name="id55">9&nbsp;&nbsp;&nbsp;Other Links</a></li>
-<li><a class="reference" href="#acknowledgments" id="id56" name="id56">10&nbsp;&nbsp;&nbsp;Acknowledgments</a></li>
-<li><a class="reference" href="#appendices" id="id57" name="id57">11&nbsp;&nbsp;&nbsp;Appendices</a><ul class="auto-toc">
-<li><a class="reference" href="#a0-changes-from-the-previous-version-of-simpy" id="id58" name="id58">11.1&nbsp;&nbsp;&nbsp;A0. Changes from the previous  version of SimPy</a></li>
-<li><a class="reference" href="#a1-simpy-error-messages" id="id59" name="id59">11.2&nbsp;&nbsp;&nbsp;A1. SimPy Error Messages</a></li>
-<li><a class="reference" href="#a2-simpy-process-states" id="id60" name="id60">11.3&nbsp;&nbsp;&nbsp;A2. SimPy Process States</a></li>
-<li><a class="reference" href="#a3-simplot-the-simpy-plotting-utility" id="id61" name="id61">11.4&nbsp;&nbsp;&nbsp;A3. SimPlot, The SimPy plotting utility</a></li>
-<li><a class="reference" href="#a4-simgui-the-simpy-graphical-user-interface" id="id62" name="id62">11.5&nbsp;&nbsp;&nbsp;A4. SimGUI, The SimPy Graphical User Interface</a></li>
-<li><a class="reference" href="#a5-simulationtrace-the-simpy-tracing-utility" id="id63" name="id63">11.6&nbsp;&nbsp;&nbsp;A5. SimulationTrace, the SimPy tracing utility</a></li>
-<li><a class="reference" href="#a6-simulationstep-the-simpy-event-stepping-utility" id="id64" name="id64">11.7&nbsp;&nbsp;&nbsp;A6. SimulationStep, the SimPy event stepping utility</a></li>
-<li><a class="reference" href="#a7-simulationrt-a-real-time-synchronizing-utility" id="id65" name="id65">11.8&nbsp;&nbsp;&nbsp;A7. SimulationRT, a real-time synchronizing utility</a></li>
+<li><a class="reference" href="#other-links" id="id56" name="id56">9&nbsp;&nbsp;&nbsp;Other Links</a></li>
+<li><a class="reference" href="#acknowledgments" id="id57" name="id57">10&nbsp;&nbsp;&nbsp;Acknowledgments</a></li>
+<li><a class="reference" href="#appendices" id="id58" name="id58">11&nbsp;&nbsp;&nbsp;Appendices</a><ul class="auto-toc">
+<li><a class="reference" href="#a0-changes-from-the-previous-version-of-simpy" id="id59" name="id59">11.1&nbsp;&nbsp;&nbsp;A0. Changes from the previous  version of SimPy</a></li>
+<li><a class="reference" href="#a1-simpy-error-messages" id="id60" name="id60">11.2&nbsp;&nbsp;&nbsp;A1. SimPy Error Messages</a></li>
+<li><a class="reference" href="#a2-simpy-process-states" id="id61" name="id61">11.3&nbsp;&nbsp;&nbsp;A2. SimPy Process States</a></li>
+<li><a class="reference" href="#a3-simplot-the-simpy-plotting-utility" id="id62" name="id62">11.4&nbsp;&nbsp;&nbsp;A3. SimPlot, The SimPy plotting utility</a></li>
+<li><a class="reference" href="#a4-simgui-the-simpy-graphical-user-interface" id="id63" name="id63">11.5&nbsp;&nbsp;&nbsp;A4. SimGUI, The SimPy Graphical User Interface</a></li>
+<li><a class="reference" href="#a5-simulationtrace-the-simpy-tracing-utility" id="id64" name="id64">11.6&nbsp;&nbsp;&nbsp;A5. SimulationTrace, the SimPy tracing utility</a></li>
+<li><a class="reference" href="#a6-simulationstep-the-simpy-event-stepping-utility" id="id65" name="id65">11.7&nbsp;&nbsp;&nbsp;A6. SimulationStep, the SimPy event stepping utility</a></li>
+<li><a class="reference" href="#a7-simulationrt-a-real-time-synchronizing-utility" id="id66" name="id66">11.8&nbsp;&nbsp;&nbsp;A7. SimulationRT, a real-time synchronizing utility</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#glossary" id="id66" name="id66">12&nbsp;&nbsp;&nbsp;Glossary</a></li>
+<li><a class="reference" href="#id17" id="id67" name="id67">12&nbsp;&nbsp;&nbsp;Glossary</a></li>
 </ul>
 </div>
 <!-- 1   Introduction
@@ -225,7 +220,7 @@ contains the revision number and date of the current version.</td></tr>
 </tbody>
 </table>
 <div class="section">
-<h1><a class="toc-backref" href="#id19" id="introduction" name="introduction">1&nbsp;&nbsp;&nbsp;Introduction</a></h1>
+<h1><a class="toc-backref" href="#id20" id="introduction" name="introduction">1&nbsp;&nbsp;&nbsp;Introduction</a></h1>
 <p>SimPy is a Python-based discrete-event simulation system that models
 active components such as messages, customers, trucks, planes by
 parallel processes. It provides a number of tools for the simulation
@@ -320,7 +315,7 @@ the <a class="reference" href="http://www.Python.org">Python</a> web-site (<a cl
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id20" id="simulation-with-simpy" name="simulation-with-simpy">2&nbsp;&nbsp;&nbsp;Simulation with SimPy</a></h1>
+<h1><a class="toc-backref" href="#id21" id="simulation-with-simpy" name="simulation-with-simpy">2&nbsp;&nbsp;&nbsp;Simulation with SimPy</a></h1>
 <p>To use the SimPy simulation system you must import its <tt class="docutils literal"><span class="pre">Simulation</span></tt>
 module (or one of the <a class="reference" href="#alternative-simpy-simulation-libraries">alternatives</a>):</p>
 <blockquote>
@@ -378,7 +373,7 @@ simulate(until=1000.0)
 Report()  #  report results when the simulation finishes
 </pre>
 <div class="section">
-<h2><a class="toc-backref" href="#id21" id="alternative-simpy-simulation-libraries" name="alternative-simpy-simulation-libraries">2.1&nbsp;&nbsp;&nbsp;Alternative SimPy simulation libraries</a></h2>
+<h2><a class="toc-backref" href="#id22" id="alternative-simpy-simulation-libraries" name="alternative-simpy-simulation-libraries">2.1&nbsp;&nbsp;&nbsp;Alternative SimPy simulation libraries</a></h2>
 <p>In addition to <em>SimPy.Simulation</em>, SimPy provides three alternative
 simulation libraries which have the basic <tt class="docutils literal"><span class="pre">SimPy.Simulation</span></tt>
 capabilities, plus additional facilities:</p>
@@ -406,7 +401,7 @@ etc.</li>
 </div>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id22" id="processes" name="processes">3&nbsp;&nbsp;&nbsp;Processes</a></h1>
+<h1><a class="toc-backref" href="#id23" id="processes" name="processes">3&nbsp;&nbsp;&nbsp;Processes</a></h1>
 <p>The active objects for discrete-event simulation in SimPy are process
 objects -- instances of some class that inherits from SimPy's Process
 class.</p>
@@ -419,7 +414,7 @@ actions of each message in its Process Execution Method (PEM).
 Individual message objects are created as the simulation runs, and
 their evolutions are directed by the <tt class="docutils literal"><span class="pre">Message</span></tt> class's PEM.</p>
 <div class="section">
-<h2><a class="toc-backref" href="#id23" id="defining-a-process" name="defining-a-process">3.1&nbsp;&nbsp;&nbsp;Defining a process</a></h2>
+<h2><a class="toc-backref" href="#id24" id="defining-a-process" name="defining-a-process">3.1&nbsp;&nbsp;&nbsp;Defining a process</a></h2>
 <p>Each Process class inherits from SimPy's <tt class="docutils literal"><span class="pre">Process</span></tt> class. For example
 the header of the definition of a new <tt class="docutils literal"><span class="pre">Message</span></tt> Process class would
 be:</p>
@@ -446,7 +441,7 @@ restarted again after the yield statement without losing its current
 state.  A PEM may have any name of your choice. For example it may
 be called <tt class="docutils literal"><span class="pre">execute(</span> <span class="pre">)</span></tt> or <tt class="docutils literal"><span class="pre">run(</span> <span class="pre">)</span></tt>.</p>
 <p>&quot;The <tt class="docutils literal"><span class="pre">yield</span></tt> statements are simulation commands which affect an
-ongoing lifecycle of Process objects. These statements control the
+ongoing life-cycle of Process objects. These statements control the
 execution and synchronization of multiple processes. They can delay
 a process, put it to sleep, request a shared resource or provide a
 resource. They can add new events on the simulation event schedule,
@@ -488,7 +483,7 @@ example below.</p>
 </ul>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id24" id="creating-a-process-object" name="creating-a-process-object">3.2&nbsp;&nbsp;&nbsp;Creating a process object</a></h2>
+<h2><a class="toc-backref" href="#id25" id="creating-a-process-object" name="creating-a-process-object">3.2&nbsp;&nbsp;&nbsp;Creating a process object</a></h2>
 <p>An entity (process object) is created in the usual Python manner by
 calling the Class. Process classes have a single argument, <tt class="docutils literal"><span class="pre">name</span></tt>
 which can be specified if no <tt class="docutils literal"><span class="pre">__init__</span></tt> method is defined. It defaults to
@@ -547,7 +542,7 @@ Current time is  106.0
 </div>
 <hr class="docutils" />
 <div class="section">
-<h2><a class="toc-backref" href="#id25" id="elapsing-time-in-a-process" name="elapsing-time-in-a-process">3.3&nbsp;&nbsp;&nbsp;Elapsing time in a Process</a></h2>
+<h2><a class="toc-backref" href="#id26" id="elapsing-time-in-a-process" name="elapsing-time-in-a-process">3.3&nbsp;&nbsp;&nbsp;Elapsing time in a Process</a></h2>
 <p>A <a class="reference" href="#pem">PEM</a> uses the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold</span></tt> command to temporarily delay a process
 object's operations.</p>
 <div class="section">
@@ -606,7 +601,7 @@ simulate(until=100.0)
 </div>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id26" id="starting-and-stopping-simpy-process-objects" name="starting-and-stopping-simpy-process-objects">3.4&nbsp;&nbsp;&nbsp;Starting and stopping SimPy Process Objects</a></h2>
+<h2><a class="toc-backref" href="#id27" id="starting-and-stopping-simpy-process-objects" name="starting-and-stopping-simpy-process-objects">3.4&nbsp;&nbsp;&nbsp;Starting and stopping SimPy Process Objects</a></h2>
 <p>A process object is &quot;passive&quot; when first created, i.e., it has no
 scheduled events. It must be <em>activated</em> to start its Process
 Execution Method. To activate an instance of a Process class you can
@@ -656,7 +651,7 @@ method. There are a number of ways of using it:</p>
 <li><p class="first"><em>p.</em><tt class="docutils literal"><span class="pre">start(</span></tt><em>p.pemname([args])</em><tt class="docutils literal"><span class="pre">[,{at=now()|delay=0}][,prior=False])</span></tt></p>
 <p>is an alternative to the <tt class="docutils literal"><span class="pre">activate</span></tt> statement. <em>p</em> is a Process
 object.  The generator function, <em>pemname</em>, can have any
-identifier (such as <tt class="docutils literal"><span class="pre">run</span></tt>, <tt class="docutils literal"><span class="pre">lifecycle</span></tt>, etc). It can have
+identifier (such as <tt class="docutils literal"><span class="pre">run</span></tt>, <tt class="docutils literal"><span class="pre">life-cycle</span></tt>, etc). It can have
 parameters.</p>
 <p>For example, to activate the process object <tt class="docutils literal"><span class="pre">cust</span></tt> using the PEM
 with identifier, <tt class="docutils literal"><span class="pre">lifetime</span></tt> at time 10.0 we would use:</p>
@@ -816,7 +811,7 @@ simulate(until=100)
 </div>
 <hr class="docutils" />
 <div class="section">
-<h2><a class="toc-backref" href="#id27" id="asynchronous-interruptions" name="asynchronous-interruptions">3.5&nbsp;&nbsp;&nbsp;Asynchronous interruptions</a></h2>
+<h2><a class="toc-backref" href="#id28" id="asynchronous-interruptions" name="asynchronous-interruptions">3.5&nbsp;&nbsp;&nbsp;Asynchronous interruptions</a></h2>
 <p>An active process object can be interrupted by another but cannot
 interrupt itself.</p>
 <div class="section">
@@ -957,6 +952,13 @@ Bus repaired at 960
 Bus has arrived at 1060
 SimPy: No more events at time 1260
 </pre>
+<p>The bus finishes at 1060 but the simulation finished at 1260. Why? The
+<tt class="docutils literal"><span class="pre">breakdown</span></tt>s PEM consists of a loop, one breakdown following
+another at <tt class="docutils literal"><span class="pre">300</span></tt> intervals. The last breakdown finishes at 960 and
+then a breakdown event is scheduled for 1260. But the bus finished at
+1060 and is not affected by the breakdown.  These details can easily
+be checked by importing from <tt class="docutils literal"><span class="pre">SimPy.SimulationTrace</span></tt> and re-running
+the program.</p>
 <hr class="docutils" />
 <p>Where interrupts can occur, the victim of interrupts must test for
 interrupt occurrence after every appropriate <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">hold</span></tt> and react
@@ -965,7 +967,7 @@ interrupted continues to hold it.</p>
 </div>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id28" id="advanced-synchronization-scheduling-capabilities" name="advanced-synchronization-scheduling-capabilities">3.6&nbsp;&nbsp;&nbsp;Advanced synchronization/scheduling capabilities</a></h2>
+<h2><a class="toc-backref" href="#id29" id="advanced-synchronization-scheduling-capabilities" name="advanced-synchronization-scheduling-capabilities">3.6&nbsp;&nbsp;&nbsp;Advanced synchronization/scheduling capabilities</a></h2>
 <p>The preceding scheduling constructs all depend on specified time
 values. That is, they delay processes for a specific time, or use
 given time parameters when reactivating them. For a wide range of
@@ -1329,7 +1331,7 @@ cost).</p>
 </div>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id29" id="resources" name="resources">4&nbsp;&nbsp;&nbsp;Resources</a></h1>
+<h1><a class="toc-backref" href="#id30" id="resources" name="resources">4&nbsp;&nbsp;&nbsp;Resources</a></h1>
 <p>The three resource facilities provided by SimPy are <a class="reference" href="#resources">Resources</a>,
 <a class="reference" href="#levels">Levels</a> and <a class="reference" href="#stores">Stores</a>. Each models a congestion point where process
 objects may have to queue up to obtain resources. This section
@@ -1348,7 +1350,7 @@ that are currently using a unit (the <tt class="docutils literal"><span class="p
 updates these queues itself -- the user can access them, but should
 not change them.</p>
 <div class="section">
-<h2><a class="toc-backref" href="#id30" id="defining-a-resource-object" name="defining-a-resource-object">4.1&nbsp;&nbsp;&nbsp;Defining a Resource object</a></h2>
+<h2><a class="toc-backref" href="#id31" id="defining-a-resource-object" name="defining-a-resource-object">4.1&nbsp;&nbsp;&nbsp;Defining a Resource object</a></h2>
 <p>A Resource object, <tt class="docutils literal"><span class="pre">r</span></tt>,  is established by the following statement:</p>
 <pre class="literal-block">
 r = Resource(capacity=1, name='a_resource', unitName='units',
@@ -1407,7 +1409,7 @@ for an example.</li>
 </blockquote>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id31" id="requesting-and-releasing-a-unit-of-a-resource" name="requesting-and-releasing-a-unit-of-a-resource">4.2&nbsp;&nbsp;&nbsp;Requesting and releasing a unit of a Resource</a></h2>
+<h2><a class="toc-backref" href="#id32" id="requesting-and-releasing-a-unit-of-a-resource" name="requesting-and-releasing-a-unit-of-a-resource">4.2&nbsp;&nbsp;&nbsp;Requesting and releasing a unit of a Resource</a></h2>
 <p>A process can request and later release a unit of the Resource object,
 <tt class="docutils literal"><span class="pre">r</span></tt>, by using the following yield commands in a Process Execution
 Method:</p>
@@ -1435,7 +1437,7 @@ either <tt class="docutils literal"><span class="pre">FIFO</span></tt> or <tt cl
 </div>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id32" id="queue-order" name="queue-order">4.3&nbsp;&nbsp;&nbsp;Queue Order</a></h2>
+<h2><a class="toc-backref" href="#id33" id="queue-order" name="queue-order">4.3&nbsp;&nbsp;&nbsp;Queue Order</a></h2>
 <p>If a requesting process must wait it is placed into the resource's
 <tt class="docutils literal"><span class="pre">waitQ</span></tt> in an order determined by settings of the resource's
 <tt class="docutils literal"><span class="pre">qType</span></tt> and <tt class="docutils literal"><span class="pre">preemptable</span></tt> attributes and of the priority value it
@@ -1760,7 +1762,7 @@ become: <tt class="docutils literal"><span class="pre">[1b,1c]</span></tt> and <
 </div>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id33" id="reneging-leaving-a-queue-before-acquiring-a-resource" name="reneging-leaving-a-queue-before-acquiring-a-resource">4.4&nbsp;&nbsp;&nbsp;Reneging -- leaving a queue before acquiring a resource</a></h2>
+<h2><a class="toc-backref" href="#id34" id="reneging-leaving-a-queue-before-acquiring-a-resource" name="reneging-leaving-a-queue-before-acquiring-a-resource">4.4&nbsp;&nbsp;&nbsp;Reneging -- leaving a queue before acquiring a resource</a></h2>
 <p>In most real world situations, people and other items do not wait
 forever for a requested resource facility to become
 available. Instead, they leave its queue when their patience is
@@ -1912,7 +1914,7 @@ complete it at hour 30, and then start on Task-C.</p>
 </div>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id34" id="recording-resource-queue-lengths" name="recording-resource-queue-lengths">4.5&nbsp;&nbsp;&nbsp;Recording Resource queue lengths</a></h2>
+<h2><a class="toc-backref" href="#id35" id="recording-resource-queue-lengths" name="recording-resource-queue-lengths">4.5&nbsp;&nbsp;&nbsp;Recording Resource queue lengths</a></h2>
 <p>Many discrete event models are used mainly to explore the
 statistical properties of the <tt class="docutils literal"><span class="pre">waitQ</span></tt> and <tt class="docutils literal"><span class="pre">activeQ</span></tt> associated with
 some or all of their simulated resources. SimPy's support for this
@@ -2076,7 +2078,7 @@ series.</p>
 </div>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id35" id="levels" name="levels">5&nbsp;&nbsp;&nbsp;Levels</a></h1>
+<h1><a class="toc-backref" href="#id36" id="levels" name="levels">5&nbsp;&nbsp;&nbsp;Levels</a></h1>
 <p>The three resource facilities provided by the SimPy system are
 <a class="reference" href="#resources">Resources</a>, <a class="reference" href="#levels">Levels</a> and <a class="reference" href="#stores">Stores</a>. Each models a congestion point where
 process objects may have to queue up to obtain resources. This section
@@ -2092,7 +2094,7 @@ in the station's storage tanks. Both getting amounts and putting
 amounts may be subjected to <a class="reference" href="#reneging-leaving-a-queue-before-acquiring-a-resource">reneging</a> like requesting amounts from a
 Resource.</p>
 <div class="section">
-<h2><a class="toc-backref" href="#id36" id="defining-a-level" name="defining-a-level">5.1&nbsp;&nbsp;&nbsp;Defining a Level</a></h2>
+<h2><a class="toc-backref" href="#id37" id="defining-a-level" name="defining-a-level">5.1&nbsp;&nbsp;&nbsp;Defining a Level</a></h2>
 <p>You define the Level resource facility <em>lev</em> by a statement like this:</p>
 <pre class="literal-block">
 lev = Level(name='a_level', unitName='units',
@@ -2143,7 +2145,7 @@ exist.</li>
 </blockquote>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id37" id="getting-amounts-from-a-level" name="getting-amounts-from-a-level">5.2&nbsp;&nbsp;&nbsp;Getting amounts from a Level</a></h2>
+<h2><a class="toc-backref" href="#id38" id="getting-amounts-from-a-level" name="getting-amounts-from-a-level">5.2&nbsp;&nbsp;&nbsp;Getting amounts from a Level</a></h2>
 <p>Processes can request amounts from a Level and the same or other
 processes can offer amounts to it.</p>
 <p>A process, the <em>requester</em>, can request an amount <em>ask</em> from the
@@ -2160,8 +2162,8 @@ when there is enough to satisfy the request.</p>
 <p><tt class="docutils literal"><span class="pre">self.got</span></tt> holds the amount actually received by the requester.</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id38" id="putting-amounts-into-a-level" name="putting-amounts-into-a-level">5.3&nbsp;&nbsp;&nbsp;Putting amounts into  a Level</a></h2>
-<p>A process, the <em>offeror</em>, which is usually but not necessarily
+<h2><a class="toc-backref" href="#id39" id="putting-amounts-into-a-level" name="putting-amounts-into-a-level">5.3&nbsp;&nbsp;&nbsp;Putting amounts into  a Level</a></h2>
+<p>A process, the <em>offerer</em>, which is usually but not necessarily
 different from the <em>requester</em>, can offer an amount <em>give</em> to a Level,
 <em>lev</em>, by a <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt> statement:</p>
 <ul class="simple">
@@ -2259,7 +2261,7 @@ average stock =  4.2720, cumulative stockout =  9.7484
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id39" id="reneging" name="reneging">5.4&nbsp;&nbsp;&nbsp;Reneging</a></h2>
+<h2><a class="toc-backref" href="#id40" id="reneging" name="reneging">5.4&nbsp;&nbsp;&nbsp;Reneging</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt> can be subject to <a class="reference" href="#reneging-leaving-a-queue-before-acquiring-a-resource">reneging</a> using one of the compound
 statements:</p>
 <ul class="simple">
@@ -2314,7 +2316,7 @@ else:
 </div>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id40" id="stores" name="stores">6&nbsp;&nbsp;&nbsp;Stores</a></h1>
+<h1><a class="toc-backref" href="#id41" id="stores" name="stores">6&nbsp;&nbsp;&nbsp;Stores</a></h1>
 <p>The three resource facilities provided by the SimPy system are
 <a class="reference" href="#resources">Resources</a>, <a class="reference" href="#levels">Levels</a> and <a class="reference" href="#stores">Stores</a>. Each models a congestion point where
 process objects may have to queue up to obtain resources. This section
@@ -2330,7 +2332,7 @@ particular be process objects, and this can be exploited to facilitate
 modeling Master/Slave relationships. <em>putting</em> and <em>getting</em> may also
 be subjected to reneging.</p>
 <div class="section">
-<h2><a class="toc-backref" href="#id41" id="defining-a-store" name="defining-a-store">6.1&nbsp;&nbsp;&nbsp;Defining a Store</a></h2>
+<h2><a class="toc-backref" href="#id42" id="defining-a-store" name="defining-a-store">6.1&nbsp;&nbsp;&nbsp;Defining a Store</a></h2>
 <p>The Store object <tt class="docutils literal"><span class="pre">sObj</span></tt> is established by a statement
 like the following:</p>
 <pre class="literal-block">
@@ -2388,11 +2390,11 @@ In this case <tt class="docutils literal"><span class="pre">sObj.putQMon</span><
 </blockquote>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id42" id="putting-objects-into-a-store" name="putting-objects-into-a-store">6.2&nbsp;&nbsp;&nbsp;Putting objects into a Store</a></h2>
+<h2><a class="toc-backref" href="#id43" id="putting-objects-into-a-store" name="putting-objects-into-a-store">6.2&nbsp;&nbsp;&nbsp;Putting objects into a Store</a></h2>
 <p>Processes can request items from a Store and the same or
 other processes can offer items to it. First look at the simpler of
 these operations, the <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt>.</p>
-<p>A process, the <em>offeror</em>, which is usually but not necessarily
+<p>A process, the <em>offerer</em>, which is usually but not necessarily
 different from the <em>requester</em>, can offer a list of
 items to <em>sObj</em> by a <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt> statement:</p>
 <ul class="simple">
@@ -2413,7 +2415,7 @@ arranged to sort them into a particular order (see <a class="reference" href="#s
 an order</a> below).</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id43" id="getting-objects-from-a-store" name="getting-objects-from-a-store">6.3&nbsp;&nbsp;&nbsp;Getting objects from  a Store</a></h2>
+<h2><a class="toc-backref" href="#id44" id="getting-objects-from-a-store" name="getting-objects-from-a-store">6.3&nbsp;&nbsp;&nbsp;Getting objects from  a Store</a></h2>
 <p>There are two ways of getting objects from a Store. A process, the
 <em>requester</em>, can either extract the first <tt class="docutils literal"><span class="pre">n</span></tt> objects from <em>sObj</em> or a list
 of items chosen by a <em>filter function</em>.</p>
@@ -2436,7 +2438,7 @@ two items and the second one, the second process gets the requested item
 only after the first process has been given its two items.</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id44" id="using-the-get-filter-function" name="using-the-get-filter-function">6.4&nbsp;&nbsp;&nbsp;Using the get filter function</a></h2>
+<h2><a class="toc-backref" href="#id45" id="using-the-get-filter-function" name="using-the-get-filter-function">6.4&nbsp;&nbsp;&nbsp;Using the get filter function</a></h2>
 <p>The second method is to get a list of items chosen by a <em>filter
 function</em>, written by the user.</p>
 <p>The command, using filter function <em>ffn</em> is as follows:</p>
@@ -2566,7 +2568,7 @@ putQ [[0, 0], [0, 1], [0, 2], [0, 3], [0, 2], [0, 1], [0, 0], [10, 1],\
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id45" id="id16" name="id16">6.5&nbsp;&nbsp;&nbsp;Reneging</a></h2>
+<h2><a class="toc-backref" href="#id46" id="id16" name="id16">6.5&nbsp;&nbsp;&nbsp;Reneging</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">put</span></tt> can be subject to <a class="reference" href="#reneging-leaving-a-queue-before-acquiring-a-resource">reneging</a> using one of the compound
 statements:</p>
 <ul class="simple">
@@ -2626,7 +2628,7 @@ it also cleanly removes a reneging process from the <tt class="docutils literal"
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id46" id="storing-objects-in-an-order" name="storing-objects-in-an-order">6.6&nbsp;&nbsp;&nbsp;Storing objects in an order</a></h2>
+<h2><a class="toc-backref" href="#id47" id="storing-objects-in-an-order" name="storing-objects-in-an-order">6.6&nbsp;&nbsp;&nbsp;Storing objects in an order</a></h2>
 <p>The contents of a Store instance are listed in a queue.  By default,
 this list is kept in FIFO order.  However, the list can be kept in a
 user-defined order. You do this by defining a function for reordering
@@ -2661,7 +2663,7 @@ when the SimPy run time system calls the re-ordering function.</p>
 NOT of the Store class.</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id47" id="master-slave-modeling-with-a-store" name="master-slave-modeling-with-a-store">6.7&nbsp;&nbsp;&nbsp;Master/Slave modeling with a Store</a></h2>
+<h2><a class="toc-backref" href="#id48" id="master-slave-modeling-with-a-store" name="master-slave-modeling-with-a-store">6.7&nbsp;&nbsp;&nbsp;Master/Slave modeling with a Store</a></h2>
 <p>The items in a <tt class="docutils literal"><span class="pre">Store</span></tt> can be of any Python type. In particular, they
 may be SimPy processes. This can be used to model
 a Master/Slave situation -- an asymmetrical cooperation between two or
@@ -2674,7 +2676,7 @@ Slave).  For Master/Slave cooperation, the Slave has to be passivated
 <tt class="docutils literal"><span class="pre">put</span></tt> and reactivated when it is retrieved and finished with. As this
 is NOT done automatically by the <tt class="docutils literal"><span class="pre">Store</span></tt>, the Master has to signal the
 end of the cooperation. This Master/Slave pattern results in the slave process'
-lifecycle having a hole between the slave process arrival and its departure
+life-cycle having a hole between the slave process arrival and its departure
 after having been served.</p>
 <hr class="docutils" />
 <p><strong>Example</strong> Cars arrive randomly at a car wash and add themselves to
@@ -2768,13 +2770,13 @@ and the <tt class="docutils literal"><span class="pre">Carwash</span></tt> as Sl
 </div>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id48" id="random-number-generation" name="random-number-generation">7&nbsp;&nbsp;&nbsp;Random Number Generation</a></h1>
+<h1><a class="toc-backref" href="#id49" id="random-number-generation" name="random-number-generation">7&nbsp;&nbsp;&nbsp;Random Number Generation</a></h1>
 <p>Simulations usually need random numbers. As SimPy does not supply
 random number generators of its own, users need to import them from
 some other source.  Perhaps the most convenient source is the standard
 <a class="reference" href="http://www.python.org/doc/current/lib/module-random.html">Python random module</a>.  It can generate random variates from the
 following continuous distributions: uniform, beta, exponential, gamma,
-normal, lognormal, weibull, and vonMises.  It can also generate random
+normal, log-normal, weibull, and vonMises.  It can also generate random
 variates from some discrete distributions. Consult the module's
 documentation for details.  (Excellent brief descriptions of these
 distributions, and many others, can be found in the <a class="reference" href="http://www.wikipedia.com/">Wikipedia</a>.)</p>
@@ -2807,7 +2809,7 @@ Y = normalvariate(10.0, 1.0)
 <!-- ============================================================================ -->
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id49" id="recording-simulation-results" name="recording-simulation-results">8&nbsp;&nbsp;&nbsp;Recording Simulation Results</a></h1>
+<h1><a class="toc-backref" href="#id50" id="recording-simulation-results" name="recording-simulation-results">8&nbsp;&nbsp;&nbsp;Recording Simulation Results</a></h1>
 <p>The <tt class="docutils literal"><span class="pre">Tally</span></tt> and <tt class="docutils literal"><span class="pre">Monitor</span></tt> class objects  enable us to observe a single
 variable of interest and to return a simple data summary either during
 or at the completion of a simulation run.</p>
@@ -2832,7 +2834,7 @@ simulation needs a 'warmup' period to achieve steady state before
 measurements are started.</li>
 </ul>
 <div class="section">
-<h2><a class="toc-backref" href="#id50" id="defining-tallys-and-monitors" name="defining-tallys-and-monitors">8.1&nbsp;&nbsp;&nbsp;Defining Tallys and Monitors</a></h2>
+<h2><a class="toc-backref" href="#id51" id="defining-tallys-and-monitors" name="defining-tallys-and-monitors">8.1&nbsp;&nbsp;&nbsp;Defining Tallys and Monitors</a></h2>
 <p>The ''Tally'' class records enough information (such as sums and sums of
 squares) while the simulation runs to return simple data summaries.
 This has the advantage of speed and low memory use. Tallys can also
@@ -2875,7 +2877,7 @@ requested at any time).</li>
 </blockquote>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id51" id="observing-data" name="observing-data">8.2&nbsp;&nbsp;&nbsp;Observing data</a></h2>
+<h2><a class="toc-backref" href="#id52" id="observing-data" name="observing-data">8.2&nbsp;&nbsp;&nbsp;Observing data</a></h2>
 <p>Both Tallys and Monitors use the <tt class="docutils literal"><span class="pre">observe</span></tt> method to record data.
 Here and in the next section, <em>r</em> is either a Tally or a Monitor object:</p>
 <ul>
@@ -2904,7 +2906,7 @@ is missing.</li>
 </ul>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id52" id="data-summaries" name="data-summaries">8.3&nbsp;&nbsp;&nbsp;Data summaries</a></h2>
+<h2><a class="toc-backref" href="#id53" id="data-summaries" name="data-summaries">8.3&nbsp;&nbsp;&nbsp;Data summaries</a></h2>
 <p>The following simple data summaries can be obtained from either
 Monitors or Tallys at any time during or after the simulation run:</p>
 <ul>
@@ -2961,7 +2963,7 @@ of the monitor. This can be used in a print statement.</p>
 </ul>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id53" id="special-methods-for-monitor" name="special-methods-for-monitor">8.4&nbsp;&nbsp;&nbsp;Special methods for Monitor</a></h2>
+<h2><a class="toc-backref" href="#id54" id="special-methods-for-monitor" name="special-methods-for-monitor">8.4&nbsp;&nbsp;&nbsp;Special methods for Monitor</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">Monitor</span></tt> variety of Recorder is a sub-class of <tt class="docutils literal"><span class="pre">List</span></tt>
 and has a few extra methods:</p>
 <ul class="simple">
@@ -2971,7 +2973,7 @@ and has a few extra methods:</p>
 </ul>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id54" id="histograms" name="histograms">8.5&nbsp;&nbsp;&nbsp;Histograms</a></h2>
+<h2><a class="toc-backref" href="#id55" id="histograms" name="histograms">8.5&nbsp;&nbsp;&nbsp;Histograms</a></h2>
 <p>A <tt class="docutils literal"><span class="pre">Histogram</span></tt> is a derived class of <tt class="docutils literal"><span class="pre">list</span></tt> that counts the
 observations that fall into a number of specified ranges, called bins.
 A histogram object can be displayed either by printing it out in text
@@ -3136,7 +3138,7 @@ SimPy.
 </div>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id55" id="other-links" name="other-links">9&nbsp;&nbsp;&nbsp;Other Links</a></h1>
+<h1><a class="toc-backref" href="#id56" id="other-links" name="other-links">9&nbsp;&nbsp;&nbsp;Other Links</a></h1>
 <p>Several example <a class="reference" href="LISTOFMODELS.html">SimPy models</a> are included with the SimPy code distribution.</p>
 <p>Klaus Muller and Tony Vignaux, <em>SimPy: Simulating Systems in Python</em>,
 O'Reilly ONLamp.com, 2003-Feb-27,  <a class="reference" href="http://www.onlamp.com/pub/a/python/2003/02/27/simpy.html">http://www.onlamp.com/pub/a/python/2003/02/27/simpy.html</a></p>
@@ -3149,19 +3151,19 @@ Developer Works, Dec 2002,
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id56" id="acknowledgments" name="acknowledgments">10&nbsp;&nbsp;&nbsp;Acknowledgments</a></h1>
+<h1><a class="toc-backref" href="#id57" id="acknowledgments" name="acknowledgments">10&nbsp;&nbsp;&nbsp;Acknowledgments</a></h1>
 <p>We will be grateful for any further corrections or suggestions that
 will improve it.</p>
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
 <!-- =================================================================== -->
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id57" id="appendices" name="appendices">11&nbsp;&nbsp;&nbsp;Appendices</a></h1>
+<h1><a class="toc-backref" href="#id58" id="appendices" name="appendices">11&nbsp;&nbsp;&nbsp;Appendices</a></h1>
 <div class="section">
-<h2><a class="toc-backref" href="#id58" id="a0-changes-from-the-previous-version-of-simpy" name="a0-changes-from-the-previous-version-of-simpy">11.1&nbsp;&nbsp;&nbsp;A0. Changes from the previous  version of SimPy</a></h2>
+<h2><a class="toc-backref" href="#id59" id="a0-changes-from-the-previous-version-of-simpy" name="a0-changes-from-the-previous-version-of-simpy">11.1&nbsp;&nbsp;&nbsp;A0. Changes from the previous  version of SimPy</a></h2>
 <p>SimPy 1.9 differs from version 1.8 in the following ways.  It requires
 Python 2.3 or later. It fixes a few bugs and adds:</p>
-<p>NEW APPENDIX NEEDED</p>
+<!-- NEW APPENDIX NEEDED -->
 <!-- - a compound ``put`` and ``get`` for Levels_ and Stores_ like the compound
   ``get`` for Resources_.
 
@@ -3175,7 +3177,7 @@ Python 2.3 or later. It fixes a few bugs and adds:</p>
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id59" id="a1-simpy-error-messages" name="a1-simpy-error-messages">11.2&nbsp;&nbsp;&nbsp;A1. SimPy Error Messages</a></h2>
+<h2><a class="toc-backref" href="#id60" id="a1-simpy-error-messages" name="a1-simpy-error-messages">11.2&nbsp;&nbsp;&nbsp;A1. SimPy Error Messages</a></h2>
 <div class="section">
 <h3><a id="advisory-messages" name="advisory-messages">Advisory messages</a></h3>
 <p>These messages are returned by <tt class="docutils literal"><span class="pre">simulate(</span> <span class="pre">)</span></tt>, as in
@@ -3250,7 +3252,7 @@ time has elapsed before attempting to calculate the time-average.</li>
 </div>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id60" id="a2-simpy-process-states" name="a2-simpy-process-states">11.3&nbsp;&nbsp;&nbsp;A2. SimPy Process States</a></h2>
+<h2><a class="toc-backref" href="#id61" id="a2-simpy-process-states" name="a2-simpy-process-states">11.3&nbsp;&nbsp;&nbsp;A2. SimPy Process States</a></h2>
 <p>From the viewpoint of the model builder a SimPy process, <em>p</em>,
 can at any time be in one of the following states:</p>
 <ul class="simple">
@@ -3279,23 +3281,23 @@ availability. <em>p.queuing(a_resource)</em> returns <em>True</em>.</li>
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id61" id="a3-simplot-the-simpy-plotting-utility" name="a3-simplot-the-simpy-plotting-utility">11.4&nbsp;&nbsp;&nbsp;A3. SimPlot, The SimPy plotting utility</a></h2>
+<h2><a class="toc-backref" href="#id62" id="a3-simplot-the-simpy-plotting-utility" name="a3-simplot-the-simpy-plotting-utility">11.4&nbsp;&nbsp;&nbsp;A3. SimPlot, The SimPy plotting utility</a></h2>
 <p><a class="reference" href="SimPlotManual/ManualPlotting.html">SimPlot</a> provides an easy way to graph the results of simulation runs.</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id62" id="a4-simgui-the-simpy-graphical-user-interface" name="a4-simgui-the-simpy-graphical-user-interface">11.5&nbsp;&nbsp;&nbsp;A4. SimGUI, The SimPy Graphical User Interface</a></h2>
+<h2><a class="toc-backref" href="#id63" id="a4-simgui-the-simpy-graphical-user-interface" name="a4-simgui-the-simpy-graphical-user-interface">11.5&nbsp;&nbsp;&nbsp;A4. SimGUI, The SimPy Graphical User Interface</a></h2>
 <p><a class="reference" href="SimGUIManual/SimGUImanual.html">SimGUI</a>  provides a  way for users to interact with a SimPy program,
 changing its parameters and examining the output.</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id63" id="a5-simulationtrace-the-simpy-tracing-utility" name="a5-simulationtrace-the-simpy-tracing-utility">11.6&nbsp;&nbsp;&nbsp;A5. SimulationTrace, the SimPy tracing utility</a></h2>
+<h2><a class="toc-backref" href="#id64" id="a5-simulationtrace-the-simpy-tracing-utility" name="a5-simulationtrace-the-simpy-tracing-utility">11.6&nbsp;&nbsp;&nbsp;A5. SimulationTrace, the SimPy tracing utility</a></h2>
 <p><a class="reference" href="Tracing.html">SimulationTrace</a> has been developed to give users insight into the
 dynamics of the execution of SimPy simulation programs. It can help
 developers with testing and users with explaining SimPy models to themselves
 and others (e.g., for documentation or teaching purposes).</p>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id64" id="a6-simulationstep-the-simpy-event-stepping-utility" name="a6-simulationstep-the-simpy-event-stepping-utility">11.7&nbsp;&nbsp;&nbsp;A6. SimulationStep, the SimPy event stepping utility</a></h2>
+<h2><a class="toc-backref" href="#id65" id="a6-simulationstep-the-simpy-event-stepping-utility" name="a6-simulationstep-the-simpy-event-stepping-utility">11.7&nbsp;&nbsp;&nbsp;A6. SimulationStep, the SimPy event stepping utility</a></h2>
 <p><a class="reference" href="SimStepManual/SimStepManual.html">SimulationStep</a> can assist with debugging models, interacting with them on
 an event-by-event basis, getting event-by-event output from a model (e.g.
 for plotting purposes), etc.</p>
@@ -3309,16 +3311,15 @@ for plotting purposes), etc.</p>
 </blockquote>
 </div>
 <div class="section">
-<h2><a class="toc-backref" href="#id65" id="a7-simulationrt-a-real-time-synchronizing-utility" name="a7-simulationrt-a-real-time-synchronizing-utility">11.8&nbsp;&nbsp;&nbsp;A7. SimulationRT, a real-time synchronizing utility</a></h2>
+<h2><a class="toc-backref" href="#id66" id="a7-simulationrt-a-real-time-synchronizing-utility" name="a7-simulationrt-a-real-time-synchronizing-utility">11.8&nbsp;&nbsp;&nbsp;A7. SimulationRT, a real-time synchronizing utility</a></h2>
 <p><a class="reference" href="SimRTManual.html">SimulationRT</a> allows synchronizing simulation time and real (wall-clock) time.
 This capability can be used to implement, e.g., interactive game applications or
 to demonstrate a model's execution in real time.</p>
 <p>[Return to <a class="reference" href="#contents">Top</a> ]</p>
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 </div>
 </div>
 <div class="section">
-<h1><a class="toc-backref" href="#id66" id="glossary" name="glossary">12&nbsp;&nbsp;&nbsp;Glossary</a></h1>
+<h1><a class="toc-backref" href="#id67" id="id17" name="id17"><span id="glossary"></span>12&nbsp;&nbsp;&nbsp;Glossary</a></h1>
 <p>(Note: Terms in <em>italics</em> refer to other special terms.
 Items in <tt class="docutils literal"><span class="pre">code</span> <span class="pre">font</span></tt> are code fragments or specific code names.):</p>
 <dl class="docutils">
@@ -3501,6 +3502,10 @@ received one of the Resource's units. See <a class="reference" href="#resources"
    :height: 37
    :alt:  SourceForge Logo -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- CVS: was $Revision: 1.35 $ $Date: 2008/06/07 23:37:45 $ -->
+<!-- the Mercurial (hg) version. -->
+<!-- SVN |svnversion| -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- Local Variables:
 mode: rst
 indent-tabs-mode: nil
@@ -3512,7 +3517,7 @@ End: -->
 <div class="footer">
 <hr class="footer" />
 <a class="reference" href="Manual.txt">View document source</a>.
-Generated on: 2008-03-12 04:31 UTC.
+Generated on: 2008-08-19 05:58 UTC.
 Generated by <a class="reference" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
 
 </div>

@@ -5,30 +5,27 @@
 ====================================
 The SimPy Manual
 ====================================
+.. |svnversion| replace:: 23
 
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
           - Klaus Muller <Muller@users.sourceforge.net>
           - Bob Helmbold
-:SimPy version: 1.9
+:SimPy version: 1.9.1
 :SimPy Web-site: http://simpy.sourceforge.net/
-:SimPy wiki: http://www.mcs.vuw.ac.nz/cgi-bin/wiki/SimPy
 :Python-Version: 2.3+
-:Revision: $Revision: 1.1.1.69 $
-:Date: $Date: 2008/03/12 04:34:39 $
+:Revision: |svnversion|
+:Date: 2008-08-09
+
+.. Derived from CVS 1.22
+
+.. CHANGES NEEDED: 
 
 
-.. CHANGES NEEDED:
-
-   SPELL CHECK
-
-   Add a paragraph about the standard PEM name ACTIONS, line 352
-
-.. REPLACEMENTS ====================
-
+.. REPLACEMENTS ==============================================
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
 .. |init| replace:: ``__init__``
-.. =================================
+.. ===========================================================
 
 .. contents:: Contents
    :depth: 2
@@ -377,7 +374,7 @@ methods and, in particular, an ``__init__`` method, may be defined.
 
 
   "The ``yield`` statements are simulation commands which affect an
-  ongoing lifecycle of Process objects. These statements control the
+  ongoing life-cycle of Process objects. These statements control the
   execution and synchronization of multiple processes. They can delay
   a process, put it to sleep, request a shared resource or provide a
   resource. They can add new events on the simulation event schedule,
@@ -568,7 +565,7 @@ method. There are a number of ways of using it:
 
      is an alternative to the ``activate`` statement. *p* is a Process
      object.  The generator function, *pemname*, can have any
-     identifier (such as ``run``, ``lifecycle``, etc). It can have
+     identifier (such as ``run``, ``life-cycle``, etc). It can have
      parameters.
 
      For example, to activate the process object ``cust`` using the PEM
@@ -871,6 +868,14 @@ The output from this example::
     Bus repaired at 960
     Bus has arrived at 1060
     SimPy: No more events at time 1260
+
+The bus finishes at 1060 but the simulation finished at 1260. Why? The
+``breakdown``\ s PEM consists of a loop, one breakdown following
+another at ``300`` intervals. The last breakdown finishes at 960 and
+then a breakdown event is scheduled for 1260. But the bus finished at
+1060 and is not affected by the breakdown.  These details can easily
+be checked by importing from ``SimPy.SimulationTrace`` and re-running
+the program.
 
 ------------
 
@@ -2147,7 +2152,7 @@ Putting amounts into  a Level
 .. |yput| replace:: ``yield put,self,``\ *lev,give[,P]* 
 
 
-A process, the *offeror*, which is usually but not necessarily
+A process, the *offerer*, which is usually but not necessarily
 different from the *requester*, can offer an amount *give* to a Level,
 *lev*, by a ``yield put`` statement:
 
@@ -2352,7 +2357,7 @@ Processes can request items from a Store and the same or
 other processes can offer items to it. First look at the simpler of
 these operations, the ``yield put``.
 
-A process, the *offeror*, which is usually but not necessarily
+A process, the *offerer*, which is usually but not necessarily
 different from the *requester*, can offer a list of
 items to *sObj* by a ``yield put`` statement:
 
@@ -2629,7 +2634,7 @@ Slave).  For Master/Slave cooperation, the Slave has to be passivated
 ``put`` and reactivated when it is retrieved and finished with. As this
 is NOT done automatically by the ``Store``, the Master has to signal the
 end of the cooperation. This Master/Slave pattern results in the slave process'
-lifecycle having a hole between the slave process arrival and its departure
+life-cycle having a hole between the slave process arrival and its departure
 after having been served.
 
 ------------
@@ -2686,7 +2691,7 @@ random number generators of its own, users need to import them from
 some other source.  Perhaps the most convenient source is the standard
 `Python random module`_.  It can generate random variates from the
 following continuous distributions: uniform, beta, exponential, gamma,
-normal, lognormal, weibull, and vonMises.  It can also generate random
+normal, log-normal, weibull, and vonMises.  It can also generate random
 variates from some discrete distributions. Consult the module's
 documentation for details.  (Excellent brief descriptions of these
 distributions, and many others, can be found in the `Wikipedia
@@ -3122,9 +3127,9 @@ Python 2.3 or later. It fixes a few bugs and adds:
 
 
 
-NEW APPENDIX NEEDED
+.. NEW APPENDIX NEEDED
 
-
+ 
 ..
     - a compound ``put`` and ``get`` for Levels_ and Stores_ like the compound
       ``get`` for Resources_.
@@ -3145,97 +3150,7 @@ NEW APPENDIX NEEDED
 A1. SimPy Error Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Advisory messages
-+++++++++++++++++
-
-These messages are returned by ``simulate( )``, as in
-``message=simulate(until=123)``.
-
-Upon a normal end of a simulation, ``simulate( )`` returns the message:
-
-- **SimPy: Normal exit**. This means that no errors have occurred and
-  the simulation has run to the time specified by the ``until`` parameter.
-
-The following messages, returned by ``simulate( )``, are produced at a premature
-termination of the simulation but allow continuation of the program.
-
-- **SimPy: No more events at time x**. All processes were completed prior
-  to the *endtime* given in *simulate(until=endtime)*.
-
-- **SimPy: No activities scheduled**. No activities were scheduled
-  when *simulate( )* was called.
-
-Fatal error messages
-++++++++++++++++++++
-
-These messages are generated when SimPy-related fatal  exceptions occur.
-They end the SimPy program. Fatal SimPy error messages are output to
-*sysout*.
-
-- **Fatal SimPy error: activating function which is not a generator (contains no 'yield')**.
-  A process tried to (re)activate a function which is not a
-  SimPy process (=Python generator). SimPy processes must contain
-  at least one *yield . . .* statement.
-
-- **Fatal SimPy error: Simulation not initialized**. The SimPy program
-  called *simulate( )* before calling *initialize( )*.
-
-- **SimPy: Attempt to schedule event in the past**: A *yield hold* statement
-  has a negative delay time parameter.
-
-- **SimPy: initialBuffered exceeds capacity**: Attempt to initialize a Store
-  or Level with more units in the buffer than its capacity allows.
-
-- **SimPy: initialBuffered param of Level negative: x**: Attempt to
-  initialize a Level with a negative amount x in the buffer.
-
-- **SimPy: Level: wrong type of initialBuffered (parameter=x)**: Attempt to
-  initialize a buffer with a non-numerical initial buffer content x.
-
-- **SimPy: Level: put parameter not a number**: Attempt to add a
-  non-numerical amount to a Level's buffer.
-
-- **SimPy: Level: put parameter not positive number**: Attempt to add
-  a negative number to a Level's amount.
-
-- **SimPy: Level: get parameter not positive number: x**: Attempt to
-  get a negative amount x from a Level.
-
-- **SimPy: Store: initialBuffered not a list**: Attempt to initialize
-  a Store with other than a list of items in the buffer.
-
-- **SimPy: Item to put missing in yield put stmt**: A *yield put* was
-  malformed by not having a parameter for the item(s) to put into the
-  Store.
-
-- **SimPy: put parameter is not a list**: *yield put* for a Store must
-  have a parameter which is a list of items to put into the buffer.
-
-- **SimPy: Store: get parameter not positive number: x**: A *yield
-  get* for a Store had a negative value for the number to get from the
-  buffer.
-
-- **SimPy: Fatal error: illegal command: yield x**: A *yield*
-  statement with an undefined command code (first parameter) x was
-  executed.
-
-
-Monitor error messages
-++++++++++++++++++++++
-
-- **SimPy: No observations for mean**. No observations were made by the
-  monitor before attempting to calculate the mean.
-
-- **SimPy: No observations for sample variance**. No observations were made by the
-  monitor before attempting to calculate the sample variance.
-
-- **SimPy: No observations for timeAverage**, No observations
-  were made by the monitor before attempting to calculate the time-average.
-
-- **SimPy: No elapsed time for timeAverage**. No simulation
-  time has elapsed before attempting to calculate the time-average.
-
-
+.. include:: messages.txt
 
 A2. SimPy Process States
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3328,220 +3243,17 @@ to demonstrate a model's execution in real time.
 
 [Return to Top_ ]
 
-.. ----------------------------------------------------------------------------
+.. _glossary:
+
+
+
 
 Glossary
--------------
-
-(Note: Terms in *italics* refer to other special terms.
-Items in ``code font`` are code fragments or specific code names.):
-
-activeQ
-   A *Resource* object automatically creates and maintains its
-   own activeQ, the queue (list) of process objects that are
-   currently using one of the Resource's units. See
-   `Resources`_. (See also the Glossary entry for *waitQ*.)
-
-activate
-   Commands a *process object* to being executing its *PEM*.
-   See `Starting and stopping SimPy process objects`_.
-   
-Backus-Naur Form (BNF) notation
-   This manual occasionally uses a modified Backus-Naur Form notation to
-   exhibit command syntax,
-   as in the description of the *activate* command::
-   
-   **activate(p, p.PEM([args]) [,{at=t|delay=period}] [,prior=False])**
-   
-   In this notation, square brackets [ ] indicate items that are optional, 
-   braces { } indicate items of which zero or more may be present, 
-   and a vertical bar | indicates a choice between alternatives 
-   (with none of them being a possibility).
-
-cancel
-   Deletes all of a *process object's* scheduled future events.
-   See `Starting and stopping SimPy process objects`_.
-
-entity
-   An alternative name for *process object*.
-
-event
-   A SimEvent object. See `Advanced synchronization/scheduling capabilities`_.
-
-FIFO
-   An attribute of a resource object (i.e., a `Resource`_, `Level`_,
-   or `Store`_)
-   indicating that an associated queue (e.g., the *ActiveQ*, *waitQ*,
-   *getQ*, or *putQ*) is to be
-   kept in FIFO order. 
-   (See also the Glossary entries for *PriorityQ* and *qType*.)
-   
-getQ
-   The queue of processes waiting to take something from a
-   `Level`_ or `Store`_ resource. See also the Glossary entry for *putQ*.
-
-interrupt
-   Requests a "victim" *process object* to interrupt (i.e., to immediately and
-   prematurely end) its current
-   ``yield hold,...`` command. (Note: A process object cannot interrupt itself.)
-   See `Asynchronous interruptions`_.
-
-Level
-   A particular type of *resource facility* that models the 
-   production and consumption of a
-   homogeneous undifferentiated "material." *Process objects* can increase or
-   decrease the amount of material in a Level resource facility. See `Levels`_.
-
-Monitor
-   A data recorder that compiles basic statistics as a function of time on
-   variables such
-   as waiting times and queue lengths. (Note: Monitors can also preserve complete
-   time-series
-   data for post-simulation analyses.) See `Recording Simulation Results`_.
-
-monitorType
-   The type of Recorder_ to be used for recording simulation results.
-   Usually this is either a Monitor_ or a Tally_. (See also the
-   Glossary entry for *Recorder*.)
-
-monitored
-   A (boolean) attribute of a *resource* object indicating whether to 
-   keep a record 
-   of its activity. See Recorder_. 
-
-passivate
-   Halts ("freezes") a *process object's* PEM. The process object  becomes 
-   "passive".
-   See `Starting and stopping SimPy Process Objects`_.
-
-PEM
-   An abbreviation for *Process Execution Method*, q.v.
-
-preempt
-   To force a *process* object currently using a *resource* unit 
-   to release it and make it
-   available for use by another process object. See `Preemptive requests for 
-   a Resource unit`_.
-
-preemptable
-   A settable attribute of *Resource* objects. The Resource object's
-   units are preemptable if
-   ``preemptable==True``, otherwise not. See `Preemptive requests for a Resource
-   unit`_.
-
-priority
-   A non-negative integer or real value controlling the order of *process* objects
-   in a queue. Higher values represent higher priority. Higher priority process
-   objects are placed ahead of lower priority ones in the queue. See also
-   the Glossary entry for *FIFO*.
-
-PriorityQ
-   An attribute of a resource object (i.e., a `Resource`_, `Level`_,
-   or `Store`_)
-   indicating that an associated queue (e.g., the *ActiveQ*, *waitQ*,
-   *getQ*, or *putQ*) is to be
-   kept in order of *priority*. 
-   (See also the Glossary entries for *FIFO*, *qType*.) 
-      
-process
-   We usually call both process objects and their classes "processes" 
-   (with a small "p").
-   Thus, "process" may refer to a *Process class* or to
-   a *process object*, depending on context. To avoid ambiguity
-   or for added emphasis
-   we often explicitly state whether a class or an object is intended.
-
-Process class
-   A class that inherits from SimPy's ``Process`` class and contains
-   at least one *Process Execution Method*.
-   Process classes may also contain other methods --
-   in particular they may contain an ``__init__`` method.
-   See `Processes`_.
-
-Process Execution Method
-   A *Process class* method that contains at least one ``yield ...``
-   statement. See `Defining a process`_.
-
-process object
-   An object created from (i.e., an instance of) a *Process class*. 
-   See `Processes`_.
-   
-putQ
-   The queue of processes waiting to add something to a `Level`_ 
-   or `Store`_ resource. See also the Glossary entry for *getQ*.
-
-reactivate
-   Reactivates ("unfreezes") a passivated or a terminated *process object's* PEM.
-   The *process object* becomes "active".  See `Starting and stopping SimPy Process
-   Objects`_.
-
-Recorder
-   A device for recording simulation results. Unless otherwise specified, it 
-   usually refers either to a `Monitor`_ or a `Tally`_. However,
-   Recorders also include histograms and observers.
-   See `Recording Simulation Results`_ 
-   for *Monitors*, *Tallys*, and the other devices for 
-   recording simulation results.  
-
-renege
-   To leave a queue before acquiring a resource unit. See `Reneging -- leaving
-   a queue before acquiring a resource`_.
-   
-resource
-   Same as "resource facility." 
-   A congestion point at which *process objects* may need to queue for access to
-   resources. The term "resource" (with a small "r") is used as a generic term 
-   for the individual resource facilities provided by SimPy (i.e.,
-   Resources_, Levels_, and Stores_).
-
-qType
-   An attribute of *resource* objects indicating whether an
-   associated queue is to be
-   kept in *FIFO* or *PriorityQ* order. See the Glossary entries 
-   for *waitQ*, *ActiveQ*, *putQ*,and *getQ*.
-   See also the treatment of these queues in the sections on
-   the individual resources (i.e., `Resources`_, `Levels`_, and `Stores`_).
-
-Resource
-   A particular type of *resource facility* that possesses several 
-   identical *resource units*.
-   A *process object* may acquire one (and only one) of the Resource's 
-   resource units. See Resources_ .
-
-Resource unit
-   One of the individual resources associated with a *Resource* type of
-   *resource facility*. See Resources_.
-
-SimEvent
-   The SimPy class for defining and creating SimEvent objects.  
-   Occasionally designates a SimEvent
-   object when context makes that usage clear.
-   See `Advanced synchronization/scheduling capabilities`_.
-
-Store
-   A particular type of *resource facility* that models the 
-   production and consumption of individual
-   items. *Process objects* can insert or remove items from the Store's list
-   of available items. See Stores_.
-
-Tally
-   A particular type of *Recorder* that compiles basic statistics as a 
-   function of time on variables such
-   as waiting times and queue lengths. (Note: Tallys do not preserve complete
-   time-series data for post-simulation analyses.) See 
-   `Recording Simulation Results`_.
-   (See also the Glossary entry for *monitorType*.)
-
-unit (of a Resource)
-   One of the individual resource capabilities provided by a *Resource*. See
-   `Resources`_.
-
-waitQ
-   A *Resource* object automatically creates and maintains its own *waitQ*, 
-   the queue (list) of process objects that have requested but not yet
-   received one of the Resource's units. See `Resources`_. 
-   (See also the Glossary entry for *activeQ*.)
+-----------
  
+
+.. include:: glossary.txt
+
 
 .. ------------------------------------------------------------------------
 .. some useful stuff used above
@@ -3577,7 +3289,10 @@ waitQ
     :height: 37
     :alt:  SourceForge Logo
 
-
+.. ----------------------------------------------------------------------------
+.. CVS: was $Revision: 1.35 $ $Date: 2008/06/07 23:37:45 $
+.. the Mercurial (hg) version.
+.. SVN |svnversion|
 .. ----------------------------------------------------------------------------
 
 
