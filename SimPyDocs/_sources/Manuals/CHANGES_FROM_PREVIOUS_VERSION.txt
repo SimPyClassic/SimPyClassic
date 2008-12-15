@@ -1,0 +1,27 @@
+=================================
+Changes from Version 1.9.1
+=================================
+
+
+
+This section addresses the difference between SimPy versions
+2.0 and version 1.9.1 in terms of changes and additions.
+  
+
+
+Additions
+============
+
+- New (object oriented) API.
+- Documentation on running SimPy in parallel processes on multiple CPUs, 
+  cores or computerswith Parallel Python
+
+Changes
+===========
+
+- Documentation formattted using Sphinx documentation generator.
+  
+
+:Revision: $Revision: 125 $
+:Date: $Date: 2008-10-31 11:50:11 +0100 (Fr, 31 Okt 2008) $
+  

@@ -1,0 +1,13 @@
+from SimPy.Simulation import *
+
+
+class Car(Process):
+
+    def __init__(self, sim, id):
+        Process.__init__(self, sim = sim)
+        self.id = id
+
+    def run(self):
+        while True:
+            yield hold, self, 10
+            print 'Car #%i at t = %i' % (self.id, self.sim.now())

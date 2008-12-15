@@ -1,0 +1,155 @@
+# coding=utf8
+"""
+This file contains classes for simulating, controlling and observing a fridge.
+
+@author: Stefan Scherfke
+@contact: stefan.scherfke at uni-oldenburg.de
+"""
+
+from math import exp
+import logging
+import random
+
+from SimPy.Simulation import Process, Simulation, \
+		activate, hold, initialize, now, simulate
+
+log = logging.getLogger('Processes')
+
+class Fridge(Process):
+	"""
+	This class represents a simulated fridge.
+
+	It's temperature T for and equidistant series of time steps is computed by
+	$T_{i+1} = \epsilon \cdot T_i + (1 - \epsilon) \cdot \left(T^O - \eta
+	\cdot \frac{q_i}{A}\right)$ with $\epsilon = e^{-\frac{\tau A}{m_c}}$.
+	"""
+
+	def __init__(self, sim, T_O = 20.0, A = 3.21, m_c = 15.97, tau = 1.0/60,
+				  eta = 3.0, q_i = 0.0, q_max = 70.0,
+				  T_i = 5.0, T_range = [5.0, 8.0], noise = False):
+		"""
+		Init all required variables.
+
+		@param sim:       The SimPy simulation this process belongs to
+		@type sim:        SimPy.Simulation
+		@param T_O:       Outside temperature
+		@param A:         Insulation
+		@param m_c:       Thermal mass/thermal storage capacity
+		@param tau:       Time span between t_i and t_{i+1}
+		@param eta:       Efficiency of the cooling device
+		@param q_i:       Initial/current electrical power
+		@param q_max:     Power required during cool-down
+		@param T_i:       Initial/current temperature
+		@param T_range:   Allowed range for T_i
+		@param noise:     Add noise to the fridge's parameters, if True
+		@type noise:      bool
+		"""
+		Process.__init__(self, sim = sim)
+		self.T_O = T_O
+		self.A = A
+		self.m_c = random.normalvariate(20, 4.5) if noise else m_c
+		self.tau = tau
+		self.eta = eta
+		self.q_i = q_i
+		self.q_max = q_max
+		self.T_i = random.uniform(T_range[0], T_range[1]) if noise else T_i
+		self.T_range = T_range
+
+	def run(self):
+		"""
+		Calculate the fridge's temperature for the current time step.
+		"""
+		while True:
+			epsilon = exp(-(self.tau * self.A) / self.m_c)
+			self.T_i = epsilon * self.T_i + (1 - epsilon) \
+					* (self.T_O - self.eta * (self.q_i / self.A))
+			if self.T_i >= self.T_range[1]:
+				self.q_i = self.q_max         # Cool down
+			elif self.T_i <= self.T_range[0]:
+				self.q_i = 0.0                # Stop cooling
+			log.debug('T_i: %2.2f°C at %.2f' % (self.T_i, self.sim.now()))
+			yield hold, self, self.tau
+
+	def coolDown(self):
+		"""
+		Start cooling down now!
+		"""
+		self.q_i = self.q_max
+
+
+class FridgeObserver(Process):
+	"""
+	This process observes the temperature and power consumption of a set of
+	fridges.
+	"""
+
+	def __init__(self, sim, fridges, tau, aggSteps):
+		"""
+		Init the observer.
+
+		@param sim: The SimPy simulation this process belongs to
+		@type sim:  SimPy.Simulation
+		@param fridges: A list of fridges to be observed
+		@type fridges: tuple of Fridge
+		@param tau: Time interval for observations
+		@type tau: float
+		@param aggSteps: Specifies after how many timesteps tau the collected
+		                 data is aggregated and stored.
+		@type aggSteps: int
+		"""
+		Process.__init__(self, sim = sim)
+		self._fridges = fridges
+		self._tau = tau
+		self._aggSteps = aggSteps
+		self._data = []
+
+	def run(self):
+		"""
+		Start observation
+		"""
+		aggSteps = 0
+		consumption = 0
+		lastProgUpdate = 0
+		while True:
+			prog = self.sim.now() * 100 / self.sim._endtime
+			if int(prog) > lastProgUpdate:
+				log.info('Progress: %d%%' % prog)
+				lastProgUpdate = prog
+			if (aggSteps >= self._aggSteps):
+				log.debug('Aggregating at %.2f' % self.sim.now())
+				self._data.append(consumption/self._aggSteps)
+				consumption = 0
+				aggSteps = 0
+
+			for fridge in self._fridges:
+				consumption += fridge.q_i
+			aggSteps += 1
+			yield hold, self, self._tau
+
+	def getData(self):
+		"""
+		Return the collected data
+
+		@return: a list with the collected data
+		"""
+		return self._data
+
+
+if __name__ == '__main__':
+	logging.basicConfig(
+			level = logging.DEBUG,
+			format = '%(levelname)-8s %(asctime)s %(name)s: %(message)s')
+
+	tau = 1./60 # Step size 1min
+	aggSteps = 15 # Aggregate consumption in 15min blocks
+	params = {'tau': tau}
+
+	sim = Simulation()
+
+	fridge = Fridge(sim, **params)
+	observer = FridgeObserver(sim, [fridge], tau, aggSteps)
+
+	sim.activate(fridge, fridge.run(), at = 0)
+	sim.activate(observer, observer.run(), at = 0)
+	sim.simulate(until = 4 + tau)
+	print observer.getData()

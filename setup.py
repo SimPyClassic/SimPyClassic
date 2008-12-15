@@ -1,16 +1,30 @@
 #! /usr/bin/env python
 from distutils.core import setup
 setup(
-      version="1.9.1",
+      version="2.0",
       author="Klaus Muller, Tony Vignaux",
       author_email="vignaux@user.sourceforge.net;kgmuller@users.sourceforge.net",
-      description="Version 1.9.1 of SimPy simulation package",
+      description="Version 2.0 of SimPy simulation package",
       long_description=\
 """
-Release 1.9.1 of SimPy is a bug-fix release of 1.9. It cures the following bugs:
+Version 2.0 of SimPy is a major release. It differs
+from the predecessor version (1.9) as follows:
 
-- excessive circular garbage, leading to large memory requirements,
-- runtime error when executing preempts of process holding hultiple resources.
+- Addition of an objected oriented API, while maintaining
+  full backward compatibility. With external packages
+  such as Parallel Python, this allows running SimPy
+  programs in parallel on multiple computers/CPUs/cores.
+  
+  With 2.0, it is simple to add new simulation classes
+  and modules which are subclassing class Simulation.
+  
+- Totally restructured, significantly smaller code base,
+  getting rid of all code duplication. This makes for
+  easier maintenance.
+  
+- Structuring and rendering of all documentation with
+  the Sphinx documentation tool. This results in one
+  easily browseable and searchable document.
 
 SimPy is a process-based discrete-event simulation language
 based on standard Python and released under the GNU LGPL. 

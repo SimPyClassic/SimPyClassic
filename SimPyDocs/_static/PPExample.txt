@@ -1,0 +1,28 @@
+"""
+Example for SimPy with Parallel Python.
+"""
+
+import PPExampleProcess
+from SimPy.Simulation import *
+import pp
+
+
+def runSimulation(jobNum, numCars):
+    sim = SimPy.Simulation.Simulation()
+    cars = []
+    for i in range(numCars):
+        car = PPExampleProcess.Car(sim, i * jobNum + i)
+        sim.activate(car, car.run(), at = 0)
+        cars.append(car)
+    sim.simulate(until = 30)
+
+
+server = pp.Server(ppservers = ())
+for i in range(4):
+    job = server.submit(
+                        runSimulation, 
+                        (i, 2),
+                        (),
+                        ('SimPy.Simulation', 'PPExampleProcess'))
+    job()
+    

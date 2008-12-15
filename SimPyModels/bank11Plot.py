@@ -26,7 +26,8 @@ class Bank11(SimPlot):
         for runNr in range(nrRuns):
             self.noRunYet=False
             self.Nc = 2
-            self.counter = [Resource(name="Clerk0",monitored=False),Resource(name="Clerk1",monitored=False)]
+            self.counter = [Resource(name="Clerk0",monitored=False),
+                            Resource(name="Clerk1",monitored=False)]
             self.waitMonitor = Monitor(name='Waiting Times')
             self.waitMonitor.xlab='Time'
             self.waitMonitor.ylab='Waiting time'
@@ -35,7 +36,8 @@ class Bank11(SimPlot):
             self.serviceMonitor.ylab='wait+service'
             initialize()
             source = Source(self,seed = self.sourceseed*1000)
-            activate(source,source.generate(self.params["numberCustomers"],self.params["interval"]),0.0)
+            activate(source,source.generate(self.params["numberCustomers"],
+                                            self.params["interval"]),0.0)
             simulate(until=self.params['endtime'])
             self.lastLeave+=now()
         print "%s run(s) completed"%(nrRuns)
@@ -43,38 +45,39 @@ class Bank11(SimPlot):
 
 class Source(Process):
     """ Source generates customers randomly"""
-    def __init__(self,sim,seed=333):
+    def __init__(self,modInst,seed=333):
         Process.__init__(self)
-        self.sim=sim
+        self.modInst=modInst
         self.SEED = seed
 
     def generate(self,number,interval):       
         rv = Random(self.SEED)
         for i in range(number):
-            c = Customer(self.sim,name = "Customer%02d"%(i,))
+            c = Customer(self.modInst,name = "Customer%02d"%(i,))
             activate(c,c.visit(timeInBank=12.0))
             t = rv.expovariate(1.0/interval)
             yield hold,self,t
 
 class Customer(Process):
     """ Customer arrives, is served and leaves """
-    def __init__(self,sim,**p):
+    def __init__(self,modInst,**p):
         Process.__init__(self,**p)
-        self.sim=sim
+        self.modInst=modInst
         
     def visit(self,timeInBank=0):       
         arrive=now()
-        Qlength = [self.sim.NoInSystem(self.sim.counter[i]) for i in range(self.sim.Nc)]
-        for i in range(self.sim.Nc):
+        Qlength = [self.modInst.NoInSystem(self.modInst.counter[i])\
+                   for i in range(self.modInst.Nc)]
+        for i in range(self.modInst.Nc):
             if Qlength[i] ==0 or Qlength[i]==min(Qlength): join =i ; break
-        yield request,self,self.sim.counter[join]
+        yield request,self,self.modInst.counter[join]
         wait=now()-arrive
-        self.sim.waitMonitor.observe(wait,t=now())
+        self.modInst.waitMonitor.observe(wait,t=now())
         ##print "%7.4f %s: Waited %6.3f"%(now(),self.name,wait)
-        tib = self.sim.counterRV.expovariate(1.0/timeInBank)
+        tib = self.modInst.counterRV.expovariate(1.0/timeInBank)
         yield hold,self,tib
-        yield release,self,self.sim.counter[join]
-        self.sim.serviceMonitor.observe(now()-arrive,t=now())
+        yield release,self,self.modInst.counter[join]
+        self.modInst.serviceMonitor.observe(now()-arrive,t=now())
 
 root=Tk()
 plt=Bank11()

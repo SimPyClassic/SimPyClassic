@@ -4,9 +4,9 @@
 
 :Authors:  - Tony Vignaux <Vignaux@users.sourceforge.net>,
            - Klaus Muller <Muller@users.sourceforge.net>
-:SimPy version: 1.9
+:SimPy version: 2.0
 :Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.3+
+:Python-Version: 2.3 or later (not 3.0)
 
 These models are examples of SimPy use written by several authors and
 usually developed for other purposes, such as teaching and
@@ -169,8 +169,8 @@ bank11Plot.py
 
 
 :Created: 2002-December
-:Date: $Date: 2007/12/02 06:11:06 $
-:Revision: $Revision: 1.1.1.18 $
+:Date: $Date$
+:Revision: $Revision$
 
  
 .. |simpylogo| image:: ../SimPyDocs/images/sm_SimPy_Logo.png

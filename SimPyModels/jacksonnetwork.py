@@ -126,5 +126,5 @@ print "Average arrival rate  = %10.4f"%(g.count/now(),)
 # jacksonnetwork.py:  Jackson network Littles law
 # pyt090b.py. See sms090b.tex for simscript version
 #        updated and simplified, 2004 Dec gav
-#        $Author: vignaux $    $Revision: 1.1.1.8 $
-#        $Date: 2007/01/12 05:50:30 $ 
+#        $Author$    $Revision$
+#        $Date$ 

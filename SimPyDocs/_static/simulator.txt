@@ -1,0 +1,198 @@
+# coding=utf8
+"""
+The fridge simulation
+
+@author: Stefan Scherfke
+@contact: stefan.scherfke at uni-oldenburg.de
+"""
+
+from time import clock
+import logging
+
+from SimPy.Simulation import Simulation, activate, initialize, simulate
+import pp
+
+from processes import Fridge, FridgeObserver
+
+log = logging.getLogger('Simulator')
+
+class Simulator(object):
+	"""
+	This class simulates a number of fridges and gets the resulting data.
+	"""
+
+	def __init__(self, numFridges, tau, aggSteps, duration):
+		"""
+		Setup the simulation with the specified number of fridges.
+
+		Tau specifies the simulation step for each frige. Furthermore the
+		observer will collect data each tau. Collected data
+		will be aggregated at the end of each aggSteps simulation steps.
+
+		@param numFridges: The number of simulated fridges
+		@type numFridges:  unsigned int
+		@param tau: simulation step size for collecting data and simulating
+		            the fridge
+		@type tau:  float
+		@param aggSteps: Collected data will be aggregated each aggSteps
+		                 simulation steps. Signals interval will be
+						 tau * aggSteps
+		@type aggSteps:  unsigned int
+		@param duration: Duration of the simulation in hours
+		@type duration:  unsigned int
+		"""
+		log.info('Initializing simulator ...')
+		self.simEnd = duration
+		self.sim = Simulation()
+
+		fridgeProperties = {'tau': tau}
+		self._fridges = []
+		for i in range(numFridges):
+			fridge = Fridge(self.sim, **fridgeProperties)
+			self._fridges.append(fridge)
+		self._observer = FridgeObserver(self.sim, self._fridges, tau, aggSteps)
+
+	def simulate(self):
+		"""
+		Initialize the system, start the simulation and return the collected
+		data.
+
+		@return: The fridgerators consumption after each aggregation
+		"""
+		log.info('Running simulation ...')
+		self.sim.initialize()
+		for fridge in self._fridges:
+			self.sim.activate(fridge, fridge.run(), at = 0)
+		self.sim.activate(self._observer, self._observer.run(), at = 0)
+		self.sim.simulate(until = self.simEnd)
+
+		log.info('Simulation run finished.')
+		return self._observer.getData()
+
+
+class ParallelSimulator(object):
+	"""
+	This class simulates a number of fridges and gets the resulting data.
+	Unlike simulator, a number of jobs will be created that use all availale
+	CPU cores or even other computers.
+
+	To use clustering, ParallelPython needs to be installed on all computers
+	and the server demon "ppserver.py" must be started. The list of the server's
+	IPs must then be passed to the constructor of this class.
+	"""
+
+	def __init__(self, numFridges, tau, aggSteps, duration,
+			jobSize = 100, servers = ()):
+		"""
+		Setup the simulation with the specified number of fridges. It will be
+		split up in several parallel jobs, each with the specified number of
+		jobs.
+
+		Tau specifies the simulation step for each frige. Furthermore the
+		observer will collect data each tau. Collected data
+		will be aggregated at the end of each aggSteps simulation steps.
+
+		@param numFridges: The number of simulated fridges
+		@type numFridges:  unsigned int
+		@param tau: simulation step size for collecting data and simulating
+		the fridge
+		@type tau:  float
+		@param aggSteps: Collected data will be aggregated each aggSteps
+		simulation steps. Signals interval will be
+		tau * aggSteps
+		@type aggSteps:  unsigned int
+		@param duration: Duration of the simulation
+		@type duration:  unsigned int
+		@param jobSize: The number of friges per job, defaults to 100.
+		@type jobSize: unsigned int
+		@param servers: A list of IPs from on which the simulation shall be
+		                executed. Defaults to "()" (use only SMP)
+		@type servers:  tuple of string
+		"""
+		log.info('Initializing prallel simulation ...')
+
+		self._jobSize = jobSize
+		self._servers = servers
+		self._numFridges = numFridges
+		self._tau = tau
+		self._aggSteps = aggSteps
+		self.simEnd = duration
+
+	def simulate(self):
+		"""
+		Create some simulation jobs, run them and retrieve their results.
+
+		@return: The fridgerators consumption after each aggregation
+		"""
+		log.info('Running parallel simulation ...')
+		oldLevel = log.getEffectiveLevel() # pp changes the log level :(
+		jobServer = pp.Server(ppservers = self._servers)
+
+		# Start the jobs
+		remainingFridges = self._numFridges
+		jobs = []
+		while remainingFridges > 0:
+			jobs.append(jobServer.submit(self.runSimulation,
+					(min(self._jobSize, remainingFridges),),
+					(),
+					("logging", "SimPy.Simulation", "processes")))
+			remainingFridges -= self._jobSize
+		log.info('Number of jobs for simulation: %d' % len(jobs))
+
+		# Add each job's data
+		pSum = [0] * int((60 / self._aggSteps) * self.simEnd)
+		for job in jobs:
+			data = job()
+			for i in range(len(data)):
+				pSum[i] += data[i]
+		for s in pSum:
+			s /= len(jobs)
+
+		log.setLevel(oldLevel)
+		log.info('Parallel simulation finished.')
+		return pSum
+
+	def runSimulation(self, numFridges):
+		"""
+		Create a job with the specified number of fridges and controllers and
+		one observer. Simulate this and return the results.
+
+		@param numFridges: The number of fridges to use for this job
+		@type numFridges:  unsigned int
+		@return: A list with the aggregated fridge consumption
+		"""
+		sim = SimPy.Simulation.Simulation()
+		sim.initialize()
+
+		fridgeProperties = {'tau': self._tau}
+		fridges = []
+		for i in range(numFridges):
+			fridge = processes.Fridge(sim, **fridgeProperties)
+			fridges.append(fridge)
+			sim.activate(fridge, fridge.run(), at = 0)
+		observer = processes.FridgeObserver(sim,
+				fridges, self._tau, self._aggSteps)
+		sim.activate(observer, observer.run(), at = 0)
+
+		sim.simulate(until = self.simEnd)
+		return observer.getData()
+
+
+if __name__ == '__main__':
+	logging.basicConfig(
+			level = logging.INFO,
+			format = '%(asctime)s %(levelname)8s: %(name)s: %(message)s')
+	
+	numFridges = 5000
+	tau = 1./60
+	aggStep = 15
+	duration = 4 + tau
+	
+	sim = Simulator(numFridges, tau, aggStep, duration)
+	data = sim.simulate()
+	log.info('Results: ' + str(data))
+
+	servers = ()
+	sim = ParallelSimulator(numFridges, tau, aggStep, duration, 100, servers)
+	data = sim.simulate()
+	log.info('Results: ' + str(data))

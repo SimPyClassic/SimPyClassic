@@ -1,0 +1,20 @@
+Cheatsheets
+====================================
+
+If you want to have a list of all SimPy commands, their
+syntax and parameters for your desktop, print out a copy
+of the **SimPy Cheatsheet**.
+
+The Cheatsheet comes in the following formats:
+
+* `Excel A4 page`_
+* `Excel Letter page`_
+* `PDF A4 page`_
+* `PDF Letter page`_
+   
+.. _`Excel A4 page`: _static/cheatsheet_A4.xls
+.. _`Excel Letter page`: _static/cheatsheet_Letter.xls
+.. _`PDF A4 page`: _static/Cheatsheet_A4.pdf
+.. _`PDF Letter page`: _static/Cheatsheet_Letter.pdf
+
+

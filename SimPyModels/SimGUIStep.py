@@ -2,7 +2,7 @@ from SimPy.SimGUI import *
 from SimPy.SimulationStep import *
 from random import Random
 
-__version__ = '$Revision: 1.1.1.6 $ $Date: 2007/12/22 03:20:43 $ kgm'
+__version__ = '$Revision$ $Date$ kgm'
 
 if __name__ == '__main__':
 
