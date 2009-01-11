@@ -19,6 +19,7 @@ Contents:
    OnLineSimPyCourse
    Interfacing
    Cheatsheets
+   SimPy_Tools
 
 Indices and tables
 ==================

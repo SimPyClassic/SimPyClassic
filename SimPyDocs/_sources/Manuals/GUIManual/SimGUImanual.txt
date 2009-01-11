@@ -8,8 +8,8 @@
 :SimPy version: 2.0
 :Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 102 $ 
-:Date: $Date: 2008-10-29 10:15:18 +0100 (Mi, 29 Okt 2008) $ 
+:Revision: $Revision: 153 $ 
+:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $ 
 
 
 .. contents:: Contents
@@ -438,4 +438,4 @@ submenu. Just e.g. **gui.waitMon=Monitor("Waiting times")**, where gui refers to
 a SimGUI (sub)class instance, is enough to facilitate this.
 
 	
-$Revision: 102 $ $Date: 2008-10-29 10:15:18 +0100 (Mi, 29 Okt 2008) $ kgm
+$Revision: 153 $ $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $ kgm

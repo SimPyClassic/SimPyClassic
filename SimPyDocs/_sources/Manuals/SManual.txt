@@ -17,7 +17,7 @@ Basic SimPy - Manual For First Time Users
 .. THIS WAS PUT UNDER SUBVERSION 2008/08/07
 
 .. REPLACEMENTS ===================================================
-.. |svnversion| replace:: $Revision: 132 $
+.. |svnversion| replace:: $Revision: 153 $
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
 .. |init| replace:: ``__init__``
@@ -1005,7 +1005,7 @@ the ``gasstation``.)
 .. _`SimPlot`: SimPlotManual/ManualPlotting.html
 
 .. ----------------------------------------------------------------------------
-.. CVS: was $Revision: 132 $ $Date: 2008-10-31 18:56:58 +0100 (Fr, 31 Okt 2008) $
+.. CVS: was $Revision: 153 $ $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
 .. the Mercurial (hg) version.
 .. SVN |svnversion|
 .. ----------------------------------------------------------------------------

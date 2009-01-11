@@ -5,8 +5,8 @@ SimPy's Object Oriented API - **New in Release 2.0**
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
 :SimPy version: 2.0
 :Python version: 2.3 and later (not 3.0)
-:Revision: $Revision: 125 $
-:Date: $Date: 2008-10-31 11:50:11 +0100 (Fr, 31 Okt 2008) $
+:Revision: $Revision: 153 $
+:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
 
 .. contents:: Contents
    :depth: 2

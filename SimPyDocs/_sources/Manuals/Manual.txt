@@ -17,8 +17,8 @@ Simulation with SimPy - In Depth Manual
 :SimPy version: 2.0
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 135 $
-:Date: $Date: 2008-10-31 19:20:10 +0100 (Fr, 31 Okt 2008) $
+:Revision: $Revision: 153 $
+:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
 
 
 
@@ -3288,7 +3288,7 @@ Glossary
     :alt:  SourceForge Logo
 
 .. ----------------------------------------------------------------------------
-.. $Revision: 135 $ $Date: 2008-10-31 19:20:10 +0100 (Fr, 31 Okt 2008) $
+.. $Revision: 153 $ $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
 .. ----------------------------------------------------------------------------
 
 
