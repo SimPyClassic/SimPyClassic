@@ -10,8 +10,8 @@ Simulation with Event Stepping
 :SimPy version: 2.0
 :Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 153 $ 
-:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $ 
+:Revision: $Revision: 179 $ 
+:Date: $Date: 2009-01-13 15:11:54 +0100 (Di, 13 Jan 2009) $ 
 
 .. contents:: Contents
    :depth: 2
@@ -67,10 +67,10 @@ Here is a simple program which shows basic event stepping capabilities::
 
 A trivial simulation model, but with event stepping:
 
-    - (1) import the stepping version of Simulation
-    - (2) define a procedure which gets called after any event
-    - (3) switch into event stepping mode
-    - (4) run the model with event callback to the procedure defined at (2); *simulate* in SimulationStep has an extra named parameter, *callback*
+	(1) import the stepping version of Simulation
+ 	(2) define a procedure which gets called after every event
+ 	(3) switch into event stepping mode
+	(4) run the model with event callback to the procedure defined at (2); ``simulate`` in SimulationStep has an extra named parameter, ``callback``.
     
 Running it produces this output::
 
@@ -86,7 +86,7 @@ Running it produces this output::
 
 The callback outputs the simulation time after every event.
 
-Here is another example, the same model, but now with the user geting control back after every 
+Here is another example, the same model, but now with the user getting control back after every 
 event::
 
     ## Stepping2.py
@@ -142,7 +142,7 @@ or this (the user stopped stepping mode at time=1)::
     got home again
 
 If one wants to run a tested/debugged model full speed, i.e. without stepping,
-one can write a program as folloes::
+one can write a program as follows::
 
     ## Stepping2Fast.py
     from __future__ import generators
@@ -184,7 +184,7 @@ one can write a program as folloes::
 	    simulate(until=100)
 	    
 If one runs this with the Python command line option '-O', any 
-statement starting with *if __debug__:* are ignored/skipped by the
+statement starting with ``if __debug__:`` is ignored/skipped by the
 Python interpreter.
     
 The SimulationStep API
@@ -236,7 +236,7 @@ Return value:
 		
 **simulate**
 ----------------
-Runs a simulation with callback to a user-defined function after each event, if stepping is turn on.
+Runs a simulation with callback to a user-defined function after each event, if stepping is turned on.
 By default, stepping is switched off.
 
 Call:
@@ -255,10 +255,10 @@ Return value:
 **simulateStep**
 ----------------
 Runs a simulation for one event, with (optional) callback to a user-defined function 
-after the event, if stepping is turn on. By default, stepping is switched off.
+after the event, if stepping is turned on. By default, stepping is switched off.
 Thus, to execute the model to completion, *simulateStep* must be called repeatedly.
 
-**Note: it is not clear to the developers yet whether this part of the API offers any advantages
+**Note: it is not yet clear to the developers whether this part of the API offers any advantages
 or capabilities over and above the *simulate* function. The survival of this function
 in future versions depends on the feedback from the user community.**
 
@@ -281,5 +281,5 @@ Return value:
 	
 
 	
-$Revision: 153 $ $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $ kgm
+$Revision: 179 $ $Date: 2009-01-13 15:11:54 +0100 (Di, 13 Jan 2009) $ kgm
 
