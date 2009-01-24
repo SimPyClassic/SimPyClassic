@@ -1,3 +1,6 @@
+""" Market.py
+Model of a supermarket.
+"""
 from SimPy.Simulation import *
 import random
 from math import sqrt
