@@ -29,7 +29,7 @@ class CallSource(Process):
  def execute(self, maxN, lam,cell):
     for i in range(maxN):
          j = Call("Call%03d"%(i,),sim=self.sim)
-         sim.self.activate(j,j.execute(cell))
+         self.sim.activate(j,j.execute(cell))
          yield hold,self,ran.expovariate(lam)
 
 
@@ -77,15 +77,15 @@ class Statistician(Process):
              yield hold,self,obsGap
              cell.totalBusyTime = 0.0
              cell.totalBusyVisits = 0
-             if cell.Nfree == 0: cell.busyStartTime = now()
+             if cell.Nfree == 0: cell.busyStartTime = self.sim.now()
              yield hold,self,obsPeriod
-             if cell.Nfree == 0: cell.totalBusyTime += now()-cell.busyStartTime
+             if cell.Nfree == 0: cell.totalBusyTime += self.sim.now()-cell.busyStartTime
              if STRACING:
                  print "%7.3f %5d"%(cell.totalBusyTime,cell.totalBusyVisits)
-             m.tally(cell.totalBusyTime)
-             bn.tally(cell.totalBusyVisits)
-         stopSimulation()
-         cell.result= (m.mean(),m.var(),bn.mean(),bn.var())
+             self.sim.m.tally(cell.totalBusyTime)
+             self.sim.bn.tally(cell.totalBusyVisits)
+         self.sim.stopSimulation()
+         cell.result= (self.sim.m.mean(),self.sim.m.var(),self.sim.bn.mean(),self.sim.bn.var())
 
 ## Experiment data -------------------------
 
@@ -102,31 +102,32 @@ obsGap    = 15.0       # gap between observation periods
 TRACING  = False
 STRACING = True
 
-
+## Model -----------------------------------
+class CellphoneModel(Simulation):
+    def run(self):
+        self.initialize()
+        self.m = Monitor(sim=self)
+        self.bn =Monitor(sim=self)
+        ran.seed(ranSeed)
+        self.cell = Cell()           # the cellphone tower
+        self.cell.Nfree   = NChannels
+        s = Statistician('Statistician',sim=self)
+        self.activate(s,s.execute(Nperiods,obsPeriod,obsGap,self.cell))
+        g = CallSource('CallSource',sim=self)
+        self.activate(g,g.execute(maxN, lam,self.cell))
+        self.simulate(until=10000.0)
+        
 ## Experiment ------------------------------
+modl=CellphoneModel()
+modl.run()
 
-m = Monitor()
-bn =Monitor()
-ran.seed(ranSeed)
-
-cell=Cell()           # the cellphone tower
-cell.Nfree   = NChannels
-
-initialize()
-s = Statistician('Statistician')
-activate(s,s.execute(Nperiods,obsPeriod,obsGap,cell))
-g = CallSource('CallSource')
-activate(g,g.execute(maxN, lam,cell))
-simulate(until=10000.0)
-
-## Output -------------------------
+## Output ----------------------------------
 print 'cellphone'
 # input data:
 print "lambda    mu      s  Nperiods obsPeriod  obsGap"
 FMT= "%7.4f %6.4f %4d   %4d      %6.2f   %6.2f"
 print FMT%(lam,mu,NChannels,Nperiods,obsPeriod,obsGap)
 
-
-sr = cell.result
+sr = modl.cell.result
 print "Busy Time:   mean = %6.3f var= %6.3f"%sr[0:2]
 print "Busy Number: mean = %6.3f var= %6.3f"%sr[2:4]
