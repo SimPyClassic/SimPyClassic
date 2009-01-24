@@ -1,7 +1,9 @@
 from SimPy.Simulation import *
-""" Finds the shortest path in a network
+""" shortestPath_SimPy.py
+
+    Finds the shortest path in a network.
     Author: Klaus Muller
-    """
+"""
 
 class node:
     def __init__(self):
