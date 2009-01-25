@@ -14,19 +14,23 @@ consulting. They are in a variety of styles. Some have been converted
 to the new script structure accepted by the SimPy users. These are
 listed first.
 
+Most models are given in two versions, one with the procedural SimPy API
+and the other (identified by an "_OO" appended to the program name) with
+the Object Oriented API introduced in SimPy 2.0.
+
 Command Line input and output
 ------------------------------
 
 new program structure
 +++++++++++++++++++++++++
 
-MMC.py	
+MMC.py, MMC_OO.py	
         M/M/c (multiple server queue model. This demonstrates both the
 	multiple capacity Resource class and the observe method of the
 	Monitor class. Random arrivals, exponential
 	service-times. (TV)
 
-bcc.py 
+bcc.py, bcc_OO.py 
         Determine the probability of rejection of random arrivals to a
 	2-server system with different service-time distributions. No
 	queues allowed, blocked customers are rejected
@@ -34,14 +38,14 @@ bcc.py
 	hyperexponential. The theoretical probability is also
 	calculated.  (TV)
 
-callCenter.py
+callCenter.py, callCenter_OO.py
         A call center with agents with different skills.  The model
         returns the frequency distribution of client waiting times,
         the percentage of reneging clients, and the load on the
         agents.  This model demonstrates the use of yield get with a
         filter function. (KGM)
 
-cellphone.py 
+cellphone.py, cellphone_OO.py 
 	A cellphone cell with blocking (that is BCC discipline). The
 	program simulates the operation for 10 observation periods and
 	measures the mean and variance of the total time blockedr and
@@ -49,7 +53,7 @@ cellphone.py
 	observational gap occurs between the observation periods to
 	make each one's measurement independent.  (TV)
 
-centralserver.py
+centralserver.py, centralserver_OO.py
 	A primitive central-server model with a single CPU and a
 	single disk. A fixed number of users send "tasks" to the
 	system which are processed and sent back to the user who then
@@ -57,7 +61,7 @@ centralserver.py
 	are exponential. This system can be solved analytically.
 	Trace statements have been removed. (TV)
 
-jacksonnetwork.py 
+jacksonnetwork.py, jacksonnetwork_OO.py 
 	A Jackson network with 3 nodes, exponential service times and
 	probability switching. The simulation measures the delay for
 	jobs moving through the system.  (TV)
@@ -68,12 +72,12 @@ jacksonnetwork.py
 Miscellaneous Models
 +++++++++++++++++++++
 
-bank08renege.py (partial conversion)
+bank08renege.py, bank08renege_OO.py (partial conversion)
 	Use of reneging (compound ``yield request``) based on ``bank08.py``
 	of the tutorial TheBank. Customers leave if they lose patience
 	with waiting.
 
-Carwash.py
+Carwash.py, Carwash_OO.py
         Using a Store object for implementing master/slave cooperation
         between processes.  Scenario is a carwash installation with
         multiple machines. Two model implementations are shown, one
@@ -93,40 +97,40 @@ demoSimPyEvents.py
 	US-style 4-way stop intersection.
 	
 
-shortestPath_SimPy.py
+shortestPath_SimPy.py, shortestPath_SimPy_OO.py
 	A fun example of using SimPy for non-queuing work. It
 	simulates a searcher through a graph, seeking the shortest
 	path. (KGM) 
 
-Machineshop.py
+Machineshop.py, Machineshop_OO.py
 	An example of the use of the ``interrupt()`` method. It
 	simulates a workshop with ``n`` machines which break down and one
 	or more repairmen which have to repair them. (KGM)
 
     
-Market.py
+Market.py, Market_OO.py
 	A supermarket checkout with multiple counters and extended
 	Monitor objects.  Written and analysed by David Mertz in an
 	article for developerWorks (). (MM)
 
-Movie_renege.py
+Movie_renege.py, Movie_renege_OO.py
 
 	Use of reneging (compound ``yield request``) constructs for
 	reneging at occurrence of an event. Scenario is a movie ticket
 	counter with a limited number of tickets for three movies.
     
-needResources.py
+needResources.py, needResources_OO.py
 	Demo of ``waitUntil`` capability introduced in SimPy 1.5. It
 	simulates three workers each requiring a set of tools to do
 	their jobs. Tools are shared, scarce resources for which they
 	compete.
 
-SimPy_worker_extend.py
-        Factory making widgets with queues for machines. (MM)
+SimPy_worker_extend.py, SimPy_worker_extend_OO.py
+      Factory making widgets with queues for machines. (MM)
 
 
 
-WidgetPacking.py
+WidgetPacking.py, WidgetPacking_OO.py
         Using buffers for producer/consumer scenarios. Scenario is a
         group of widget producing machines and a widget packer,
         synchronized via a buffer. Two models are shown: the first
@@ -137,14 +141,10 @@ WidgetPacking.py
 GUI Input
 -----------
 
-MM1.py
-	M/M/1 random-arrivals, exponential service time queue with GUI input.
-	(MM)
-
-GUIdemo.py
+GUIdemo.py, GUIdemo_OO.py
 	A firework show.
 
-bank11GUI.py
+bank11GUI.py, bank11GUI_OO.py
 	A modification of the bank11 simulation with GUI input.
 
 SimGUIStep.py
@@ -154,7 +154,7 @@ SimGUIStep.py
 Plot
 ----------------
 
-bakery.py
+bakery.py, bakery_OO.py
         A bakery with three ovens to answer the following questions:
         a) What is the mean waiting time for retail and restaurant
         buyers?  b) What is their maximum waiting time?  c) What
