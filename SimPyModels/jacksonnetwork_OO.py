@@ -127,5 +127,5 @@ print "Total jobs arrived    = %10d"%(modl.g.count)
 print "Total jobs completed  = %10d"%(modl.TimeInSystem.count(),)
 print "Average arrival rate  = %10.4f"%(modl.g.count/modl.now(),)
 
-#        $Author: kgmuller $    $Revision: 163 $
-#        $Date: 2008-12-15 12:47:44 +0100 (Mo, 15 Dez 2008) $ 
+#        $Author$    $Revision$
+#        $Date$ 
