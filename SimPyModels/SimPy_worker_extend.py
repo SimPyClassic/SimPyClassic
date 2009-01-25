@@ -4,8 +4,8 @@ import string
 
 def theTime(time):
 
-    hrs=time//60
-    min=time-hrs
+    hrs=int(time/60)
+    min=int(time-hrs*60)
     return "%s:%s" %(string.zfill(str(hrs),2),string.zfill(str(min),2))
 
 class worker(Process):
