@@ -41,8 +41,6 @@ class Widget:
         
 class WidgetMakerN(Process):
     """Produces widgets"""
-    def __init__(self,name):
-        Process.__init__(self,name)
     def make(self,buffer):
         while True:
             yield hold,self,r.uniform(tMake-deltaT,tMake+deltaT)
@@ -50,8 +48,6 @@ class WidgetMakerN(Process):
         
 class WidgetPackerN(Process):
     """Packs a number of widgets into a package"""
-    def __init__(self,name):
-        Process.__init__(self,name)
     def pack(self,buffer):
         while True:
             for i in range(nWidgets):
@@ -81,8 +77,6 @@ packMax=120     #kilogrammes per package (max)
 
 class WidgetMakerW(Process):
     """Produces widgets"""
-    def __init__(self,name):
-        Process.__init__(self,name)
     def make(self,buffer):
         while True:
             yield hold,self,r.uniform(tMake-deltaT,tMake+deltaT)
@@ -91,8 +85,6 @@ class WidgetMakerW(Process):
         
 class WidgetPackerW(Process):
     """Packs a number of widgets into a package"""
-    def __init__(self,name):
-        Process.__init__(self,name)
     def pack(self,buffer):
         weightLeft=0
         while True:
