@@ -8,8 +8,8 @@ INSTALLATION: SimPy
 :SimPy version: 2.0
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3+ (but NOT 3.0)
-:Revision: $Revision: $
-:Date: $Date: $
+:Revision: $Revision$
+:Date: $Date$
 
 
 This file describes the installation of SimPy 
