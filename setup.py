@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 from distutils.core import setup
 setup(
-      version="2.0",
+      version="2.00",
       author="Klaus Muller, Tony Vignaux",
       author_email="vignaux@user.sourceforge.net;kgmuller@users.sourceforge.net",
       description="Version 2.0 of SimPy simulation package",
