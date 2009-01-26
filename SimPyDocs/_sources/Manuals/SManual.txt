@@ -11,13 +11,14 @@ Basic SimPy - Manual For First Time Users
 
 :Authors: G A Vignaux and Klaus Muller
 
-:Date:  August 2008 
-
+:Date:  January 2009
+:SimPy version: 2.0
+:Python-Version: 2.3 and later (not 3.0)
 
 .. THIS WAS PUT UNDER SUBVERSION 2008/08/07
 
 .. REPLACEMENTS ===================================================
-.. |svnversion| replace:: $Revision: 153 $
+.. |svnversion| replace:: $Revision: 202 $
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
 .. |init| replace:: ``__init__``
@@ -988,7 +989,7 @@ the ``gasstation``.)
 
 .. _`SimPy models`: LISTOFMODELS.html
 
-.. _Manual: http://simpy.sourceforge.net/SimPyDocs/Manual.html
+.. _Manual: Manual.html
 .. _`SimPy.SimulationTrace`: http://simpy.sourceforge.net/SimPyDocs/Tracing.html
 .. _`SimPy.SimulationRT`: http://simpy.sourceforge.net/SimPyDocs/SimRTManual.html
 .. _`SimPy.SimulationStep`: http://simpy.sourceforge.net/SimPyDocs/SimStepManual/SimStepManual.html
@@ -1005,7 +1006,7 @@ the ``gasstation``.)
 .. _`SimPlot`: SimPlotManual/ManualPlotting.html
 
 .. ----------------------------------------------------------------------------
-.. CVS: was $Revision: 153 $ $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+.. CVS: was $Revision: 202 $ $Date: 2009-01-24 22:12:35 +0100 (Sa, 24 Jan 2009) $
 .. the Mercurial (hg) version.
 .. SVN |svnversion|
 .. ----------------------------------------------------------------------------

@@ -6,8 +6,8 @@ Running SimPy on Multiple Processors with **Parallel Python**
           - Ontje L |uumlaut| nsdorf
 :SimPy version: 2.0
 :Python version: 2.3 and later (not 3.0)
-:Revision: $Revision: 153 $
-:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+:Revision: $Revision: 200 $
+:Date: $Date: 2009-01-23 14:05:25 +0100 (Fr, 23 Jan 2009) $
 
 .. |uumlaut| unicode:: U+00FC
    :trim:
@@ -20,14 +20,14 @@ Introduction
 
 With SimPy 2.0, you can easily increase the performance of your simulation by using `Parallel
 Python`_ if you have a larger number of independent processors (multiple CPUs or cores). 
-*Parallel Python can* distribute the execution of your SimPy processes to all cores of your
-CPU and even to other computers. You should read the PP documentaion for further
+*Parallel Python* can distribute the execution of your SimPy processes to all cores of your
+CPU and even to other computers. You should read the PP documentation for further
 information on how this works.
 
 .. _`Parallel Python`: http://www.parallelpython.com/
 
 Please, note that *Parallel Python* is not included in the SimPy 2.0 distribution and needs to 
-be `downloaded http://www.parallelpython.com/>` and installed separately
+be `downloaded <http://www.parallelpython.com/>` and installed separately.
 
 Examples
 =============
@@ -36,8 +36,8 @@ Example #1
 -----------------
 
 The files PPExample.txt_ and PPExampleProcess.txt_ contain a small example
-with several car processes. It is important, that all process etc.are not
-defined in the same file that starts the PP job server and executes the jobs,
+with several car processes. It is important, that processes etc.are not
+defined in the file that starts the PP job server and executes the jobs,
 since ``ppserver.submit()`` only takes functions defined in the same file and
 module names to import, but no classes.
 
@@ -96,7 +96,7 @@ cars, we can easily distribute the processes to many CPU cores and others
 computers in our network.
 
 PP pickles everything it sends to other cores/computers. Since SimPy is
-currently not pickleable, you cannot sumit ``Simulation.simulate()`` to the
+currently not pickleable, you cannot submit ``Simulation.simulate()`` to the
 PPServer. In this example ``runSimulation`` is defined and submitted to the
 server. The code within it will be executed on each core/computer. In the 
 example we create four simulation jobs with two cars for each job.
@@ -109,9 +109,9 @@ Example #2
 Files simulator.txt_ and processes.txt_ contain an example that
 simulates refrigerators in single-thread and in parallel simulation mode.
 
-Class Simulator simulates a number of fridges and gets the resulting data.
+Class ``Simulator`` simulates a number of fridges and gets the resulting data.
 
-Class ParallelSimulator simulates a number of fridges and gets the resulting data.
+Class ``ParallelSimulator`` simulates a number of fridges and gets the resulting data.
 A number of jobs will be created that use all available
 CPU cores or even other computers.
 

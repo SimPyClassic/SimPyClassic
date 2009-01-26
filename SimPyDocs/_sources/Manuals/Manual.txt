@@ -17,8 +17,8 @@ Simulation with SimPy - In Depth Manual
 :SimPy version: 2.0
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 153 $
-:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+:Revision: $Revision: 209 $
+:Date: $Date: 2009-01-25 05:32:46 +0100 (So, 25 Jan 2009) $
 
 
 
@@ -30,90 +30,6 @@ Simulation with SimPy - In Depth Manual
 
 .. contents:: Contents
    :depth: 2
-
-..
-    1   Introduction
-    2   Simulation with SimPy
-      2.1  Alternative SimPy simulation libraries
-    3   Processes
-      3.1  Defining a process
-      3.2  Creating a process object
-      3.3  Elapsing time in a Process
-        3.3.1  yield hold
-      3.4  Starting and stopping SimPy Process Objects
-        3.4.1  activate
-        3.4.2  start
-        3.4.3  passivate
-        3.4.4  reactivate
-        3.4.5  cancel
-        3.4.6  A source fragment
-      3.5  Asynchronous interruptions
-        3.5.1  interrupt
-        3.5.2  interrupted
-        3.5.3  interruptCause
-        3.5.4  interruptLeft
-        3.5.5  interruptReset
-      3.6  Advanced synchronization/scheduling capabilities
-        3.6.1  Creating and Signalling SimEvents
-          3.6.1.1  Waiting or Queueing for SimEvents
-        3.6.2  yield waitevent
-        3.6.3  yield queueevent
-          3.6.3.1  Finding Which Processes Are Waiting/Queueing for an Event, and Which Events Fired
-        3.6.4  "waituntil" synchronization -- waiting for any condition
-        3.6.5  yield waituntil
-    4   Resources
-      4.1  Defining a Resource object
-      4.2  Requesting and releasing a unit of a Resource
-        4.2.1  yield request
-        4.2.2  yield release
-      4.3  Queue Order
-        4.3.1  Non-priority queueing
-        4.3.2  Priority requests for a Resource unit
-        4.3.3  Preemptive requests for a Resource unit
-        4.3.4  Note on preemptive requests with waitQ in FIFO order
-      4.4  Reneging -- leaving a queue before acquiring a resource
-        4.4.1  Reneging yield request
-        4.4.2  Reneging after a time limit
-        4.4.3  Reneging when an event has happened
-        4.4.4  Note on exiting conventions and preemptive queues
-      4.5  Recording Resource queue lengths
-    5   Levels
-      5.1  Defining a Level
-      5.2  Getting amounts from a Level
-      5.3  Putting amounts into  a Level
-      5.4  Reneging
-    6   Stores
-      6.1  Defining a Store
-      6.2  Putting objects into a Store
-      6.3  Getting objects from  a Store
-      6.4  Using the get filter function
-      6.5  Reneging
-      6.6  Storing objects in an order
-      6.7  Master/Slave modeling with a Store
-    7   Random Number Generation
-    8   Recording Simulation Results
-      8.1  Defining Tallys and Monitors
-      8.2  Observing data
-      8.3  Data summaries
-      8.4  Special methods for Monitor
-      8.5  Histograms
-        8.5.1  Setting up a Histogram for a Tally object
-        8.5.2  Setting up a Histogram for a Monitor object
-    9   Other Links
-    10  Acknowledgments
-    11  Appendices
-      11.1  A0. Changes from the previous  version of SimPy
-      11.2  A1. SimPy Error Messages
-        11.2.1  Advisory messages
-        11.2.2  Fatal error messages
-        11.2.3  Monitor error messages
-      11.3  A2. SimPy Process States
-      11.4  A3. SimPlot, The SimPy plotting utility
-      11.5  A4. SimGUI, The SimPy Graphical User Interface
-      11.6  A5. SimulationTrace, the SimPy tracing utility
-      11.7  A6. SimulationStep, the SimPy event stepping utility
-      11.8  A7. SimulationRT, a real-time synchronizing utility
-    12  Glossary
 
 
 
@@ -139,34 +55,34 @@ active components such as messages, customers, trucks, planes by
 parallel processes. It provides a number of tools for the simulation
 programmer including Processes_ to model active entities, three kinds
 of resource facilities (Resources_, Levels_, and Stores_) and ways of
-recording results by using Monitors_ and Tallys_.
+recording results by using Monitors_ and Tallys_. 
 
 The basic active elements of a SimPy model are process objects (i.e.,
-objects of a Process class -- see Processes_) [#]_.  These may be delayed
-for fixed or random times, queued at resource facilities, and may be
-interrupted by or interact in other ways with other processes and
-components. For example, Automobiles, modeled as process objects, may
-have to queue while waiting for a pump to become available in a model
-of a gas station. One obtaining a pump it takes some time to fill
-before releasing the pump.
+objects of a Process class -- see Processes_).  As a general practice
+and for brevity we will often refer to both process objects and their
+classes as "processes."  Thus, "process" may refer to a Process class
+or to a process object, depending on context. To avoid ambiguity or
+for added emphasis we often explicitly state whether a class or an
+object is intended. In addition we will use "entity" to refer to
+process objects as this is frequently used in the simulation
+literature. Here, though, we restrict it to process objects and it
+will not be used for any other elements in the simulation.
 
-.. [#] As a general practice and for brevity we will usually refer to
-       both process objects and their classes as "processes."  Thus,
-       "process" may refer to a Process class or to a process object,
-       depending on context. To avoid ambiguity or for added emphasis
-       we often explicitly state whether a class or an object is
-       intended.
+
+During the simulation, Process objects may be delayed for fixed or
+random times, queued at resource facilities, and may be interrupted by
+or interact in other ways with other processes and components. For
+example, Automobiles in a model of a gas station may have to queue
+while waiting for a pump to become available . One obtaining a pump it
+takes some time to fill before releasing the pump.
+
 
 A SimPy script contains the declaration of one or more Process classes
-and the creation of process objects from them.  Each process
-object  [#]_ executes its *Process Execution Method* (referred to later as a
-PEM_), a method that determines its actions. Each PEM runs in parallel
-with (and may interact with) the PEMs of other process objects.
-
-.. [#] We will often refer to process objects as "entities". This term
-       is frequently used in the simulation literature. Here, though,
-       we restrict it to process objects and it will not be used for
-       any other elements in the simulation.
+and the creation of process objects (entities) from them.  Each
+process object executes its *Process Execution Method* (referred to
+later as a PEM_), a method that determines its actions. Each PEM runs
+in parallel with (and may interact with) the PEMs of other process
+objects.
 
 There are three types of resource facilities (Resources_, Levels_, and
 Stores_). Each type models a congestion point where process objects
@@ -221,6 +137,7 @@ time-series records. Monitors can preserve complete time-series
 records that may later be used for more advanced post-simulation
 analyses.
 
+
 Before attempting to use SimPy, you should be able to write Python
 code. In particular, you should be able to define and use classes and
 their objects. Python is free and usable on most platforms.  We do not
@@ -228,7 +145,6 @@ expound it here. You can find out more about it and download it from
 the Python_ web-site (http://www.Python.org). SimPy requires *Python*
 2.3 or later.
 
-[Return to Top_ ]
 
 Simulation with SimPy
 -------------------------
@@ -299,10 +215,33 @@ function is called to display the results::
 
   Report()  #  report results when the simulation finishes
   
+
+The object-oriented programmers interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An object-oriented API interface was added in SimPy 2.0.  It is
+described more fully in `SimPyOO_API`_\. It defines a class of
+*Simulation* objects and makes running multiple simulations cleaner
+and easier. It is compatible with the procedural version described in
+this Manual. Using the object-oriented API, the program fragment listed
+at the end of the previous subsection would look like this::
+
+
+  s=Simulation()
+  s.initialize()
+  m = Message(sim=s)
+  s.activate(m,m.go(),at=0.0)
+  s.simulate(until=1000.0)
+
+  Report()  #  report results when the simulation finishes
+
+Further examples of the OO style exist in the *SimPyModels* directory.
+
+
 Alternative SimPy simulation libraries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to *SimPy.Simulation*, SimPy provides three alternative
+In addition to *SimPy.Simulation*, SimPy provides four alternative
 simulation libraries which have the basic ``SimPy.Simulation``
 capabilities, plus additional facilities:
 
@@ -324,7 +263,12 @@ capabilities, plus additional facilities:
    getting event-by-event output from a model (e.g. for plotting purposes),
    etc.
 
-[Return to Top_ ]
+ * *SimPy.SimulationGUIDebug* for event-stepping through a simulation
+   with a GUI: ``from SimPy.SimulationGUIDebug import *`` provides an
+   API for stepping through a simulation event-by-event, with a GUI
+   for user control. The event list, Process and Resource objects are
+   shown in windows. This is useful for debugging models and for teaching
+   discrete event simulation with SimPy.
 
 .. ==================================================================
 
@@ -3136,11 +3080,11 @@ SimPy 2.0 differs from version 1.9.1 in the following ways:
 
 - New (object oriented) API added.
 - Documentation on running SimPy in parallel processes on multiple CPUs, 
-  cores or computerswith Parallel Python
+  cores or computerswith Parallel Pythonf
 
 **Changes:**
 
-- The documentation is now formattted using Sphinx documentation generator.
+- The documentation is now formattted using the Sphinx documentation generator.
 
 
 
@@ -3239,7 +3183,6 @@ to demonstrate a model's execution in real time.
 
 .. _`SimulationRT`: SimRTManual.html
 
-[Return to Top_ ]
 
 .. _glossary:
 
@@ -3261,6 +3204,9 @@ Glossary
 .. _`simpydownload`: http://sourceforge.net/projects/simpy/
 
 .. _`SimPy models`: LISTOFMODELS.html
+.. _`SimPyOO_API`: SimPyOO_API.html
+.. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
+
 
 
 .. _Top: Contents_
@@ -3273,7 +3219,6 @@ Glossary
 .. _Recorders: `Recording Simulation Results`_
 .. _reneging: `Reneging -- leaving a queue before acquiring a resource`_
 .. _interrupted: `Asynchronous interruptions`_
-.. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
 .. _Level: `Levels`_
 .. _Store: `Stores`_
 .. _Resource: `Resources`_
@@ -3288,7 +3233,7 @@ Glossary
     :alt:  SourceForge Logo
 
 .. ----------------------------------------------------------------------------
-.. $Revision: 153 $ $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+.. $Revision: 209 $ $Date: 2009-01-25 05:32:46 +0100 (So, 25 Jan 2009) $
 .. ----------------------------------------------------------------------------
 
 

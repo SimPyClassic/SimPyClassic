@@ -8,8 +8,8 @@ The Bank Tutorial part 2: More  examples of SimPy Simulation
 .. ---------------------------------------------------
 ..        2004 October gav  079.131.13
 ..        $Author: kgmuller $
-..        $Revision: 153 $
-..        $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+..        $Revision: 224 $
+..        $Date: 2009-01-25 19:10:13 +0100 (So, 25 Jan 2009) $
 .. ---------------------------------------------------
  
 .. ---------------------------------------------------
@@ -423,7 +423,7 @@ have to wait until the door is opened.
 Monitors
 -------------
 
-Monitors (and Tallyies) are used to track and record values in a
+Monitors (and Tallys) are used to track and record values in a
 simulation. They store a list of [time,value] pairs, one pair being
 added whenever the ``observe`` method is called.  A particularly
 useful characteristic is that they continue to exist after the
@@ -568,7 +568,7 @@ References
 
 - The Bank: `The Bank`_
 
-:Version: $Revision: 153 $
+:Version: $Revision: 224 $
 
 ..
   ------------------------------------------------------
