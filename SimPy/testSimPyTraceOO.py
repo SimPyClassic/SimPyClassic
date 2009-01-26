@@ -3,7 +3,7 @@ from SimPy.MonitorTest import *
 from SimPy.SimulationTrace  import *
 import unittest
 from random import random
-# $Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $ 
+# $Revision$ $Date$ 
 """testSimPyTraceOO.py
 SimPy version 2.0
 Unit tests for SimulationTrace.
@@ -36,12 +36,12 @@ Unit tests for SimulationTrace.
 # 2007 12 05 added tests for start method (Process)
 # 2008 03 03 added test for nested preempts
 
-#'$Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $ kgm'
+#'$Revision$ $Date$ kgm'
 
 """
 simulationTraceVersion=version
 print "Under test: SimulationTrace.py %s"%simulationTraceVersion
-__version__ = '2.0 $Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $ '
+__version__ = '2.0 $Revision$ $Date$ '
 print 'testSimPyTraceOO.py %s'%__version__
 
 ## -------------------------------------------------------------

@@ -3,7 +3,7 @@ from SimPy.SimulationRT  import *
 from SimPy.MonitorTest import *
 import unittest
 from random import random
-# $Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $
+# $Revision$ $Date$
 """testSimPyRT.py
 SimPy version 2.0
 Unit tests for SimulationRT.
@@ -37,12 +37,12 @@ between Simulation and SimulationRT.
 # 2007 12 05 added tests for start method (Process)
 # 2008 03 03 added test for nested preempts
 
-#'$Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $ kgm'
+#'$Revision$ $Date$ kgm'
 
 """
 simulationRTVersion=version
 print "Under test: SimulationRT.py %s"%simulationRTVersion
-__version__ = '2.0 $Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $ '
+__version__ = '2.0 $Revision$ $Date$ '
 print 'testSimPyRTOO.py %s'%__version__
 
 ## -------------------------------------------------------------

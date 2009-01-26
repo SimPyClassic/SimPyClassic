@@ -2,7 +2,7 @@
 This file provides a global Simulation object and the global simulation methods
 used by SimPy up to version 1.9.1.
 """
-# $Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $
+# $Revision$ $Date$
 # SimPy version: 2.0
 
 global sim

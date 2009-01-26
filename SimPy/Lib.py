@@ -2,7 +2,7 @@
 This file contains Process, SimEvent, the resources Resource, Leven and Storage 
 as well as their dependencies Buffer, Queue, FIFO and PriorityQ.
 """
-# $Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $ kgm
+# $Revision$ $Date$ kgm
 # SimPy version: 2.0
 import inspect
 import new

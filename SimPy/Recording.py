@@ -2,7 +2,7 @@
 This file contains the classes for recording simulation results, Histogram,
 Monitor and Tally.
 """
-# $Revision: 136 $ $Date: 2008-11-01 11:18:13 +0100 (Sa, 01 Nov 2008) $
+# $Revision$ $Date$
 # SimPy version: 2.0
 
 # Required for backward compatibility
