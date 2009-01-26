@@ -4,7 +4,7 @@
 SimPy a process - based simulation package in Python
 
 LICENSE:
-Copyright (C) 2002, 2004, 2005, 2006, 2007, 2008  Klaus G. Muller, Tony Vignaux
+Copyright (C) 2002, 2004, 2005, 2006, 2007, 2008, 2009  Klaus G. Muller, Tony Vignaux
 mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
 
     This library is free software; you can redistribute it and / or
