@@ -17,8 +17,8 @@ Simulation with SimPy - In Depth Manual
 :SimPy version: 2.0
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 209 $
-:Date: $Date: 2009-01-25 05:32:46 +0100 (So, 25 Jan 2009) $
+:Revision: $Revision: 234 $
+:Date: $Date: 2009-01-27 03:55:51 +0100 (Di, 27 Jan 2009) $
 
 
 
@@ -37,6 +37,10 @@ Simulation with SimPy - In Depth Manual
 This document describes SimPy version 2.0 [#]_ Changes from
 version 1.9.1 are listed in `Appendix A0`_.
 
+.. [#] The variable ``version``, imported from ``SimPy.Simulation``,
+       contains the revision number and date of the current version.
+
+
 .. note:: 
 
    This document does **not** describe the object oriented (OO) API
@@ -44,8 +48,6 @@ version 1.9.1 are listed in `Appendix A0`_.
    is fully backward compatible with previous versions. The
    procedural API and the OO API co-exist happily in SimPy 2.0.  
 
-.. [#] The variable ``version``, imported from ``SimPy.Simulation``,
-       contains the revision number and date of the current version.
 
 Introduction
 -------------------
@@ -3233,7 +3235,7 @@ Glossary
     :alt:  SourceForge Logo
 
 .. ----------------------------------------------------------------------------
-.. $Revision: 209 $ $Date: 2009-01-25 05:32:46 +0100 (So, 25 Jan 2009) $
+.. $Revision: 234 $ $Date: 2009-01-27 03:55:51 +0100 (Di, 27 Jan 2009) $
 .. ----------------------------------------------------------------------------
 
 
