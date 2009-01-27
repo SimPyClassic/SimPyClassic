@@ -173,7 +173,7 @@ bank11Plot.py
 :Revision: $Revision$
 
  
-.. |simpylogo| image:: ../SimPyDocs/images/sm_SimPy_Logo.png
+.. |simpylogo| image:: ../SimPyDocs/_images/sm_SimPy_Logo.png
 
 
 ..
