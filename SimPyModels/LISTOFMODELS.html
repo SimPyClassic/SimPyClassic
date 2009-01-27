@@ -292,7 +292,7 @@ ul.auto-toc {
 </head>
 <body>
 <div class="document" id="simpylogo-list-of-models-using-simpy">
-<h1 class="title"><img alt="simpylogo" src="../SimPyDocs/images/sm_SimPy_Logo.png" /> LIST OF MODELS using SimPy</h1>
+<h1 class="title"><img alt="simpylogo" src="../SimPyDocs/_images/sm_SimPy_Logo.png" /> LIST OF MODELS using SimPy</h1>
 <table class="docinfo" frame="void" rules="none">
 <col class="docinfo-name" />
 <col class="docinfo-content" />
@@ -313,44 +313,47 @@ usually developed for other purposes, such as teaching and
 consulting. They are in a variety of styles. Some have been converted
 to the new script structure accepted by the SimPy users. These are
 listed first.</p>
+<p>Most models are given in two versions, one with the procedural SimPy API
+and the other (identified by an &quot;_OO&quot; appended to the program name) with
+the Object Oriented API introduced in SimPy 2.0.</p>
 <div class="section">
 <h1><a id="command-line-input-and-output" name="command-line-input-and-output">Command Line input and output</a></h1>
 <div class="section">
 <h2><a id="new-program-structure" name="new-program-structure">new program structure</a></h2>
 <dl class="docutils">
-<dt>MMC.py</dt>
+<dt>MMC.py, MMC_OO.py</dt>
 <dd>M/M/c (multiple server queue model. This demonstrates both the
 multiple capacity Resource class and the observe method of the
 Monitor class. Random arrivals, exponential
 service-times. (TV)</dd>
-<dt>bcc.py</dt>
+<dt>bcc.py, bcc_OO.py</dt>
 <dd>Determine the probability of rejection of random arrivals to a
 2-server system with different service-time distributions. No
 queues allowed, blocked customers are rejected
 (BCC). Distributions are Erlang, exponential, and
 hyperexponential. The theoretical probability is also
 calculated.  (TV)</dd>
-<dt>callCenter.py</dt>
+<dt>callCenter.py, callCenter_OO.py</dt>
 <dd>A call center with agents with different skills.  The model
 returns the frequency distribution of client waiting times,
 the percentage of reneging clients, and the load on the
 agents.  This model demonstrates the use of yield get with a
 filter function. (KGM)</dd>
-<dt>cellphone.py</dt>
+<dt>cellphone.py, cellphone_OO.py</dt>
 <dd>A cellphone cell with blocking (that is BCC discipline). The
 program simulates the operation for 10 observation periods and
 measures the mean and variance of the total time blockedr and
 the number of times blocking occur in each hour. An
 observational gap occurs between the observation periods to
 make each one's measurement independent.  (TV)</dd>
-<dt>centralserver.py</dt>
+<dt>centralserver.py, centralserver_OO.py</dt>
 <dd>A primitive central-server model with a single CPU and a
 single disk. A fixed number of users send &quot;tasks&quot; to the
 system which are processed and sent back to the user who then
 thinks for a time before sending a task back. Service times
 are exponential. This system can be solved analytically.
 Trace statements have been removed. (TV)</dd>
-<dt>jacksonnetwork.py</dt>
+<dt>jacksonnetwork.py, jacksonnetwork_OO.py</dt>
 <dd>A Jackson network with 3 nodes, exponential service times and
 probability switching. The simulation measures the delay for
 jobs moving through the system.  (TV)</dd>
@@ -359,11 +362,11 @@ jobs moving through the system.  (TV)</dd>
 <div class="section">
 <h2><a id="miscellaneous-models" name="miscellaneous-models">Miscellaneous Models</a></h2>
 <dl class="docutils">
-<dt>bank08renege.py (partial conversion)</dt>
+<dt>bank08renege.py, bank08renege_OO.py (partial conversion)</dt>
 <dd>Use of reneging (compound <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">request</span></tt>) based on <tt class="docutils literal"><span class="pre">bank08.py</span></tt>
 of the tutorial TheBank. Customers leave if they lose patience
 with waiting.</dd>
-<dt>Carwash.py</dt>
+<dt>Carwash.py, Carwash_OO.py</dt>
 <dd>Using a Store object for implementing master/slave cooperation
 between processes.  Scenario is a carwash installation with
 multiple machines. Two model implementations are shown, one
@@ -378,33 +381,33 @@ Life. (KGM)</dd>
 dogs, an activity simulation where a job is completed after a
 number of parallel activities, and the simulation of a
 US-style 4-way stop intersection.</dd>
-<dt>shortestPath_SimPy.py</dt>
+<dt>shortestPath_SimPy.py, shortestPath_SimPy_OO.py</dt>
 <dd>A fun example of using SimPy for non-queuing work. It
 simulates a searcher through a graph, seeking the shortest
 path. (KGM)</dd>
-<dt>Machineshop.py</dt>
+<dt>Machineshop.py, Machineshop_OO.py</dt>
 <dd>An example of the use of the <tt class="docutils literal"><span class="pre">interrupt()</span></tt> method. It
 simulates a workshop with <tt class="docutils literal"><span class="pre">n</span></tt> machines which break down and one
 or more repairmen which have to repair them. (KGM)</dd>
-<dt>Market.py</dt>
+<dt>Market.py, Market_OO.py</dt>
 <dd>A supermarket checkout with multiple counters and extended
 Monitor objects.  Written and analysed by David Mertz in an
 article for developerWorks (). (MM)</dd>
 </dl>
-<p>Movie_renege.py</p>
+<p>Movie_renege.py, Movie_renege_OO.py</p>
 <blockquote>
 Use of reneging (compound <tt class="docutils literal"><span class="pre">yield</span> <span class="pre">request</span></tt>) constructs for
 reneging at occurrence of an event. Scenario is a movie ticket
 counter with a limited number of tickets for three movies.</blockquote>
 <dl class="docutils">
-<dt>needResources.py</dt>
+<dt>needResources.py, needResources_OO.py</dt>
 <dd>Demo of <tt class="docutils literal"><span class="pre">waitUntil</span></tt> capability introduced in SimPy 1.5. It
 simulates three workers each requiring a set of tools to do
 their jobs. Tools are shared, scarce resources for which they
 compete.</dd>
-<dt>SimPy_worker_extend.py</dt>
+<dt>SimPy_worker_extend.py, SimPy_worker_extend_OO.py</dt>
 <dd>Factory making widgets with queues for machines. (MM)</dd>
-<dt>WidgetPacking.py</dt>
+<dt>WidgetPacking.py, WidgetPacking_OO.py</dt>
 <dd>Using buffers for producer/consumer scenarios. Scenario is a
 group of widget producing machines and a widget packer,
 synchronized via a buffer. Two models are shown: the first
@@ -417,12 +420,9 @@ uses a Level for buffering non-distinguishable items
 <div class="section">
 <h1><a id="gui-input" name="gui-input">GUI Input</a></h1>
 <dl class="docutils">
-<dt>MM1.py</dt>
-<dd>M/M/1 random-arrivals, exponential service time queue with GUI input.
-(MM)</dd>
-<dt>GUIdemo.py</dt>
+<dt>GUIdemo.py, GUIdemo_OO.py</dt>
 <dd>A firework show.</dd>
-<dt>bank11GUI.py</dt>
+<dt>bank11GUI.py, bank11GUI_OO.py</dt>
 <dd>A modification of the bank11 simulation with GUI input.</dd>
 <dt>SimGUIStep.py</dt>
 <dd>A modification of the bank11 simulation with the ability to
@@ -432,7 +432,7 @@ step between events</dd>
 <div class="section">
 <h1><a id="plot" name="plot">Plot</a></h1>
 <dl class="docutils">
-<dt>bakery.py</dt>
+<dt>bakery.py, bakery_OO.py</dt>
 <dd>A bakery with three ovens to answer the following questions:
 a) What is the mean waiting time for retail and restaurant
 buyers?  b) What is their maximum waiting time?  c) What
