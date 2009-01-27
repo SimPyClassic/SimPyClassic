@@ -20,6 +20,7 @@ Contents:
    Interfacing
    Cheatsheets
    SimPy_Tools
+   Sourcecode_Documentation
 
 Indices and tables
 ==================
