@@ -20,7 +20,7 @@ Unit tests for SimulationStep.
 # 2004 02 28 added test for monitored queues (gav)
 # 2004 05 03 corrected test for monitored queues (gav)
 # 2004 05 15 first version of testSimPyStep; just
-#            tests compatibility with Simulation.py
+#            tests compatibility with SimulationStep.py
 # 2004 09 17 added tests for waitevent, queueevent, waituntil (new in 1.5)
 # 2005 05 19 added tests for compound yield statements (reneging)
 # 2006 01 15 added tests for Store and Level and the get / put yield statements
@@ -73,7 +73,7 @@ class makeSimulationtestcase(unittest.TestCase):
    def testInit(self):
         """Test initialisation
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         result=s.simulate(until=10)
         assert result=="SimPy: No activities scheduled",\
@@ -83,7 +83,7 @@ class makeSimulationtestcase(unittest.TestCase):
    def testActivate(self):
         """Test activate()
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         P1 = P(name="P1",T=100.0,sim=s)
         s.activate(P1,P1.execute(),0)
@@ -93,7 +93,7 @@ class makeSimulationtestcase(unittest.TestCase):
    def testStart(self):
        """Test start method
        """
-       s=Simulation()
+       s=SimulationStep()
        P1 = P(name="P1",T=100.0,sim=s)
        s.initialize()
        P1.start(P1.execute(),0)
@@ -103,7 +103,7 @@ class makeSimulationtestcase(unittest.TestCase):
    def testStartActions(self):
       """Test start method with ACTIONS PEM
       """
-      s=Simulation()
+      s=SimulationStep()
       P1 = PActions(name="P1",T=100.0,sim=s)
       s.initialize()
       P1.start()
@@ -113,7 +113,7 @@ class makeSimulationtestcase(unittest.TestCase):
    def testYield(self):
         """Test yield hold and simulate(until)
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         P1 = P(name="P1",T=10,sim=s)
         s.initialize()
@@ -157,7 +157,7 @@ class makeResourcetestcase(unittest.TestCase):
    """
    def testInit(self):
         """Test initialisation"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         R = Resource(sim=s)
         assert R.name == "a_resource", "Not null name"
@@ -183,7 +183,7 @@ class makeResourcetestcase(unittest.TestCase):
         assert R0.name == "", "Not null name"
         assert R0.capacity == 0, "Not capacity 0, it is "+`R0.capacity`
         ## now test requesting: ------------------------------------
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         R1 = Resource(capacity=0,name="3-version",unitName="blobs")
         J= Job(name="job",server=R1)
@@ -199,7 +199,7 @@ class makeResourcetestcase(unittest.TestCase):
    def testrequest2(self):
         """Test request2 with capacity = 1"""
         ## now test requesting: ------------------------------------
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         R2 = Resource(capacity=1,name="3-version",unitName="blobs")
         J2= Job(name="job",server=R2)
@@ -215,7 +215,7 @@ class makeResourcetestcase(unittest.TestCase):
    def testrequest3(self):
         """Test request3 with capacity = 1 several requests"""
         ## now test requesting: ------------------------------------
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         R3 = Resource(capacity=1,name="3-version",unitName="blobs")
         J2= Job(name="job",server=R3)
@@ -237,7 +237,7 @@ class makeResourcetestcase(unittest.TestCase):
    def testrequest4(self):
         """Test request4 with capacity = 2 several requests"""
         ## now test requesting: ------------------------------------
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         R3 = Resource(capacity=2,name="4-version",unitName="blobs")
         J2= Job(name="job",server=R3)
@@ -270,7 +270,7 @@ class makeResourcetestcase(unittest.TestCase):
            def execute(self,priority):
               yield request,self,self.R,priority
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         Rp = Resource(capacity=0,qType=PriorityQ,sim=s)
         J5 = Job(name="job 5",server=Rp,sim=s)
@@ -292,7 +292,7 @@ class makeResourcetestcase(unittest.TestCase):
            sortok = q[0] >= q[1] and sorted(q[2:])
            return sortok
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         Rp=Resource(capacity=0,qType=PriorityQ,sim=s)
         for i in range(10):
@@ -315,7 +315,7 @@ class makeResourcetestcase(unittest.TestCase):
            def execute(self,priority):
               yield request,self,self.R,priority
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         Rp = Resource(capacity=1,qType=PriorityQ,sim=s)
         J5 = Job(name="job 5",server=Rp,sim=s)
@@ -353,7 +353,7 @@ class makeResourcetestcase(unittest.TestCase):
                         %(self.nameself.sim.now())
              yield release,self,res
 
-       s = Simulation()
+       s = SimulationStep()
        s.initialize()
        res=Resource(name="server",capacity=1,qType=PriorityQ,preemptable=1,
                     sim=s)
@@ -383,7 +383,7 @@ class makeResourcetestcase(unittest.TestCase):
              yield release,self,res
              nuJob.seqOut.append((self,self.sim.now()))
 
-       s=Simulation()
+       s=SimulationStep()
        s.initialize()
        res=Resource(name="server",capacity=1,qType=PriorityQ,preemptable=1,
                     sim=s)
@@ -415,7 +415,7 @@ class makeResourcetestcase(unittest.TestCase):
               yield release,self,res2
               yield release,self,res1
 
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       outer=Resource(name="outer",qType=PriorityQ,preemptable=True,sim=s)
       inner=Resource(name="inner",qType=PriorityQ,preemptable=True,sim=s)
@@ -443,7 +443,7 @@ class makeResourcetestcase(unittest.TestCase):
              yield hold,self,2
              yield release,self,res
 
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       res=Resource(name="server",capacity=1,monitored=1,sim=s)
       n1=Job(name="Job 1",sim=s)
@@ -518,7 +518,7 @@ class makeInterrupttestcase(unittest.TestCase):
       Test single interrupt during victim activity
       """
       global victim
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       breaker=Interruptor(sim=s)
       s.activate(breaker,breaker.breakin(10))
@@ -535,7 +535,7 @@ class makeInterrupttestcase(unittest.TestCase):
       Test multiple interrupts during victim activity
       """
       global victim
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       breaker=Interruptor(sim=s)
       s.activate(breaker,breaker.breakin(10,howoften=3))
@@ -551,7 +551,7 @@ class makeInterrupttestcase(unittest.TestCase):
       Test interrupts after victim activity
       """
       global victim
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       breaker=Interruptor(sim=s)
       s.activate(breaker,breaker.breakin(50,howoften=5))
@@ -565,7 +565,7 @@ class makeInterrupttestcase(unittest.TestCase):
       Test multiple interrupts by multiple processes during victim activity
       """
       global victim
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       breaker1=Interruptor(sim=s)
       s.activate(breaker1,breaker1.breakin(15,howoften=3))
@@ -585,7 +585,7 @@ class makeInterrupttestcase(unittest.TestCase):
       Test reset of 'interrupted' state.
       """
       global victim
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       breaker=Interruptor(sim=s)
       victim=Interrupted(sim=s)
@@ -755,7 +755,7 @@ class makePStatetestcase(unittest.TestCase):
       Tests state transitions by hold
       """
       ## active => hold => terminated
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       p=PS1(sim=s)
       s.activate(p,p.life1())
@@ -768,14 +768,14 @@ class makePStatetestcase(unittest.TestCase):
       Tests state transitions by activate and passivate
       """
       ## passive => activate => hold => terminated
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       p=PS1(sim=s)
       ob1=Observer1(sim=s)
       s.activate(ob1,ob1.look2(p))
       s.simulate(until=12)
       ## passive => activate => hold => active => passivate => passive
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       p1=PS1(sim=s)
       ob2=Observer1(sim=s)
@@ -787,7 +787,7 @@ class makePStatetestcase(unittest.TestCase):
       Tests state transitions by cancel()
       """
       ## active => cancel => passive => reactivate => active => terminated
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       p2=PS1(sim=s)
       s.activate(p2,p2.life1())
@@ -796,7 +796,7 @@ class makePStatetestcase(unittest.TestCase):
       s.simulate(until=12)
 
       ## passive => cancel => passive
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       p3=PS1(sim=s)
       s.activate(p3,p3.life2())
@@ -809,7 +809,7 @@ class makePStatetestcase(unittest.TestCase):
       Test request/release state transitions
       """
       ## not queuing,active => request => queuing,passive => release => not queuing,active
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       res=Resource(capacity=1,sim=s)
       pq1=PS2(sim=s)
@@ -821,7 +821,7 @@ class makePStatetestcase(unittest.TestCase):
       s.simulate(until=12)
 
       ## queuing,passive => interrupt =>  queuing, interrupted => interruptRest => queuing, not interrupted
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       res=Resource(capacity=1,sim=s)
       pq3=PS2(sim=s)
@@ -935,7 +935,7 @@ class makeEtestcase(unittest.TestCase):
       """
       Tests basic signal semantics
       """
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       e=SimEvent(sim=s)
       e.signal("param")
@@ -950,7 +950,7 @@ class makeEtestcase(unittest.TestCase):
       """
       Tests basic waiting and queuing semantics
       """
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       ev1=SimEvent("ev1",sim=s)
       ev2=SimEvent("ev2",sim=s)
@@ -984,7 +984,7 @@ class makeEtestcase(unittest.TestCase):
       """
       Tests waiting, queuing for at least one event out of a list/tuple.
       """
-      si=Simulation()
+      si=SimulationStep()
       si.initialize()
       e1=SimEvent("e1",sim=si)
       e2=SimEvent("e2",sim=si)
@@ -1001,7 +1001,7 @@ class makeEtestcase(unittest.TestCase):
    def testSimEvents4(self):
       """Tests that eventsFired reports all events which fired
       """
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       w=WaitProcessOR1(sim=s)
       s.activate(w,w.signalandwait())
@@ -1010,7 +1010,7 @@ class makeEtestcase(unittest.TestCase):
    def testSimEvents5(self):
       """Tests that eventsFired reports all events which fired
       """
-      s=Simulation()
+      s=SimulationStep()
       s.initialize()
       w=QueueProcessOR1(sim=s)
       s.activate(w,w.signalandqueue())
@@ -1060,7 +1060,7 @@ class makeWtestcase(unittest.TestCase):
    def testwaituntil1(self):
        global a,b,c
        a=b=c=False
-       si=Simulation()
+       si=SimulationStep()
        si.initialize()
        w=Waiter(sim=si)
        si.activate(w,w.waitforit())
@@ -1126,7 +1126,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that resource gets acquired without timeout
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,sim=s)
         usetime=5
@@ -1147,7 +1147,7 @@ class makeTimeoutTestcase(unittest.TestCase):
            Resource monitored.
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,monitored=True,sim=s)
         usetime=5
@@ -1168,7 +1168,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that timeout occurs when resource busy
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,sim=s)
         usetime=5
@@ -1188,7 +1188,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that timeout occurs when resource busy.
            Resource monitored.
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,monitored=True,sim=s)
         usetime=5
@@ -1209,7 +1209,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that timeout occurs when resource busy.
            Resource monitored. Requests with priority and preemption.
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,monitored=True,
                      qType=PriorityQ,preemptable=True,sim=s)
@@ -1239,7 +1239,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that timeout occurs when resource has no capacity free
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=0,sim=s)
         usetime=5
@@ -1260,7 +1260,7 @@ class makeTimeoutTestcase(unittest.TestCase):
            Resource monitored.
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=0,monitored=True,sim=s)
         usetime=5
@@ -1349,7 +1349,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
     def testNoEvent(self):
         """Test that processes acquire resource normally if no event fires
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         event=SimEvent("Renege_trigger",sim=s) #never gets fired
         res=Resource(name="Server",capacity=1,sim=s)
@@ -1370,7 +1370,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         """Test that processes acquire resource normally if no event fires.
            Resource monitored.
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,monitored=True,sim=s)
         event=SimEvent("Renege_trigger",sim=s) #never gets fired
@@ -1392,7 +1392,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         """Test that signalled event leads to renege when resource busy
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,sim=s)
         event=SimEvent("Renege_trigger",sim=s)
@@ -1417,7 +1417,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
            Resource monitored.
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,monitored=True,sim=s)
         event=SimEvent("Renege_trigger",sim=s)
@@ -1442,7 +1442,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         """Test that renege-triggering event can be one of an event list
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,sim=s)
         event1=SimEvent("Renege_trigger_1",sim=s)
@@ -1470,7 +1470,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
            Resource monitored.
         """
 
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         res=Resource(name="Server",capacity=1,monitored=True,sim=s)
         event1=SimEvent("Renege_trigger_1",sim=s)
@@ -1582,7 +1582,7 @@ class makeLevelTestcase(unittest.TestCase):
     def testStatic(self):
         """Tests initialization of Level instances
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         a=Level(sim=s)
         assert a.capacity==sys.maxint,"wrong capacity:%s"%a
@@ -1615,7 +1615,7 @@ class makeLevelTestcase(unittest.TestCase):
         -   Consumers must not be waiting while Level buffer value > 0,
         -   Producers must not be waiting while Level buffer value == 0
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         bufferSize=1
         productionTime=1
@@ -1630,7 +1630,7 @@ class makeLevelTestcase(unittest.TestCase):
 
     def testConProd1(self):
         """Level: tests put/get in 1 Producer/ 1 Consumer scenario"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Level(initialBuffered=0,sim=s)
         p=Producer(sim=s)
@@ -1644,7 +1644,7 @@ class makeLevelTestcase(unittest.TestCase):
 
     def testConProdM(self):
         """Level: tests put/get in multiple Producer/Consumer scenario"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Level(initialBuffered=0,sim=s)
         Producer.produced=0
@@ -1668,7 +1668,7 @@ class makeLevelTestcase(unittest.TestCase):
         """
         global doneList
         doneList=[]
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Level(capacity=7,putQType=PriorityQ,monitored=True,sim=s)
         for i in range(4):
@@ -1689,7 +1689,7 @@ class makeLevelTestcase(unittest.TestCase):
         """
         global doneList
         doneList=[]
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Level(capacity=7,getQType=PriorityQ,monitored=True,sim=s)
         for i in range(4):
@@ -1846,7 +1846,7 @@ class makeStoreTestcase(unittest.TestCase):
     def testStatic(self):
         """Store: tests initialization of Store instances
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         a=Store(sim=s)
         assert a.capacity==sys.maxint,"wrong capacity:%s"%a
@@ -1883,7 +1883,7 @@ class makeStoreTestcase(unittest.TestCase):
         productionTime=1
         consumptionTime=5
         endtime=50
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Store(capacity=bufferSize,sim=s)
         consumer=ConsumerPrincS(sim=s)
@@ -1894,7 +1894,7 @@ class makeStoreTestcase(unittest.TestCase):
 
     def testConProd1(self):
         """Store: tests put/get in 1 Producer/ 1 Consumer scenario"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Store(initialBuffered=[],sim=s)
         p=ProducerWidget(sim=s)
@@ -1909,7 +1909,7 @@ class makeStoreTestcase(unittest.TestCase):
 
     def testConProdM(self):
         """Store: tests put/get in multiple Producer/Consumer scenario"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Store(initialBuffered=[],sim=s)
         ProducerWidget.produced=0
@@ -1933,7 +1933,7 @@ class makeStoreTestcase(unittest.TestCase):
         """
         global doneList
         doneList=[]
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Store(capacity=7,putQType=PriorityQ,monitored=True,sim=s)
         for i in range(4):
@@ -1954,7 +1954,7 @@ class makeStoreTestcase(unittest.TestCase):
         """
         global doneList
         doneList=[]
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         buffer=Store(capacity=7,getQType=PriorityQ,monitored=True,sim=s)
         for i in range(4):
@@ -1970,7 +1970,7 @@ class makeStoreTestcase(unittest.TestCase):
     def testBufferSort(self):
         """Tests the optional sorting of theBuffer by applying a user-defined
         sort function."""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         gotten=[]
         sortedStore=Store(sim=s)
@@ -1986,7 +1986,7 @@ class makeStoreTestcase(unittest.TestCase):
     def testBufferFilter(self):
         """Tests get from a Store with a filter function
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         ItClass=FilterConsumer.Widget
         all=[ItClass(1),ItClass(4),ItClass(6),ItClass(12)]
@@ -2110,7 +2110,7 @@ class makeStoreCompTestcase(unittest.TestCase):
     def testBasicTime(self):
         """Store (unmonitored):
         test 'yield (get,self,store),(hold,self,timeout)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         class Item:pass
         st=Store(initialBuffered=[Item()],sim=s)
@@ -2126,7 +2126,7 @@ class makeStoreCompTestcase(unittest.TestCase):
     def testBasicTimePut(self):
         """Store (unmonitored):
         test 'yield (put,self,store),(hold,self,time)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         st=Store(capacity=1,sim=s)
         t=TBTput(sim=s)
@@ -2136,7 +2136,7 @@ class makeStoreCompTestcase(unittest.TestCase):
     def testBasicTimePutM(self):
         """Store (monitored):
         test monitors with 'yield (put,self,store),(hold,self,time)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         st=Store(capacity=1,monitored=True,sim=s)
         t=TBTput(sim=s)
@@ -2156,7 +2156,7 @@ class makeStoreCompTestcase(unittest.TestCase):
     def testBasicEvent(self):
         """Store (unmonitored):
         test 'yield (get,self,store),(waitevent,self,event)"""
-        si=Simulation()
+        si=SimulationStep()
         si.initialize()
         class Item:pass
         st=Store(initialBuffered=[Item()],sim=si)
@@ -2175,7 +2175,7 @@ class makeStoreCompTestcase(unittest.TestCase):
     def testBasicEventPut(self):
         """Store (unmonitored):
         test 'yield (put,self,store),(waitevent,self,event)"""
-        si=Simulation()
+        si=SimulationStep()
         si.initialize()
         s=SimEvent(sim=si)
         store=Store(capacity=1,sim=si)
@@ -2188,7 +2188,7 @@ class makeStoreCompTestcase(unittest.TestCase):
     def testBasicEventPutM(self):
         """Store (monitored):
         test monitors with 'yield (put,self,store),(waitevent,self,event)"""
-        si=Simulation()
+        si=SimulationStep()
         si.initialize()
         s=SimEvent(sim=si)
         st=Store(capacity=1,monitored=True,sim=si)
@@ -2311,7 +2311,7 @@ class makeLevelCompTestcase(unittest.TestCase):
         """Level (unmonitored):
             test 'yield (get,self,level),(hold,self,timeout)
         """
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         l=Level(initialBuffered=1,sim=s)
         t=TBTLev(sim=s)
@@ -2326,7 +2326,7 @@ class makeLevelCompTestcase(unittest.TestCase):
     def testBasicTimePut(self):
         """Level (unmonitored):
         test 'yield (put,self,level),(hold,self,timeout)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         l=Level(capacity=1,sim=s)
         t=TBTLevPut(sim=s)
@@ -2341,7 +2341,7 @@ class makeLevelCompTestcase(unittest.TestCase):
     def testBasicEvent(self):
         """Level (unmonitored):
         test 'yield (get,self,level),(waitevent,self,event)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         l=Level(initialBuffered=1,sim=s)
         trig=SimEvent(sim=s)
@@ -2354,7 +2354,7 @@ class makeLevelCompTestcase(unittest.TestCase):
     def testBasicEventM(self):
         """Level (monitored):
         test monitors with 'yield (get,self,level),(waitevent,self,event)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         l=Level(initialBuffered=1,monitored=True,sim=s)
         trig=SimEvent(sim=s)
@@ -2378,7 +2378,7 @@ class makeLevelCompTestcase(unittest.TestCase):
     def testBasicEventPut(self):
         """Level (unmonitored):
         test 'yield (put,self,level),(waitevent,self,event)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         l=Level(capacity=1,sim=s)
         trig=SimEvent(sim=s)
@@ -2391,7 +2391,7 @@ class makeLevelCompTestcase(unittest.TestCase):
     def testBasicEventPutM(self):
         """Level (monitored):
         test monitors with 'yield (put,self,level),(waitevent,self,event)"""
-        s=Simulation()
+        s=SimulationStep()
         s.initialize()
         l=Level(capacity=1,monitored=True,sim=s)
         trig=SimEvent(sim=s)
