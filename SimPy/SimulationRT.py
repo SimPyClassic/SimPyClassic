@@ -136,7 +136,9 @@ END OF LICENSE
     10 Aug 2008: - Renamed __Evlist to EvlistRT and let it inherit from
                    Evlist (from Simulation.py) (Stefan Scherfke)
                  - New class SimulationRT contains the old method simulate
-                 - Removed everything else and import it from Simulation.py
+                 - Removed everything else and imported it from Simulation.py
+                 
+    19 Mar 2009: - Repair of wallclock synchronisation algorithm (again)
     
 """
 import time
@@ -179,15 +181,14 @@ class EvlistRT(Evlist):
             else:
                 raise Simerror('No more events at time %s' % self.sim._t)
         nextEvent._rec = None
+        _tsimold = self.sim._t
         self.sim._t = _tnotice
         ## Calculate any wait time
-        ## event clock time = rtlast + (sim_time - stlast) / rel_speed
-        ## delay = (1.0 * earliest / self.rel_speed) - self.sim.rtnow()
+        ## (tRTnow - tRTold + delay)/(tsim - tsimold) = 1/rel_speed
         if self.real_time:                                 
-##          delay = next_time - self.sim.wallclock()
-            delay = (1.0 * self.sim._t / self.rel_speed) - self.sim.rtnow()
+            delay = float(_tnotice-_tsimold)/self.rel_speed-self.sim.rtnow()+self.rtlast
             if delay > 0:
-                time.sleep(delay)                  
+                time.sleep(delay)               
             self.rtlast = self.sim.wallclock()
             self.stlast = self.sim._t
         if self.sim._t > self.sim._endtime:
@@ -225,9 +226,9 @@ class SimulationRT(Simulation):
     def rtset(self, rel_speed = 1):
         """resets the the ratio simulation time over clock time(seconds).
         """
-        if _e is None:
+        if self._e is None:
             raise FatalSimerror('Fatal SimPy error: Simulation not initialized')
-        _e.rel_speed = rel_speed
+        self._e.rel_speed = float(rel_speed)
     
     def simulate(self, until = 0, real_time = False, rel_speed = 1):
         """Schedules Processes / semi - coroutines until time 'until'"""
@@ -347,14 +348,16 @@ class SimulationRT(Simulation):
 
 # For backward compatibility
 Globals.sim = SimulationRT()
+
 def rtnow():
     return Globals.sim.rtnow()
-    
-def rtset(rel_speed = 1):
-    Globals.sim.rtset()
+
+rtset =  Globals.sim.rtset
     
 def simulate(until = 0, real_time = False, rel_speed = 1):
     return Globals.sim.simulate(until = until, real_time = real_time, rel_speed = rel_speed)
+    
+wallclock = Globals.sim.wallclock
 # End backward compatibility
 
 if __name__ == '__main__':
@@ -583,8 +586,8 @@ if __name__ == '__main__':
             print '%s needs %s for his job' % (who.name,[x.name for x in who.heNeeds])
         print
         print simulate(until = 9 * 60)
-    test_demo()
+    #test_demo()
     # Run tests
     test_interrupt()
-    testSimEvents()
-    testwaituntil()
+    #testSimEvents()
+    #testwaituntil()
