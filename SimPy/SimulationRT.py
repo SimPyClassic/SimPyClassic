@@ -586,7 +586,7 @@ if __name__ == '__main__':
             print '%s needs %s for his job' % (who.name,[x.name for x in who.heNeeds])
         print
         print simulate(until = 9 * 60)
-    #test_demo()
+    test_demo()
     # Run tests
     test_interrupt()
     #testSimEvents()
