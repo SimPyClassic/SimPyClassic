@@ -36,6 +36,7 @@ between Simulation and SimulationRT.
 # 2007 01 08 added test for Store with filter function
 # 2007 12 05 added tests for start method (Process)
 # 2008 03 03 added test for nested preempts
+# 2009 03 19 added SimulationRT OO API testing
 
 #'$Revision$ $Date$ kgm'
 
@@ -46,7 +47,7 @@ __version__ = '2.0 $Revision$ $Date$ '
 print 'testSimPyRTOO.py %s'%__version__
 
 ## -------------------------------------------------------------
-##                    TEST SIMULATION
+##                    TEST SIMULATIONRT
 ## -------------------------------------------------------------
 class P(Process):
    """ P class for testing"""
@@ -126,7 +127,7 @@ class makeSimulationtestcase(unittest.TestCase):
         s.activate(P2,P2.execute(),0)
         s.simulate(until=20)
         assert(s.now()==10),"P1 hold to %s not %s"%(s.now(),10)
-
+        
 def makeSSuite():
     suite = unittest.TestSuite()
     testInit = makeSimulationtestcase("testInit")
