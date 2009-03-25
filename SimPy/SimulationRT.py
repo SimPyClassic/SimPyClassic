@@ -189,7 +189,7 @@ class EvlistRT(Evlist):
             delay = float(_tnotice-_tsimold)/self.rel_speed-self.sim.rtnow()+self.rtlast
             if delay > 0:
                 time.sleep(delay)               
-            self.rtlast = self.sim.wallclock()
+            self.rtlast = self.sim.wallclock()-self.sim.rtstart
             self.stlast = self.sim._t
         if self.sim._t > self.sim._endtime:
             self.sim._t = self.sim._endtime
@@ -217,8 +217,10 @@ class SimulationRT(Simulation):
         self.initialize()
         
     def initialize(self):
+        self.rtstart = self.wallclock()
         Simulation.initialize(self)
         self._e = EvlistRT(self)
+        self._e.rtlast = 0
 
     def rtnow(self):
         return self.wallclock() - self.rtstart
@@ -304,8 +306,8 @@ class SimulationRT(Simulation):
             raise FatalSimerror('Simulation not initialized')
         self._e.real_time = real_time
         self._e.rel_speed = rel_speed
-        self._e.rtlast = self.wallclock()
-        self._e.stlast = 0
+        #~ self._e.rtlast = self.wallclock()
+        #~ self._e.stlast = 0
         if self._e._isEmpty():
             message = 'SimPy: No activities scheduled'
             return message
