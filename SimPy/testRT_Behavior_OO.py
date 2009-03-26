@@ -9,7 +9,7 @@ OO API.
 # $Revision$ $Date$
 
 print "Under test: SimulationRT.py"
-__version__ = '2.0 $Revision:  $ $Date: $ '
+__version__ = '2.0 $Revision$ $Date$ '
 print 'testRT_Behavior.py %s'%__version__
 
 class Ticker(Process):
