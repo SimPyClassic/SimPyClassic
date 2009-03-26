@@ -6,7 +6,7 @@ and wallclock time can be synchronized.
 
 OO API.
 """
-# $Revision: $ $Date:  $
+# $Revision$ $Date$
 
 print "Under test: SimulationRT.py"
 __version__ = '2.0 $Revision:  $ $Date: $ '
