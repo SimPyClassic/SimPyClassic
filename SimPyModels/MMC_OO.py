@@ -52,7 +52,7 @@ class Job(Process):
     def trace(self,message):
         FMT="%7.4f %6s %10s (%2d)"
         if TRACING:
-            print FMT%(now(),self.name,message,Job.NoInSystem)
+            print FMT%(self.sim.now(),self.name,message,Job.NoInSystem)
 
 ## Experiment data -------------------------
 
