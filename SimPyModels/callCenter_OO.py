@@ -80,7 +80,7 @@ class Agent(Process):
             yield get,self,incoming,mySkills
             self.busyMon.observe(busy)
             theClient=self.got[0]
-            callCtr.waitMoni.observe(now()-theClient.tArrive)
+            callCtr.waitMoni.observe(self.sim.now()-theClient.tArrive)
             self.interrupt(theClient) # interrupt the timeout renege
             yield hold,self,tService[theClient.need]
             theClient.done.signal()
