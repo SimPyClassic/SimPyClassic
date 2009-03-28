@@ -23,7 +23,7 @@ class Customer(Process):
     """ Customer arrives, is served and leaves """
         
     def visit(self,counter,timeInBank=0):       
-        arrive=now()
+        arrive = self.sim.now()
         print "%7.4f %s: Here I am     "%(self.sim.now(),self.name)
 
         yield (request,self,counter),(hold,self,Customer.patience())
