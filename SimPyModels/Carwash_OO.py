@@ -70,6 +70,7 @@ class CarWashModel1(Simulation):
         for j in range(1,5):
             c = Car("car%s"%-j,sim=self)
             self.activate(c,c.lifecycle())
+            waiting.append(c)
         self.waitingCars=Store(capacity=40,initialBuffered=waiting,sim=self)
         cw=[]
         for i in range(nrMachines):

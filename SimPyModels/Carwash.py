@@ -68,6 +68,7 @@ waiting=[]
 for j in range(1,5):
     c=Car("car%s"%-j)
     activate(c,c.lifecycle())
+    waiting.append(c)
 waitingCars=Store(capacity=40,initialBuffered=waiting)
 cw=[]
 for i in range(2):
