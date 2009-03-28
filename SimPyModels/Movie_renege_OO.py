@@ -31,7 +31,7 @@ class MovieGoer(Process):
   
 class CustomerArrivals(Process):
     def traffic(self):
-        while now()<120:
+        while self.sim.now() < 120:
             yield hold,self,expovariate(1/0.5)
             movieChoice = choice(movies)
             nrTickets = randint(1,6)        
