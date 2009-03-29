@@ -14,13 +14,14 @@ class Autom(Process):
         nr=0
         coords=[(xco+x,yco+y) for xco in (-1,0,1) for yco in (-1,0,1) if not (xco==0 and yco==0)]
 
-        for j in range(len(coords)):
+        for a_coord in coords:
             try:
-                if cells[j].state: nr += 1
+                if cells[a_coord].state: 
+                    nr += 1
             except KeyError:
                 ## wrap around
-                nux=divmod(coords[j][0],size)[1]
-                nuy=divmod(coords[j][1],size)[1]
+                nux=divmod(a_coord[0],size)[1]
+                nuy=divmod(a_coord[1],size)[1]
                 if cells[(nux,nuy)].state: nr += 1
         return nr
 
