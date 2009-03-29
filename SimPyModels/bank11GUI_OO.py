@@ -51,9 +51,6 @@ class Customer(Process):
         if gui.params.trace:
             gui.writeConsole("%7.4f %s: Finished    "%(self.sim.now(),self.name))
 
-#~ def model(counterseed=3939393):
-
-    #~ global Nc,counter,counterRV,waitMonitor 
 class CounterModel(Simulation):
     def run(self,counterseed=3939393):
         self.initialize()
@@ -77,7 +74,7 @@ def statistics():
         return
     gui.writeConsole(text="\nRun parameters: %s"%gui.params)
     gui.writeConsole(text="Average wait for %4d customers was %6.2f"%
-                     (waitMonitor.count(), waitMonitor.mean()))
+                     (gui.mon1.count(), gui.mon1.mean()))
 
 def run():
     CounterModel().run(gui.params.counterseed)
