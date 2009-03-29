@@ -34,7 +34,7 @@ class Customer_Factory(Process):
 class Monitor2(Monitor):
     def __init__(self,sim):
         Monitor.__init__(self,sim=sim)
-        self.min, self.max = (int(2**31-1),0)
+        self.min, self.max = (sys.maxint,0)
     def tally(self, x):
         self.observe(x)
         self.min = min(self.min, x)
