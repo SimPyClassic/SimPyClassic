@@ -32,7 +32,7 @@ class GUIdemoModel(Simulation):
         self.simulate(until=gui.params.duration)
         gui.noRunYet=False
         gui.writeStatusLine("%s rockets launched in %.1f minutes"%
-                        (Launcher.nrLaunched,self.sim.now()))
+                        (Launcher.nrLaunched,self.now()))
                         
 ## Model GUI ----------------------------------------------
 
