@@ -45,7 +45,6 @@ class Call(Process):
                  self.trace("start busy period======")
                  cell.busyStartTime = now()
                  cell.totalBusyVisits += 1
-                 interIdleTime = now() - cell.busyEndTime
              yield hold,self,ran.expovariate(mu)
              self.trace("finished")
              if cell.Nfree == 0:
@@ -94,7 +93,6 @@ maxN    = 10000
 ranSeed = 3333333
 lam = 1.0              # per minute
 mu = 0.6667            # per minute
-meanLifeTime = 1.0/mu  # minute
 Nperiods  =  10
 obsPeriod = 60.0       # minutes
 obsGap    = 15.0       # gap between observation periods
