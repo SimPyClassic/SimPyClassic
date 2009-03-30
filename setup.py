@@ -1,12 +1,13 @@
 #! /usr/bin/env python
 from distutils.core import setup
 setup(
-      version="2.00",
-      author="Klaus Muller, Tony Vignaux",
-      author_email="vignaux@user.sourceforge.net;kgmuller@users.sourceforge.net",
-      description="Version 2.0 of SimPy simulation package",
+      version = "2.0.1beta",
+      author = "Klaus Muller, Tony Vignaux",
+      author_email = "vignaux at user.sourceforge.net;kgmuller at users.sourceforge.net",
+      description="Release 2.0.1beta of SimPy simulation package",
       long_description=\
 """
+SimPy 2.0.1 is a bug-fix release of SimPy 2.0.
 Version 2.0 of SimPy is a major release. It differs
 from the predecessor version (1.9) as follows:
 
@@ -54,8 +55,13 @@ other Python-accessible packages, such as GUI, data base or
 mapping and to share these new capabilities with the
 community under the GNU LGPL.
 """,
-      license="GNU LGPL",
-      name="SimPy",
-      url="simpy.sourceforge.net",
-      packages=["SimPy"]
+      license = "GNU LGPL",
+      name = "SimPy",
+      url = "simpy.sourceforge.net",
+      packages = ["SimPy"],
+      keywords = "simulation, discrete event simulation, process-oriented simulation",
+      classifiers = [
+          "Programming Language :: Python",
+           "Topic :: Scientific/Engineering"
+                      ]
       )
