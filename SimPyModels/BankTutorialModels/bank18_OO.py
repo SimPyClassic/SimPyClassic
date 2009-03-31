@@ -75,5 +75,5 @@ class BankModel(library):
         self.simulate(until=maxTime)                                     
 
 ## Experiment  ----------------------------------
-seed(3893939)
+seed(393939)
 BankModel().run()
