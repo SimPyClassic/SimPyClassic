@@ -23,6 +23,8 @@ mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
 END OF LICENSE
 
 Contains the following modules:
+Lib - module with all base classes of SimPy
+Globals - module providing a global Simulation object
 Simulation - module implementing processes and resources
 Monitor - dummy module for backward compatibility
 SimulationTrace - module implementing event tracing
