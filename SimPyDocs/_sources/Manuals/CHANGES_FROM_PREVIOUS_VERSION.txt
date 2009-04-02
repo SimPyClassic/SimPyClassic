@@ -1,27 +1,35 @@
 =================================
-Changes from Version 1.9.1
+Changes from Release 2.0
 =================================
 
 
 
 This section addresses the difference between SimPy versions
-2.0 and version 1.9.1 in terms of changes and additions.
+2.0 and release 2.0.1 in terms of changes and additions.
   
+Bug fixes
+==========
 
+- Repaired a number of coding errors in several
+  models in the SimPyModels folder.
+  
+- Repaired SimulationRT.py bug introduced by recoding for the OO API.
 
+- Repaired errors in sample programs in documents:
+
+  * Simulation with SimPy - In Depth Manual
+  * SimPy's Object Oriented API Manual
+  * Simulation With Real Time Synchronization Manual
+  * SimPlot Manual
+  * Publication-quality Plot Production With Matplotlib Manual
+  
 Additions
 ============
 
-- New (object oriented) API.
-- Documentation on running SimPy in parallel processes on multiple CPUs, 
-  cores or computerswith Parallel Python
-
-Changes
-===========
-
-- Documentation formattted using Sphinx documentation generator.
+- Tests for real time behavior (testRT_Behavior.py and
+  testRT_Behavior_OO.py in folder SimPy).
   
 
-:Revision: $Revision: 153 $
-:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+:Revision: $Revision: 296 $
+:Date: $Date: 2009-03-30 14:57:22 +0200 (Mo, 30 Mrz 2009) $
   

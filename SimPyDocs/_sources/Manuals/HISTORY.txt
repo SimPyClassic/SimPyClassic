@@ -4,12 +4,12 @@
 
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
           - Klaus Muller <Muller@users.sourceforge.net>
-:SimPy version: 2.0
+:SimPy release: |release|
 :SimPy Web-site: http://simpy.sourceforge.net/
 :SimPy wiki: http://www.mcs.vuw.ac.nz/cgi-bin/wiki/SimPy
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 153 $
-:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+:Revision: $Revision: 297 $
+:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
 
 SimPy is based on ideas from Simula and Simscript but uses standard
 Python. It combines two previous packages, SiPy, in Simula-Style
@@ -22,6 +22,12 @@ Python's generators capability.
 The package has been hosted on Sourceforge.net since 15 September 2002.
 Sourceforge.net's service has always been outstanding. It is essential to
 the SimPy project! Thanks, all you people at SourceForge!
+
+April 2009: Release 2.0.1
+==========================
+
+A bug-fix release of SimPy 2.0
+
 
 October 2008: Version 2.0
 =============================

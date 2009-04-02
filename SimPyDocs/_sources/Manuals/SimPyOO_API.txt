@@ -3,16 +3,16 @@ SimPy's Object Oriented API - **New in Release 2.0**
 =====================================================
 
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
-:SimPy version: 2.0
+:SimPy release: |release|
 :Python version: 2.3 and later (not 3.0)
-:Revision: $Revision: 220 $
-:Date: $Date: 2009-01-25 18:33:49 +0100 (So, 25 Jan 2009) $
+:Revision: $Revision: 297 $
+:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
 
 .. contents:: Contents
    :depth: 2
 
 .. highlight:: python
-   :linenothreshold: 5
+   :linenothreshold: 12
 
 Introduction
 =============
@@ -72,7 +72,7 @@ The following program shows what this means for API and program structure::
     s=Simulation()
     s.initialize()
     r = Resource(capacity=5,sim=s)
-    auto = Car(whichSim=s)
+    auto = Car(sim=s)
     s.activate(auto,auto.run(res=r))
     s.simulate(until=100)
 
@@ -109,8 +109,6 @@ example::
     """Object Oriented SimPy API"""
 
     class Car(Process):
-        def __init__(self,name,whichSim):
-            Process.__init__(self,name=name,sim=whichSim)
         def run(self,res):
             yield request,self,res
             yield hold,self,10
@@ -126,7 +124,7 @@ example::
             self.initialize()
             r = Resource(capacity=5,sim=self)
             for i in range(self.nrCars):
-                auto = Car(name="Car%s"%i,whichSim=self)
+                auto = Car(name="Car%s"%i,sim=self)
                 self.activate(auto,auto.run(res=r))
             self.simulate(until=100)
 
@@ -160,7 +158,7 @@ of Resource units (capacity) by subclassing as follows::
             self.initialize()
             r = Resource(capacity=self.resCapacity,sim=self)
             for i in range(self.nrCars):
-                auto = Car(name="Car%s"%i,whichSim=self)
+                auto = Car(name="Car%s"%i,sim=self)
                 self.activate(auto,auto.run(res=r))
             self.simulate(until=100)
     
@@ -199,7 +197,7 @@ The semantics and parameters of the methods are identical to those of the non-OO
 
 - *stopSimulation*
 
-- *startCollextion*
+- *startCollection*
 
 - *allEventNotices*
 
@@ -320,10 +318,16 @@ Classes with a **SimulationXX** attribute
 ------------------------------------------
 
 All SimPy entity (*Process*, *Resource*, *Store*, *Level*, *SimEvent*)
-and monitoring (*Monitor*, *Tally*) classses have time-related functions.
+and monitoring (*Monitor*, *Tally*) classes have time-related functions.
 In the OO-API of SimPy, they therefore have a **.sim** attribute which is a
 reference to the *SimulationXX* instance to which they belong. This association
 is made by providing that reference as a parameter to the constructor of the class.
+
+.. Important::
+   **All class instances instances must refer to the same SimulationXX instance,
+   i.e., their .sim attributes must have the same value. That value must be the 
+   reference to the SimulationXX instance.** Any deviation from this will
+   lead to strange misfunctioning of a SimPy script.
 
 The constructor calls (signatures) for the classes in question thus change as follows:
 

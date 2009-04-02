@@ -4,10 +4,10 @@ Running SimPy on Multiple Processors with **Parallel Python**
 
 :Authors: - Stefan Scherfke [stefan.scherfke@uni-oldenburg.de]
           - Ontje L |uumlaut| nsdorf
-:SimPy version: 2.0
+:SimPy release: |release|
 :Python version: 2.3 and later (not 3.0)
-:Revision: $Revision: 200 $
-:Date: $Date: 2009-01-23 14:05:25 +0100 (Fr, 23 Jan 2009) $
+:Revision: $Revision: 297 $
+:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
 
 .. |uumlaut| unicode:: U+00FC
    :trim:

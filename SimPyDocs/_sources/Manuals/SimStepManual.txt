@@ -7,11 +7,11 @@ Simulation with Event Stepping
 
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
           - Tony Vignaux <Vignaux@users.sourceforge.net>
-:SimPy version: 2.0
+:SimPy release: |release|
 :Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 179 $ 
-:Date: $Date: 2009-01-13 15:11:54 +0100 (Di, 13 Jan 2009) $ 
+:Revision: $Revision: 297 $ 
+:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $ 
 
 .. contents:: Contents
    :depth: 2
@@ -281,5 +281,5 @@ Return value:
 	
 
 	
-$Revision: 179 $ $Date: 2009-01-13 15:11:54 +0100 (Di, 13 Jan 2009) $ kgm
+$Revision: 297 $ $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $ kgm
 

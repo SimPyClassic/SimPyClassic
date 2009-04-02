@@ -2,11 +2,11 @@
 Contents of This SimPy Distribution
 =================================================
 
-SimPy 2.0 contains the following files:
+SimPy |release| contains the following files:
 
  * READ_ME_FIRST.txt        - Describing what to do after installation
  * INSTALLATION.txt and INSTALLATION. html   - a simple installation guide
- * SimPy            - Python code directory for the SimPy 2.0 package
+ * SimPy            - Python code directory for the SimPy |release| package
 
         - Lister.py, a prettyprinter for class instances
         - Simulation.py, code for SimPy simulation
@@ -25,7 +25,10 @@ SimPy 2.0 contains the following files:
           API of Simulation.py
         - testSimPyTraceOO.py, a unit test script for the OO API of SimulationTrace.py
         - testSimPyRTOO.py, a unit test script for the OO API of SimulationRT.py 
-        - testSimPyStep.py, a unit test script for the OO API of SimulationStep.py         
+        - testSimPyStep.py, a unit test script for the OO API of SimulationStep.py  
+        - testRT_Behavior.py, a test program measuring the degree of RT synchronization for
+          SimulationRT, and
+        - testRT_Behavior_OO.py, an OO API version of that test program
 
  * SimPyDocs          - a directory containing the complete, browseable (HTML) documentation of SimPy.
    It includes tutorials and descriptions of accessing external packages from SimPy.
@@ -37,12 +40,12 @@ SimPy 2.0 contains the following files:
      
  * SimPyModels      - some SimPy models (in traditional and Object Oriented API)
  
-    * Bankmodels - a sub-directory with the models of the Bank tutorials ((in traditional and Object Oriented API)
+    * Bankmodels - a sub-directory with the models of the Bank tutorials (in traditional and Object Oriented API)
  
  * LGPLlicense.html - GNU Lesser General Public Licence text
  * setup.py	     	- setup script (distutils)
 
-:Date: $Date: 2009-01-28 14:58:22 +0100 (Mi, 28 Jan 2009) $
-:Revision: $Revision: 245 $
+:Date: $Date: 2009-04-02 06:14:08 +0200 (Do, 02 Apr 2009) $
+:Revision: $Revision: 307 $
 
 

@@ -14,11 +14,11 @@ Simulation with SimPy - In Depth Manual
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
           - Klaus Muller <Muller@users.sourceforge.net>
           - Bob Helmbold
-:SimPy version: 2.0
+:SimPy release: |release|
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 234 $
-:Date: $Date: 2009-01-27 03:55:51 +0100 (Di, 27 Jan 2009) $
+:Revision: $Revision: 297 $
+:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
 
 
 
@@ -3021,7 +3021,7 @@ under- and over-count bins)::
       m.observe(y)
 
       # set up and return the completed histogram
-   h = m.histogram(name='exponential',low=0.0, high=20, nbins=30)
+   h = m.histogram(low=0.0, high=20, nbins=30)
 
 ---------
 
@@ -3037,7 +3037,6 @@ under- and over-count bins)::
    * ``r.accum(y [,t])`` records the current value of ``y`` and time ``t``
      (the current time, ``now( )``, if ``t`` is missing). (DO NOT USE)  
 
-[Return to Top_ ]
 
 .. -------------------------------------------------------------------------
 
@@ -3057,13 +3056,13 @@ David Mertz, *Charming Python: SimPy simplifies complex models*, IBM
 Developer Works, Dec 2002,
 http://www-106.ibm.com/developerworks/linux/library/l-simpy.html
 
-[Return to Top_ ]
 
 Acknowledgments
 -------------------
 
-We will be grateful for any further corrections or suggestions that
-will improve it.
+We thank those users who have sent comments to correct or improve this
+text. These include: F. Benichu, Bob Helmbold, M. Matti. We will be
+grateful for further corrections or suggestions.
 
 
 
@@ -3235,7 +3234,7 @@ Glossary
     :alt:  SourceForge Logo
 
 .. ----------------------------------------------------------------------------
-.. $Revision: 234 $ $Date: 2009-01-27 03:55:51 +0100 (Di, 27 Jan 2009) $
+.. $Revision: 297 $ $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
 .. ----------------------------------------------------------------------------
 
 

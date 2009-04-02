@@ -2,7 +2,7 @@
 Installation
 ===================
 
-This file describes the installation of SimPy 2.0.
+This file describes the installation of SimPy |release|.
 
 In order to install SimPy on your system, you will need to perform the
 following steps:
@@ -13,12 +13,12 @@ following steps:
 
 2. Download and unpack the SimPy archive into a folder (using option "Use folder
    names" in WinZip, "Re-create folders" in Linux Archive Manager, or
-   similar option in your unpacker). This will create a SimPy-2.0 folder with all source
+   similar option in your unpacker). This will create a SimPy-2.0.1 folder with all source
    code and documentation.	Run "python setup.py install" in that folder. This 
    will install the SimPy programs in a folder on the Python 
    search path (typically /Lib/site-packages). 
 
-3. Run one or more of the programs under /SimPy-2.0/SimPyModels to see
+3. Run one or more of the programs under /SimPy-2.0.1/SimPyModels to see
    whether Python finds the SimPy module. If you get an error message
    like "ImportError: No module named SimPy", move the SimPy folder
    into a directory which you know to be on the Python module search
@@ -30,5 +30,5 @@ following steps:
 
 Enjoy simulation programming in SimPy!
 
-:Revision: $Revision: 153 $
-:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
+:Revision: $Revision: 308 $
+:Date: $Date: 2009-04-02 06:15:51 +0200 (Do, 02 Apr 2009) $
