@@ -7,7 +7,8 @@ setup(
       description="Release 2.0.1beta of SimPy simulation package",
       long_description=\
 """
-SimPy 2.0.1 is a bug-fix release of SimPy 2.0.
+SimPy 2.0.1 is a bug-fix release of SimPy 2.0. It repairs
+a number of errors in SimPy libraries, models and documentation.
 Version 2.0 of SimPy is a major release. It differs
 from the predecessor version (1.9) as follows:
 
