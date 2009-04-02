@@ -39,4 +39,4 @@ Globals - module providing global Simulation object and the global
 __version__ = '$Revision$ $Date$ kgm'
 """
 
-__SimPyVersion__ = '2.0'
+__SimPyVersion__ = '2.0.1'
