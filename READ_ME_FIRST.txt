@@ -5,7 +5,7 @@ INSTALLATION: SimPy
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
           - Klaus Muller <Muller@users.sourceforge.net>
 
-:SimPy version: 2.0
+:SimPy release: 2.0.1
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3+ (but NOT 3.0)
 :Revision: $Revision$
@@ -44,7 +44,7 @@ following steps:
    few lines of Python and SimPy can model significant real systems.
 
 7. For more help, contact the Simpy-Users mailing list,
-   mailto:simpy-users@lists.sourceforge.net. SimPy users are pretty
+   mailto:simpy-users at lists.sourceforge.net. SimPy users are pretty
    helpful.
 
 Enjoy simulation programming in SimPy!
