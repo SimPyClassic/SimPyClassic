@@ -461,7 +461,7 @@ class Resource(Lister):
             # If yes:
             if preempt:
                 z = self.activeQ[-1]
-				# Keep track of preempt level
+                # Keep track of preempt level
                 z._preempted += 1
                 # suspend lowest priority process being served
                 # record remaining service time at first preempt only 
@@ -512,10 +512,10 @@ class Resource(Lister):
             if self.preemptable:
                 # if object had been preempted:
                 if obj._preempted:
-                	# keep track of preempt level
+                    # keep track of preempt level
                     obj._preempted -= 1
                     # reactivate object delay = remaining service time
-					# but only, if all other preempts are over
+                    # but only, if all other preempts are over
                     if obj._preempted == 0:
                         self.sim.reactivate(obj, delay = obj._remainService,
                                             prior = 1)
