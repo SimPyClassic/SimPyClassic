@@ -1,16 +1,16 @@
 #! /usr/bin/env python
 from distutils.core import setup
 setup(
-      version = "2.0.1beta",
+      version = "2.0.1",
       author = "Klaus Muller, Tony Vignaux",
       author_email = "vignaux at user.sourceforge.net;kgmuller at users.sourceforge.net",
-      description="Release 2.0.1beta of SimPy simulation package",
+      description="Release 2.0.1 of SimPy simulation package",
       long_description=\
 """
 SimPy 2.0.1 is a bug-fix release of SimPy 2.0. It repairs
 a number of errors in SimPy libraries, models and documentation.
 Version 2.0 of SimPy is a major release. It differs
-from the predecessor version (1.9) as follows:
+from the predecessor version (1.9.1) as follows:
 
 - Addition of an objected oriented API, while maintaining
   full backward compatibility. With external packages
