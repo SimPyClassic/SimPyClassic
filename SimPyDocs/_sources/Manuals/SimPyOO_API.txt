@@ -5,8 +5,8 @@ SimPy's Object Oriented API - **New in Release 2.0**
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
 :SimPy release: |release|
 :Python version: 2.3 and later (not 3.0)
-:Revision: $Revision: 297 $
-:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
+:Revision: $Revision: 313 $
+:Date: $Date: 2009-04-05 01:25:11 +0200 (So, 05 Apr 2009) $
 
 .. contents:: Contents
    :depth: 2
@@ -233,7 +233,7 @@ class **Trace**. This becomes an attribute **trace** of the **SimulationTrace**
 instance.
 
 **Trace** methods
-^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++
 
 The semantics and parameters of the **Trace** methods are identical to those of
 the non-OO **SimPy.SimulationTrace** **trace** instance of the same name.

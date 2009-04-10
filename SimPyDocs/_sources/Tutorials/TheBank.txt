@@ -36,8 +36,6 @@ The examples run with SimPy version 1.5 and later.  This tutorial is
 best read with the SimPy Manual or Cheatsheet at your side for
 reference. 
 
-.. _Manual: Manual.html
-.. _Cheatsheet: cheatsheet.html
 
 
 Before attempting to use SimPy you should be familiar with the Python_

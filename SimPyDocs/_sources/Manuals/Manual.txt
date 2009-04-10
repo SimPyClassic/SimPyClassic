@@ -5,7 +5,6 @@
 .. highlight:: python
    :linenothreshold: 5 
 
-
 =======================================
 Simulation with SimPy - In Depth Manual
 =======================================
@@ -17,8 +16,7 @@ Simulation with SimPy - In Depth Manual
 :SimPy release: |release|
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 297 $
-:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
+:Date: |today|
 
 
 
@@ -34,11 +32,8 @@ Simulation with SimPy - In Depth Manual
 
 
   
-This document describes SimPy version 2.0 [#]_ Changes from
-version 1.9.1 are listed in `Appendix A0`_.
-
-.. [#] The variable ``version``, imported from ``SimPy.Simulation``,
-       contains the revision number and date of the current version.
+This document describes SimPy version 2.0.  Changes from version 1.9.1
+are listed in `Appendix A0`_.
 
 
 .. note:: 
@@ -222,7 +217,7 @@ The object-oriented programmers interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An object-oriented API interface was added in SimPy 2.0.  It is
-described more fully in `SimPyOO_API`_\. It defines a class of
+described more fully in ``SimPyOO_API``\. It defines a class of
 *Simulation* objects and makes running multiple simulations cleaner
 and easier. It is compatible with the procedural version described in
 this Manual. Using the object-oriented API, the program fragment listed
@@ -247,25 +242,25 @@ In addition to *SimPy.Simulation*, SimPy provides four alternative
 simulation libraries which have the basic ``SimPy.Simulation``
 capabilities, plus additional facilities:
 
- * *SimPy.SimulationTrace* for program tracing:
+*  *SimPy.SimulationTrace* for program tracing:
    With ``from SimPy.SimulationTrace import *``, any SimPy program automatically
    generates detailed event-by-event tracing output. This makes the library 
    ideal for program development/testing and for teaching SimPy.
 
- * *SimPy.SimulationRT* for real time synchronization:
+*  *SimPy.SimulationRT* for real time synchronization:
    ``from SimPy.SimulationRT import *`` facilitates synchronizing simulation
    time and real (wall-clock) time. This capability can be used to implement,
    e.g., interactive game applications or to demonstrate a model's execution
    in real time.
 
- * *SimPy.SimulationStep* for event-stepping through a simulation:
+*  *SimPy.SimulationStep* for event-stepping through a simulation:
    The import ``from SimPy.SimulationStep import *`` provides an API for
    stepping through a simulation event by event. This can assist with 
    debugging models, interacting with them on an event-by-event basis, 
    getting event-by-event output from a model (e.g. for plotting purposes),
    etc.
 
- * *SimPy.SimulationGUIDebug* for event-stepping through a simulation
+*  *SimPy.SimulationGUIDebug* for event-stepping through a simulation
    with a GUI: ``from SimPy.SimulationGUIDebug import *`` provides an
    API for stepping through a simulation event-by-event, with a GUI
    for user control. The event list, Process and Resource objects are
@@ -2729,7 +2724,7 @@ To define a new Tally object:
 
  - ``name`` is a descriptive name for the tally object (default='``a_Tally``' ).
 
- - ``ylab`` and ``tlab`` are descriptive labels used by the `SimPlot`_
+ - ``ylab`` and ``tlab`` are descriptive labels used by the ``SimPy.SimPlot``
    package when plotting graphs of the recorded data. They
    default to ``'y'`` and ``'t'``, respectively. (If a histogram_ is
    required the method ``setHistogram`` must be called before recording
@@ -2748,7 +2743,7 @@ To define a new Monitor object:
 
  - ``name`` is a descriptive name for the Monitor object (default='``a_Monitor``').
 
- - ``ylab`` and ``tlab`` are descriptive labels used by the `SimPlot`_
+ - ``ylab`` and ``tlab`` are descriptive labels used by the ``SimPy.SimPlot``
    package when plotting graphs of the recorded data. They
    default to ``'y'`` and ``'t'``, respectively. 
    (A histogram_ can be
@@ -2868,7 +2863,7 @@ A ``Histogram`` is a derived class of ``list`` that counts the
 observations that fall into a number of specified ranges, called bins.
 A histogram object can be displayed either by printing it out in text
 form using ``printHistogram`` method or using the ``plotHistogram`` method in the
-`SimPlot`_ package.
+``SimPy.SimPlot`` package.
 
 
 * ``h = Histogram(low=<float>,high=<float>,nbins=<integer>)`` is a
@@ -3043,7 +3038,8 @@ under- and over-count bins)::
 Other Links
 -------------------
 
-Several example `SimPy models`_ are included with the SimPy code distribution.
+Several example SimPy models are included with the SimPy code
+distribution in the file ``SimPyModels``.
 
 Klaus Muller and Tony Vignaux, *SimPy: Simulating Systems in Python*,
 O'Reilly ONLamp.com, 2003-Feb-27,  http://www.onlamp.com/pub/a/python/2003/02/27/simpy.html
@@ -3134,36 +3130,34 @@ In addition, a SimPy process, *p*,  can be in the following (sub)states:
 A3. SimPlot, The SimPy plotting utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SimPlot_ provides an easy way to graph the results of simulation runs.
+``SimPlot`` provides an easy way to graph the results of simulation runs.
 
-.. _`SimPlot`: PlotManual/ManualPlotting.html
+
 
 
 A4. SimGUI, The SimPy Graphical User Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SimGUI_  provides a  way for users to interact with a SimPy program,
+``SimGUI``  provides a  way for users to interact with a SimPy program,
 changing its parameters and examining the output.
 
-.. _`SimGUI`: GUIManual/SimGUImanual.html
 
 
 
 A5. SimulationTrace, the SimPy tracing utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`SimulationTrace`_ has been developed to give users insight into the
+``SimulationTrace`` has been developed to give users insight into the
 dynamics of the execution of SimPy simulation programs. It can help
 developers with testing and users with explaining SimPy models to themselves
 and others (e.g., for documentation or teaching purposes).
 
-.. _`SimulationTrace`: Tracing.html
 
 
 A6. SimulationStep, the SimPy event stepping utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`SimulationStep`_ can assist with debugging models, interacting with them on
+``SimulationStep`` can assist with debugging models, interacting with them on
 an event-by-event basis, getting event-by-event output from a model (e.g.
 for plotting purposes), etc.
 
@@ -3173,16 +3167,14 @@ It caters for:
    - running a simulation model one event at a time by repeated calls,
    - starting and stopping the event-stepping mode under program control.
 
-.. _`SimulationStep`: SimStepManual.html
 
 A7. SimulationRT, a real-time synchronizing utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`SimulationRT`_ allows synchronizing simulation time and real (wall-clock) time.
+``SimulationRT`` allows synchronizing simulation time and real (wall-clock) time.
 This capability can be used to implement, e.g., interactive game applications or
 to demonstrate a model's execution in real time.
 
-.. _`SimulationRT`: SimRTManual.html
 
 
 .. _glossary:
@@ -3204,8 +3196,6 @@ Glossary
 .. |simpylogo| image:: images/sm_SimPy_Logo.png
 .. _`simpydownload`: http://sourceforge.net/projects/simpy/
 
-.. _`SimPy models`: LISTOFMODELS.html
-.. _`SimPyOO_API`: SimPyOO_API.html
 .. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
 
 
@@ -3234,7 +3224,7 @@ Glossary
     :alt:  SourceForge Logo
 
 .. ----------------------------------------------------------------------------
-.. $Revision: 297 $ $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
+.. $Revision: 313 $ $Date: 2009-04-05 01:25:11 +0200 (So, 05 Apr 2009) $
 .. ----------------------------------------------------------------------------
 
 

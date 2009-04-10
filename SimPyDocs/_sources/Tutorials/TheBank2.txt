@@ -7,9 +7,9 @@ The Bank Tutorial part 2: More  examples of SimPy Simulation
 
 .. ---------------------------------------------------
 ..        2004 October gav  079.131.13
-..        $Author: kgmuller $
-..        $Revision: 224 $
-..        $Date: 2009-01-25 19:10:13 +0100 (So, 25 Jan 2009) $
+..        $Author: vignaux $
+..        $Revision: 313 $
+..        $Date: 2009-04-05 01:25:11 +0200 (So, 05 Apr 2009) $
 .. ---------------------------------------------------
  
 .. ---------------------------------------------------
@@ -63,7 +63,7 @@ The Bank Tutorial part 2: More  examples of SimPy Simulation
 Introduction
 -------------------------------------
 
-The first Bank tutorial, `The Bank`_ , developed and explained a
+The first Bank tutorial, The Bank, developed and explained a
 series of simulation models of a simple bank using SimPy_. In various
 models, customers arrived randomly, queued up to be served at one or
 several counters, modelled using the Resource class, and, in one case,
@@ -81,8 +81,6 @@ until a condition occurs (``waituntil``) and waiting for events to
 occur. 
 
 .. _SimPy: http://simpy.sourceforge.net/
-.. _Manual: Manual.html
-.. _Cheatsheet: cheatsheet.html
 
 The programs are available without line numbers and ready to go, in
 directory ``bankprograms``. Some have trace statements for
@@ -121,7 +119,7 @@ Priority Customers without preemption
 .. index:: priority
 
 In the first example, we modify the program with random arrivals, one
-counter, and a fixed service time (like ``bank07.py`` in `The Bank`_
+counter, and a fixed service time (like ``bank07.py`` in The Bank
 tutorial) to process a high priority customer. Warning: the ``seed()``
 value has been changed to ``98989`` to make the story more exciting.
 
@@ -468,7 +466,7 @@ Monitor, ``Mon``, at line 37 and the times are ``observed`` at line
 30.
 
 The histogram is constructed from the Monitor, after the simulation
-has finished, at line 55. The `SimPy.SimPlot`_ package allows
+has finished, at line 55. The SimPy SimPlot package allows
 simple plotting of results from simulations.  Here we use the SimPlot
 ``plotHistogram`` method. The plotting routines appear in lines
 57-61. The ``plotHistogram`` call is in line 58.
@@ -543,8 +541,6 @@ program the graph is plotted; the user has to terminate the plotting
 
 .. _`SimPy`: http://simpy.sourceforge.net/
 .. _Python: http://www.Python.org
-.. _`The Bank`: TheBank.html
-.. _`SimPy.SimPlot`: SimPlotManual/ManualPlotting.html
 .. _`Python web site`: http://www.Python.org
 
 
@@ -566,9 +562,9 @@ References
 
 - SimPy homepage: http://simpy.sourceforge.net/
 
-- The Bank: `The Bank`_
+- The Bank:
 
-:Version: $Revision: 224 $
+:Version: $Revision: 313 $
 
 ..
   ------------------------------------------------------

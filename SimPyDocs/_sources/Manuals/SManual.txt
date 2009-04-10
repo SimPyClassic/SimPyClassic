@@ -11,14 +11,14 @@ Basic SimPy - Manual For First Time Users
 
 :Authors: G A Vignaux and Klaus Muller
 
-:Date:  January 2009
+:Date:  |today|
 :SimPy release: |release|
 :Python-Version: 2.3 and later (not 3.0)
 
 .. THIS WAS PUT UNDER SUBVERSION 2008/08/07
 
 .. REPLACEMENTS ===================================================
-.. |svnversion| replace:: $Revision: 297 $
+.. |svnversion| replace:: $Revision: 313 $
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
 .. |init| replace:: ``__init__``
@@ -76,7 +76,7 @@ simulation programs. This document is a description of basic
 techniques of SimPy. It describes a subset of SimPy's capabilities -
 sufficient, we think, to develop standard simulations. You may also
 find `The Bank`_ tutorial included in SimPy's distribution helpful in
-the early stages.  The full Manual_, included in the distribution, is
+the early stages.  The full SimPy Manual, included in the distribution, is
 more detailed.
 
 The active elements (or *entities*) of a SimPy model are objects of a
@@ -129,15 +129,18 @@ resource.SimPy automatically handles the queueing.
   of spares from the Store. The store is replenished by deliveries
   from a warehouse.
 
-SimPy also supplies Monitors to record simulation events. Monitors_
-are used to compile summary statistics such as waiting times and queue
-lengths. These statistics includes simple averages and variances,
-time-weighted averages, or histograms. In particular, data can be
-gathered on the queues associated with Resources, Levels and
-Stores. For example we may collect data on the average number of cars
-waiting at the gas station and the distribution of their waiting
-times. Monitors preserve complete time-series records that may later
-be used for more advanced post-simulation analyses.
+SimPy also supplies Monitors and Tallys to record simulation
+events. Monitors_ are used to compile summary statistics such as
+waiting times and queue lengths. These statistics includes simple
+averages and variances, time-weighted averages, or histograms. In
+particular, data can be gathered on the queues associated with
+Resources, Levels and Stores. For example we may collect data on the
+average number of cars waiting at the gas station and the distribution
+of their waiting times. Monitors preserve complete time-series records
+that may later be used for more advanced post-simulation analyses. A
+simpler version of a Monitor is a Tally which provides most of the
+statistical facilities but does not retain a complete time-series
+record. See the SimPy Manual for details on the Tally.
 
 You need to write Python code to develop a SimPy model. In
 particular, you will have to define and use classes and their
@@ -155,7 +158,7 @@ To use the SimPy simulation system in your Python program you must import its
 
    ``from SimPy.Simulation import *``
 
-We recommend that new users instead  import `SimPy.SimulationTrace`_,
+We recommend that new users instead  import ``SimPy.SimulationTrace``,
 which works the same but also automatically produces a timed listing of
 events as the model executes. (An example of such a trace is shown in
 `The Resource Example with Tracing`_):
@@ -230,10 +233,10 @@ the simulation time reaches ``1000.0``. When the simulation stops the
 
 In addition to *SimPy.Simulation* there are three alternative
 simulation libraries with the same simulation capabilities but with
-special facilities. Beside `SimPy.SimulationTrace`_, already
-mentioned, there are `SimPy.SimulationRT`_ for real time
-synchronisation and `SimPy.SimulationStep`_ for event-stepping through
-a simulation. See the Manual_ for more information.
+special facilities. Beside ``SimPy.SimulationTrace``, already
+mentioned, there are ``SimPy.SimulationRT`` for real time
+synchronisation and ``SimPy.SimulationStep`` for event-stepping through
+a simulation. See the SimPy Manual for more information.
 
 
 .. ==================================================================
@@ -457,7 +460,7 @@ An entity (Process object) can be "put to sleep" or passivated using
 ``yield passivate,self`` (and it can be reactivated by another entity
 using ``reactivate``), or permanently removed from the future event
 queue by the command ``self.cancel()``. Active entities can be
-``interrupt``\ed by other entities. Examine the full Manual_ for
+``interrupt``\ed by other entities. Examine the full SimPy Manual for
 details.
 
 ------
@@ -518,7 +521,7 @@ Running this program gives the following output::
 If, instead one chose to import ``SimPy.SimulateTrace`` at the start
 of the program one would obtain the following output. (The meaning of
 the phrase ``prior : False`` in the first two lines is described in
-the full Manual_. ``prior`` is an advanced technique for fine control
+the full SimPy Manual. ``prior`` is an advanced technique for fine control
 of PEM priorities but seldom affects simulated operations and so
 normally can be ignored/)
 
@@ -644,7 +647,7 @@ Entities can use a priority system for queueing. They can also preempt
 (that is, interrupt) others already in the system. They can also
 *renege* from the ``waitQ`` (that is, abandon the queue if it takes
 too long). This is achieved by an extension to the ``yield request``
-command. See the main Manual_.
+command. See the main SimPy Manual.
 
 yield release
 +++++++++++++++
@@ -707,7 +710,7 @@ normal, log-normal, Weibull, and vonMises.  It can also generate
 random variates from some discrete distributions. Consult the module's
 documentation for details.  Excellent brief descriptions of these
 distributions, and many others, can be found in the `Wikipedia
-<http://www.wikipedia.com/>`_.)
+<http://www.wikipedia.com/>`_.
 
 Python's ``random`` module can be used in two ways: you can import the
 methods directly or you can import the ``Random`` class and make your
@@ -760,7 +763,8 @@ more sophisticated statistical analysis.
 When Resources are defined, a Monitor can be set up to automatically
 observe the lengths of each of their queues.
 
-
+The simpler version, the Tally, is not covered in this document. See
+the SimPy Manual for more details.
 
 
 Defining Monitors
@@ -938,7 +942,7 @@ certain simulation time. This is helpful when a simulation needs a
 started.  A Monitor can also generate a ``Histogram`` of the data
 (The SimPy ``Tally`` is an alternative to ``Monitor`` that does essentially
 the same job but uses less storage space at some cost of speed and
-flexibility. See the Manual_ for more information on these options.)
+flexibility. See the SimPy Manual for more information on these options.)
 
 
  
@@ -951,9 +955,9 @@ SimPy Information
 
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:SimPy version: 2.0
+:SimPy version: |release|
 :SVN:   |svnversion|
-:Date: 2008-08-07
+:Date: |today|
 
 
 The Resource Example with Tracing
@@ -963,7 +967,7 @@ This is the trace produced in the Resource example when
 ``SimPy.SimulationTrace`` is imported at the head of the program. The
 relevance of the phrases ```prior: False``` and ```priority:
 default``` refer to advanced but seldom-needed methods for
-fine-grained control of event timing, as explained in the Manual_. The
+fine-grained control of event timing, as explained in the SimPy Manual. The
 trace contains the results of all the ``print`` output specifically
 called for by the user's program (for example, line 5) but adds a line
 for every event executed. (The ``request`` at time ``3.0``, for
@@ -987,10 +991,8 @@ the ``gasstation``.)
 .. _`simpydownload`: http://sourceforge.net/projects/simpy/
 .. _`Python web-site` : http://www.Python.org
 
-.. _`SimPy models`: LISTOFMODELS.html
 
-.. _Manual: Manual.html
-.. _`SimPy.SimulationTrace`: http://simpy.sourceforge.net/SimPyDocs/Tracing.html
+
 .. _`SimPy.SimulationRT`: http://simpy.sourceforge.net/SimPyDocs/SimRTManual.html
 .. _`SimPy.SimulationStep`: http://simpy.sourceforge.net/SimPyDocs/SimStepManual/SimStepManual.html
 .. _`The Bank`: http://simpy.sourceforge.net/SimPyDocs/TheBank.html
@@ -1003,10 +1005,9 @@ the ``gasstation``.)
 
 .. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
 .. _Python: http://www.Python.org
-.. _`SimPlot`: SimPlotManual/ManualPlotting.html
 
 .. ----------------------------------------------------------------------------
-.. CVS: was $Revision: 297 $ $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
+.. CVS: was $Revision: 313 $ $Date: 2009-04-05 01:25:11 +0200 (So, 05 Apr 2009) $
 .. the Mercurial (hg) version.
 .. SVN |svnversion|
 .. ----------------------------------------------------------------------------
