@@ -19,7 +19,7 @@ import SimPy.Globals as Globals
 class Process(Lister):
     """Superclass of classes which may use generator functions"""
     def __init__(self, name = 'a_process', sim = None):
-        if not sim: sim = Globals.sim # Use global simulation object if sim is None
+        if sim is None: sim = Globals.sim # Use global simulation object if sim is None
         self.sim = sim
         #the reference to this Process instances single process (==generator)
         self._nextpoint = None
@@ -197,7 +197,7 @@ class SimEvent(Lister):
     the first gets activated.
     """
     def __init__(self, name = 'a_SimEvent', sim = None):
-        if not sim: sim = Globals.sim # Use global simulation if sim is None
+        if sim is None: sim = Globals.sim # Use global simulation if sim is None
         self.sim = sim
         self.name = name
         self.waits = []
@@ -423,7 +423,7 @@ class Resource(Lister):
         monitorType={Monitor(default) | Tally}
         """
         
-        if not sim: sim = Globals.sim # Use global simulation if sim is Non
+        if sim is None: sim = Globals.sim # Use global simulation if sim is Non
         self.sim = sim
         self.name = name          # resource name
         self.capacity = capacity  # resource units in this resource
@@ -538,7 +538,7 @@ class Buffer(Lister):
                 putQType = FIFO, getQType = FIFO,
                 monitored = False, monitorType = Monitor, initialBuffered = None,
                 sim = None):
-        if not sim: sim = Globals.sim # Use global simulation if sim is None
+        if sim is None: sim = Globals.sim # Use global simulation if sim is None
         self.sim = sim
         if capacity == 'unbounded': capacity = sys.maxint
         self.capacity = capacity
