@@ -311,6 +311,7 @@ from SimPy.Lib import Process, SimEvent, PriorityQ, Resource, Level, Store
 # Required for backward compatibility
 import SimPy.Globals as Globals
 from SimPy.Globals import initialize, simulate, now, stopSimulation, \
+        allEventNotices, allEventTimes, startCollection,\
         _startWUStepping, _stopWUStepping, activate, reactivate
 
 
@@ -496,7 +497,7 @@ class Simulation(object):
         r[:] = self._e.timestamps
         r.sort()
         # return only event times of not cancelled event notices
-        r1 = [x[0] for x in r if not r[3]]
+        r1 = [x[0] for x in r if not x[3]]
         tprev=-1
         ret = []
         for t in r1:
