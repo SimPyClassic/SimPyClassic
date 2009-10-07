@@ -18,7 +18,7 @@ def stopSimulation():
     """Application function to stop simulation run"""
     sim.stopSimulation()
     
-def allEventNotices(self):
+def allEventNotices():
     """Returns string with eventlist as;
             t1: processname, processname2
             t2: processname4, processname5, . . .
@@ -26,12 +26,12 @@ def allEventNotices(self):
         """
     return sim.allEventNotices()
 
-def allEventTimes(self):
+def allEventTimes():
     """Returns list of all times for which events are scheduled.
     """
     return sim.allEventTimes()
 
-def startCollection(self, when = 0.0, monitors = None, tallies = None):
+def startCollection(when = 0.0, monitors = None, tallies = None):
     """Starts data collection of all designated Monitor and Tally objects 
     (default = all) at time 'when'.
     """
