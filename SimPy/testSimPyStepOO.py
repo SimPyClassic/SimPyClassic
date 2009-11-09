@@ -66,6 +66,32 @@ class PActions(Process):
 
    def ACTIONS(self):
         yield hold,self,self.T
+    
+class ToStop(Process):
+    """For testing stopSimulation
+    """
+    def run(self,stopTime):
+        yield hold,self,now()+stopTime
+        self.sim.stopSimulation()
+        yield hold,self,10
+        
+class ToCollect(Process):
+    """For testing startCollection
+    """
+    def run(self,mon1,mon2,tal1,tal2):
+        while True:
+            yield hold,self,1
+            mon1.observe(self.sim.now())
+            mon2.observe(self.sim.now())
+            tal1.observe(self.sim.now())
+            tal2.observe(self.sim.now())
+            
+class ForEvtTimes(Process):
+    """For testing allEventTimes
+    """
+    def run(self):
+        yield hold,self
+
 
 class makeSimulationtestcase(unittest.TestCase):
    """ Tests of simulation
@@ -126,6 +152,50 @@ class makeSimulationtestcase(unittest.TestCase):
         s.activate(P2,P2.execute(),0)
         s.simulate(until=20)
         assert(s.now()==10),"P1 hold to %s not %s"%(s.now(),10)
+        
+   ## ------------------------------------------------------------------------
+   ## Tests of simulation utility functions/methods    
+   ## ------------------------------------------------------------------------
+    
+   def testStopSimulation(self):
+        """Test stopSimulation function/method
+        """
+        timeToStop = 7
+        s = SimulationStep()
+        ts = ToStop(sim = s)
+        s.activate(ts,ts.run(stopTime = timeToStop))
+        s.simulate(until = 50)
+        assert(s.now()==timeToStop),\
+        "stopSimulation not working; now = %s instead of %s"%(now(),timeToStop)
+
+   def testStartCollection(self):
+       """Test startCollection function/method
+       """
+       s = SimulationStep()
+       tStart = 9
+       mon1 = Monitor("mon1",sim = s)
+       mon2 = Monitor("mon2",sim = s)
+       tal1 = Tally("tal1",sim = s)
+       tal2 = Tally("tal2",sim = s)
+       s.startCollection(when = tStart,monitors=[mon1,mon2],tallies=[tal1,tal2])
+       tc = ToCollect(sim = s)
+       s.activate(tc,tc.run(mon1,mon2,tal1,tal2))
+       s.simulate(until=50)
+       assert(mon1[0]==mon2[0]==[tStart,tStart]),\
+              "startCollection not working correctly for Monitors"
+       assert(tal1.count()==tal2.count()==50-tStart+1),\
+              "startCollection not working for Tally"
+              
+   def testAllEventTimes(self):
+       """Test allEventTimes function/method
+       """
+       s = SimulationStep()
+       for i in range(3):
+           f = ForEvtTimes(sim = s)
+           s.activate(f,f.run(),at=i)
+       assert(s.allEventTimes()==[0,1,2]),\
+              "allEventTimes not working"
+ 
 
 def makeSSuite():
     suite = unittest.TestSuite()
@@ -134,8 +204,12 @@ def makeSSuite():
     testStart=makeSimulationtestcase("testStart")
     testStartActions=makeSimulationtestcase("testStartActions")
     testYield = makeSimulationtestcase("testYield")
-    suite.addTests([testInit,testActivate,testStart,testStartActions,
-                    testYield])
+    testStopSimulation = makeSimulationtestcase('testStopSimulation') 
+    testStartCollection = makeSimulationtestcase('testStartCollection')
+    testAllEventTimes = makeSimulationtestcase('testAllEventTimes')
+    suite.addTests([testInit, testActivate, testStart, testStartActions, 
+                    testYield,testStopSimulation,testStartCollection,
+                    testAllEventTimes])
     return suite
 
 ## -------------------------------------------------------------

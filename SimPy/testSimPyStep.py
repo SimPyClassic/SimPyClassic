@@ -67,6 +67,31 @@ class PActions(Process):
    def ACTIONS(self):       
         yield hold, self, self.T
         
+class ToStop(Process):
+    """For testing stopSimulation
+    """
+    def run(self,stopTime):
+        yield hold,self,now()+stopTime
+        stopSimulation()
+        yield hold,self,10
+        
+class ToCollect(Process):
+    """For testing startCollection
+    """
+    def run(self,mon1,mon2,tal1,tal2):
+        while True:
+            yield hold,self,1
+            mon1.observe(now())
+            mon2.observe(now())
+            tal1.observe(now())
+            tal2.observe(now())
+            
+class ForEvtTimes(Process):
+    """For testing allEventTimes
+    """
+    def run(self):
+        yield hold,self
+        
 class makeSimulationtestcase(unittest.TestCase):
    """ Tests of simulation
    """
@@ -119,6 +144,52 @@ class makeSimulationtestcase(unittest.TestCase):
         simulate(until = 20)
         assert(now() == 10),'P1 hold to %s not %s' % (now(),10)
         
+    
+   ## ------------------------------------------------------------------------
+   ## Tests of simulation utility functions/methods    
+   ## ------------------------------------------------------------------------
+    
+   def testStopSimulation(self):
+        """Test stopSimulation function/method
+        """
+        timeToStop = 7
+        initialize()
+        ts = ToStop()
+        activate(ts,ts.run(stopTime = timeToStop))
+        simulate(until = 50)
+        assert(now()==timeToStop),\
+        "stopSimulation not working; now = %s instead of %s"%(now(),timeToStop)
+
+   def testStartCollection(self):
+       """Test startCollection function/method
+       """
+       initialize()
+       tStart = 9
+       mon1 = Monitor("mon1")
+       mon2 = Monitor("mon2")
+       tal1 = Tally("tal1")
+       tal2 = Tally("tal2")
+       startCollection(when = tStart,monitors=[mon1,mon2],tallies=[tal1,tal2])
+       tc = ToCollect()
+       activate(tc,tc.run(mon1,mon2,tal1,tal2))
+       simulate(until=50)
+       assert(mon1[0]==mon2[0]==[tStart,tStart]),\
+              "startCollection not working correctly for Monitors"
+       assert(tal1.count()==tal2.count()==50-tStart+1),\
+              "startCollection not working for Tally"
+              
+   def testAllEventTimes(self):
+       """Test allEventTimes function/method
+       """
+       initialize()
+       for i in range(3):
+           f = ForEvtTimes()
+           activate(f,f.run(),at=i)
+       assert(allEventTimes()==[0,1,2]),\
+              "allEventTimes not working"
+       
+               
+        
        
 def makeSSuite():
     suite = unittest.TestSuite()
@@ -127,9 +198,14 @@ def makeSSuite():
     testStart = makeSimulationtestcase('testStart')
     testStartActions = makeSimulationtestcase('testStartActions')
     testYield = makeSimulationtestcase('testYield')
+    testStopSimulation = makeSimulationtestcase('testStopSimulation') 
+    testStartCollection = makeSimulationtestcase('testStartCollection')
+    testAllEventTimes = makeSimulationtestcase('testAllEventTimes')
     ##testrequest3 = makeSimulationtestcase('testrequest3')
     ##testrequest4 = makeSimulationtestcase('testrequest4')
-    suite.addTests([testInit, testActivate, testStart, testStartActions, testYield])
+    suite.addTests([testInit, testActivate, testStart, testStartActions, 
+                    testYield,testStopSimulation,testStartCollection,
+                    testAllEventTimes])
     return suite
 
 ## -------------------------------------------------------------
@@ -174,7 +250,7 @@ class makeResourcetestcase(unittest.TestCase):
         ## R = Resource() when Simulation is fixed
         R0 = Resource(name = '', capacity = 0)
         assert R0.name == '', 'Not null name'
-        assert R0.capacity == 0, 'Not capacity 0, it is '+`R0.capacity`
+        assert R0.capacity == 0, 'Not capacity 0, it is ' + 'R0.capacity'
         ## now test requesting: ------------------------------------
         initialize()
         R1 = Resource(capacity = 0, name = '3 - version', unitName = 'blobs')
