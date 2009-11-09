@@ -554,7 +554,6 @@ class Simulation(object):
         class Starter(Process):
             def collect(self, monitors, tallies):
                 for m in monitors:
-                    print m.name
                     m.reset()
                 for t in tallies:
                     t.reset()
