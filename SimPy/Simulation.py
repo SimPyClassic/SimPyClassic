@@ -562,8 +562,15 @@ class Simulation(object):
             monitors = self.allMonitors
         if tallies is None:
             tallies = self.allTallies
-        s = Starter()
-        self.activate(s, s.collect(monitors = monitors, tallies = tallies),at = when)
+        if when == 0.0:
+            for m in monitors:
+                m.reset()
+            for t in tallies:
+                t.reset()
+        else:                
+            s = Starter()
+            self.activate(s, s.collect(monitors = monitors, tallies = tallies),\
+                      at = when, prior = True)
     
     ## begin waituntil functionality
     def _test(self):
