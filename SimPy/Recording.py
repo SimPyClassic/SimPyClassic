@@ -169,15 +169,15 @@ class Monitor(list):
 
         if t is None: t = self.sim.now()
         sum = 0.0
-        tlast = self.startTime
-        ylast = 0.0
+        tlast = self[0][0]
+        ylast = self[0][1]
         for i in range(N):
             ti, yi = self[i]
             sum += ylast * (ti - tlast)
             tlast = ti
             ylast = yi
         sum += ylast * (t - tlast)
-        T = t - self.startTime
+        T = tlast - self[0][0]
         if T == 0:
              print 'SimPy: No elapsed time for timeAverage'
              return None
@@ -196,9 +196,9 @@ class Monitor(list):
         if t is None: t = self.sim.now()
         sm = 0.0
         ssq = 0.0
-        tlast = self.startTime
+        tlast = self[0][0]
         # print 'DEBUG: 1 twVar ', t, tlast
-        ylast = 0.0
+        ylast = self[0][1]
         for i in range(N):
             ti, yi = self[i]
             sm  += ylast * (ti - tlast)
@@ -207,7 +207,7 @@ class Monitor(list):
             ylast = yi
         sm  += ylast * (t - tlast)
         ssq += ylast * ylast * (t - tlast)
-        T = t - self.startTime
+        T = tlast - self[0][0]
         if T == 0:
              print 'SimPy: No elapsed time for timeVariance'
              return None
