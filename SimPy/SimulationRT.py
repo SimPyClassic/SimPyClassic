@@ -155,198 +155,61 @@ if __TESTING:
     else:
         print
 
-        
-class EvlistRT(Evlist):
-    """Defines event list and operations on it"""
-    def __init__(self, sim):
-        # always sorted list of events (sorted by time, priority)
-        # make heapq
-        self.sim = sim
-        self.timestamps = []
-        self.sortpr = 0  
-        self.real_time = False
-        self.rel_speed = 1 
-        self.rtlast = self.sim.wallclock()
-        self.stlast = 0
-            
-    def _nextev(self):
-        """Retrieve next event from event list"""
-        noActiveNotice = True
-        ## Find next event notice which is not marked cancelled
-        while noActiveNotice:
-            if self.timestamps:
-                 ## ignore priority value         
-                (_tnotice, p,nextEvent, cancelled) = hq.heappop(self.timestamps)
-                noActiveNotice = cancelled
-            else:
-                raise Simerror('No more events at time %s' % self.sim._t)
-        nextEvent._rec = None
-        _tsimold = self.sim._t
-        self.sim._t = _tnotice
-        ## Calculate any wait time
-        ## (tRTnow - tRTold + delay)/(tsim - tsimold) = 1/rel_speed
-        if self.real_time:                                 
-            delay = float(_tnotice-_tsimold)/self.rel_speed-self.sim.rtnow()+self.rtlast
-            if delay > 0:
-                time.sleep(delay)               
-            self.rtlast = self.sim.wallclock()-self.sim.rtstart
-            self.stlast = self.sim._t
-        if self.sim._t > self.sim._endtime:
-            self.sim._t = self.sim._endtime
-            self.sim._stop = True
-            return (None,)
-        try:
-            resultTuple = nextEvent._nextpoint.next()
-        except StopIteration:
-            nextEvent._nextpoint = None
-            nextEvent._terminated = True
-            nextEvent._nextTime = None
-            resultTuple = None
-        return (resultTuple, nextEvent)
-
-
 class SimulationRT(Simulation):
-    
     def __init__(self):
         if sys.platform == 'win32':  #take care of differences in clock accuracy
             self.wallclock = time.clock
         else:
             self.wallclock = time.time
-        self.rtstart = self.wallclock()
         Simulation.__init__(self)
-        self.initialize()
-        
-    def initialize(self):
-        self.rtstart = self.wallclock()
-        Simulation.initialize(self)
-        self._e = EvlistRT(self)
-        self._e.rtlast = 0
 
     def rtnow(self):
         return self.wallclock() - self.rtstart
-        
-    def rtset(self, rel_speed = 1):
-        """resets the the ratio simulation time over clock time(seconds).
+
+    def rtset(self, rel_speed=1):
         """
-        if self._e is None:
-            raise FatalSimerror('Fatal SimPy error: Simulation not initialized')
-        self._e.rel_speed = float(rel_speed)
-    
-    def simulate(self, until = 0, real_time = False, rel_speed = 1):
-        """Schedules Processes / semi - coroutines until time 'until'"""
-        
-        """Gets called once. Afterwards, co - routines (generators) return by 
-        'yield' with a cargo:
-        yield hold, self, <delay>: schedules the 'self' process for activation 
-                                   after < delay > time units.If <,delay > missing,
-                                   same as 'yield hold, self, 0'
-                                   
-        yield passivate, self    :  makes the 'self' process wait to be re - activated
-    
-        yield request, self,<Resource > [,<priority>]: request 1 unit from < Resource>
-            with < priority > pos integer (default = 0)
-    
-        yield release, self,<Resource> : release 1 unit to < Resource>
-    
-        yield waitevent, self,<SimEvent>|[<Evt1>,<Evt2>,<Evt3), . . . ]:
-            wait for one or more of several events
-            
-    
-        yield queueevent, self,<SimEvent>|[<Evt1>,<Evt2>,<Evt3), . . . ]:
-            queue for one or more of several events
-    
-        yield waituntil, self, cond : wait for arbitrary condition
-    
-        yield get, self,<buffer > [,<WhatToGet > [,<priority>]]
-            get < WhatToGet > items from buffer (default = 1); 
-            <WhatToGet > can be a pos integer or a filter function
-            (Store only)
-            
-        yield put, self,<buffer > [,<WhatToPut > [,priority]]
-            put < WhatToPut > items into buffer (default = 1);
-            <WhatToPut > can be a pos integer (Level) or a list of objects
-            (Store)
-    
-        EXTENSIONS:
-        Request with timeout reneging:
-        yield (request, self,<Resource>),(hold, self,<patience>) :
-            requests 1 unit from < Resource>. If unit not acquired in time period
-            <patience>, self leaves waitQ (reneges).
-    
-        Request with event - based reneging:
-        yield (request, self,<Resource>),(waitevent, self,<eventlist>):
-            requests 1 unit from < Resource>. If one of the events in < eventlist > occurs before unit
-            acquired, self leaves waitQ (reneges).
-            
-        Get with timeout reneging (for Store and Level):
-        yield (get, self,<buffer>,nrToGet etc.),(hold, self,<patience>)
-            requests < nrToGet > items / units from < buffer>. If not acquired < nrToGet > in time period
-            <patience>, self leaves < buffer>.getQ (reneges).
-            
-        Get with event - based reneging (for Store and Level):
-        yield (get, self,<buffer>,nrToGet etc.),(waitevent, self,<eventlist>)
-            requests < nrToGet > items / units from < buffer>. If not acquired < nrToGet > before one of
-            the events in < eventlist > occurs, self leaves < buffer>.getQ (reneges).
-    
-            
-    
-        Event notices get posted in event - list by scheduler after 'yield' or by 
-        'activate' / 'reactivate' functions.
-        
-        if real_time == True, the simulation time and real (clock) time get
-        synchronized as much as possible. rel_speed is the ratio simulation time
-        over clock time(seconds). Example: rel_speed == 100: 100 simulation time units take
-        1 second clock time.
-        
+        Resets the ratio simulation time over clock time(seconds).
         """
-        global _endtime, _e, _stop, _t, _wustep    
-        self._stop = False
-    
-        if self._e is None:
-            raise FatalSimerror('Simulation not initialized')
-        self._e.real_time = real_time
-        self._e.rel_speed = rel_speed
-        #~ self._e.rtlast = self.wallclock()
-        #~ self._e.stlast = 0
-        if self._e._isEmpty():
-            message = 'SimPy: No activities scheduled'
-            return message
-            
-        self._endtime = until
-        message = 'SimPy: Normal exit'
-        dispatch={hold:holdfunc, request:requestfunc, release:releasefunc,
-                  passivate:passivatefunc, waitevent:waitevfunc, queueevent:queueevfunc,
-                  waituntil:waituntilfunc, get:getfunc, put:putfunc}
-        commandcodes = dispatch.keys()
-        commandwords={hold:'hold', request:'request', release:'release', passivate:'passivate',
-            waitevent:'waitevent', queueevent:'queueevent', waituntil:'waituntil',
-            get:'get', put:'put'}
-        nextev = self._e._nextev ## just a timesaver
-        while not self._stop and self._t <= self._endtime:
-            try:
-                a = nextev()
-                if not a[0] is None:
-                    ## 'a' is tuple '(<yield command>, <action>)'  
-                    if type(a[0][0]) == tuple:
-                        ##allowing for yield (request, self, res),(waituntil, self, cond)
-                        command = a[0][0][0]
-                    else: 
-                        command = a[0][0]
-                    if __debug__:
-                        if not command in commandcodes:
-                            raise FatalSimerror('Illegal command: yield %s'%command)
-                    dispatch[command](a)     
-            except FatalSimerror, error:
-                print 'SimPy: ' + error.value
-                sys.exit(1)
-            except Simerror, error:
-                message = 'SimPy: ' + error.value
-                self._stop = True
-            if self._wustep:
-                self._test()
-        self._stopWUStepping()
-        self._e = None
-        return message
+        # Ensure relative speed is a float.
+        self.rel_speed = float(rel_speed)
+
+    def simulate(self, until=0, real_time=False, rel_speed=1):
+        """
+        Simulates until simulation time reaches ``until``. If ``real_time`` is
+        ``True`` a simulation time unit is matched with real time by the factor
+        1 / ``rel_speed``.
+        """
+        try:
+            self.rtstart = self.wallclock()
+            self.rtset(rel_speed)
+
+            while self._timestamps and not self._stop:
+                next_event_time = self.peek()
+                if next_event_time > until: break
+
+                if real_time:
+                    delay = (
+                            next_event_time / self.rel_speed -
+                            (self.wallclock() - self.rtstart)
+                    )
+                    if delay > 0: time.sleep(delay)
+
+                self.step()
+
+            # There are still events in the timestamps list and the simulation
+            # has not been manually stopped. This means we have reached the stop
+            # time.
+            if not self._stop and self._timestamps:
+                self._t = until
+                return 'SimPy: Normal exit'
+            else:
+                return 'SimPy: No activities scheduled'
+        except Simerror, error:
+            return 'SimPy: ' + error.value
+        finally:
+            self._stop = True
+
+
 
 # For backward compatibility
 Globals.sim = SimulationRT()

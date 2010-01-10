@@ -305,189 +305,36 @@ if __TESTING:
 _step = False
 
 class SimulationStep(Simulation):
-
     def __init__(self):
         Simulation.__init__(self)
         self._step = False
-        
+
     def initialize(self):
         Simulation.initialize(self)
         self._step = False
- 
+
     def startStepping(self):
         """Application function to start stepping through simulation."""
         self._step = True
-    
+
     def stopStepping(self):
         """Application function to stop stepping through simulation."""
         self._step = False
-        
-    def simulate(self, callback = lambda :None, until = 0):
-        """Schedules Processes / semi - coroutines until time 'until'"""
-        
-        """Gets called once. Afterwards, co - routines (generators) return by 
-        'yield' with a cargo:
-        yield hold, self, <delay>: schedules the 'self' process for activation 
-                                   after < delay > time units.If <,delay > missing,
-                                   same as 'yield hold, self, 0'
-                                   
-        yield passivate, self    :  makes the 'self' process wait to be re - activated
-    
-        yield request, self,<Resource > [,<priority>]: request 1 unit from < Resource>
-            with < priority > pos integer (default = 0)
-    
-        yield release, self,<Resource> : release 1 unit to < Resource>
-    
-        yield waitevent, self,<SimEvent>|[<Evt1>,<Evt2>,<Evt3), . . . ]:
-            wait for one or more of several events
-            
-    
-        yield queueevent, self,<SimEvent>|[<Evt1>,<Evt2>,<Evt3), . . . ]:
-            queue for one or more of several events
-    
-        yield waituntil, self, cond : wait for arbitrary condition
-    
-        yield get, self,<buffer > [,<WhatToGet > [,<priority>]]
-            get < WhatToGet > items from buffer (default = 1); 
-            <WhatToGet > can be a pos integer or a filter function
-            (Store only)
-            
-        yield put, self,<buffer > [,<WhatToPut > [,priority]]
-            put < WhatToPut > items into buffer (default = 1);
-            <WhatToPut > can be a pos integer (Level) or a list of objects
-            (Store)
-    
-        EXTENSIONS:
-        Request with timeout reneging:
-        yield (request, self,<Resource>),(hold, self,<patience>) :
-            requests 1 unit from < Resource>. If unit not acquired in time period
-            <patience>, self leaves waitQ (reneges).
-    
-        Request with event - based reneging:
-        yield (request, self,<Resource>),(waitevent, self,<eventlist>):
-            requests 1 unit from < Resource>. If one of the events in < eventlist > occurs before unit
-            acquired, self leaves waitQ (reneges).
-            
-        Get with timeout reneging (for Store and Level):
-        yield (get, self,<buffer>,nrToGet etc.),(hold, self,<patience>)
-            requests < nrToGet > items / units from < buffer>. If not acquired < nrToGet > in time period
-            <patience>, self leaves < buffer>.getQ (reneges).
-            
-        Get with event - based reneging (for Store and Level):
-        yield (get, self,<buffer>,nrToGet etc.),(waitevent, self,<eventlist>)
-            requests < nrToGet > items / units from < buffer>. If not acquired < nrToGet > before one of
-            the events in < eventlist > occurs, self leaves < buffer>.getQ (reneges).
-    
-            
-    
-        Event notices get posted in event - list by scheduler after 'yield' or by 
-        'activate' / 'reactivate' functions.
-    
-        Nov 9, 2003: Added capability to step through simulation event by event if
-                     step == True. 'callback' gets called after every event. It can
-                     cancel stepping or end run. API and semantics backwards
-                     compatible with previous versions of simulate().
-        
+
+    def step(self):
+        Simulation.step(self)
+        if self._step: self.callback()
+
+    def simulate(self, callback=lambda: None, until=0):
         """
-        paused = False
-        self._stop = False
-    
-        if self._e is None:
-            raise FatalSimerror('Simulation not initialized')
-        if self._e._isEmpty():
-            message = 'SimPy: No activities scheduled'
-            return message
-            
-        self._endtime = until
-        message = 'SimPy: Normal exit'
-        dispatch={hold:holdfunc, request:requestfunc, release:releasefunc,
-                  passivate:passivatefunc, waitevent:waitevfunc, queueevent:queueevfunc,
-                  waituntil:waituntilfunc, get:getfunc, put:putfunc}
-        commandcodes = dispatch.keys()
-        commandwords={hold:'hold', request:'request', release:'release', passivate:'passivate',
-            waitevent:'waitevent', queueevent:'queueevent', waituntil:'waituntil',
-            get:'get', put:'put'}
-        nextev = self._e._nextev ## just a timesaver
-        while not self._stop and self._t <= self._endtime:
-            try:
-                a = nextev()
-                if not a[0] is None:
-                    ## 'a' is tuple '(<yield command>, <action>)'  
-                    if type(a[0][0]) == tuple:
-                        ##allowing for yield (request, self, res),(waituntil, self, cond)
-                        command = a[0][0][0]
-                    else: 
-                        command = a[0][0]
-                    if __debug__:
-                        if not command in commandcodes:
-                            raise FatalSimerror('Illegal command: yield %s'%command)
-                    dispatch[command](a)     
-            except FatalSimerror, error:
-                print 'SimPy: ' + error.value
-                sys.exit(1)
-            except Simerror, error:
-                message = 'SimPy: ' + error.value
-                self._stop = True
-            if self._step:
-                callback()
-            if self._wustep:
-                self._test()
-        self._stopWUStepping()            
-        self.stopStepping()
-        self._e = None
-        return message
-    
-    def simulateStep(self, callback = lambda :None, until = 0):
-        """Schedules Processes / semi - coroutines until next event
-        
-        Can be called repeatedly.
-        Behaves like 'simulate', but does execute only one event per call.
-                                   
-    
-        
-        """    
-        status = 'resumable'
-    
-        if self._e == None:
-            raise Simerror('Fatal SimPy error: Simulation not initialized')
-        if self._e._isEmpty():
-            message = 'SimPy: No activities scheduled'
-            status = 'notResumable'
-            return message, status
-            
-        self._endtime = until
-        message = 'SimPy: Normal exit' 
-        dispatch={hold:holdfunc, request:requestfunc, release:releasefunc,
-                  passivate:passivatefunc, waitevent:waitevfunc, queueevent:queueevfunc,
-                  waituntil:waituntilfunc, get:getfunc, put:putfunc}
-        commandcodes = dispatch.keys()
-        commandwords={hold:'hold', request:'request', release:'release', passivate:'passivate',
-            waitevent:'waitevent', queueevent:'queueevent', waituntil:'waituntil',
-            get:'get', put:'put'}
-        if not self._stop and self._t <= self._endtime:
-            try:
-                a = self._e._nextev()        
-                if not a[0] == None:
-                    ## 'a' is tuple '(<yield command>, <action>)'  
-                    if type(a[0][0]) == tuple:
-                        ##allowing for yield (request, self, res),(waituntil, self, cond)
-                        command = a[0][0][0]
-                    else: 
-                        command = a[0][0]
-                    if __debug__:
-                        if not command in commandcodes:
-                            raise FatalSimerror('Fatal error: illegal command: yield %s'%command)
-                    dispatch[command](a)         
-            except FatalSimerror, error:
-                print 'SimPy: ' + error.value
-                sys.exit(1)
-            except Simerror, error:
-                message = 'SimPy: ' + error.value
-                self._stop = True
-                status = 'notResumable'
-            if self._step:
-                callback()
-        return message, status
+        Simulates until simulation time reaches ``until``. After processing each
+        event, ``callback`` will be invoked if stepping has been enabled with
+        :meth:`~SimPy.SimulationStep.startStepping`.
+        """
+        self.callback = callback
+        return Simulation.simulate(self, until)
+
+    simulateStep = simulate
 
 # For backward compatibility
 Globals.sim = SimulationStep()

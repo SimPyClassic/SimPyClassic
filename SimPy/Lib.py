@@ -56,7 +56,7 @@ class Process(Lister):
     def cancel(self, victim): 
         """Application function to cancel all event notices for this Process
         instance;(should be all event notices for the _generator_)."""
-        self.sim._e._unpost(whom = victim)
+        self.sim._unpost(whom = victim)
 
     def start(self, pem = None, at = 'undefined', delay = 'undefined', prior = False):
         """Activates PEM of this Process.
@@ -72,10 +72,6 @@ class Process(Lister):
                        ('Fatal SimPy error: no generator function to activate')
         else:
             pass
-        if self.sim._e is None:
-            raise FatalSimerror\
-              ('Fatal SimPy error: simulation is not initialized'\
-                                 '(call initialize() first)')
         if not (type(pem) == types.GeneratorType):
             raise FatalSimerror('Fatal SimPy error: activating function which'+
                            ' is not a generator (contains no \'yield\')')
@@ -91,7 +87,7 @@ class Process(Lister):
             if self._doTracing:
                 self.sim.trace.recordActivate(who = self, when = zeit,
                                                prior = prior)
-            self.sim._e._post(what = self, at = zeit, prior = prior)
+            self.sim._post(what = self, at = zeit, prior = prior)
             
     def _hold(self, a):
         if len(a[0]) == 3:
@@ -102,7 +98,7 @@ class Process(Lister):
         self.interruptLeft = delay
         self._inInterrupt = False
         self.interruptCause = None
-        self.sim._e._post(what = who, at = self.sim._t + delay)
+        self.sim._post(what = who, at = self.sim._t + delay)
 
     def _passivate(self, a):
         a[0][1]._nextTime = None
@@ -254,7 +250,7 @@ class SimEvent(Lister):
         else:
             proc.eventsFired.append(self)
             self.occurred = False
-            self.sim._e._post(proc, at = self.sim._t, prior = 1)
+            self.sim._post(proc, at = self.sim._t, prior = 1)
 
     def _waitOR(self, par):
         """Handles waiting for an OR of events in a tuple / list.
@@ -269,7 +265,7 @@ class SimEvent(Lister):
                 proc.eventsFired.append(ev)
                 ev.occurred = False
         if anyoccur: #at least one event has fired; continue process
-            self.sim._e._post(proc, at = self.sim._t, prior = 1)
+            self.sim._post(proc, at = self.sim._t, prior = 1)
 
         else: #no event in list has fired, enter process in all 'waits' lists
             proc.eventsFired = []
@@ -289,7 +285,7 @@ class SimEvent(Lister):
         else:
             proc.eventsFired.append(self)
             self.occurred = False
-            self.sim._e._post(proc, at = self.sim._t, prior = 1)
+            self.sim._post(proc, at = self.sim._t, prior = 1)
 
     def _queueOR(self, par):
         """Handles queueing for an OR of events in a tuple / list.
@@ -304,7 +300,7 @@ class SimEvent(Lister):
                 proc.eventsFired.append(ev)
                 ev.occurred = False
         if anyoccur: #at least one event has fired; continue process
-            self.sim._e._post(proc, at = self.sim._t, prior = 1)
+            self.sim._post(proc, at = self.sim._t, prior = 1)
 
         else: #no event in list has fired, enter process in all 'waits' lists
             proc.eventsFired = []
@@ -481,7 +477,7 @@ class Resource(Lister):
                 # assign resource unit to preemptor
                 self.activeQ.enter(obj)
                 # post event notice for preempting process
-                self.sim._e._post(obj, at = self.sim._t, prior = 1)
+                self.sim._post(obj, at = self.sim._t, prior = 1)
             else:
                 self.waitQ.enter(obj)
                 # passivate queuing process
@@ -494,7 +490,7 @@ class Resource(Lister):
             else:
                 self.n -= 1
                 self.activeQ.enter(obj)
-                self.sim._e._post(obj, at = self.sim._t, prior = 1)
+                self.sim._post(obj, at = self.sim._t, prior = 1)
 
     def _release(self, arg):
         """Process release request for this resource"""
@@ -525,7 +521,7 @@ class Resource(Lister):
             # else:
             else:
                 self.sim.reactivate(obj, delay = 0, prior = 1)
-        self.sim._e._post(arg[1], at = self.sim._t, prior = 1)
+        self.sim._post(arg[1], at = self.sim._t, prior = 1)
 
 class Buffer(Lister):
     """Abstract class for buffers
@@ -660,10 +656,10 @@ class Level(Buffer):
                     if self.monitored:
                         self.bufferMon.observe(y = self.amount, t = self.sim.now())
                     self.getQ.takeout(proc) # get requestor's record out of queue
-                    whichSim._e._post(proc, at = whichSim._t) # continue a blocked get requestor
+                    whichSim._post(proc, at = whichSim._t) # continue a blocked get requestor
                 else:
                     break
-            whichSim._e._post(obj, at = whichSim._t, prior = 1) # continue the put requestor
+            whichSim._post(obj, at = whichSim._t, prior = 1) # continue the put requestor
 
     def _get(self, arg):
         """Handles get requests for Level instances"""
@@ -694,7 +690,7 @@ class Level(Buffer):
             self.nrBuffered -= nrToGet
             if self.monitored:
                 self.bufferMon.observe(y = self.amount, t = self.sim.now())
-            self.sim._e._post(obj, at = self.sim._t, prior = 1)
+            self.sim._post(obj, at = self.sim._t, prior = 1)
             # reactivate any put requestors for which space is now available
             # service in queue - order; do not serve second in queue before first
             # has been served
@@ -705,7 +701,7 @@ class Level(Buffer):
                     if self.monitored:
                         self.bufferMon.observe(y = self.amount, t = self.sim.now())
                     self.putQ.takeout(proc)#requestor's record out of queue
-                    self.sim._e._post(proc, at = self.sim._t) # continue a blocked put requestor
+                    self.sim._post(proc, at = self.sim._t) # continue a blocked put requestor
                 else:
                     break
 
@@ -806,7 +802,7 @@ class Store(Buffer):
                         if self.monitored:
                             self.bufferMon.observe(
                                     y = self.nrBuffered, t = whichSim._t)
-                        whichSim._e._post(what = proc, at = whichSim._t) # continue a blocked get requestor
+                        whichSim._post(what = proc, at = whichSim._t) # continue a blocked get requestor
                     else:
                         break
                 else: #numerical parameter
@@ -820,11 +816,11 @@ class Store(Buffer):
                                        y = self.nrBuffered, t = whichSim._t)
                         # take this get requestor's record out of queue:
                         self.getQ.takeout(proc) 
-                        whichSim._e._post(what = proc, at = whichSim._t) # continue a blocked get requestor
+                        whichSim._post(what = proc, at = whichSim._t) # continue a blocked get requestor
                     else:
                         break
                     
-            whichSim._e._post(what = obj, at = whichSim._t, prior = 1) # continue the put requestor
+            whichSim._post(what = obj, at = whichSim._t, prior = 1) # continue the put requestor
 
     def _get(self, arg):
         """Handles get requests"""
@@ -862,7 +858,7 @@ class Store(Buffer):
                                                 # buffer to requesting process
                 if self.monitored:
                     self.bufferMon.observe(y = self.nrBuffered, t = whichSim.now())
-                whichSim._e._post(obj, at = whichSim._t, prior = 1)
+                whichSim._post(obj, at = whichSim._t, prior = 1)
                 # reactivate any put requestors for which space is now available
                 # serve in queue order: do not serve second in queue before first
                 # has been served
@@ -877,13 +873,13 @@ class Store(Buffer):
                             self.bufferMon.observe(
                                         y = self.nrBuffered, t = whichSim.now())
                         self.putQ.takeout(proc) # dequeue requestor's record 
-                        whichSim._e._post(proc, at = whichSim._t) # continue a blocked put requestor
+                        whichSim._post(proc, at = whichSim._t) # continue a blocked put requestor
                     else:
                         break
         else: # items to get determined by filtfunc
             movCand = filtfunc(self.theBuffer)
             if movCand: # get succeded
-                whichSim._e._post(obj, at = whichSim._t, prior = 1)
+                whichSim._post(obj, at = whichSim._t, prior = 1)
                 obj.got = movCand[:]
                 for item in movCand:
                     self.theBuffer.remove(item)
@@ -903,7 +899,7 @@ class Store(Buffer):
                             self.bufferMon.observe(
                                         y = self.nrBuffered, t = whichSim.now())
                         self.putQ.takeout(proc) # dequeue requestor's record 
-                        whichSim._e._post(proc, at = whichSim._t) # continue a blocked put requestor
+                        whichSim._post(proc, at = whichSim._t) # continue a blocked put requestor
                     else:
                         break
             else: # get did not succeed, block

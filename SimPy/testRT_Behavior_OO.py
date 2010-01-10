@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 from SimPy.SimulationRT import *
 """testRT_Behavior_OO.py
 Tests SimulationRT for degree to which simulation time

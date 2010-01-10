@@ -158,224 +158,65 @@ if __TESTING:
         print '__debug__ on'
     else:
         print
-        
-class SimulationTrace(Simulation):
 
+def trace_dispatch(trace, command, func):
+    """
+    Returns a wrapper for ``func`` which will record the dispatch in the trace
+    log.
+    """
+    def dispatch(event):
+        func(event)
+        trace.recordEvent(command, event)
+
+    return dispatch
+
+class SimulationTrace(Simulation):
     def __init__(self):
         Simulation.__init__(self)
-        self.trace = Trace(sim=self)
-        
+
+        # Trace method to be called on _post calls.
+        self._post_tracing = None
+
+        # We use our own instance of the command dictionary.
+        self._dispatch = dict(Simulation._dispatch)
+
+        # Now wrap all commands in a tracing call.
+        for command, func in self._dispatch.items():
+            self._dispatch[command] = trace_dispatch(self.trace, command, func)
+
     def initialize(self):
         Simulation.initialize(self)
         self.trace = Trace(sim=self)
-    
-    def activate(self, obj, process, at = 'undefined', delay = 'undefined', prior = False):
-        """Application function to activate passive process."""
-        if self._e is None:
-            raise FatalSimerror\
-                    ('Fatal error: simulation is not initialized (call initialize() first)')
-        if not (type(process) == types.GeneratorType):
-            raise FatalSimerror('Activating function which'+
-                ' is not a generator (contains no \'yield\')')
-        if not obj._terminated and not obj._nextTime:
-            #store generator reference in object; needed for reactivation
-            obj._nextpoint = process
-            if at == 'undefined':
-                at = self._t
-            if delay == 'undefined':
-                zeit = max(self._t, at)
-            else:
-                zeit = max(self._t, self._t + delay)
-            self.trace.recordActivate(who = obj, when = zeit, prior = prior)
-            self._e._post(obj, at = zeit, prior = prior)
-    
-    def reactivate(self, obj, at = 'undefined', delay = 'undefined', prior = False):
-        """Application function to reactivate a process which is active,
-        suspended or passive."""
-        # Object may be active, suspended or passive
-        if not obj._terminated:
-            a = Process('SimPysystem',sim=self)
-            a.cancel(obj)
-            # object now passive
-            if at == 'undefined':
-                at = self._t
-            if delay == 'undefined':
-                zeit = max(self._t, at)
-            else:
-                zeit = max(self._t, self._t + delay)
-            self.trace.recordReactivate(who = obj, when = zeit, prior = prior)
-            self._e._post(obj, at = zeit, prior = prior)
-            
-    def simulate(self, until = 0):
-        """Schedules Processes / semi - coroutines until time 'until'"""
-        
-        """Gets called once. Afterwards, co - routines (generators) return by 
-        'yield' with a cargo:
-        yield hold, self, <delay>: schedules the 'self' process for activation 
-                                after < delay > time units.If <,delay > missing,
-                                same as 'yield hold, self, 0'
-                                
-        yield passivate, self    :  makes the 'self' process wait to be re - activated
-    
-        yield request, self,<Resource > [,<priority>]: request 1 unit from < Resource>
-            with < priority > pos integer (default = 0)
-    
-        yield release, self,<Resource> : release 1 unit to < Resource>
-    
-        yield waitevent, self,<SimEvent>|[<Evt1>,<Evt2>,<Evt3), . . . ]:
-            wait for one or more of several events
-            
-    
-        yield queueevent, self,<SimEvent>|[<Evt1>,<Evt2>,<Evt3), . . . ]:
-            queue for one or more of several events
-    
-        yield waituntil, self, cond : wait for arbitrary condition
-    
-        yield get, self,<buffer > [,<WhatToGet > [,<priority>]]
-            get < WhatToGet > items from buffer (default = 1); 
-            <WhatToGet > can be a pos integer or a filter function
-            (Store only)
-            
-        yield put, self,<buffer > [,<WhatToPut > [,priority]]
-            put < WhatToPut > items into buffer (default = 1);
-            <WhatToPut > can be a pos integer (Level) or a list of objects
-            (Store)
-    
-        EXTENSIONS:
-        Request with timeout reneging:
-        yield (request, self,<Resource>),(hold, self,<patience>) :
-            requests 1 unit from < Resource>. If unit not acquired in time period
-            <patience>, self leaves waitQ (reneges).
-    
-        Request with event - based reneging:
-        yield (request, self,<Resource>),(waitevent, self,<eventlist>):
-            requests 1 unit from < Resource>. If one of the events in < eventlist > occurs before unit
-            acquired, self leaves waitQ (reneges).
-            
-        Get with timeout reneging (for Store and Level):
-        yield (get, self,<buffer>,nrToGet etc.),(hold, self,<patience>)
-            requests < nrToGet > items / units from < buffer>. If not acquired < nrToGet > in time period
-            <patience>, self leaves < buffer>.getQ (reneges).
-            
-        Get with event - based reneging (for Store and Level):
-        yield (get, self,<buffer>,nrToGet etc.),(waitevent, self,<eventlist>)
-            requests < nrToGet > items / units from < buffer>. If not acquired < nrToGet > before one of
-            the events in < eventlist > occurs, self leaves < buffer>.getQ (reneges).
-    
-            
-    
-        Event notices get posted in event - list by scheduler after 'yield' or by 
-        'activate' / 'reactivate' functions.
-        
-        """
-        self._stop = False
-    
-        if self._e is None:
-            raise FatalSimerror('Simulation not initialized')
-        if self._e._isEmpty():
-            message = 'SimPy: No activities scheduled'
-            return message
-        
-        self._endtime = until
-        message = 'SimPy: Normal exit'
-        dispatch={hold:holdfunc, request:requestfunc, release:releasefunc,
-        passivate:passivatefunc, waitevent:waitevfunc, queueevent:queueevfunc,
-        waituntil:waituntilfunc, get:getfunc, put:putfunc}
-        commandcodes = dispatch.keys()
-        commandwords={hold:'hold', request:'request', release:'release', passivate:'passivate',
-        waitevent:'waitevent', queueevent:'queueevent', waituntil:'waituntil',
-        get:'get', put:'put'}
-        nextev = self._e._nextev ## just a timesaver
-        while not self._stop and self._t <= self._endtime:
-            try:
-                a = nextev()
-                if not a[0] is None:
-                    ## 'a' is tuple '(<yield command>, <action>)'  
-                    if type(a[0][0]) == tuple:
-                        ##allowing for yield (request, self, res),(waituntil, self, cond)
-                        command = a[0][0][0]
-                    else: 
-                        command = a[0][0]
-                    if __debug__:
-                        if not command in commandcodes:
-                            raise FatalSimerror('Illegal command: yield %s'%command)
-                    dispatch[command](a)
-                    self.trace.recordEvent(command, a)
-                else:
-                    if not a == (None,): #not at endtime!
-                        self.trace.tterminated(a[1])
-            except FatalSimerror, error:
-                print 'SimPy: ' + error.value
-                sys.exit(1)
-            except Simerror, error:
-                message = 'SimPy: ' + error.value
-                self._stop = True
-            if self._wustep:
-                self._test()
-        self._stopWUStepping()
-        self._e = None
-        if not(self.trace.outfile is sys.stdout):
-            self.trace.outfile.close()
-        return message
 
-def requestfunc(a):
-    """Handles 'yield request, self, res' and 'yield (request, self, res),(<code>,self, par)'.
-    <code > can be 'hold' or 'waitevent'.
-    """
-    if type(a[0][0]) == tuple:
-        ## Compound yield request statement
-        ## first tuple in ((request, self, res),(xx, self, yy))
-        b = a[0][0]
-        ## b[2] == res (the resource requested)
-        ##process the first part of the compound yield statement
-        ##a[1] is the Process instance
-        b[2]._request(arg = (b, a[1]))
-        ##deal with add - on condition to command
-        ##Trigger processes for reneging
-        class _Holder(Process):
-            """Provides timeout process"""
-            def __init__(self,name,sim=None):
-                Process.__init__(self,name=name,sim=sim)
-            def trigger(self, delay):
-                yield hold, self, delay
-                if not proc in b[2].activeQ:
-                    proc.sim.reactivate(proc)
+    def _post(self, what, at, prior=False):
+        if self._post_tracing is not None: self._post_tracing(what, at, prior)
+        Simulation._post(self, what, at, prior)
 
-        class _EventWait(Process):
-            """Provides event waiting process"""
-            def __init__(self,name,sim=None):
-                Process.__init__(self,name=name,sim=sim)
-            def trigger(self, event):
-                yield waitevent, self, event
-                if not proc in b[2].activeQ:
-                    proc.eventsFired = self.eventsFired
-                    proc.sim.reactivate(proc)
+    def activate(
+            self, obj, process, at='undefined', delay='undefined', prior=False):
+        # Activate _post tracing.
+        self._post_tracing = self.trace.recordActivate
+        Simulation.activate(self, obj, process, at, delay, prior)
+        self._post_tracing = None
 
-        #activate it
-        proc = a[0][0][1] # the process to be woken up
-        actCode = a[0][1][0]
-        trace.tstop()
-        if actCode == hold:
-            proc._holder = _Holder(name = 'RENEGE - hold for %s'%proc.name,
-                                   sim=proc.sim)
-            ##                                          the timeout delay
-            proc.sim.activate(proc._holder, proc._holder.trigger(a[0][1][2]))
-        elif actCode == waituntil:
-            raise FatalSimerror('Illegal code for reneging: waituntil')
-        elif actCode == waitevent:
-            proc._holder = _EventWait(name = 'RENEGE - waitevent for %s'\
-                                      %proc.name,sim=proc.sim)
-            ##                                          the event
-            proc.sim.activate(proc._holder, proc._holder.trigger(a[0][1][2]))
-        elif actCode == queueevent:
-            raise FatalSimerror('Illegal code for reneging: queueevent')
-        else:
-            raise FatalSimerror('Illegal code for reneging %s'%actCode)
-        trace.tstart()
-    else:
-        ## Simple yield request command
-        a[0][2]._request(a)
-    
+    def reactivate(
+            self, obj, at='undefined', delay='undefined', prior=False):
+        # Activate _post tracing.
+        self._post_tracing = self.trace.recordReactivate
+        Simulation.reactivate(self, obj, at, delay, prior)
+        self._post_tracing = None
+
+    def _terminate(self, process):
+        self.trace.tterminated(process)
+        Simulation._terminate(self, process)
+
+    def simulate(self, until=0):
+        try:
+            return Simulation.simulate(self, until)
+        finally:
+            if not(self.trace.outfile is sys.stdout):
+                self.trace.outfile.close()
+
 class Trace(Lister):
     commands={hold:'hold', passivate:'passivate', request:'request', release:'release',
               waitevent:'waitevent', queueevent:'queueevent', waituntil:'waituntil',
@@ -1084,4 +925,4 @@ if __name__ == '__main__':
     test_demo()
     test_interrupt()
     testSimEvents()
-    testwaituntil()    
+    testwaituntil()
