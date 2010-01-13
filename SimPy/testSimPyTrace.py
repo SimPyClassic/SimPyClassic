@@ -501,7 +501,7 @@ class makeResourcetestcase(unittest.TestCase):
       assert res.waitMon == [[2, 1], [2, 2], [4, 1], [6, 0]],'Wrong waitMon:%s'%res.waitMon
       assert res.actMon == [[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],'Wrong actMon:%s'%res.actMon
       #print res.actMon
-      assert res.waitMon.timeAverage() == (0 * 2 + 2 * 2 + 1 * 2) / 8.0, 'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage()
+      assert res.waitMon.timeAverage() == (0 * 2 + 2 * 2 + 1 * 2) / 6.0, 'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage()
       
                
 def makeRSuite():
