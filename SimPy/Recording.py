@@ -177,7 +177,7 @@ class Monitor(list):
             tlast = ti
             ylast = yi
         sum += ylast * (t - tlast)
-        T = tlast - self[0][0]
+        T = t - self[0][0]
         if T == 0:
              print 'SimPy: No elapsed time for timeAverage'
              return None
@@ -207,7 +207,7 @@ class Monitor(list):
             ylast = yi
         sm  += ylast * (t - tlast)
         ssq += ylast * ylast * (t - tlast)
-        T = tlast - self[0][0]
+        T = t - self[0][0]
         if T == 0:
              print 'SimPy: No elapsed time for timeVariance'
              return None
