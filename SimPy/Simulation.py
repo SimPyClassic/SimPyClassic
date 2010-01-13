@@ -725,13 +725,21 @@ class Simulation(object):
             tallies = self.allTallies
         if when == 0.0:
             for m in monitors:
+                try:
+                    ylast = m[-1][1]
+                    empty = False
+                except IndexError:
+                    empty = True
                 m.reset()
+                if not empty:
+                    m.observe(t = now(), y = ylast)
             for t in tallies:
                 t.reset()
         else:                
             s = Starter()
             self.activate(s, s.collect(monitors = monitors, tallies = tallies),\
                       at = when, prior = True)
+    
 
     def _waitUntilFunc(self, proc, cond):
         """
