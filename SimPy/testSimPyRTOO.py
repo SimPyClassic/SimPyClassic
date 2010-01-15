@@ -528,7 +528,7 @@ class makeResourcetestcase(unittest.TestCase):
              'Wrong waitMon:%s'%res.waitMon
       assert res.actMon == [[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],\
               'Wrong actMon:%s'%res.actMon
-      self.assertAlmostEqual( res.waitMon.timeAverage(t=s.now()), (0*2+2*2+1*2)/8.0,2,
+      self.assertAlmostEqual( res.waitMon.timeAverage(t=s.now()), (0*2+2*2+1*2)/6.0,2,
              'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage(t=s.now()))
 
 def makeRSuite():
