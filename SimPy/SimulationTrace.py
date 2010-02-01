@@ -244,7 +244,7 @@ class Trace(Lister):
         self._comment = None
 
     def treset(self):
-        Trace.commandsproc={hold:Trace.thold, passivatre:Trace.tpassivate,
+        Trace.commandsproc={hold:Trace.thold, passivate:Trace.tpassivate,
                             request:Trace.trequest, release:Trace.trelease,
                             waitevent:Trace.twaitevent,
                             queueevent:Trace.tqueueevent,
