@@ -1,5 +1,6 @@
 """
-This file contains Process, SimEvent, the resources Resource, Leven and Storage 
+This file contains Simerror, FatalSimerror, Process, SimEvent, 
+the resources Resource, Level and Storage 
 as well as their dependencies Buffer, Queue, FIFO and PriorityQ.
 """
 # $Revision$ $Date$ kgm
@@ -15,6 +16,19 @@ from SimPy.Recording import Monitor, Tally
 # Required for backward compatiblity
 import SimPy.Globals as Globals
 
+class Simerror(Exception):
+    """ SimPy error which terminates "simulate" with an error message"""
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return `self.value`
+
+class FatalSimerror(Simerror):
+    """ SimPy error which terminates script execution with an exception"""
+    def __init__(self, value):
+        Simerror.__init__(self, value)
+        self.value = value
 
 class Process(Lister):
     """Superclass of classes which may use generator functions"""
@@ -90,9 +104,11 @@ class Process(Lister):
             self.sim._post(what = self, at = zeit, prior = prior)
             
     def _hold(self, a):
-        if len(a[0]) == 3:
-            delay = abs(a[0][2])
-        else:
+        if len(a[0]) == 3: ## yield hold,self,delay
+            delay = a[0][2]
+            if delay < 0:
+                raise FatalSimerror('hold: delay time negative: %s'%delay)
+        else:              ## yield hold,self     
             delay = 0
         who = a[1]
         self.interruptLeft = delay
@@ -727,13 +743,15 @@ class Store(Buffer):
             self.name = 'a_store' ## default name
         if type(self.capacity) != type(1) or self.capacity <= 0:
             raise FatalSimerror\
-                ('Store: capacity parameter not a positive integer > 0: %s'\
-                    %self.initialBuffered)
+                ('Store: capacity parameter not a positive integer: %s'\
+                    %self.capacity)
         if type(self.initialBuffered) == type([]):
             if len(self.initialBuffered) > self.capacity:
-                raise FatalSimerror('initialBuffered exceeds capacity')
+                raise FatalSimerror\
+                   ('Store: number initialBuffered exceeds capacity')
             else:
-                self.theBuffer[:] = self.initialBuffered##buffer == list of objects
+                ## buffer receives list of objects
+                self.theBuffer[:] = self.initialBuffered
         elif self.initialBuffered is None: 
             self.theBuffer = []
         else:
