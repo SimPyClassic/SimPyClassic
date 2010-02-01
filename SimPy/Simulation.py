@@ -306,7 +306,8 @@ from heapq import heappush, heappop
 
 from SimPy.Lister import Lister
 from SimPy.Recording import Monitor, Tally
-from SimPy.Lib import Process, SimEvent, PriorityQ, Resource, Level, Store
+from SimPy.Lib import Process, SimEvent, PriorityQ, Resource, Level, \
+                      Store, Simerror, FatalSimerror
 
 # Required for backward compatibility
 import SimPy.Globals as Globals
@@ -334,20 +335,6 @@ queueevent = 6
 waituntil = 7
 get = 8
 put = 9
-
-
-class Simerror(Exception):
-    def __init__(self, value):
-        self.value = value
-
-    def __str__(self):
-        return `self.value`
-
-    
-class FatalSimerror(Simerror):
-    def __init__(self, value):
-        Simerror.__init__(self, value)
-        self.value = value
 
 def scheduler(till = 0):
     """Schedules Processes / semi - coroutines until time 'till'.
@@ -487,7 +474,7 @@ def getfunc(a):
             ##                                          the timeout delay
             a[1].sim.activate(proc._holder, proc._holder.trigger(a[0][1][2]))
         elif actCode == waituntil:
-            raise FatalSimerror('Illegal code for reneging: waituntil')
+            raise FatalSimerror('waituntil: Illegal code for reneging: waituntil')
         elif actCode == waitevent:
             proc._holder = _EventWait(name="RENEGE - waitevent for%s"\
                                       %proc.name,sim=proc.sim)
@@ -853,6 +840,8 @@ class Simulation(object):
                 return 'SimPy: Normal exit'
             else:
                 return 'SimPy: No more events at time %s' % self._t
+        except FatalSimerror, error:
+            raise FatalSimerror, error.value
         except Simerror, error:
             return 'SimPy: ' + error.value
         finally:
