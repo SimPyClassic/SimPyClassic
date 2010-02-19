@@ -140,6 +140,9 @@ END OF LICENSE
                  
     19 Mar 2009: - Repair of wallclock synchronisation algorithm (again)
     
+    10 Jan 2010: - Implemented refactoring proposed by Stefan Scherfke:
+                   * removed duplication of code with Simulation.py
+    
 """
 import time
 
