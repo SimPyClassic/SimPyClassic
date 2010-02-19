@@ -289,6 +289,10 @@ END OF LICENSE
                    Simulation.py instead (Stefan Scherfke)
                  - Moved remaining functions to SimulationStep and added some
                    methods for backward compatibility
+                   
+    10 Jan 2010: - Implemented refactoring proposed by Stefan Scherfke:
+                   * removed duplication of code with Simulation.py
+                 - Removed simulateStep function/method                   
     
 """
 from SimPy.Simulation import *
@@ -334,8 +338,6 @@ class SimulationStep(Simulation):
         self.callback = callback
         return Simulation.simulate(self, until)
 
-    simulateStep = simulate
-
 # For backward compatibility
 Globals.sim = SimulationStep()
 def startStepping():
@@ -347,8 +349,6 @@ def stopStepping():
 def simulate(callback = lambda :None, until = 0):
     return Globals.sim.simulate(callback = callback, until = until)
 
-def simulateStep(callback = lambda :None, until = 0):
-    return Globals.sim.simulateStep(callback = callback, until = until)
 # End backward compatibility
     
 
