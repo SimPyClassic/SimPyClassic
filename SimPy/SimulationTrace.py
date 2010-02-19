@@ -143,6 +143,10 @@ END OF LICENSE
                    Simulation.py instead (Stefan Scherfke)
                  - Moved remaining functions to SimulationTrace and added some
                    methods for backward compatibility
+                   
+    10 Jan 2010: - Implemented refactoring proposed by Stefan Scherfke:
+                   * removed duplication of code with Simulation.py by
+                     introducing method _post_tracing
     
 """
 
