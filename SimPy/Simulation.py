@@ -296,6 +296,15 @@ END OF LICENSE
                  - Process, SimEvent, Queue, FIFO, PriorityQ, Resource, Buffer,
                    Level, Store moved to Resources.py
                  - Renamed __Evlist to Evlist
+                 
+    10 Jan 2010: - Implemented refactoring proposed by Stefan Scherfke:
+                   * class Simulation simplified
+                   * class Evlist removed -- timestamps are an attribute 
+                     of class Simulation now
+                     
+     1 Feb 2010:  - Moved Simerror and FatalSimeror to module Lib
+                  - Changed Simulation.simulate so that a FatalSimerror terminates
+                    a script
     
 """
 
