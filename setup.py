@@ -1,15 +1,22 @@
 #! /usr/bin/env python
 from distutils.core import setup
 setup(
-      version = "2.0.1",
+      version = "2.1.0beta",
       author = "Klaus Muller, Tony Vignaux",
       author_email = "vignaux at user.sourceforge.net;kgmuller at users.sourceforge.net",
-      description="Release 2.0.1 of SimPy simulation package",
+      description = "Release 2.1.0beta of SimPy simulation package",
+      url = "http://SimPy.SourceForge.net",
       long_description=\
 """
-SimPy 2.0.1 is a bug-fix release of SimPy 2.0. It repairs
-a number of errors in SimPy libraries, models and documentation.
-Version 2.0 of SimPy is a major release. It differs
+SimPy 2.1.0 is a minor re-release of SimPy 2.0. It repairs
+a number of errors in SimPy 2.0.1 libraries, models and documentation.
+There has been significant code refactoring in Simulation.py,
+SimulationStep.py, SimulationTrace.py, SimulationRT.py, and Lib.py.
+This resulted in a significant reduction of code to be maintained.
+
+Documentation/tutorials on using the advanced OO API have been added.
+
+Version 2.0 of SimPy was a major release. It differs
 from the predecessor version (1.9.1) as follows:
 
 - Addition of an objected oriented API, while maintaining
@@ -21,7 +28,7 @@ from the predecessor version (1.9.1) as follows:
   and modules which are subclassing class Simulation.
   
 - Totally restructured, significantly smaller code base,
-  getting rid of all code duplication. This makes for
+  getting rid of much code duplication. This makes for
   easier maintenance.
   
 - Structuring and rendering of all documentation with
@@ -63,6 +70,11 @@ community under the GNU LGPL.
       keywords = "simulation, discrete event simulation, process-oriented simulation",
       classifiers = [
           "Programming Language :: Python",
+          "Operating System :: OS Independent",
+
+          "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)",
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Science/Research",
            "Topic :: Scientific/Engineering"
                       ]
       )
