@@ -4,7 +4,7 @@ the resources Resource, Level and Storage
 as well as their dependencies Buffer, Queue, FIFO and PriorityQ.
 """
 # $Revision$ $Date$ kgm
-# SimPy version: 2.0
+# SimPy version: 2.1
 import inspect
 import new
 import sys
