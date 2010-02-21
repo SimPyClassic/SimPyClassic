@@ -1,6 +1,6 @@
 #!/usr / bin / env python
 # $Revision$ $Date$ kgm
-"""SimulationStep 2.0 Supports stepping through SimPy simulation event - by - event.
+"""SimulationStep 2.1 Supports stepping through SimPy simulation event - by - event.
 Based on generators (Python 2.3 and later; not 3.0)
 
 LICENSE:

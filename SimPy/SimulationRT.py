@@ -1,6 +1,6 @@
 #!/usr / bin / env python
 # $Revision$ $Date$ kgm
-"""SimulationRT 2.0 Provides synchronization of real time and SimPy simulation time.
+"""SimulationRT 2.1 Provides synchronization of real time and SimPy simulation time.
 Implements SimPy Processes, resources, and the backbone simulation scheduling
 by coroutine calls. 
 Based on generators (Python 2.3 and later; not 3.0)

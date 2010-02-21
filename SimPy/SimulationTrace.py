@@ -1,6 +1,6 @@
 #!/usr / bin / env python
 # $Revision$ $Date$ kgm
-"""SimulationTrace 2.0 Traces execution of SimPy models.
+"""SimulationTrace 2.1 Traces execution of SimPy models.
 Implements SimPy Processes, Resources, Buffers, and the backbone simulation 
 scheduling by coroutine calls. Provides data collection through classes 
 Monitor and Tally.
