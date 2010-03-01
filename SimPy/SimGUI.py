@@ -264,7 +264,7 @@ class SimGUI(object):
                 except:
                     showerror(title = 'Input error',
                         message = 'Type Error; correct parameter \'%s\' to %s' % (p, tipo))
-            elif this == type('abc'):
+            elif tipo == type('abc'):
                 try:
                     this[p] = self.ent[p].get()
                 except:
