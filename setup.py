@@ -65,13 +65,11 @@ community under the GNU LGPL.
 """,
       license = "GNU LGPL",
       name = "SimPy",
-      url = "simpy.sourceforge.net",
       packages = ["SimPy"],
       keywords = "simulation, discrete event simulation, process-oriented simulation",
       classifiers = [
           "Programming Language :: Python",
           "Operating System :: OS Independent",
-
           "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)",
           "Development Status :: 5 - Production/Stable",
           "Intended Audience :: Science/Research",
