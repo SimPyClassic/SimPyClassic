@@ -345,12 +345,6 @@ waituntil = 7
 get = 8
 put = 9
 
-def scheduler(till = 0):
-    """Schedules Processes / semi - coroutines until time 'till'.
-    Deprecated since version 0.5.
-    """
-    simulate(until = till)
-
 def holdfunc(a):
     a[0][1]._hold(a)
 
@@ -769,17 +763,23 @@ class Simulation(object):
 
     def step(self):
         """
-        Executes the next event in the eventqueue. Returns the time of the
-        following event or ``None`` if there isn't any.
+        Executes the next uncancelled event in the eventqueue. 
         """
 
         # Fetch next process and advance its process execution method.
-        _tnotice, p, proc, cancelled = heappop(self._timestamps)
+        noActiveNotice = True
+        # Get an uncancelled event
+        while noActiveNotice:
+            if self._timestamps:
+                _tnotice, p, proc, cancelled = heappop(self._timestamps)
+                noActiveNotice = cancelled
+            else:
+                raise Simerror('No more events at time %s' % self._t)
 
-        # Abort if the event has been cancelled.
-        if cancelled:
-            return
-            #return self._timestamps[0][0] if self._timestamps else None
+        #~ # Abort if the event has been cancelled.
+        #~ if cancelled:
+            #~ return
+            #~ #return self._timestamps[0][0] if self._timestamps else None
 
         # Advance simulation time.
         proc._rec = None
@@ -841,16 +841,19 @@ class Simulation(object):
             while not self._stop and timestamps and timestamps[0][0] <= until:
                 step()
 
-            # There are still events in the timestamps list and the simulation
-            # has not been manually stopped. This means we have reached the stop
-            # time.
-            if not self._stop and timestamps:
+            if not self._stop and timestamps: 
+                # Timestamps left, simulation not stopped
                 self._t = until
-                return 'SimPy: Normal exit'
-            else:
+                return 'SimPy: Normal exit at time %s' % self._t
+            elif not timestamps: 
+                # No more timestamps
                 return 'SimPy: No more events at time %s' % self._t
+            else: 
+                # Stopped by call of stopSimulation
+                return 'SimPy: Run stopped at time %s' % self._t
         except FatalSimerror, error:
-            raise FatalSimerror, error.value
+                print 'SimPy: ' + error.value
+                sys.exit(1)
         except Simerror, error:
             return 'SimPy: ' + error.value
         finally:
