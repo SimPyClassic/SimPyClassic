@@ -177,7 +177,7 @@ def trace_dispatch(trace, command, func):
 class SimulationTrace(Simulation):
     def __init__(self):
         Simulation.__init__(self)
-
+        self.trace = Trace(sim=self)
         # Trace method to be called on _post calls.
         self._post_tracing = None
 
@@ -190,7 +190,7 @@ class SimulationTrace(Simulation):
 
     def initialize(self):
         Simulation.initialize(self)
-        self.trace = Trace(sim=self)
+
 
     def _post(self, what, at, prior=False):
         if self._post_tracing is not None: self._post_tracing(what, at, prior)
