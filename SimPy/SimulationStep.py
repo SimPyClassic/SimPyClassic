@@ -340,11 +340,16 @@ class SimulationStep(Simulation):
 
 # For backward compatibility
 Globals.sim = SimulationStep()
+
 def startStepping():
     Globals.sim.startStepping()
     
 def stopStepping():
     Globals.sim.stopStepping()
+    
+peek = Globals.sim.peek
+
+step = Globals.sim.step
     
 def simulate(callback = lambda :None, until = 0):
     return Globals.sim.simulate(callback = callback, until = until)
