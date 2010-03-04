@@ -5,7 +5,7 @@ INSTALLATION: SimPy
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
           - Klaus Muller <Muller@users.sourceforge.net>
 
-:SimPy release: 2.0.1
+:SimPy release: 2.1.0
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3+ (but NOT 3.0)
 :Revision: $Revision$
@@ -24,7 +24,7 @@ following steps:
 2. Download and unpack the SimPy archive into a folder (using option
    "Use folder names" in WinZip, "Re-create folders" in Linux Archive
    Manager, or similar option in your unpacker). This will create a
-   "SimPy" folder with all source code and documentation.
+   "SimPy-2.1.0" folder with all source code and documentation.
 
 3. Run "python setup.py install" in that folder. This 
    will install the SimPy programs in a folder on the Python 
