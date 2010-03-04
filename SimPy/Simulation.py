@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 # $Revision$ $Date: 2008-09-10 17:25:13 +0200 (Mi, 10 Sep 2008) 
 """Simulation 2.0 Implements SimPy Processes, Resources, Buffers, and the backbone simulation
 scheduling by coroutine calls. Provides data collection through classes 
@@ -344,6 +345,9 @@ queueevent = 6
 waituntil = 7
 get = 8
 put = 9
+
+# good enough infinity
+infinity = float('1000000000000000000000000000000000')
 
 def holdfunc(a):
     a[0][1]._hold(a)
@@ -752,14 +756,22 @@ class Simulation(object):
         process._terminated = True
         process._nextTime = None
 
-    def is_active(self):
+    def has_events(self):
+        """
+        Checks if there are events which can be processed. Returns ``True`` if
+        there are events and the simulation has not been stopped.
+        """
         return not self._stop and self._timestamps
 
     def peek(self):
+        """
+        Returns the time of the next event or infinity, if no
+        more events are scheduled.
+        """
         if not self._timestamps:
-            raise FatalSimerror('No more events')
-
-        return self._timestamps[0][0]
+            return infinity
+        else:
+            return self._timestamps[0][0]
 
     def step(self):
         """
@@ -774,12 +786,7 @@ class Simulation(object):
                 _tnotice, p, proc, cancelled = heappop(self._timestamps)
                 noActiveNotice = cancelled
             else:
-                raise Simerror('No more events at time %s' % self._t)
-
-        #~ # Abort if the event has been cancelled.
-        #~ if cancelled:
-            #~ return
-            #~ #return self._timestamps[0][0] if self._timestamps else None
+                return None
 
         # Advance simulation time.
         proc._rec = None
@@ -792,7 +799,7 @@ class Simulation(object):
             # Process the command function which has been yielded by the
             # process.
             if type(resultTuple[0]) == tuple:
-                # allowing for:
+                # allowing for reneges, e.g.:
                 # >>> yield (request, self, res),(waituntil, self, cond)
                 command = resultTuple[0][0]
             else:
@@ -823,11 +830,15 @@ class Simulation(object):
 
         # Return time of the next scheduled event.
         #return self._timestamps[0][0] if self._timestamps else None
+        if self._timestamps:
+            return self._timestamps[0][0]
+        else:
+            return None
 
     def simulate(self, until=0):
         """
         Start the simulation and run its loop until the timeout ``until`` is
-        reached.
+        reached, stopSimulation is called, or no more events are scheduled.
         """
         try:
             if not self._timestamps:
@@ -861,6 +872,10 @@ class Simulation(object):
 
 # For backward compatibility
 Globals.sim = Simulation()
+
+peek = Globals.sim.peek
+
+step = Globals.sim.step 
 # End backward compatibility
 
 if __name__ == '__main__':
