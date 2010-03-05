@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 This file contains Simerror, FatalSimerror, Process, SimEvent, 
 the resources Resource, Level and Storage 

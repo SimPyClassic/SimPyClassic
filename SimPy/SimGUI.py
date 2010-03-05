@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 # $Revision$ $Date$ kgm
 """SimGUI 2.0  Provides a Tk / Tkinter - based framework for SimPy simulation
 models.

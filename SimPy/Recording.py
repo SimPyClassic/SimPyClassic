@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 This file contains the classes for recording simulation results, Histogram,
 Monitor and Tally.

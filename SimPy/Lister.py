@@ -1,9 +1,10 @@
 #!/usr / bin / env python
+# coding=utf-8
 # $Revision$ $Date$ kgm
-"""Lister 2.0
+"""Lister 2.1
 Pretty-printer for SimPy class objects
 """
-__version__ = '2.0 $Revision$ $Date$'
+__version__ = '2.1 $Revision$ $Date$'
 
 class Lister(object):
 

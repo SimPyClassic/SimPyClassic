@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 This file provides a global Simulation object and the global simulation methods
 used by SimPy up to version 1.9.1.
