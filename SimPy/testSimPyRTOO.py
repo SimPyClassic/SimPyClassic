@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 from SimPy.SimulationRT  import *
 from SimPy.MonitorTest import *
 import unittest

@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 # $Revision$ $Date$ kgm
 """SimulationTrace 2.1 Traces execution of SimPy models.
 Implements SimPy Processes, Resources, Buffers, and the backbone simulation 

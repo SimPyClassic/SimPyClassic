@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 # $Revision$ $Date$ kgm
 """SimulationStep 2.1 Supports stepping through SimPy simulation event - by - event.
 Based on generators (Python 2.3 and later; not 3.0)
