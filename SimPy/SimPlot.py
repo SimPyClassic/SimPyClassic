@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 # $Revision$ $Date$ kgm
 """ SimPlot 2.0  Provides basic plotting services based on Tk / Tkinter.
 
