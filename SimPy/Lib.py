@@ -108,7 +108,9 @@ class Process(Lister):
         if len(a[0]) == 3: ## yield hold,self,delay
             delay = a[0][2]
             if delay < 0:
-                raise FatalSimerror('hold: delay time negative: %s'%delay)
+                #raise FatalSimerror('hold: delay time negative: %s'%delay)
+                raise FatalSimerror('hold: delay time negative: %s, in %s' % (
+                                     delay, str(a[0][1])))
         else:              ## yield hold,self     
             delay = 0
         who = a[1]
