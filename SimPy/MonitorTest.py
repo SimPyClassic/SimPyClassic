@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 DEVELOPING = False
 if DEVELOPING:
    from Simulation import *
