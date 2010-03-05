@@ -346,8 +346,12 @@ waituntil = 7
 get = 8
 put = 9
 
-# good enough infinity
-infinity = float('1000000000000000000000000000000000')
+
+class Infinity(object):
+    def __cmp__(self, other):
+        return 1
+
+infinity = Infinity()
 
 def holdfunc(a):
     a[0][1]._hold(a)
