@@ -1,4 +1,5 @@
 #!/usr / bin / env python
+# coding=utf-8
 # $Revision$ $Date$
 """
 SimPy a process - based simulation package in Python
@@ -41,4 +42,4 @@ Globals - module providing global Simulation object and the global
 __version__ = '$Revision$ $Date$ kgm'
 """
 
-__SimPyVersion__ = '2.0.1'
+__SimPyVersion__ = '2.1.0'
