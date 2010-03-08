@@ -479,6 +479,8 @@ class Trace(Lister):
 # For backward compatibility
 Globals.sim = SimulationTrace()
 trace = Globals.sim.trace
+step = Globals.sim.step
+peek = Globals.sim.peek
 # End backward compatibility
 
 if __name__ == '__main__':
