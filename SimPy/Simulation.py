@@ -45,7 +45,7 @@ from SimPy.Globals import initialize, simulate, now, stopSimulation, \
 
 
 __TESTING = False
-version = __version__ = '2.0 $Revision$ $Date$'
+version = __version__ = '2.1 $Revision$ $Date$'
 if __TESTING: 
     print 'SimPy.Simulation %s' %__version__,
     if __debug__:
