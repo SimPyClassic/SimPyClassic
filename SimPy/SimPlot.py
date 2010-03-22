@@ -1,7 +1,7 @@
 #!/usr / bin / env python
 # coding=utf-8
 # $Revision$ $Date$ kgm
-""" SimPlot 2.0  Provides basic plotting services based on Tk / Tkinter.
+""" SimPlot 2.1  Provides basic plotting services based on Tk / Tkinter.
 
 LICENSE:
 Copyright (C) 2002, 2005, 2006, 2007, 2008  Klaus G. Muller, Tony Vignaux
@@ -27,18 +27,8 @@ The idea to use this package came from Prof. Simon Frost
 of U of California, San Diego who also strongly contributed
 to the design and implementation of SimPlot.
 
-
-Change history:
-
-    Nov 2, 2003 :  Combined utils.py (also from Grayson) with plotting package.
-    Nov 11, 2003: Made totally OO
-    Dec 16, 2003: Completion of SimPlot 1.4alpha
-    Feb 2004:       Release with SimPy 1.4
-    Aug 27, 2005: Added tests for empty point sets to plotXXX functions.
-    Sep 15, 2008: Adjusted to SimPy 2.0 changes
-
 """
-__version__ = '2.0 $Revision$ $Date$'
+__version__ = '2.1 $Revision$ $Date$'
 from Tkinter import *
 from Canvas import Line, CanvasText, Rectangle
 from tkMessageBox import *
