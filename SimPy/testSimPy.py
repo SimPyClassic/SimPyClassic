@@ -6,42 +6,16 @@ import unittest
 from random import random
 # $Revision$ $Date$
 """testSimPy.py
-SimPy version 2.0
+SimPy version 2.1
 Unit tests for Simulation.py.
-            
-**Change history**:       
-# 2002 11 15 Added tests for priority queues and preemption
-# 2002 11 22 testing problem in accum
-# 2003 03 30 added tests for SEP001v17 interrupts
-# 2003 04 05 added test for interruptReset
-# 2003 04 08 added tests for process state transitions
-# 2003 04 10 changed to 'self.cancel(victim)' syntax
-# 2003 04 13 removed dummy init assertions
-# 2004 02 28 added test for monitored queues (gav)
-# 2004 05 03 corrected test for monitored queues (gav)
-# 2004 09 17 added tests for waitevent, queueevent, waituntil (new in 1.5)
-# 2005 05 19 added tests for compound yield statements (reneging)
-# 2006 01 15 added tests for Store and Level and the get / put yield statements
-# 2006 02 02 removed histogram plotting suite
-# 2006 05 10 changed test testStatic for Level to test that float type 
-             supported for initialBuffered
-# 2006 05 16 added tests for Store and Level to test basic Producer / Consumer 
-             principles
-# 2006 10 16 added tests for compound get statement (Unmonitored Store / Level)
-# 2006 10 17 added tests for compound put statement (Unmonitored Store / Level)
-# 2007 01 08 added tests for monitoring of Store / Level with compound get / put
-# 2007 01 08 added test for Store with filter function
-# 2007 12 05 added tests for start method (Process)
-# 2008 03 03 added test for nested preempts
 
 #'$Revision$ $Date$ kgm'
 
 """
 
-
 simulationVersion=version
 print "Under test: Simulation.py %s"%simulationVersion
-__version__ = '2.0 $Revision$ $Date$ '
+__version__ = '2.1 $Revision$ $Date$ '
 print 'testSimpy.py %s'%__version__
 ## -------------------------------------------------------------
 ##                    TEST SIMULATION
