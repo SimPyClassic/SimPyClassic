@@ -25,130 +25,6 @@ mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111 - 1307  USA
 END OF LICENSE
-
-
-**Change history:**
-    9 May 03: SimulationTrace module based on SimPy 1.3
-    
-    12 / 5/2003: Changed eventlist handling from dictionary to bisect
-    
-    9 / 6/2003: - Changed eventlist handling from pure dictionary to bisect-
-                sorted 'timestamps' list of keys, resulting in greatly 
-                improved performance for models with large
-                numbers of event notices with differing event times.
-                =========================================================
-                This great change was suggested by Prof. Simon Frost. 
-                Thank you, Simon! This version 1.3 is dedicated to you!
-                =========================================================
-              - Added import of Lister which supports well - structured 
-                printing of all attributes of Process and Resource instances.
-
-    November 03: Brought up to Simulation 1.4alpha
-    
-    13 Dec 2003: Merged in Monitor and Histogram
-
-    27 Feb 2004: Repaired bug in activeQ monitor of class Resource. Now actMon
-                 correctly records departures from activeQ.
-                 
-    19 May 2004: Added erroneously omitted Histogram class.
-    
-    5 Sep 2004: Added SimEvents synchronization constructs
-    
-    17 Sep 2004: Added waituntil synchronization construct
-                     
-    01 Dec 2004: SimPy version 1.5
-                 Changes in this module: Repaired SimEvents bug re proc.eventsFired
-
-    12 Jan 2005: SimPy version 1.5.1
-                 Changes in this module: Monitor objects now have a default name
-                                         'a_Monitor'
-                                         
-    29 Mar 2005: Start SimPy 1.6: compound 'yield request' statements
-    
-    05 Jun 2005: Fixed bug in _request method -- waitMon did not work properly in
-                 preemption case
-                 
-    09 Jun 2005: Added test in 'activate' to see whether 'initialize()' was called first.
-    
-    23 Aug 2005: - Added Tally data collection class
-                 - Adjusted Resource to work with Tally
-                 - Redid function allEventNotices() (returns prettyprinted string with event
-                   times and names of process instances
-                 - Added function allEventTimes (returns event times of all scheduled events)
-                 
-    16 Mar 2006: - Added Store and Level classes
-                 - Added 'yield get' and 'yield put'
-                 
-    10 May 2006: - Repaired bug in Store._get method
-                 - Repaired Level to allow initialBuffered have float value
-                 - Added type test for Level get parameter 'nrToGet'
-                 
-    06 Jun 2006: - To improve pretty - printed output of 'Level' objects, changed attribute
-                   _nrBuffered to nrBuffered (synonym for amount property)
-                 - To improve pretty - printed output of 'Store' objects, added attribute
-                   buffered (which refers to _theBuffer)
-                   
-    25 Aug 2006: - Start of version 1.8
-                 - made 'version' public
-                 - corrected condQ initialization bug
-                 
-    30 Sep 2006: - Introduced checks to ensure capacity of a Buffer > 0
-                 - Removed from __future__ import (so Python 2.3 or later needed)
-                
-    15 Oct 2006: - Added code to register all Monitors and all Tallies in variables
-                   'allMonitors' and 'allTallies'
-                 - Added function 'startCollection' to activate Monitors and Tallies at a
-                   specified time (e.g. after warmup period)
-                 - Moved all test / demo programs to after 'if __name__ == '__main__':'.
-                
-    17 Oct 2006: - Added compound 'put' and 'get' statements for Level and Store.
-    
-    18 Oct 2006: - Repaired bug: self.eventsFired now gets set after an event fires
-                   in a compound yield get / put with a waitevent clause (reneging case).
-                   
-    21 Oct 2006: - Introduced Store 'yield get' with a filter function.
-                
-    22 Oct 2006: - Repaired bug in prettyprinting of Store objects (the buffer 
-                   content==._theBuffer was not shown) by changing ._theBuffer 
-                   to .theBuffer.
-                
-    04 Dec 2006: - Added printHistogram method to Tally and Monitor (generates
-                   table - form histogram)
-                    
-    07 Dec 2006: - Changed the __str__ method of Histogram to print a table 
-                   (like printHistogram).
-    
-    18 Dec 2006: - Added trace printing of Buffers' 'unitName' for yield get and put.
-    
-    09 Jun 2007: - Enabled tracing of 'activate' and 'passivate'.
-                 - Cleaned out all uses of 'object' to prevent name clash.
-    18 Nov 2007: - Start of 1.9 development
-                 - Added 'start' method (alternative to activate) to Process
-                 
-    22 Nov 2007: - Major change to event list handling to speed up larger models:
-                    * Drop dictionary
-                    * Replace bisect by heapq
-                    * Mark cancelled event notices in unpost and skip them in
-                      nextev (great idea of Tony Vignaux))
-                      
-    4 Dec 2007: - Added twVariance calculation for both Monitor and Tally (gav)
-    
-    5 Dec 2007: - Changed name back to timeVariance (gav)
-    
-    1 Mar 2008: - Start of 1.9.1 bugfix release
-                - Delete circular reference in Process instances when event 
-                  notice has been processed (caused much circular garbage)
-                - Added capability for multiple preempts of a process
-                
-    14 Aug 2008: - Removed most classes / methods and imported them from
-                   Simulation.py instead (Stefan Scherfke)
-                 - Moved remaining functions to SimulationTrace and added some
-                   methods for backward compatibility
-                   
-    10 Jan 2010: - Implemented refactoring proposed by Stefan Scherfke:
-                   * removed duplication of code with Simulation.py by
-                     introducing method _post_tracing
-    
 """
 
 from SimPy.Lister import *
@@ -156,7 +32,7 @@ from SimPy.Simulation import *
 
 
 __TESTING = False
-version = __version__ = '2.0 $Revision$ $Date$'
+version = __version__ = '2.1 $Revision$ $Date$'
 if __TESTING: 
     print 'SimPy.SimulationTrace %s' %__version__,
     if __debug__:
