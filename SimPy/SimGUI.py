@@ -1,7 +1,7 @@
 #!/usr / bin / env python
 # coding=utf-8
 # $Revision$ $Date$ kgm
-"""SimGUI 2.0  Provides a Tk / Tkinter - based framework for SimPy simulation
+"""SimGUI 2.1  Provides a Tk / Tkinter - based framework for SimPy simulation
 models.
 
 LICENSE:
@@ -27,18 +27,6 @@ SimGUI uses a Tkinter - based console for conversing with the Python interpreter
 developed by Ka - Ping Yee, <ping@lfw.org>.
 
 
-**Change history:**
-    October through December 2003:
-                   Development of SimGUI, with outstanding support by
-                   Prof. Simon Frost of University of California, San Diego
-                   as co - designer / co - implementor.
-                   Simon also contributed the idea of using Ka - Ping Yee's
-                   Python interpreter console.
-                   
-    December 16, 2003:   Completion of 1.4alpha version (fully compatible with
-                   SimPy 1.4alpha).
-
-    February 2004: Release as part of SimPy 1.4
     
 """
 
