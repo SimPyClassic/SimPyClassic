@@ -262,6 +262,12 @@ class SimEvent(Lister):
         waits for this event.
         """
         proc = par[0][1] #the process issuing the yield waitevent command
+        # test that process and SimEvent belong to same Simulation instance
+        if __debug__:
+            if not (proc.sim == self.sim):
+                raise FatalSimerror,\
+                "yield waitevent: Process %s, SimEvent %s not in "\
+                "same Simulation instance"%(proc.name,self.name) 
         proc.eventsFired = []
         if not self.occurred:
             self.waits.append([proc, [self]])
@@ -279,6 +285,12 @@ class SimEvent(Lister):
         proc.eventsFired = []
         anyoccur = False
         for ev in evlist:
+            # test that process and SimEvent belong to same Simulation instance
+            if __debug__:
+                if not (proc.sim == ev.sim):
+                    raise FatalSimerror,\
+                    "yield waitevent: Process %s, SimEvent %s not in "\
+                    "same Simulation instance"%(proc.name,ev.name) 
             if ev.occurred:
                 anyoccur = True
                 proc.eventsFired.append(ev)
@@ -298,6 +310,12 @@ class SimEvent(Lister):
         """
         proc = par[0][1] #the process issuing the yield queueevent command
         proc.eventsFired = []
+        # test that process and SimEvent belong to same Simulation instance
+        if __debug__:
+            if not (proc.sim == self.sim):
+                raise FatalSimerror,\
+                "yield queueevent: Process %s, SimEvent %s not in "\
+                "same Simulation instance"%(proc.name,self.name) 
         if not self.occurred:
             self.queues.append([proc, [self]])
             proc._nextTime = None #passivate calling process
@@ -314,6 +332,12 @@ class SimEvent(Lister):
         proc.eventsFired = []
         anyoccur = False
         for ev in evlist:
+        # test that process and SimEvent belong to same Simulation instance
+            if __debug__:
+                if not (proc.sim == ev.sim):
+                    raise FatalSimerror,\
+                    "yield queueevent: Process %s, SimEvent %s not in "\
+                    "same Simulation instance"%(proc.name,ev.name) 
             if ev.occurred:
                 anyoccur = True
                 proc.eventsFired.append(ev)
@@ -466,6 +490,12 @@ class Resource(Lister):
     def _request(self, arg):
         """Process request event for this resource"""
         obj = arg[1]
+        # test that process and Resource belong to same Simulation instance
+        if __debug__:
+            if not (obj.sim == self.sim):
+                raise FatalSimerror,\
+                "yield request: Process %s, Resource %s not in "\
+                "same Simulation instance"%(obj.name,self.name)
         if len(arg[0]) == 4:        # yield request, self, resource, priority
             obj._priority[self] = arg[0][3]
         else:                       # yield request, self, resource
@@ -642,6 +672,12 @@ class Level(Buffer):
         """Handles put requests for Level instances"""
         obj = arg[1]
         whichSim=self.sim
+        # test that process and Level belong to same Simulation instance
+        if __debug__:
+            if not (obj.sim == self.sim):
+                raise FatalSimerror,\
+                "yield put: Process %s, Level %s not in "\
+                "same Simulation instance"%(obj.name,self.name) 
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
             obj._putpriority[self] = arg[0][4]
             whatToPut = arg[0][3]
@@ -683,6 +719,12 @@ class Level(Buffer):
     def _get(self, arg):
         """Handles get requests for Level instances"""
         obj = arg[1]
+        # test that process and Store belong to same Simulation instance
+        if __debug__:
+            if not (obj.sim == self.sim):
+                raise FatalSimerror,\
+                "yield put: Process %s, Level %s not in "\
+                "same Simulation instance"%(obj.name,self.name) 
         obj.got = None
         if len(arg[0]) == 5:        # yield get, self, buff, whattoget, priority
             obj._getpriority[self] = arg[0][4]
@@ -785,6 +827,12 @@ class Store(Buffer):
     def _put(self, arg):
         """Handles put requests for Store instances"""
         obj = arg[1]
+        # test that process and Store belong to same Simulation instance
+        if __debug__:
+            if not (obj.sim == self.sim):
+                raise FatalSimerror,\
+                "yield put: Process %s, Store %s not in "\
+                "same Simulation instance"%(obj.name,self.name)       
         whichSim=self.sim
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
             obj._putpriority[self] = arg[0][4]
@@ -847,6 +895,12 @@ class Store(Buffer):
         """Handles get requests"""
         filtfunc = None
         obj = arg[1]
+        # test that process and Store belong to same Simulation instance
+        if __debug__:
+            if not (obj.sim == self.sim):
+                raise FatalSimerror,\
+                "yield get: Process %s, Store %s not in "\
+                "same Simulation instance"%(obj.name,self.name) 
         whichSim=obj.sim
         obj.got = []                  # the list of items retrieved by 'get'
         if len(arg[0]) == 5:        # yield get, self, buff, whattoget, priority
