@@ -75,7 +75,8 @@ def holdfunc(a):
     a[0][1]._hold(a)
 
 def requestfunc(a):
-    """Handles 'yield request, self, res' and 'yield (request, self, res),(<code>,self, par)'.
+    """Handles 'yield request, self, res' and 
+    'yield (request, self, res),(<code>,self, par)'.
     <code > can be 'hold' or 'waitevent'.
     """
     if type(a[0][0]) == tuple:
@@ -393,9 +394,14 @@ class Simulation(object):
     def activate(self, obj, process, at = 'undefined', delay = 'undefined',
                  prior = False):
         """Application function to activate passive process."""
-        if not (type(process) == types.GeneratorType):
-            raise FatalSimerror('Activating function which'+
-                ' is not a generator (contains no \'yield\')')
+        if __debug__:
+            if not (obj.sim == self):
+                raise FatalSimerror\
+                  ("Activate: Process %s not in same "%obj.name+
+                  "Simulation instance as activate")
+            if not (type(process) == types.GeneratorType):
+                raise FatalSimerror('Activating function which'+
+                    ' is not a generator (contains no \'yield\')')
         if not obj._terminated and not obj._nextTime:
             #store generator reference in object; needed for reactivation
             obj._nextpoint = process
@@ -586,7 +592,7 @@ class Simulation(object):
                 return 'SimPy: Run stopped at time %s' % self._t
         except FatalSimerror, error:
                 print 'SimPy: ' + error.value
-                sys.exit(1)
+                raise FatalSimerror, 'SimPy: ' + error.value
         except Simerror, error:
             return 'SimPy: ' + error.value
         finally:
