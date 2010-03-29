@@ -458,7 +458,7 @@ class Simulation(object):
             for t in tallies:
                 t.reset()
         else:                
-            s = Starter()
+            s = Starter(sim = self)
             self.activate(s, s.collect(monitors = monitors, tallies = tallies),\
                       at = when, prior = True)
     
