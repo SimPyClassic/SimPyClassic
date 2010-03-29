@@ -6,11 +6,11 @@ import sys
 import unittest
 from random import random
 # $Revision$ $Date$
+
 """testSimPyStep.py 
 SimPy version 2.1 
 Unit tests for SimulationStep (OO mode).
 
-#'$Revision$ $Date$ kgm'
 
 """
 simulationStepVersion=version
@@ -24,7 +24,7 @@ print 'testSimPyStepOO.py %s'%__version__
 class P(Process):
    """ P class for testing"""
    def __init__(self,name="",T = 0,sim=None):
-        Process.__init__(self,name,sim)
+        Process.__init__(self,name = name,sim = sim)
         self.name=name
         self.T = T
 
@@ -34,8 +34,8 @@ class P(Process):
 class PActions(Process):
    """ PActions class for testing"""
    def __init__(self,name="",T = 0,sim=None):
-        Process.__init__(self,name,sim)
-        self.name=name
+        Process.__init__(self,name = name,sim = sim)
+
         self.T = T
 
    def ACTIONS(self):
@@ -78,7 +78,7 @@ class makeSimulationtestcase(unittest.TestCase):
         result=s.simulate(until=10)
         assert result=="SimPy: No activities scheduled",\
                "There should have been no activities."
-        assert(now()==0),"time not 0"
+        assert(s.now()==0),"time not 0"
 
    def testActivate(self):
         """Test activate()
@@ -193,8 +193,8 @@ def makeSSuite():
 class Job(Process):
    """ Job class for testing"""
    def __init__(self,server=None,name="",sim=None):
-        Process.__init__(self,name,sim)
-        self.name=name
+        Process.__init__(self,name = name,sim = sim)
+
         self.R=server
 
    def execute(self):
@@ -225,16 +225,14 @@ class makeResourcetestcase(unittest.TestCase):
 
    def testrequest(self):
         """Test request"""
-        ## NB this next call should be changed to
-        ## R = Resource() when Simulation is fixed
-        R0 = Resource(name='',capacity=0)
+        ## now test requesting: ------------------------------------
+        s=Simulation()
+        s.initialize()
+        R0 = Resource(name='',capacity=0, sim = s)
         assert R0.name == "", "Not null name"
         assert R0.capacity == 0, "Not capacity 0, it is "+`R0.capacity`
-        ## now test requesting: ------------------------------------
-        s=SimulationStep()
-        s.initialize()
-        R1 = Resource(capacity=0,name="3-version",unitName="blobs")
-        J= Job(name="job",server=R1)
+        R1 = Resource(capacity=0,name="3-version",unitName="blobs", sim = s)
+        J= Job(name="job",server=R1, sim = s)
         s.activate(J,J.execute(), at=0.0) # this requests a unit of R1
         ## when simulation starts
         s.simulate(until=10.0)
@@ -249,8 +247,8 @@ class makeResourcetestcase(unittest.TestCase):
         ## now test requesting: ------------------------------------
         s=SimulationStep()
         s.initialize()
-        R2 = Resource(capacity=1,name="3-version",unitName="blobs")
-        J2= Job(name="job",server=R2)
+        R2 = Resource(capacity=1,name="3-version",unitName="blobs", sim = s)
+        J2= Job(name="job",server=R2, sim = s)
         s.activate(J2,J2.execute(), at=0.0) # requests a unit of R2
         ## when simulation starts
         s.simulate(until = 10.0)
@@ -265,10 +263,10 @@ class makeResourcetestcase(unittest.TestCase):
         ## now test requesting: ------------------------------------
         s=SimulationStep()
         s.initialize()
-        R3 = Resource(capacity=1,name="3-version",unitName="blobs")
-        J2= Job(name="job",server=R3)
-        J3= Job(name="job",server=R3)
-        J4= Job(name="job",server=R3)
+        R3 = Resource(capacity=1,name="3-version",unitName="blobs", sim = s)
+        J2= Job(name="job",server=R3, sim = s)
+        J3= Job(name="job",server=R3, sim = s)
+        J4= Job(name="job",server=R3, sim = s)
         s.activate(J2,J2.execute(), at=0.0) # requests a unit of R3
         s.activate(J3,J3.execute(), at=0.0) # requests a unit of R3
         s.activate(J4,J4.execute(), at=0.0) # requests a unit of R3
@@ -287,10 +285,10 @@ class makeResourcetestcase(unittest.TestCase):
         ## now test requesting: ------------------------------------
         s=SimulationStep()
         s.initialize()
-        R3 = Resource(capacity=2,name="4-version",unitName="blobs")
-        J2= Job(name="job",server=R3)
-        J3= Job(name="job",server=R3)
-        J4= Job(name="job",server=R3)
+        R3 = Resource(capacity=2,name="4-version",unitName="blobs", sim = s)
+        J2= Job(name="job",server=R3, sim = s)
+        J3= Job(name="job",server=R3, sim = s)
+        J4= Job(name="job",server=R3, sim = s)
         s.activate(J2,J2.execute(), at=0.0) # requests a unit of R3
         s.activate(J3,J3.execute(), at=0.0) # requests a unit of R3
         s.activate(J4,J4.execute(), at=0.0) # requests a unit of R3
@@ -311,8 +309,8 @@ class makeResourcetestcase(unittest.TestCase):
         class Job(Process):
            """ Job class for testing"""
            def __init__(self,server=None,name="",sim=None):
-              Process.__init__(self,name,sim)
-              self.name=name
+              Process.__init__(self,name = name,sim = sim)
+
               self.R=server
 
            def execute(self,priority):
@@ -356,8 +354,8 @@ class makeResourcetestcase(unittest.TestCase):
         class Job(Process):
            """ Job class for testing"""
            def __init__(self,server=None,name="",sim=None):
-              Process.__init__(self,name,sim)
-              self.name=name
+              Process.__init__(self, name = name, sim = sim)
+
               self.R=server
 
            def execute(self,priority):
@@ -379,8 +377,8 @@ class makeResourcetestcase(unittest.TestCase):
    def testrequestPriority2(self):
        """Test PriorityQ, with preemption, capacity == 1"""
        class nuJob(Process):
-          def __init__(self,name,sim=None):
-             Process.__init__(self,name,sim)
+          def __init__(self,name = "", sim=None):
+             Process.__init__(self, name = name, sim = sim)
 
           def execute(self,res,priority):
              self.preempt=len(res.activeQ) > 0\
@@ -398,7 +396,7 @@ class makeResourcetestcase(unittest.TestCase):
              else:
                 assert t+60 == t1,\
                         "Wrong completion time for preempted %s %s:"\
-                        %(self.nameself.sim.now())
+                        %(self.name, self.sim.now())
              yield release,self,res
 
        s = SimulationStep()
@@ -415,8 +413,8 @@ class makeResourcetestcase(unittest.TestCase):
        """Test preemption of preemptor"""
        class nuJob(Process):
           seqOut=[]
-          def __init__(self,name,sim=None):
-             Process.__init__(self,name,sim)
+          def __init__(self,name="",sim=None):
+             Process.__init__(self, name = name, sim = sim)
              self.serviceTime=30
 
           def execute(self,res,priority):
@@ -483,8 +481,8 @@ class makeResourcetestcase(unittest.TestCase):
       """ test monitoring of number in the two queues, waitQ and activeQ
       """
       class Job(Process):
-          def __init__(self,name,sim=None):
-             Process.__init__(self,name,sim)
+          def __init__(self,name='',sim=None):
+             Process.__init__(self,name = name,sim = sim)
 
           def execute(self,res):
              yield request,self,res
@@ -776,7 +774,7 @@ class Observer2(Process):
    def look1(self,p1,p2,res):
       assert p1.active(), "p1 not active"
       assert not p1.queuing(res), "p1 queuing"
-      assert p2.active(), "p2 noit active"
+      assert p2.active(), "p2 not active"
       assert not p2.queuing(res), "p2 queuing"
       yield hold,self,2
       assert p1.active(), "p1 not active"
@@ -942,9 +940,9 @@ class WaitProcessOR1(Process):
     def __init__(self,**var):
        Process.__init__(self,**var)
     def signalandwait(self):
-      e1=SimEvent()
+      e1=SimEvent(sim = self.sim)
       e1.signal()
-      e2=SimEvent()
+      e2=SimEvent(sim = self.sim)
       e2.signal()
       yield waitevent,self,[e1,e2]
       assert self.eventsFired==[e1,e2],"eventsFired does not report all events"
@@ -966,9 +964,9 @@ class QueueProcessOR1(Process):
     def __init__(self,**var):
        Process.__init__(self,**var)
     def signalandqueue(self):
-        e1=SimEvent()
+        e1=SimEvent(sim = self.sim)
         e1.signal()
-        e2=SimEvent()
+        e2=SimEvent(sim = self.sim)
         e2.signal()
         yield queueevent,self,[e1,e2]
         assert self.eventsFired==[e1,e2],\
@@ -1011,23 +1009,6 @@ class makeEtestcase(unittest.TestCase):
          s.activate(q,q.queueForSig(ev2))
       s.simulate(until=2)
 
-##   def testSimEvents3(self):
-##      """
-##      Tests waiting, queuing for at least one event out of a list/tuple.
-##      """
-##      initialize()
-##      e1=SimEvent("e1")
-##      e2=SimEvent("e2")
-##      e3=SimEvent("e3")
-##      s=SignalProcessOR()
-##      activate(s,s.makeSignal(e1,e3))
-##      w=WaitProcessOR()
-##      activate(w,w.waitForSig([e1,e2]))
-##      for i in range(5):
-##         q=QueueProcessOR()
-##         activate(q,q.queueForSig([e2,e3]))
-##      simulate(until=10)
-
    def testSimEvents3(self):
       """
       Tests waiting, queuing for at least one event out of a list/tuple.
@@ -1051,7 +1032,7 @@ class makeEtestcase(unittest.TestCase):
       """
       s=SimulationStep()
       s.initialize()
-      w=WaitProcessOR1(sim=s)
+      w=WaitProcessOR1(sim = s)
       s.activate(w,w.signalandwait())
       s.simulate(until=5)
 
@@ -1060,7 +1041,7 @@ class makeEtestcase(unittest.TestCase):
       """
       s=SimulationStep()
       s.initialize()
-      w=QueueProcessOR1(sim=s)
+      w=QueueProcessOR1(sim = s)
       s.activate(w,w.signalandqueue())
       s.simulate(until=5)
 
@@ -1297,7 +1278,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         j2=JobTO(server=res,name="Job_2",sim=s)
         s.activate(j2,j2.execute(timeout=timeout,usetime=usetime))
         s.simulate(until=2*usetime)
-        assert s.now()==timeout,"time %s not == timeout"%now()
+        assert s.now()==timeout,"time %s not == timeout"%s.now()
         assert not j1.gotResource,"Job_1 got resource"
         assert not j2.gotResource,"Job_2 got resource"
         assert not (res.waitQ or res.activeQ),\
@@ -1318,7 +1299,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         j2=JobTO(server=res,name="Job_2",sim=s)
         s.activate(j2,j2.execute(timeout=timeout,usetime=usetime))
         s.simulate(until=2*usetime)
-        assert s.now()==timeout,"time %s not == timeout"%now()
+        assert s.now()==timeout,"time %s not == timeout"%s.now()
         assert not j1.gotResource,"Job_1 got resource"
         assert not j2.gotResource,"Job_2 got resource"
         assert not (res.waitQ or res.activeQ),\
@@ -1351,7 +1332,7 @@ class JobEvt(Process):
    """ Job class for testing event reneging
    """
    def __init__(self,server=None,name="",sim=None):
-        Process.__init__(self,name,sim=sim)
+        Process.__init__(self,name = name, sim = sim)
         self.res=server
         self.gotResource=None
 
@@ -1368,7 +1349,7 @@ class JobEvtMulti(Process):
    """ Job class for testing event reneging with multi-event lists
    """
    def __init__(self,server=None,name="",sim=None):
-        Process.__init__(self,name,sim=sim)
+        Process.__init__(self,name = name, sim=sim)
         self.res=server
         self.gotResource=None
 
@@ -1479,7 +1460,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         s.activate(f,f.fire(fireDelay=eventtime,event=event))
         s.simulate(until=2*usetime)
         # Job_1 should get server, Job_2 renege
-        assert(s.now()==usetime),"time not ==usetime"
+        assert(s.now()==usetime),"time not == usetime"
         assert(j1.gotResource),"Job_1 did not get resource"
         assert(not j2.gotResource),"Job_2 did not renege"
         assert not (res.waitQ or res.activeQ),\
@@ -2038,8 +2019,8 @@ class makeStoreTestcase(unittest.TestCase):
         s.initialize()
         ItClass=FilterConsumer.Widget
         all=[ItClass(1),ItClass(4),ItClass(6),ItClass(12)]
-        st=Store(initialBuffered=all)
-        fc=FilterConsumer()
+        st=Store(initialBuffered = all, sim = s)
+        fc=FilterConsumer(sim = s)
         minw=2;maxw=10
         s.activate(fc,fc.getItems(store=st,a=minw,b=maxw))
         s.simulate(until=1)

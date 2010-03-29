@@ -1,5 +1,4 @@
 #!/usr / bin / env python
-# coding=utf-8
 from SimPy.SimulationRT  import *
 from SimPy.MonitorTest import *
 import unittest
@@ -2018,8 +2017,8 @@ class makeStoreTestcase(unittest.TestCase):
         s.initialize()
         ItClass=FilterConsumer.Widget
         all=[ItClass(1),ItClass(4),ItClass(6),ItClass(12)]
-        st=Store(initialBuffered=all)
-        fc=FilterConsumer()
+        st=Store(initialBuffered = all, sim = s)
+        fc=FilterConsumer(sim = s)
         minw=2;maxw=10
         s.activate(fc,fc.getItems(store=st,a=minw,b=maxw))
         s.simulate(until=1)
