@@ -21,7 +21,7 @@ Change history:
 2007 12 05 changed name to timeVariance (gav)
 
 """
-__version__ = '2.0 $Revision$ $Date$'
+__version__ = '2.1 $Revision$ $Date$'
 
 ## ------------------------------------------------------------
 class Thing(Process):
