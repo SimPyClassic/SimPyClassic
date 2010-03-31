@@ -319,7 +319,7 @@ class Simulation(object):
         """Post an event notice for process what for time at"""
         # event notices are Process instances
         if at < self._t:
-            raise Simerror('Attempt to schedule event in the past')
+            raise FatalSimerror('Attempt to schedule event in the past')
         what._nextTime = at
         self._sortpr -= 1
         if prior:
@@ -397,8 +397,8 @@ class Simulation(object):
         if __debug__:
             if not (obj.sim == self):
                 raise FatalSimerror\
-                  ("Activate: Process %s not in same "%obj.name+
-                  "Simulation instance as activate")
+                  ("activate: Process %s not in same "%obj.name+
+                  "Simulation instance as activating process %s"%self.name)
             if not (type(process) == types.GeneratorType):
                 raise FatalSimerror('Activating function which'+
                     ' is not a generator (contains no \'yield\')')
