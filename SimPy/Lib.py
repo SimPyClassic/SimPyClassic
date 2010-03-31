@@ -84,11 +84,11 @@ class Process(Lister):
                 pem = self.ACTIONS()
             except AttributeError:
                 raise FatalSimerror\
-                       ('Fatal SimPy error: no generator function to activate')
+                       ('no generator function to activate')
         else:
             pass
         if not (type(pem) == types.GeneratorType):
-            raise FatalSimerror('Fatal SimPy error: activating function which'+
+            raise FatalSimerror('activating function which'+
                            ' is not a generator (contains no \'yield\')')
         if not self._terminated and not self._nextTime: 
             #store generator reference in object; needed for reactivation
@@ -108,7 +108,6 @@ class Process(Lister):
         if len(a[0]) == 3: ## yield hold,self,delay
             delay = a[0][2]
             if delay < 0:
-                #raise FatalSimerror('hold: delay time negative: %s'%delay)
                 raise FatalSimerror('hold: delay time negative: %s, in %s' % (
                                      delay, str(a[0][1])))
         else:              ## yield hold,self     
@@ -266,7 +265,7 @@ class SimEvent(Lister):
         if __debug__:
             if not (proc.sim == self.sim):
                 raise FatalSimerror,\
-                "yield waitevent: Process %s, SimEvent %s not in "\
+                "waitevent: Process %s, SimEvent %s not in "\
                 "same Simulation instance"%(proc.name,self.name) 
         proc.eventsFired = []
         if not self.occurred:
@@ -289,7 +288,7 @@ class SimEvent(Lister):
             if __debug__:
                 if not (proc.sim == ev.sim):
                     raise FatalSimerror,\
-                    "yield waitevent: Process %s, SimEvent %s not in "\
+                    "waitevent: Process %s, SimEvent %s not in "\
                     "same Simulation instance"%(proc.name,ev.name) 
             if ev.occurred:
                 anyoccur = True
@@ -314,7 +313,7 @@ class SimEvent(Lister):
         if __debug__:
             if not (proc.sim == self.sim):
                 raise FatalSimerror,\
-                "yield queueevent: Process %s, SimEvent %s not in "\
+                "queueevent: Process %s, SimEvent %s not in "\
                 "same Simulation instance"%(proc.name,self.name) 
         if not self.occurred:
             self.queues.append([proc, [self]])
@@ -676,7 +675,7 @@ class Level(Buffer):
         if __debug__:
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
-                "yield put: Process %s, Level %s not in "\
+                "put: Process %s, Level %s not in "\
                 "same Simulation instance"%(obj.name,self.name) 
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
             obj._putpriority[self] = arg[0][4]
@@ -723,7 +722,7 @@ class Level(Buffer):
         if __debug__:
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
-                "yield put: Process %s, Level %s not in "\
+                "get: Process %s, Level %s not in "\
                 "same Simulation instance"%(obj.name,self.name) 
         obj.got = None
         if len(arg[0]) == 5:        # yield get, self, buff, whattoget, priority
@@ -831,7 +830,7 @@ class Store(Buffer):
         if __debug__:
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
-                "yield put: Process %s, Store %s not in "\
+                "put: Process %s, Store %s not in "\
                 "same Simulation instance"%(obj.name,self.name)       
         whichSim=self.sim
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
@@ -899,7 +898,7 @@ class Store(Buffer):
         if __debug__:
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
-                "yield get: Process %s, Store %s not in "\
+                "get: Process %s, Store %s not in "\
                 "same Simulation instance"%(obj.name,self.name) 
         whichSim=obj.sim
         obj.got = []                  # the list of items retrieved by 'get'
