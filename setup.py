@@ -8,32 +8,13 @@ setup(
       url = "http://SimPy.SourceForge.net",
       long_description=\
 """
-SimPy 2.1.0 is a minor re-release of SimPy 2.0. It repairs
+SimPy 2.1.0 is a major re-release of SimPy 2.0. It repairs
 a number of errors in SimPy 2.0.1 libraries, models and documentation.
 There has been significant code refactoring in Simulation.py,
 SimulationStep.py, SimulationTrace.py, SimulationRT.py, and Lib.py.
 This resulted in a significant reduction of code to be maintained.
 
 Documentation/tutorials on using the advanced OO API have been added.
-
-Version 2.0 of SimPy was a major release. It differs
-from the predecessor version (1.9.1) as follows:
-
-- Addition of an objected oriented API, while maintaining
-  full backward compatibility. With external packages
-  such as Parallel Python, this allows running SimPy
-  programs in parallel on multiple computers/CPUs/cores.
-  
-  With 2.0, it is simple to add new simulation classes
-  and modules which are subclassing class Simulation.
-  
-- Totally restructured, significantly smaller code base,
-  getting rid of much code duplication. This makes for
-  easier maintenance.
-  
-- Structuring and rendering of all documentation with
-  the Sphinx documentation tool. This results in one
-  easily browseable and searchable document.
 
 SimPy is a process-based discrete-event simulation language
 based on standard Python and released under the GNU LGPL. 
