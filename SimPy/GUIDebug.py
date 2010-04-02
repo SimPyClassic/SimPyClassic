@@ -51,7 +51,7 @@ class GUIController(object):
         #from SimPy.SimulationTrace import _e
 
         tempList=[]
-        tempList[:]=Globals.sim._e.timestamps
+        tempList[:]=Globals.sim._timestamps
         tempList.sort()
                 
         for ev in tempList:
@@ -203,7 +203,7 @@ class EventWindow(GenericWindow):
         self.table.delete(0,self.table.size())
 
         tempList=[]
-        tempList[:]=Globals.sim._e.timestamps
+        tempList[:]=Globals.sim._timestamps
         tempList.sort()
         
         ev = self.guiCtrl.nextEvent
