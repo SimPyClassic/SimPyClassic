@@ -166,7 +166,7 @@ class Trace(Lister):
         try:
             return 'delay: %s'%par[0][2]
         except:
-            return 0
+            return 'delay: 0'
     thold = classmethod(thold)
     
     def trequest(self, par):
@@ -274,19 +274,13 @@ class Trace(Lister):
     def recordEvent(self, command, whole):
         if self.ifTrace(Trace.commands[command] in self.toTrace):
             if not type(whole[0][0]) == tuple:
-                try:
-                    print >> self.outfile, whole[0][1].sim.now(),\
-                             Trace.commands[command],\
-                             ' < ' + whole[0][1].name + ' > ',\
-                             Trace.commandsproc[command](whole)
-                except TypeError:
-                    print 'l.1649: whole[0][1].name', whole[0][1].name,\
-                        Trace.commands[command],Trace.commandsproc[command]
-                Trace.commands[command],Trace.commandsproc[command]
+                print >> self.outfile, whole[0][1].sim.now(),\
+                    Trace.commands[command],\
+                    ' < ' + whole[0][1].name + ' > ',\
+                    Trace.commandsproc[command](whole)
                 if self._comment:
                     print >> self.outfile, '----', self._comment
             else:
-                ##print >> self.outfile, '[WHOLE]', whole, '\n[END WHOLE]'
                 print >> self.outfile, whole[0][0][1].sim.now(),\
                          Trace.commands[command],\
                          ' < ' + whole[0][0][1].name + ' > '+\
