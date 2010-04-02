@@ -1597,13 +1597,13 @@ class makeLevelTestcase(unittest.TestCase):
         initialize()
         buffer = Level(capacity = 7, putQType = PriorityQ, monitored = True)
         for i in range(4):
-            p = Producer(i)
+            p = Producer(str(i))
             pPriority = i
             activate(p, p.producePriority(buffer = buffer, priority = pPriority))
         c = Consumer()
         activate(c, c.consume1(buffer = buffer))
         simulate(until = 100)
-        assert doneList == [0, 3,2, 1],'puts were not done in priority order: %s'\
+        assert doneList == ["0","3","2","1"],'puts were not done in priority order: %s'\
                                     %doneList
                                     
     def testConPriorProdM(self):
@@ -1617,13 +1617,13 @@ class makeLevelTestcase(unittest.TestCase):
         initialize()
         buffer = Level(capacity = 7, getQType = PriorityQ, monitored = True)
         for i in range(4):
-            c = Consumer(i)
+            c = Consumer(str(i))
             cPriority = i
             activate(c, c.consumePriority(buffer = buffer, priority = cPriority))
         p = Producer()
         activate(p, p.produce1(buffer = buffer))
         simulate(until = 100)
-        assert doneList == [3, 2,1, 0],'gets were not done in priority order: %s'\
+        assert doneList == ["3","2","1","0"],'gets were not done in priority order: %s'\
                                     %doneList
 
 def makeLevelSuite():
@@ -1847,13 +1847,13 @@ class makeStoreTestcase(unittest.TestCase):
         initialize()
         buffer = Store(capacity = 7, putQType = PriorityQ, monitored = True)
         for i in range(4):
-            p = ProducerWidget(i)
+            p = ProducerWidget(str(i))
             pPriority = i
             activate(p, p.producePriority(buffer = buffer, priority = pPriority))
         c = ConsumerWidget()
         activate(c, c.consume1(buffer = buffer))
         simulate(until = 100)
-        assert doneList == [0, 3,2, 1],'puts were not done in priority order: %s'\
+        assert doneList == ["0","3","2","1"],'puts were not done in priority order: %s'\
                                     %doneList
                                     
     def testConPriorProdM(self):
