@@ -396,9 +396,9 @@ class Simulation(object):
         """Application function to activate passive process."""
         if __debug__:
             if not (obj.sim == self):
-                raise FatalSimerror\
-                  ("activate: Process %s not in same "%obj.name+
-                  "Simulation instance as activating process %s"%self.name)
+                txt="activate: Process %s not in activating Simulation instance"\
+                    %obj.name
+                raise FatalSimerror(txt)
             if not (type(process) == types.GeneratorType):
                 raise FatalSimerror('Activating function which'+
                     ' is not a generator (contains no \'yield\')')
