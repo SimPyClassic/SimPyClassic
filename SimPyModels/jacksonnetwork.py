@@ -25,6 +25,7 @@
    
 """
 from SimPy.Simulation import *
+##from SimPy.SimulationTrace import *
 import random as ran
 
 ## Model components ------------------------
@@ -43,7 +44,7 @@ def choose2dA(i,P):
     return(j)
 
 class Msg(Process):
-    """a message"""
+    """a message."""
     noInSystem=0
     def execute(self,i):
         """ executing a message """
@@ -67,7 +68,7 @@ class Msg(Process):
         NoInSystem.accum(Msg.noInSystem)
         
     def trace(self,message):
-        if MTRACING: print "%7.4f %3d %10s"%(now(),self.name, message)
+        if MTRACING: print "%7.4f %3s %10s"%(now(),self.name, message)
 
 
 class MsgSource(Process):
@@ -75,10 +76,11 @@ class MsgSource(Process):
      
    def execute(self,rate,maxN):
        self.count=0   # hold number of messages generated
+       self.trace("starting MsgSource")
        while  (self.count < maxN):
            self.count+=1
-           p = Msg(self.count)
-           activate(p,p.execute(i=startNode))
+           p = Msg("Message %d"%(self.count,))
+           activate(p,p.execute(startNode))
            yield hold,self,ran.expovariate(rate)
        self.trace("generator finished with "+`self.count`+" ========")
 
@@ -89,7 +91,7 @@ class MsgSource(Process):
 
 rate = 1.5        ## arrivals per second
 maxNumber = 1000  ## of Messages
-GTRACING = False  ## tracing Messages Source?
+GTRACING = False ## tracing Messages Source?
 
 startNode = 0     ## Messages always enter at node 0
 ran.seed(77777)
@@ -108,7 +110,7 @@ P = [[0,   0.5, 0.5, 0  ], ## transition matrix P_ij
 ## Model/Experiment ------------------------------
 
 initialize()
-g = MsgSource("MsgSource")
+g = MsgSource(name="MsgSource")
 activate(g,g.execute(rate,maxNumber))
 simulate(until=5000.0)
 
