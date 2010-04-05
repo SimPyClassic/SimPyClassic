@@ -41,7 +41,7 @@ class Process(Lister):
         if type(name) == type("m"):
             self.name = name
         else:
-            raise Simerror("Process name parameter '%s' is not a string"%name)
+            raise FatalSimerror("Process name parameter '%s' is not a string"%name)
         self._nextTime = None #next activation time
         self._remainService = 0
         self._preempted = 0
