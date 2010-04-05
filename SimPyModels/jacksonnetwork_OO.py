@@ -77,7 +77,7 @@ class MsgSource(Process):
        self.count=0   # hold number of messages generated
        while  (self.count < maxN):
            self.count+=1
-           p = Msg(self.count,sim=self.sim)
+           p = Msg("Message %d"%(self.count,),sim=self.sim)
            self.sim.activate(p,p.execute(i=startNode))
            yield hold,self,ran.expovariate(rate)
        self.trace("generator finished with "+`self.count`+" ========")
