@@ -55,11 +55,10 @@ if __name__ == "__main__":
         def run(self,evt):
             def gt30():
                 return now()>30
-            if True: 
-                self.cancel(t2)                
-                yield waituntil,self,gt30
-                print "now() is past 30"
-                stopSimulation()
+              
+            yield waituntil,self,gt30
+            print "now() is past 30"
+            stopSimulation()
             
     until = 100
     initialize()
