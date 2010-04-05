@@ -164,8 +164,17 @@ bakery.py, bakery_OO.py
 
 
 bank11Plot.py
-	A Modification of the bank11 simulation with graphical
+	A modification of the bank11 simulation with graphical
 	output. It plots service and waiting times 
+
+Debugging
+--------------
+
+SimpleDebugger.py, SimpleDebugger_OO.py
+         A program which demonstrates how one can step through a 
+         SimPy model interactively, event by event. Can be imported
+         into any model.
+
 
 
 :Created: 2002-December
