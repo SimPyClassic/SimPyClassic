@@ -73,7 +73,7 @@ bakMod = BakeryModel()
 for day in range(nrDays):
     bakery = bakMod.run()
 ## Analysis/output -------------------------
-print 'bakery'
+print 'bakery_OO'
 for cType in ["retail","restaurant"]:
     print "Average wait for %s customers: %4.2f hours"\
     %(cType,(1.0*sum(waits[cType]))/len(waits[cType]))
