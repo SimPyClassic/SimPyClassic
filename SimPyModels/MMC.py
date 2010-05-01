@@ -61,9 +61,9 @@ c = 3           ## number of servers in M/M/c system
 stime = 1.0     ## mean service time
 rate  = 2.0     ## mean arrival rate 
 maxNumber= 1000
-m   =Monitor()  ## monitor for the number of jobs
-mT  =Monitor()  ## monitor for the time in system
-msT =Monitor()  ## monitor for the generated service times
+m   = Monitor()  ## monitor for the number of jobs
+mT  = Monitor()  ## monitor for the time in system
+msT = Monitor()  ## monitor for the generated service times
 
 seed(333555777) ## seed for random numbers
 
@@ -77,6 +77,7 @@ initialize()
 g = Generator('gen')
 activate(g,g.execute(maxNumber=maxNumber,
                      rate=rate, stime=stime))
+m.observe(0) ## number in system is 0 at the start
 simulate(until=3000.0)
 
 

@@ -74,6 +74,7 @@ class MMCmodel(Simulation):
         g = Generator(name='gen',sim=self)
         self.activate(g,g.execute(maxNumber=maxNumber,
                      rate=rate, stime=stime))
+        self.m.observe(0) ## number in system is 0 at the start
         self.simulate(until=3000.0)
 
 ## Experiment ------------------------------
