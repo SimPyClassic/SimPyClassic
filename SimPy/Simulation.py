@@ -357,15 +357,15 @@ class Simulation(object):
         tempList.sort()
         # return only event notices which are not cancelled
         tempList = [[x[0],x[2].name] for x in tempList if not x[3]]
-        tprev=-1
+        tprev = -1
         for t in tempList:
             # if new time, new line
             if t[0] == tprev:
                 # continue line
-                ret += ',%s'%t[1]
+                ret += ', %s'%t[1]
             else:
                 # new time
-                if tprev==-1:
+                if tprev == -1:
                     ret = '%s: %s' % (t[0],t[1])
                 else:
                     ret += '\n%s: %s' % (t[0],t[1])
@@ -380,7 +380,7 @@ class Simulation(object):
         r.sort()
         # return only event times of not cancelled event notices
         r1 = [x[0] for x in r if not x[3]]
-        tprev=-1
+        tprev = -1
         ret = []
         for t in r1:
             if t == tprev:
