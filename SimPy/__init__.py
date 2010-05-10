@@ -2,11 +2,11 @@
 # coding=utf-8
 # $Revision$ $Date$
 """
-SimPy a process - based simulation package in Python
+SimPy, a process - based simulation package in Python
 
 LICENSE:
-Copyright (C) 2002, 2004, 2005, 2006, 2007, 2008, 2009 Klaus G. Muller, Tony Vignaux
-mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
+Copyright (C) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Klaus G. Muller, Tony Vignaux
+mailto: kgmuller at xs4all.nl and Tony.Vignaux at vuw.ac.nz
 
     This library is free software; you can redistribute it and / or
     modify it under the terms of the GNU Lesser General Public
@@ -38,6 +38,7 @@ Lib - module containing SimPy entity classes (Process etc.)
 Recording - module containing SimPy classes for recording results (Monitor, Tally)
 Globals - module providing global Simulation object and the global 
           simulation methods
+stepping - a simple interactive debugger
 
 __version__ = '$Revision$ $Date$ kgm'
 """
