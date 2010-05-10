@@ -34,7 +34,7 @@ Simulation model developers are encouraged to share their
 SimPy modeling techniques with the SimPy community. Please
 post a message to the simpy-Users mailing list,
 
-mailto:simpy-users@lists.sourceforge.net.
+mailto:simpy-users at lists.sourceforge.net.
 
 Subscribe to simpy-users mailing list:
 http://lists.sourceforge.net/lists/listinfo/simpy-users
