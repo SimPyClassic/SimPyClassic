@@ -4,8 +4,8 @@
 """ SimPlot 2.1  Provides basic plotting services based on Tk / Tkinter.
 
 LICENSE:
-Copyright (C) 2002, 2005, 2006, 2007, 2008  Klaus G. Muller, Tony Vignaux
-mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
+Copyright (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010  Klaus G. Muller, Tony Vignaux
+mailto: kgmuller at xs4all.nl and Tony.Vignaux at vuw.ac.nz
 
     This library is free software; you can redistribute it and / or
     modify it under the terms of the GNU Lesser General Public
