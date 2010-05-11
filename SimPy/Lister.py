@@ -4,7 +4,7 @@
 """Lister 2.1
 Pretty-printer for SimPy class objects
 """
-__version__ = '2.1 $Revision$ $Date$'
+__version__ = '2.1.0 $Revision$ $Date$'
 
 class Lister(object):
 
