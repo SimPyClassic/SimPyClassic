@@ -35,7 +35,7 @@ from tkMessageBox import *
 from Canvas import Line, CanvasText, Rectangle
 import tkconsole as tkcons
 
-__version__ = '2.0 $Revision$ $Date$'
+__version__ = '2.1.0 $Revision$ $Date$'
 
 class SimGUI(object):
     def __init__(self, win, title = 'SimGUI', doc = 'No doc string found', consoleHeight = 50):

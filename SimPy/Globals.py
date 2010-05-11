@@ -4,7 +4,7 @@ This file provides a global Simulation object and the global simulation methods
 used by SimPy up to version 1.9.1.
 """
 # $Revision$ $Date$
-# SimPy version: 2.0
+# SimPy version: 2.1.0
 
 global sim
 sim = None

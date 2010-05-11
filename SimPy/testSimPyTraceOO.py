@@ -14,7 +14,7 @@ Unit tests for SimulationTrace (OO mode).
 """
 simulationTraceVersion=version
 print "Under test: SimulationTrace.py %s"%simulationTraceVersion
-__version__ = '2.0 $Revision$ $Date$ '
+__version__ = '2.1.0 $Revision$ $Date$ '
 print 'testSimPyTraceOO.py %s'%__version__
 
 ## -------------------------------------------------------------

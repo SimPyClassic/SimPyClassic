@@ -4,7 +4,7 @@ This file contains the classes for recording simulation results, Histogram,
 Monitor and Tally.
 """
 # $Revision$ $Date$
-# SimPy version: 2.0
+# SimPy version: 2.1.0
 
 # Required for backward compatibility
 import SimPy.Globals as Globals
