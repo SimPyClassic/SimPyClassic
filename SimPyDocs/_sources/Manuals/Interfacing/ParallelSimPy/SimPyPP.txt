@@ -4,10 +4,10 @@ Running SimPy on Multiple Processors with **Parallel Python**
 
 :Authors: - Stefan Scherfke [stefan.scherfke@uni-oldenburg.de]
           - Ontje L |uumlaut| nsdorf
-:SimPy release: |release|
+:SimPy version: 2.1
 :Python version: 2.3 and later (not 3.0)
-:Revision: $Revision: 297 $
-:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $
+:Revision: $Revision: 497 $
+:Date: $Date: 2010-05-11 07:25:08 +0200 (Di, 11 Mai 2010) $
 
 .. |uumlaut| unicode:: U+00FC
    :trim:
@@ -18,7 +18,7 @@ Running SimPy on Multiple Processors with **Parallel Python**
 Introduction
 =============
 
-With SimPy 2.0, you can easily increase the performance of your simulation by using `Parallel
+With SimPy 2.0 and later, you can easily increase the performance of your simulation by using `Parallel
 Python`_ if you have a larger number of independent processors (multiple CPUs or cores). 
 *Parallel Python* can distribute the execution of your SimPy processes to all cores of your
 CPU and even to other computers. You should read the PP documentation for further
@@ -27,7 +27,7 @@ information on how this works.
 .. _`Parallel Python`: http://www.parallelpython.com/
 
 Please, note that *Parallel Python* is not included in the SimPy 2.0 distribution and needs to 
-be `downloaded <http://www.parallelpython.com/>` and installed separately.
+be downloaded <http://www.parallelpython.com/> and installed separately.
 
 Examples
 =============
@@ -36,8 +36,8 @@ Example #1
 -----------------
 
 The files PPExample.txt_ and PPExampleProcess.txt_ contain a small example
-with several car processes. It is important, that processes etc.are not
-defined in the file that starts the PP job server and executes the jobs,
+with several car processes. It is important, that all process etc.are not
+defined in the same file that starts the PP job server and executes the jobs,
 since ``ppserver.submit()`` only takes functions defined in the same file and
 module names to import, but no classes.
 
@@ -109,9 +109,9 @@ Example #2
 Files simulator.txt_ and processes.txt_ contain an example that
 simulates refrigerators in single-thread and in parallel simulation mode.
 
-Class ``Simulator`` simulates a number of fridges and gets the resulting data.
+Class Simulator simulates a number of fridges and gets the resulting data.
 
-Class ``ParallelSimulator`` simulates a number of fridges and gets the resulting data.
+Class ParallelSimulator simulates a number of fridges and gets the resulting data.
 A number of jobs will be created that use all available
 CPU cores or even other computers.
 

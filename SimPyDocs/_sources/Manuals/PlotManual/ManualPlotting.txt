@@ -6,11 +6,11 @@
 
 
 :Authors: Klaus Muller <Muller@users.sourceforge.net>
-:SimPy release: |release|
+:SimPy version: 2.1
 :Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 298 $ 
-:Date: $Date: 2009-03-31 06:46:11 +0200 (Di, 31 Mrz 2009) $ 
+:Revision: $Revision: 499 $ 
+:Date: $Date: 2010-05-11 07:32:23 +0200 (Di, 11 Mai 2010) $ 
 
 
 .. contents:: Contents
@@ -712,6 +712,6 @@ Colours in SimPlot are defined by Tk. The Tk colour model is RGB. The simplest w
 is to use one of the hundreds of Tk-defined literals such as "black", "aquamarine", or even "BlanchedAlmond". 
 See the `Tk colour page`_ for definitions.
 
-.. _`Tk colour page`: ../../_static/Tkcolors.htm
+.. _`Tk colour page`: Tkcolors.htm
 
-$Revision: 298 $ $Date: 2009-03-31 06:46:11 +0200 (Di, 31 Mrz 2009) $
+$Revision: 499 $ $Date: 2010-05-11 07:32:23 +0200 (Di, 11 Mai 2010) $

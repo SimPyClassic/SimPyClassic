@@ -1,4 +1,3 @@
-====================================
 SimPy Tutorials
 ====================================
 
@@ -7,8 +6,25 @@ SimPy Tutorials
    
    Tutorials/TheBank
    Tutorials/TheBank2
-   
-   
+   Tutorials/TheBankOO
+   Tutorials/TheBank2OO
+
+
+Two extensive tutorials by Tony Vignaux on using SimPy are included 
+in the distribution:
+
+* The Bank (`PDF`_) (`HTML`_)
+* The Bank2 (`in PDF`_) (`in HTML`_)
+
+.. _`PDF`: _static/TheBank.pdf
+.. _`HTML`: _static/TheBank.html
+.. _`in PDF`: _static/TheBank2.pdf
+.. _`in HTML`: _static/TheBank2.html
+
+An outstanding tutorial on SimPy by Prof. Norm Matloff (U. of California at Davis)
+can be found on the Web: 
+`A Discrete-Event Simulation Course Based on the SimPy Language <http://heather.cs.ucdavis.edu/~matloff/simcourse.html>`_ .
+
 
 
 

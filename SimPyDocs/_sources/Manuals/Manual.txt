@@ -5,6 +5,7 @@
 .. highlight:: python
    :linenothreshold: 5 
 
+
 =======================================
 Simulation with SimPy - In Depth Manual
 =======================================
@@ -13,10 +14,11 @@ Simulation with SimPy - In Depth Manual
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
           - Klaus Muller <Muller@users.sourceforge.net>
           - Bob Helmbold
-:SimPy release: |release|
+:SimPy version: 2.1
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Date: |today|
+:Revision: $Revision: 488 $
+:Date: $Date: 2010-05-10 10:25:40 +0200 (Mo, 10 Mai 2010) $
 
 
 
@@ -29,20 +31,18 @@ Simulation with SimPy - In Depth Manual
 .. contents:: Contents
    :depth: 2
 
-
-
-  
-This document describes SimPy version 2.0.  Changes from version 1.9.1
-are listed in `Appendix A0`_.
-
+This document describes SimPy version 2.1.0. [#]_ Changes from
+version 2.0.1 are listed in `Appendix A0`_.
 
 .. note:: 
 
    This document does **not** describe the object oriented (OO) API
-   which has been added to SimPy with version 2.0. SimPy 2.0 
+   which has been added to SimPy with release 2.0. SimPy 2.1.0 
    is fully backward compatible with previous versions. The
-   procedural API and the OO API co-exist happily in SimPy 2.0.  
+   procedural API and the OO API co-exist happily in SimPy 2.1.0.  
 
+.. [#] The variable ``version``, imported from ``SimPy.Simulation``,
+       contains the revision number and date of the current version.
 
 Introduction
 -------------------
@@ -69,9 +69,10 @@ will not be used for any other elements in the simulation.
 During the simulation, Process objects may be delayed for fixed or
 random times, queued at resource facilities, and may be interrupted by
 or interact in other ways with other processes and components. For
-example, Automobiles in a model of a gas station may have to queue
-while waiting for a pump to become available . One obtaining a pump it
-takes some time to fill before releasing the pump.
+example, Automobiles, modeled as process objects, may have to queue
+while waiting for a pump to become available in a model of a gas
+station. One obtaining a pump it takes some time to fill before
+releasing the pump.
 
 
 A SimPy script contains the declaration of one or more Process classes
@@ -134,7 +135,6 @@ time-series records. Monitors can preserve complete time-series
 records that may later be used for more advanced post-simulation
 analyses.
 
-
 Before attempting to use SimPy, you should be able to write Python
 code. In particular, you should be able to define and use classes and
 their objects. Python is free and usable on most platforms.  We do not
@@ -142,6 +142,7 @@ expound it here. You can find out more about it and download it from
 the Python_ web-site (http://www.Python.org). SimPy requires *Python*
 2.3 or later.
 
+[Return to Top_ ]
 
 Simulation with SimPy
 -------------------------
@@ -212,14 +213,13 @@ function is called to display the results::
 
   Report()  #  report results when the simulation finishes
   
-
-The object-oriented programmers interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-An object-oriented API interface was added in SimPy 2.0.  It is
+ The advanced object-oriented application programmers interface
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+An alternative, advanced object-oriented API interface was added in SimPy 2.0.  This API is
 described more fully in ``SimPyOO_API``\. It defines a class of
-*Simulation* objects and makes running multiple simulations cleaner
-and easier. It is compatible with the procedural version described in
+*Simulation* objects and makes running multiple simulations and building model libraries
+cleanerand easier. It is compatible with the procedural version described in
 this Manual. Using the object-oriented API, the program fragment listed
 at the end of the previous subsection would look like this::
 
@@ -232,40 +232,39 @@ at the end of the previous subsection would look like this::
 
   Report()  #  report results when the simulation finishes
 
-Further examples of the OO style exist in the *SimPyModels* directory.
+Further examples of the OO style exist in the *SimPyModels* directory 
+and the *Bank Tutorial*. 
 
-
+This Manual does not address the advanced OO API any further. The reader is
+advised to first follow this Manual and continue with the ``SimPyOO_API`` 
+document after having developed a basic understanding of SimPy.
+  
 Alternative SimPy simulation libraries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to *SimPy.Simulation*, SimPy provides four alternative
+In addition to *SimPy.Simulation*, SimPy provides three alternative
 simulation libraries which have the basic ``SimPy.Simulation``
 capabilities, plus additional facilities:
 
-*  *SimPy.SimulationTrace* for program tracing:
+ * *SimPy.SimulationTrace* for program tracing:
    With ``from SimPy.SimulationTrace import *``, any SimPy program automatically
    generates detailed event-by-event tracing output. This makes the library 
    ideal for program development/testing and for teaching SimPy.
 
-*  *SimPy.SimulationRT* for real time synchronization:
+ * *SimPy.SimulationRT* for real time synchronization:
    ``from SimPy.SimulationRT import *`` facilitates synchronizing simulation
    time and real (wall-clock) time. This capability can be used to implement,
    e.g., interactive game applications or to demonstrate a model's execution
    in real time.
 
-*  *SimPy.SimulationStep* for event-stepping through a simulation:
+ * *SimPy.SimulationStep* for event-stepping through a simulation:
    The import ``from SimPy.SimulationStep import *`` provides an API for
    stepping through a simulation event by event. This can assist with 
    debugging models, interacting with them on an event-by-event basis, 
    getting event-by-event output from a model (e.g. for plotting purposes),
    etc.
 
-*  *SimPy.SimulationGUIDebug* for event-stepping through a simulation
-   with a GUI: ``from SimPy.SimulationGUIDebug import *`` provides an
-   API for stepping through a simulation event-by-event, with a GUI
-   for user control. The event list, Process and Resource objects are
-   shown in windows. This is useful for debugging models and for teaching
-   discrete event simulation with SimPy.
+[Return to Top_ ]
 
 .. ==================================================================
 
@@ -368,7 +367,7 @@ Creating a process object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An entity (process object) is created in the usual Python manner by
-calling the Class. Process classes have a single argument, ``name``
+calling the class. Process classes have a single argument, ``name``
 which can be specified if no |init| method is defined. It defaults to
 ``'a_process'``. It can be over-ridden if an |init| method is defined.
 
@@ -379,6 +378,15 @@ For example to create a new ``Message`` object with a name
 
 
 --------
+
+.. note:: When working through this and all other SimPy manuals,
+   the reader is encouraged to type in, run and experiment with 
+   all examples as she goes. No better way of learning exists
+   than **doing**! A suggestion: if you want to see how a SimPy
+   model is being executed, *trace* it by replacing `from SimPy.Simulation 
+   import *` with `fromSimPy.SimulationTrace import *`.
+   Any Python environment is suitable -- an interactive Python session,
+   IDLE, IPython, Scite . . . 
 
 .. _`Example 1`:
 
@@ -2724,7 +2732,7 @@ To define a new Tally object:
 
  - ``name`` is a descriptive name for the tally object (default='``a_Tally``' ).
 
- - ``ylab`` and ``tlab`` are descriptive labels used by the ``SimPy.SimPlot``
+ - ``ylab`` and ``tlab`` are descriptive labels used by the `SimPlot`_
    package when plotting graphs of the recorded data. They
    default to ``'y'`` and ``'t'``, respectively. (If a histogram_ is
    required the method ``setHistogram`` must be called before recording
@@ -2743,7 +2751,7 @@ To define a new Monitor object:
 
  - ``name`` is a descriptive name for the Monitor object (default='``a_Monitor``').
 
- - ``ylab`` and ``tlab`` are descriptive labels used by the ``SimPy.SimPlot``
+ - ``ylab`` and ``tlab`` are descriptive labels used by the `SimPlot`_
    package when plotting graphs of the recorded data. They
    default to ``'y'`` and ``'t'``, respectively. 
    (A histogram_ can be
@@ -2863,7 +2871,7 @@ A ``Histogram`` is a derived class of ``list`` that counts the
 observations that fall into a number of specified ranges, called bins.
 A histogram object can be displayed either by printing it out in text
 form using ``printHistogram`` method or using the ``plotHistogram`` method in the
-``SimPy.SimPlot`` package.
+`SimPlot`_ package.
 
 
 * ``h = Histogram(low=<float>,high=<float>,nbins=<integer>)`` is a
@@ -3016,7 +3024,7 @@ under- and over-count bins)::
       m.observe(y)
 
       # set up and return the completed histogram
-   h = m.histogram(low=0.0, high=20, nbins=30)
+   h = m.histogram(name='exponential',low=0.0, high=20, nbins=30)
 
 ---------
 
@@ -3032,14 +3040,14 @@ under- and over-count bins)::
    * ``r.accum(y [,t])`` records the current value of ``y`` and time ``t``
      (the current time, ``now( )``, if ``t`` is missing). (DO NOT USE)  
 
+[Return to Top_ ]
 
 .. -------------------------------------------------------------------------
 
 Other Links
 -------------------
 
-Several example SimPy models are included with the SimPy code
-distribution in the file ``SimPyModels``.
+Several example `SimPy models`_ are included with the SimPy code distribution.
 
 Klaus Muller and Tony Vignaux, *SimPy: Simulating Systems in Python*,
 O'Reilly ONLamp.com, 2003-Feb-27,  http://www.onlamp.com/pub/a/python/2003/02/27/simpy.html
@@ -3052,13 +3060,13 @@ David Mertz, *Charming Python: SimPy simplifies complex models*, IBM
 Developer Works, Dec 2002,
 http://www-106.ibm.com/developerworks/linux/library/l-simpy.html
 
+[Return to Top_ ]
 
 Acknowledgments
 -------------------
 
-We thank those users who have sent comments to correct or improve this
-text. These include: F. Benichu, Bob Helmbold, M. Matti. We will be
-grateful for further corrections or suggestions.
+We will be grateful for any further corrections or suggestions that
+will improve it.
 
 
 
@@ -3071,20 +3079,39 @@ Appendices
 A0. Changes from the previous  version of SimPy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SimPy 2.0 differs from version 1.9.1 in the following ways:
+SimPy 2.1 differs from version 2.0.1 in the following ways:
 
 **Additions:**
 
-- New (object oriented) API added.
-- Documentation on running SimPy in parallel processes on multiple CPUs, 
-  cores or computerswith Parallel Pythonf
+- A function `step` has been added to the API. When called, it executes 
+  the next scheduled event. (`step` is actually a method of Simulation.)
+- Another new function is `peek`. It returns the time of the next event. 
+  By using `peek` and `step` together, one can easily write e.g. an
+  interactive program to step through a simulation evnt by event.
+  
+- Checks have been added which test whether entities belong to the 
+  same `Simulation` instance.
+  These can prevent obscure errors in using the advanced object oriented
+  API which are caused by the omission of a `sim` parameter..
+  Example:: 
+  
+     s = Simulation()
+     p = AProcess() ## missing 'sim = s'
+     s.activate(p, p.run())
+     
+  Here, `Aprocess` does not belong to the Simulation instance `s`.
+  In SimPy 2.1, this now leads to an informative error message and program termination.
+  To reduce run time, the tests can be switched off after debugging programs
+  by executing Python with the `-O` parameter. Example: `python -O mySimulation.py`
+
 
 **Changes:**
 
-- The documentation is now formattted using the Sphinx documentation generator.
-
-
-
+- Major re-structuring of SimPy code, resulting in much less
+  SimPy code -- great for the maintainers.
+- The `Monitor` and `Tally` methods `timeAverage` and `timeVariance` 
+  now calculate only with the observed timeseries. No value is 
+  assumed for the period prior to the first observation.
 
 A1. SimPy Error Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3130,34 +3157,36 @@ In addition, a SimPy process, *p*,  can be in the following (sub)states:
 A3. SimPlot, The SimPy plotting utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``SimPlot`` provides an easy way to graph the results of simulation runs.
+SimPlot_ provides an easy way to graph the results of simulation runs.
 
-
+.. _`SimPlot`: PlotManual/ManualPlotting.html
 
 
 A4. SimGUI, The SimPy Graphical User Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``SimGUI``  provides a  way for users to interact with a SimPy program,
+SimGUI_  provides a  way for users to interact with a SimPy program,
 changing its parameters and examining the output.
 
+.. _`SimGUI`: GUIManual/SimGUImanual.html
 
 
 
 A5. SimulationTrace, the SimPy tracing utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``SimulationTrace`` has been developed to give users insight into the
+`SimulationTrace`_ has been developed to give users insight into the
 dynamics of the execution of SimPy simulation programs. It can help
 developers with testing and users with explaining SimPy models to themselves
 and others (e.g., for documentation or teaching purposes).
 
+.. _`SimulationTrace`: Tracing.html
 
 
 A6. SimulationStep, the SimPy event stepping utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``SimulationStep`` can assist with debugging models, interacting with them on
+`SimulationStep`_ can assist with debugging models, interacting with them on
 an event-by-event basis, getting event-by-event output from a model (e.g.
 for plotting purposes), etc.
 
@@ -3167,15 +3196,18 @@ It caters for:
    - running a simulation model one event at a time by repeated calls,
    - starting and stopping the event-stepping mode under program control.
 
+.. _`SimulationStep`: SimStepManual.html
 
 A7. SimulationRT, a real-time synchronizing utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``SimulationRT`` allows synchronizing simulation time and real (wall-clock) time.
+`SimulationRT`_ allows synchronizing simulation time and real (wall-clock) time.
 This capability can be used to implement, e.g., interactive game applications or
 to demonstrate a model's execution in real time.
 
+.. _`SimulationRT`: SimRTManual.html
 
+[Return to Top_ ]
 
 .. _glossary:
 
@@ -3196,8 +3228,7 @@ Glossary
 .. |simpylogo| image:: images/sm_SimPy_Logo.png
 .. _`simpydownload`: http://sourceforge.net/projects/simpy/
 
-.. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
-
+.. _`SimPy models`: LISTOFMODELS.html
 
 
 .. _Top: Contents_
@@ -3210,6 +3241,7 @@ Glossary
 .. _Recorders: `Recording Simulation Results`_
 .. _reneging: `Reneging -- leaving a queue before acquiring a resource`_
 .. _interrupted: `Asynchronous interruptions`_
+.. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
 .. _Level: `Levels`_
 .. _Store: `Stores`_
 .. _Resource: `Resources`_
@@ -3224,7 +3256,7 @@ Glossary
     :alt:  SourceForge Logo
 
 .. ----------------------------------------------------------------------------
-.. $Revision: 313 $ $Date: 2009-04-05 01:25:11 +0200 (So, 05 Apr 2009) $
+.. $Revision: 488 $ $Date: 2010-05-10 10:25:40 +0200 (Mo, 10 Mai 2010) $
 .. ----------------------------------------------------------------------------
 
 

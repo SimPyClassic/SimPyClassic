@@ -5,11 +5,11 @@ Simulation with Tracing
 =============================
 
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
-:SimPy release: |release|
+:SimPy version: 2.1
 :Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 297 $
-:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $ 
+:Revision: $Revision: 494 $
+:Date: $Date: 2010-05-11 07:04:16 +0200 (Di, 11 Mai 2010) $ 
 
 
 .. contents:: Contents

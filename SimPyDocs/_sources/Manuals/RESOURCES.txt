@@ -22,7 +22,7 @@ mailto:vignaux at users.sourceforge.net.
 
 
 
-:Date: $Date: 2008-11-03 14:28:44 +0100 (Mo, 03 Nov 2008) $
-:Revision: $Revision: 153 $
+:Date: $Date: 2008-10-31 11:50:11 +0100 (Fr, 31 Okt 2008) $
+:Revision: $Revision: 125 $
 
 

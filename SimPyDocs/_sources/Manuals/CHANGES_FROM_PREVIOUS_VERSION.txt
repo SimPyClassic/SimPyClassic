@@ -1,35 +1,61 @@
 =================================
-Changes from Release 2.0
+Changes from Version 2.0.1
 =================================
 
 
 
 This section addresses the difference between SimPy versions
-2.0 and release 2.0.1 in terms of changes and additions.
+2.1.0 and version 2.0.1 in terms of changes, additions and repairs.
   
-Bug fixes
-==========
 
-- Repaired a number of coding errors in several
-  models in the SimPyModels folder.
-  
-- Repaired SimulationRT.py bug introduced by recoding for the OO API.
 
-- Repaired errors in sample programs in documents:
-
-  * Simulation with SimPy - In Depth Manual
-  * SimPy's Object Oriented API Manual
-  * Simulation With Real Time Synchronization Manual
-  * SimPlot Manual
-  * Publication-quality Plot Production With Matplotlib Manual
-  
 Additions
 ============
 
-- Tests for real time behavior (testRT_Behavior.py and
-  testRT_Behavior_OO.py in folder SimPy).
-  
+- A function `step` has been added to the API. When called, it executes 
+  the next scheduled event. (`step` is actually a method of Simulation.)
+- Another new function is `peek`. It returns the time of the next event. 
+  By using `peek` and `step` together, one can easily write e.g. an
+  interactive program to step through a simulation event by event.
+- A simple interactive debugger ``stepping.py`` has been added. It allows
+  stepping through a simulation, with options to skip to a certain time, 
+  skip to the next event of a given process, or viewing the event list.
+- Versions of the Bank tutorials using the advanced object-oriented
+  API have been added.
+- A new document describes tools for gaining insight into and debugging SimPy
+  models.
 
-:Revision: $Revision: 296 $
-:Date: $Date: 2009-03-30 14:57:22 +0200 (Mo, 30 Mrz 2009) $
+Changes
+===========
+
+- Major re-structuring of SimPy code, resulting in much less
+  SimPy code -- great for the maintainers.
+- Checks have been added which test whether entities belong to the 
+  same `Simulation` instance.
+  These can prevent obscure errors in using the advanced object oriented
+  API which are caused by the omission of a ``sim`` parameter..
+  Example:: 
+  
+     s = Simulation()
+     p = AProcess() ## missing 'sim = s'
+     s.activate(p, p.run())
+     
+  Here, ``Aprocess`` does not belong to the Simulation instance ``s``.
+  In SimPy 2.1.0, this now leads to an informative error message and program termination.
+  To reduce run time, the tests can be switched off after debugging programs
+  by executing Python with the ``-O`` parameter. Example: ``python -O mySimulation.py``
+- The `Monitor` and `Tally` methods `timeAverage` and `timeVariance` 
+  now calculate only with the observed time-series. No value is 
+  assumed for the period prior to the first observation.
+- Changed class `Lister` so that circular references between
+  objects no longer lead to stack overflow and crash.
+  
+Repairs
+=========
+
+- Functions ``allEventNotices`` and ``allEventTimes`` are working again.
+- Error messages for methods in SimPy.Lib work again.
+
+:Revision: $Revision: 493 $
+:Date: $Date: 2010-05-11 07:02:41 +0200 (Di, 11 Mai 2010) $
   

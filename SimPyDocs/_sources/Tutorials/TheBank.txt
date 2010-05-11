@@ -1,9 +1,16 @@
-=============================================================
-The Bank Tutorial Part 1: Examples of SimPy Simulation
-=============================================================
+.. highlight:: python
+   :linenothreshold: 5  
+
+======================================================
+The Bank Tutorial: Examples of Simpy Simulation
+======================================================
+
+:Authors: G A Vignaux
+:Date:  2008 August
 
 .. highlight:: python
    :linenothreshold: 5  
+
 
 .. index::
    Monitors, Tallys, Processes,Resources, Levels, Stores
@@ -18,17 +25,11 @@ active components such as messages, customers, trucks, and planes. It
 has three classes to model facilities where congestion might occur:
 *Resources* for ordinary queues, *Levels* for the supply of quantities
 of material, and *Stores* for collections of individual items. Only
-examples of *Resources* are described here. It also provides
-*Monitors* and *Tallys* to record data like queue lengths and delay
-times and to calculate simple averages.  It uses the standard Python
-random package to generate random numbers.
+examples of *Resources* are described here.
 
-Starting with SimPy 2.0 an object-oriented programmer's interface was
-added to the package. It is quite compatible with the current
-procedural approach which is used in the models described here.
-
-
-.. _`SimPy`: http://simpy.sourceforge.net/
+SimPy also provides *Monitors* and *Tallys* to record data like queue
+lengths and delay times and to calculate simple averages.  It uses the
+standard Python random package to generate random numbers.
 
 
 SimPy can be obtained from: http://sourceforge.net/projects/simpy.
@@ -36,6 +37,7 @@ The examples run with SimPy version 1.5 and later.  This tutorial is
 best read with the SimPy Manual or Cheatsheet at your side for
 reference. 
 
+.. _`SimPy`: http://simpy.sourceforge.net/
 
 
 Before attempting to use SimPy you should be familiar with the Python_
@@ -54,23 +56,23 @@ A  single Customer
 
 In this tutorial we model a simple bank with customers arriving at
 random. We develop the model step-by-step, starting out simply, and
-producing a running program at each stage. The programs we develop are
-available without line numbers and ready to go, in the
-``bankprograms`` directory. Please copy them, run them and improve
-them - and in the tradition of open-source software suggest your
-modifications to the SimPy users list. Object-orented versions of all
-the models are included in the same directory.
+producing a running program at each stage. The programs are available
+without line numbers and ready to go, in the ``bankprograms``
+directory. Please copy them, run them and improve them - and in the
+tradition of open-source software suggest your modifications to the
+SimPy users list.
 
 A simulation should always be developed to answer a specific question;
 in these models we investigate how changing the number of bank servers
-or tellers might affect the waiting time for customers.
+or tellers affects the waiting time for customers.
 
-.. index:: bank 01
+
 
 
 A Customer arriving at a fixed time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
+
+.. index:: bank01 
 
 We first model a single customer who arrives at the bank for a visit,
 looks around at the decor for a time and then leaves.  There is no
@@ -281,8 +283,7 @@ The output is:
 Many Random Customers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. index:: 
-   bank 06
+.. index:: bank06
 
 
 We now extend this model to allow arrivals at random. In simulation this

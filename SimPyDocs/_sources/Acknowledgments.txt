@@ -2,16 +2,15 @@
 Acknowledgments
 =====================================================
 
-SimPy 2.0 has been primarily developed by Stefan Scherfke and 
-Ontje L |uumlaut| nsdorf, starting from SimPy 1.9. Their work has 
-resulted in a most
-elegant combination of an object oriented API with the existing API,
-maintaining full backward compatibility. 
-It has been quite easy to integrate their product into the existing
-SimPy code and documentation environment. 
+SimPy 2.1 is a great refactoring of SimPy 2.0. 
+It has been primarily developed by  
+Ontje L |uumlaut| nsdorf, with key inputs by Stefan Scherfke.
+SimPy now offers much better capabilities for writing debugger code. 
+It is also easier to maintain, as the code base has been significantly
+reduced.
 
-Thanks, guys, for this great job!
-**SimPy 2.0 is dedicated to you!**
+Thanks, guys, for this great job! You have become a major force in SimPy's
+evolution.
 
 .. |uumlaut| unicode:: U+00FC
    :trim:

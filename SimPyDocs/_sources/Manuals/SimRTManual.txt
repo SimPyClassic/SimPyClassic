@@ -4,16 +4,14 @@
  Simulation with Real Time Synchronization 
 ===============================================
 
-.. highlight:: python
-   :linenothreshold: 5  
 
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
           - Tony Vignaux <Vignaux@users.sourceforge.net>
-:SimPy release: |release|
+:SimPy version: 2.1
 :Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3+ (not 3.0)
-:Revision: $Revision: 297 $ 
-:Date: $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $ 
+:Revision: $Revision: 496 $ 
+:Date: $Date: 2010-05-11 07:05:35 +0200 (Di, 11 Mai 2010) $ 
 
 .. contents:: Contents
    :depth: 3
@@ -40,19 +38,62 @@ to demonstrate a model's execution in real time.
 It is identical to Simulation, except for the *simulate* function which takes 
 an additional parameter controlling real-time execution speed. 
 
-Here is an example:
+Here is an example::
 
-.. highlight:: python
-   :linenothreshold: 5 
-
-.. literalinclude:: SimulationRTprograms/RealTimeFireworks.py
+    ## RealTimeFireworks.py
+    from SimPy.SimulationRT  import *
+    from random import *
+    import time
+    class Launcher(Process):
+        def launch(self):
+            while True:
+                print "Launch at %.1f; wallclock: %s"%(now(),time.clock()-startTime)
+                yield hold,self,uniform(1,maxFlightTime)
+		print "Boom!!! Aaaah!! at %.1f; wallclock: %s"%(now(),time.clock()-startTime)
+    def model():
+        initialize()
+        for i in range(nrLaunchers):
+            lau=Launcher()
+            activate(lau,lau.launch())
+        simulate(real_time=True,rel_speed=1,until=20) ##unit sim time = 1 sec clock
+    nrLaunchers=2
+    maxFlightTime=5.0 
+    startTime=time.clock()
+    model()
     
-*rel_speed* is the ratio **simulated time/wallclock time**. *rels_speed=1* sets the synchronization so that 1 simulation time unit
+*rels_speed=1* sets the synchronization so that 1 simulation time unit
 is executed in approximately 1 second of wallclock time.
-Run under Python 2.6 on a Windows Vista-box (2.3 GHz), this output resulted
-over about 17.5 seconds of wallclock time:
+Run under Python 2.2.2 on a Windows XP-box (1.7 GHz), this output resulted
+over about 18 seconds of wallclock time::
 
-.. literalinclude:: SimulationRTprograms/RealTimeFireworks.out
+	Launch at 0.0; wallclock: 0.000195555580376
+	Launch at 0.0; wallclock: 0.00190107960634
+	Boom!!! Aaaah!! at 1.8; wallclock: 1.78082661344
+	Launch at 1.8; wallclock: 1.78274501368
+	Boom!!! Aaaah!! at 2.8; wallclock: 2.84245930698
+	Launch at 2.8; wallclock: 2.84435982785
+	Boom!!! Aaaah!! at 4.1; wallclock: 4.08443978215
+	Launch at 4.1; wallclock: 4.09004328762
+	Boom!!! Aaaah!! at 5.2; wallclock: 5.14561822801
+	Launch at 5.2; wallclock: 5.14878203794
+	Boom!!! Aaaah!! at 7.0; wallclock: 6.99845622838
+	Launch at 7.0; wallclock: 7.00175357483
+	Boom!!! Aaaah!! at 7.4; wallclock: 7.39919794276
+	Launch at 7.4; wallclock: 7.40245282571
+	Boom!!! Aaaah!! at 9.7; wallclock: 9.69250728794
+	Launch at 9.7; wallclock: 9.69912935862
+	Boom!!! Aaaah!! at 10.6; wallclock: 10.5938587167
+	Launch at 10.6; wallclock: 10.6006140445
+	Boom!!! Aaaah!! at 13.8; wallclock: 13.8082362423
+	Launch at 13.8; wallclock: 13.8134877477
+	Boom!!! Aaaah!! at 14.1; wallclock: 14.1385670525
+	Launch at 14.1; wallclock: 14.1438146468
+	Boom!!! Aaaah!! at 16.4; wallclock: 16.411963811
+	Launch at 16.4; wallclock: 16.4172373863
+	Boom!!! Aaaah!! at 17.1; wallclock: 17.1429980626
+	Launch at 17.1; wallclock: 17.1482308506
+	Boom!!! Aaaah!! at 18.1; wallclock: 18.0742063586
+	Launch at 18.1; wallclock: 18.0794469688
 	
 Clearly, the wallclock time does not deviate significantly from the simulation time.
 
@@ -62,15 +103,71 @@ Changing the execution speed during a simulation run
 By calling method *rtset* with a parameter, the ratio simulated time to wallclock time
 can be changed during a run.
 
-Here is an example:
+Here is an example::
 
-.. literalinclude:: SimulationRTprograms/variableTimeRatio.py
+    """variableTimeRatio.py
+    Shows the SimulationRT capability to change the ratio simulation 
+    time to wallclock time during the run of a simulation.
+    """
+    from SimulationRT import *
 
+    class Changer(Process):
+        def change(self,when,rat):
+            global ratio
+            yield hold,self,when
+            rtset(rat)
+            ratio=rat
+    class Series(Process):
+        def tick(self,nrTicks):
+            oldratio=ratio
+            for i in range(nrTicks):
+                tLastSim=now()
+                tLastWallclock=wallclock()
+                yield hold,self,1
+                diffSim=now()-tLastSim
+                diffWall=wallclock()-tLastWallclock
+                print "now(): %s, sim. time elapsed: %s, wall clock elapsed: "\
+                    "%6.3f, sim/wall time ratio: %6.3f"\
+                    %(now(),diffSim,diffWall,diffSim/diffWall)
+                if not ratio==oldratio:
+                    print "At simulation time %s: ratio simulation/wallclock "\
+                        "time now changed to %s"%(now(),ratio)
+                    oldratio=ratio
+    initialize()
+    ticks=15
+    s=Series()
+    activate(s,s.tick(nrTicks=ticks))
+    c=Changer()
+    activate(c,c.change(5,5))
+    c=Changer()
+    activate(c,c.change(10,0.1))
+    ratio=1
+    print "At simulation time %s: set ratio simulation/wallclock time to %s"\
+           %(now(),ratio)
+    simulate(until=100,real_time=True,rel_speed=ratio)
+    
 The program changes the time ratio twice, at simulation times 5 and 10.
     
-When run on a Windows Vista computer under Python 2.6, this results in this output:
+When run on a Windows XP computer under Python 2.3, this results in this output::
 
-.. literalinclude:: SimulationRTprograms/variableTimeRatio.out
+    At simulation time 0: set ratio simulation/wallclock time to 1
+    now(): 1, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+    now(): 2, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+    now(): 3, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+    now(): 4, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+    now(): 5, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+    At simulation time 5: ratio simulation/wallclock time now changed to 5
+    now(): 6, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.021
+    now(): 7, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.020
+    now(): 8, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.020
+    now(): 9, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.020
+    now(): 10, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.019
+    At simulation time 10: ratio simulation/wallclock time now changed to 0.1
+    now(): 11, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+    now(): 12, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+    now(): 13, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+    now(): 14, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
+    now(): 15, sim. time elapsed: 1, wall clock elapsed: 10.001, sim/wall time ratio:  0.100
 
 Limitations
 ============
@@ -141,4 +238,4 @@ Return value:
 	None
 
     
-$Revision: 297 $ $Date: 2009-03-30 15:24:46 +0200 (Mo, 30 Mrz 2009) $ 
+$Revision: 496 $ $Date: 2010-05-11 07:05:35 +0200 (Di, 11 Mai 2010) $ 
