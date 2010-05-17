@@ -459,7 +459,7 @@ class Resource(Lister):
     
     def __init__(self, capacity = 1, name = 'a_resource', unitName = 'units',
                  qType = FIFO, preemptable = 0, monitored = False,
-                 monitorType = Monitor,sim=None):
+                 monitorType = Monitor,sim = None):
         """
         monitorType={Monitor(default) | Tally}
         """
@@ -475,11 +475,11 @@ class Resource(Lister):
         if self.monitored:           # Monitor waitQ, activeQ
             self.actMon = monitorType(name = 'Active Queue Monitor %s'%self.name,
                                  ylab = 'nr in queue', tlab = 'time',
-                                 sim=self.sim)
+                                 sim = self.sim)
             monact = self.actMon
             self.waitMon = monitorType(name = 'Wait Queue Monitor %s'%self.name,
                                  ylab = 'nr in queue', tlab = 'time',
-                                 sim=self.sim)
+                                 sim = self.sim)
             monwait = self.waitMon
         else:
             monwait = None
@@ -488,6 +488,10 @@ class Resource(Lister):
         self.preemptable = preemptable
         self.activeQ = qType(self, monact)
         self.priority_default = 0
+        # Initialize monitors
+        if self.monitored:
+            monact.observe(t = self.sim.now(), y = len(self.activeQ))
+            monwait.observe(t = self.sim.now(), y = len(self.waitQ))        
 
     def _request(self, arg):
         """Process request event for this resource"""
