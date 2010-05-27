@@ -497,12 +497,12 @@ class makeResourcetestcase(unittest.TestCase):
       s.activate(n2,n2.execute(res),at=2)
       s.activate(n3,n3.execute(res),at=2) # 3 arrive at 2
       s.simulate(until=100)
-      assert res.waitMon == [[2, 1], [2, 2], [4, 1], [6, 0]],\
+      assert res.waitMon == [[0, 0],[2, 1], [2, 2], [4, 1], [6, 0]],\
              'Wrong waitMon:%s'%res.waitMon
-      assert res.actMon == [[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],\
+      assert res.actMon == [[0, 0],[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],\
               'Wrong actMon:%s'%res.actMon
-      self.assertAlmostEqual( res.waitMon.timeAverage(t=s.now()), (0*2+2*2+1*2)/6.0,2,
-             'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage(t=s.now()))
+      assert res.waitMon.timeAverage() == (0 * 2 + 2 * 2 + 1 * 2) / float(s.now()), \
+             'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage()
 
 def makeRSuite():
     suite = unittest.TestSuite()
@@ -1189,7 +1189,7 @@ class makeTimeoutTestcase(unittest.TestCase):
             "at least one job failed to get resource"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[usetime,0]],"res.waitMon wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[usetime,0]],"res.waitMon wrong: %s"%res.waitMon
 
     def testTimeout1(self):
         """Test that timeout occurs when resource busy
@@ -1230,7 +1230,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert(not j2.gotResource),"Job_2 did not renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[timeout,0]],"res.waitMon wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[timeout,0]],"res.waitMon wrong: %s"%res.waitMon
 
     def testTimeout_MP(self):
         """Test that timeout occurs when resource busy.
@@ -1259,8 +1259,8 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert(j2.gotResource),"Job_3 did renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[j2_arrival,1],[j3_arrival,2],[usetime+j3_arrival,1],[usetime+j2_arrival+usetime,0]],\
-             "res.waitMon wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[j2_arrival,1],[j3_arrival,2],[usetime+j3_arrival,1],\
+              [usetime+j2_arrival+usetime,0]],"res.waitMon wrong: %s"%res.waitMon
 
     def testTimeout2(self):
         """Test that timeout occurs when resource has no capacity free
@@ -1302,7 +1302,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert not j2.gotResource,"Job_2 got resource"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[0,2],[timeout,1],[timeout,0]],\
+        assert res.waitMon==[[0,0],[0,1],[0,2],[timeout,1],[timeout,0]],\
             "res.waitMon is wrong: %s"%res.waitMon
 
 def makeTOSuite():
@@ -1413,7 +1413,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
             "at least one job failed to get resource"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[usetime,0]],"res.waitMoni is wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[usetime,0]],"res.waitMoni is wrong: %s"%res.waitMon
 
     def testWaitEvent1(self):
         """Test that signalled event leads to renege when resource busy
@@ -1463,7 +1463,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         assert(not j2.gotResource),"Job_2 did not renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
 
     def testWaitEvent2(self):
         """Test that renege-triggering event can be one of an event list
@@ -1519,7 +1519,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         assert(not j2.gotResource),"Job_2 did not renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
 
 def makeEvtRenegeSuite():
     suite = unittest.TestSuite()
