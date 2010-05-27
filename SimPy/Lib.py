@@ -38,7 +38,7 @@ class Process(Lister):
         self.sim = sim
         #the reference to this Process instances single process (==generator)
         self._nextpoint = None
-        if type(name) == type("m"):
+        if isinstance(name, basestring):
             self.name = name
         else:
             raise FatalSimerror("Process name parameter '%s' is not a string"%name)
