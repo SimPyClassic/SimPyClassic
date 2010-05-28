@@ -1,4 +1,4 @@
-#!/usr / bin / env python
+#!/usr/bin/env python
 # coding=utf-8
 from SimPy.MonitorTest import *
 from SimPy.SimulationStep import *
@@ -79,8 +79,8 @@ class makeSimulationtestcase(unittest.TestCase):
    def testActivate(self):
         """Test activate()
         """
-        P1 = P(name = 'P1', T = 100.0)
         initialize()
+        P1 = P(name = 'P1', T = 100.0)
         activate(P1, P1.execute(),0)
         simulate(until = 5)
         assert(now() == 5),'Simulate stopped at %s not %s' % (now(),5)
@@ -88,8 +88,8 @@ class makeSimulationtestcase(unittest.TestCase):
    def testStart(self):
        """Test start method
        """
-       P1 = P(name = 'P1', T = 100.0)
        initialize()
+       P1 = P(name = 'P1', T = 100.0)
        P1.start(P1.execute(),0)
        simulate(until = 5)
        assert(now() == 5),'Simulate stopped at %s not %s' % (now(),5)
@@ -97,8 +97,8 @@ class makeSimulationtestcase(unittest.TestCase):
    def testStartActions(self):
       """Test start method with ACTIONS PEM
       """
-      P1 = PActions(name = 'P1', T = 100.0)
       initialize()
+      P1 = PActions(name = 'P1', T = 100.0)
       P1.start()
       simulate(until = 5)
       assert(now() == 5),'Simulate stopped at %s not %s' % (now(),5)  
@@ -106,8 +106,8 @@ class makeSimulationtestcase(unittest.TestCase):
    def testYield(self):
         """Test yield hold and simulate(until)
         """
-        P1 = P(name = 'P1', T = 10)
         initialize()
+        P1 = P(name = 'P1', T = 10)
         activate(P1, P1.execute(),0)
         simulate(until = 5)
         assert(now() == 5),'Simulate stopped at %s not %s' % (now(),5)
@@ -222,11 +222,11 @@ class makeResourcetestcase(unittest.TestCase):
         """Test request"""
         ## NB this next call should be changed to
         ## R = Resource() when Simulation is fixed
+        initialize()
         R0 = Resource(name = '', capacity = 0)
         assert R0.name == '', 'Not null name'
         assert R0.capacity == 0, 'Not capacity 0, it is ' + 'R0.capacity'
         ## now test requesting: ------------------------------------
-        initialize()
         R1 = Resource(capacity = 0, name = '3 - version', unitName = 'blobs')
         J = Job(name = 'job', server = R1) 
         activate(J, J.execute(), at = 0.0) # this requests a unit of R1
@@ -474,10 +474,11 @@ class makeResourcetestcase(unittest.TestCase):
       activate(n2, n2.execute(res),at = 2)
       activate(n3, n3.execute(res),at = 2) # 3 arrive at 2
       simulate(until = 100)
-      assert res.waitMon == [[2, 1], [2, 2], [4, 1], [6, 0]],'Wrong waitMon:%s'%res.waitMon
-      assert res.actMon == [[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],'Wrong actMon:%s'%res.actMon
-      #print res.actMon
-      assert res.waitMon.timeAverage() == (0 * 2 + 2 * 2 + 1 * 2) / 6.0, 'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage()
+      assert res.waitMon == [[0,0],[2, 1], [2, 2], [4, 1], [6, 0]],'Wrong waitMon:%s'%res.waitMon
+      assert res.actMon == [[0,0],[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],\
+             'Wrong actMon:%s'%res.actMon
+      assert res.waitMon.timeAverage() == (0 * 2 + 2 * 2 + 1 * 2) / float(now()), \
+             'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage()
       
                
 def makeRSuite():
@@ -1089,8 +1090,8 @@ class makeTimeoutTestcase(unittest.TestCase):
     def testNoTimeout(self):
         """Test that resource gets acquired without timeout
         """
-        res = Resource(name = 'Server', capacity = 1)
         initialize()
+        res = Resource(name = 'Server', capacity = 1)
         usetime = 5
         timeout = 1000000
         j1 = JobTO(server = res, name = 'Job_1')
@@ -1108,8 +1109,8 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that resource gets acquired without timeout.
            Resource monitored.
         """
-        res = Resource(name = 'Server', capacity = 1, monitored = True)
         initialize()
+        res = Resource(name = 'Server', capacity = 1, monitored = True)
         usetime = 5
         timeout = 1000000
         j1 = JobTO(server = res, name = 'Job_1')
@@ -1122,13 +1123,13 @@ class makeTimeoutTestcase(unittest.TestCase):
             'at least one job failed to get resource'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-        assert res.waitMon == [[0, 1],[usetime, 0]],'res.waitMon wrong: %s'%res.waitMon
+        assert res.waitMon == [[0, 0],[0, 1],[usetime, 0]],'res.waitMon wrong: %s'%res.waitMon
             
     def testTimeout1(self):
         """Test that timeout occurs when resource busy
         """
-        res = Resource(name = 'Server', capacity = 1)
         initialize()
+        res = Resource(name = 'Server', capacity = 1)
         usetime = 5
         timeout = 3
         j1 = JobTO(server = res, name = 'Job_1')
@@ -1146,8 +1147,8 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that timeout occurs when resource busy.
            Resource monitored.
         """
-        res = Resource(name = 'Server', capacity = 1, monitored = True)
         initialize()
+        res = Resource(name = 'Server', capacity = 1, monitored = True)
         usetime = 5
         timeout = 3
         j1 = JobTO(server = res, name = 'Job_1')
@@ -1160,14 +1161,14 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert(not j2.gotResource),'Job_2 did not renege'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-        assert res.waitMon == [[0, 1],[timeout, 0]],'res.waitMon wrong: %s'%res.waitMon
+        assert res.waitMon == [[0, 0],[0, 1],[timeout, 0]],'res.waitMon wrong: %s'%res.waitMon
         
     def testTimeout_MP(self):
         """Test that timeout occurs when resource busy.
            Resource monitored. Requests with priority and preemption.
         """
-        res = Resource(name = 'Server', capacity = 1, monitored = True, qType = PriorityQ, preemptable = True)
         initialize()
+        res = Resource(name = 'Server', capacity = 1, monitored = True, qType = PriorityQ, preemptable = True)
         usetime = 5
         timeout = 3
         j1 = JobTO_P(server = res, name = 'Job_1')
@@ -1185,14 +1186,14 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert(j2.gotResource),'Job_3 did renege'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-        assert res.waitMon == [[j2_arrival, 1],[j3_arrival, 2],[usetime + j3_arrival, 1],[usetime + j2_arrival + usetime, 0]],\
+        assert res.waitMon == [[0, 0],[j2_arrival, 1],[j3_arrival, 2],[usetime + j3_arrival, 1],[usetime + j2_arrival + usetime, 0]],\
              'res.waitMon wrong: %s'%res.waitMon
 
     def testTimeout2(self):
         """Test that timeout occurs when resource has no capacity free
         """
-        res = Resource(name = 'Server', capacity = 0)
         initialize()
+        res = Resource(name = 'Server', capacity = 0)
         usetime = 5
         timeout = 3
         j1 = JobTO(server = res, name = 'Job_1')
@@ -1210,8 +1211,8 @@ class makeTimeoutTestcase(unittest.TestCase):
         """Test that timeout occurs when resource has no capacity free.
            Resource monitored.
         """
-        res = Resource(name = 'Server', capacity = 0, monitored = True)
         initialize()
+        res = Resource(name = 'Server', capacity = 0, monitored = True)
         usetime = 5
         timeout = 3
         j1 = JobTO(server = res, name = 'Job_1')
@@ -1224,7 +1225,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert not j2.gotResource, 'Job_2 got resource'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'  
-        assert res.waitMon == [[0, 1],[0, 2],[timeout, 1],[timeout, 0]],\
+        assert res.waitMon == [[0, 0],[0, 1],[0, 2],[timeout, 1],[timeout, 0]],\
             'res.waitMon is wrong: %s'%res.waitMon
             
 def makeTOSuite():
@@ -1296,9 +1297,9 @@ class makeEventRenegeTestcase(unittest.TestCase):
     def testNoEvent(self):
         """Test that processes acquire resource normally if no event fires
         """
+        initialize()
         res = Resource(name = 'Server', capacity = 1)
         event = SimEvent('Renege_trigger') #never gets fired
-        initialize()
         usetime = 5
         j1 = JobEvt(server = res, name = 'Job_1')
         activate(j1, j1.execute(event = event, usetime = usetime))
@@ -1316,9 +1317,9 @@ class makeEventRenegeTestcase(unittest.TestCase):
         """Test that processes acquire resource normally if no event fires.
            Resource monitored.
         """
+        initialize()
         res = Resource(name = 'Server', capacity = 1, monitored = True)
         event = SimEvent('Renege_trigger') #never gets fired
-        initialize()
         usetime = 5
         j1 = JobEvt(server = res, name = 'Job_1')
         activate(j1, j1.execute(event = event, usetime = usetime))
@@ -1331,13 +1332,13 @@ class makeEventRenegeTestcase(unittest.TestCase):
             'at least one job failed to get resource'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource' 
-        assert res.waitMon == [[0, 1],[usetime, 0]],'res.waitMoni is wrong: %s'%res.waitMon
+        assert res.waitMon == [[0, 0],[0, 1],[usetime, 0]],'res.waitMoni is wrong: %s'%res.waitMon
             
     def testWaitEvent1(self):
         """Test that signalled event leads to renege when resource busy
         """
-        res = Resource(name = 'Server', capacity = 1)
         initialize()
+        res = Resource(name = 'Server', capacity = 1)
         event = SimEvent('Renege_trigger')
         usetime = 5
         eventtime = 1
@@ -1359,8 +1360,8 @@ class makeEventRenegeTestcase(unittest.TestCase):
         """Test that signalled event leads to renege when resource busy.
            Resource monitored.
         """
-        res = Resource(name = 'Server', capacity = 1, monitored = True)
         initialize()
+        res = Resource(name = 'Server', capacity = 1, monitored = True)
         event = SimEvent('Renege_trigger')
         usetime = 5
         eventtime = 1
@@ -1377,13 +1378,13 @@ class makeEventRenegeTestcase(unittest.TestCase):
         assert(not j2.gotResource),'Job_2 did not renege'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-        assert res.waitMon == [[0, 1],[eventtime, 0]],'res.waitMon is wrong: %s'%res.waitMon
+        assert res.waitMon == [[0, 0],[0, 1],[eventtime, 0]],'res.waitMon is wrong: %s'%res.waitMon
             
     def testWaitEvent2(self):
         """Test that renege - triggering event can be one of an event list
         """
-        res = Resource(name = 'Server', capacity = 1)
         initialize()
+        res = Resource(name = 'Server', capacity = 1)
         event1 = SimEvent('Renege_trigger_1')
         event2 = SimEvent('Renege_trigger_2')
         usetime = 5
@@ -1408,8 +1409,8 @@ class makeEventRenegeTestcase(unittest.TestCase):
         """Test that renege - triggering event can be one of an event list.
            Resource monitored.
         """
-        res = Resource(name = 'Server', capacity = 1, monitored = True)
         initialize()
+        res = Resource(name = 'Server', capacity = 1, monitored = True)
         event1 = SimEvent('Renege_trigger_1')
         event2 = SimEvent('Renege_trigger_2')
         usetime = 5
@@ -1429,7 +1430,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         assert(not j2.gotResource),'Job_2 did not renege'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-        assert res.waitMon == [[0, 1],[eventtime, 0]],'res.waitMon is wrong: %s'%res.waitMon
+        assert res.waitMon == [[0 ,0],[0, 1],[eventtime, 0]],'res.waitMon is wrong: %s'%res.waitMon
     
 def makeEvtRenegeSuite():
     suite = unittest.TestSuite()
