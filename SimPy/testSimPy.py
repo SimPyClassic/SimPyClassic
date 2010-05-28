@@ -1,4 +1,4 @@
-#!/usr / bin / env python
+#!/usr/bin/env python
 # coding=utf-8
 from SimPy.Simulation  import *
 from SimPy.MonitorTest import *
@@ -1122,7 +1122,7 @@ class makeTimeoutTestcase(unittest.TestCase):
             'at least one job failed to get resource'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-        assert res.waitMon == [[0,  0],[0, 1],[usetime, 0]],'res.waitMon wrong: %s'%res.waitMon
+        assert res.waitMon == [[0, 0],[0, 1],[usetime, 0]],'res.waitMon wrong: %s'%res.waitMon
             
     def testTimeout1(self):
         """Test that timeout occurs when resource busy
@@ -1597,7 +1597,7 @@ class makeLevelTestcase(unittest.TestCase):
         initialize()
         buffer = Level(capacity = 7, putQType = PriorityQ, monitored = True)
         for i in range(4):
-            p = Producer(str(i)) 
+            p = Producer(str(i))
             pPriority = i
             activate(p, p.producePriority(buffer = buffer, priority = pPriority))
         c = Consumer()
@@ -2253,7 +2253,7 @@ class makeLevelCompTestcase(unittest.TestCase):
     ## ------------------------------------------------------------------
     def testBasicEventPut(self):
         """Level (unmonitored): 
-        test 'yield (put, self, level),(waitevent, self, event)"""
+        test 'yield (put, self, level),(waitevent, self, event)'"""
         initialize()
         l = Level(capacity = 1)
         trig = SimEvent()
