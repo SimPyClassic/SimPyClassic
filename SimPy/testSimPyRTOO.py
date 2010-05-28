@@ -1,4 +1,4 @@
-#!/usr / bin / env python
+#!/usr/ bin/env python
 from SimPy.SimulationRT  import *
 from SimPy.MonitorTest import *
 import unittest
@@ -25,7 +25,7 @@ print 'testSimPyRTOO.py %s'%__version__
 class P(Process):
    """ P class for testing"""
    def __init__(self,name="",T = 0,sim=None):
-        Process.__init__(self,name=name,sim=sim)
+        Process.__init__(self,name = name,sim = sim)
         self.name=name
         self.T = T
 
@@ -35,7 +35,8 @@ class P(Process):
 class PActions(Process):
    """ PActions class for testing"""
    def __init__(self,name="",T = 0,sim=None):
-        Process.__init__(self,name=name,sim=sim)
+        Process.__init__(self,name = name,sim = sim)
+
         self.T = T
 
    def ACTIONS(self):
@@ -193,7 +194,8 @@ def makeSSuite():
 class Job(Process):
    """ Job class for testing"""
    def __init__(self,server=None,name="",sim=None):
-        Process.__init__(self,name=name,sim=sim)
+        Process.__init__(self,name = name,sim = sim)
+
         self.R=server
 
    def execute(self):
@@ -228,11 +230,11 @@ class makeResourcetestcase(unittest.TestCase):
         ## now test requesting: ------------------------------------
         s=SimulationRT()
         s.initialize()        
-        R0 = Resource(name='',capacity=0,sim=s)
+        R0 = Resource(name='', capacity=0, sim=s)
         assert R0.name == "", "Not null name"
         assert R0.capacity == 0, "Not capacity 0, it is "+`R0.capacity`
-        R1 = Resource(capacity=0,name="3-version",unitName="blobs",sim=s)
-        J= Job(name="job",server=R1,sim=s)
+        R1 = Resource(capacity=0,name="3-version",unitName="blobs", sim = s)
+        J= Job(name="job",server=R1, sim = s)
         s.activate(J,J.execute(), at=0.0) # this requests a unit of R1
         ## when simulation starts
         s.simulate(until=10.0)
@@ -247,8 +249,8 @@ class makeResourcetestcase(unittest.TestCase):
         ## now test requesting: ------------------------------------
         s=SimulationRT()
         s.initialize()
-        R2 = Resource(capacity=1,name="3-version",unitName="blobs",sim=s)
-        J2= Job(name="job",server=R2,sim=s)
+        R2 = Resource(capacity=1,name="3-version",unitName="blobs", sim = s)
+        J2= Job(name="job",server=R2, sim = s)
         s.activate(J2,J2.execute(), at=0.0) # requests a unit of R2
         ## when simulation starts
         s.simulate(until = 10.0)
@@ -263,10 +265,10 @@ class makeResourcetestcase(unittest.TestCase):
         ## now test requesting: ------------------------------------
         s=SimulationRT()
         s.initialize()
-        R3 = Resource(capacity=1,name="3-version",unitName="blobs",sim=s)
-        J2= Job(name="job",server=R3,sim=s)
-        J3= Job(name="job",server=R3,sim=s)
-        J4= Job(name="job",server=R3,sim=s)
+        R3 = Resource(capacity=1,name="3-version",unitName="blobs", sim = s)
+        J2= Job(name="job",server=R3, sim = s)
+        J3= Job(name="job",server=R3, sim = s)
+        J4= Job(name="job",server=R3, sim = s)
         s.activate(J2,J2.execute(), at=0.0) # requests a unit of R3
         s.activate(J3,J3.execute(), at=0.0) # requests a unit of R3
         s.activate(J4,J4.execute(), at=0.0) # requests a unit of R3
@@ -285,10 +287,10 @@ class makeResourcetestcase(unittest.TestCase):
         ## now test requesting: ------------------------------------
         s=SimulationRT()
         s.initialize()
-        R3 = Resource(capacity=2,name="4-version",unitName="blobs",sim=s)
-        J2= Job(name="job",server=R3,sim=s)
-        J3= Job(name="job",server=R3,sim=s)
-        J4= Job(name="job",server=R3,sim=s)
+        R3 = Resource(capacity=2,name="4-version",unitName="blobs", sim = s)
+        J2= Job(name="job",server=R3, sim = s)
+        J3= Job(name="job",server=R3, sim = s)
+        J4= Job(name="job",server=R3, sim = s)
         s.activate(J2,J2.execute(), at=0.0) # requests a unit of R3
         s.activate(J3,J3.execute(), at=0.0) # requests a unit of R3
         s.activate(J4,J4.execute(), at=0.0) # requests a unit of R3
@@ -309,7 +311,8 @@ class makeResourcetestcase(unittest.TestCase):
         class Job(Process):
            """ Job class for testing"""
            def __init__(self,server=None,name="",sim=None):
-              Process.__init__(self,name=name,sim=sim)
+              Process.__init__(self,name = name,sim = sim)
+
               self.R=server
 
            def execute(self,priority):
@@ -353,7 +356,8 @@ class makeResourcetestcase(unittest.TestCase):
         class Job(Process):
            """ Job class for testing"""
            def __init__(self,server=None,name="",sim=None):
-              Process.__init__(self,name=name,sim=sim)
+              Process.__init__(self, name = name, sim = sim)
+
               self.R=server
 
            def execute(self,priority):
@@ -375,8 +379,8 @@ class makeResourcetestcase(unittest.TestCase):
    def testrequestPriority2(self):
        """Test PriorityQ, with preemption, capacity == 1"""
        class nuJob(Process):
-          def __init__(self,name="",sim=None):
-             Process.__init__(self,name=name,sim=sim)
+          def __init__(self,name = "", sim=None):
+             Process.__init__(self, name = name, sim = sim)
 
           def execute(self,res,priority):
              self.preempt=len(res.activeQ) > 0\
@@ -394,7 +398,7 @@ class makeResourcetestcase(unittest.TestCase):
              else:
                 assert t+60 == t1,\
                         "Wrong completion time for preempted %s %s:"\
-                        %(self.name,self.sim.now())
+                        %(self.name, self.sim.now())
              yield release,self,res
 
        s = SimulationRT()
@@ -412,7 +416,7 @@ class makeResourcetestcase(unittest.TestCase):
        class nuJob(Process):
           seqOut=[]
           def __init__(self,name="",sim=None):
-             Process.__init__(self,name=name,sim=sim)
+             Process.__init__(self, name = name, sim = sim)
              self.serviceTime=30
 
           def execute(self,res,priority):
@@ -479,8 +483,8 @@ class makeResourcetestcase(unittest.TestCase):
       """ test monitoring of number in the two queues, waitQ and activeQ
       """
       class Job(Process):
-          def __init__(self,name="",sim=None):
-             Process.__init__(self,name=name,sim=sim)
+          def __init__(self,name='',sim=None):
+             Process.__init__(self,name = name,sim = sim)
 
           def execute(self,res):
              yield request,self,res
@@ -497,12 +501,12 @@ class makeResourcetestcase(unittest.TestCase):
       s.activate(n2,n2.execute(res),at=2)
       s.activate(n3,n3.execute(res),at=2) # 3 arrive at 2
       s.simulate(until=100)
-      assert res.waitMon == [[2, 1], [2, 2], [4, 1], [6, 0]],\
+      assert res.waitMon == [[0, 0],[2, 1], [2, 2], [4, 1], [6, 0]],\
              'Wrong waitMon:%s'%res.waitMon
-      assert res.actMon == [[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],\
+      assert res.actMon == [[0, 0],[2, 1], [4, 0], [4, 1], [6, 0], [6, 1], [8, 0]],\
               'Wrong actMon:%s'%res.actMon
-      self.assertAlmostEqual( res.waitMon.timeAverage(t=s.now()), (0*2+2*2+1*2)/6.0,2,
-             'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage(t=s.now()))
+      assert res.waitMon.timeAverage() == (0 * 2 + 2 * 2 + 1 * 2) / float(s.now()), \
+             'Wrong waitMon.timeAverage:%s'%res.waitMon.timeAverage()
 
 def makeRSuite():
     suite = unittest.TestSuite()
@@ -938,9 +942,9 @@ class WaitProcessOR1(Process):
     def __init__(self,**var):
        Process.__init__(self,**var)
     def signalandwait(self):
-      e1=SimEvent(sim=self.sim)
+      e1=SimEvent(sim = self.sim)
       e1.signal()
-      e2=SimEvent(sim=self.sim)
+      e2=SimEvent(sim = self.sim)
       e2.signal()
       yield waitevent,self,[e1,e2]
       assert self.eventsFired==[e1,e2],"eventsFired does not report all events"
@@ -962,9 +966,9 @@ class QueueProcessOR1(Process):
     def __init__(self,**var):
        Process.__init__(self,**var)
     def signalandqueue(self):
-        e1=SimEvent(sim=self.sim)
+        e1=SimEvent(sim = self.sim)
         e1.signal()
-        e2=SimEvent(sim=self.sim)
+        e2=SimEvent(sim = self.sim)
         e2.signal()
         yield queueevent,self,[e1,e2]
         assert self.eventsFired==[e1,e2],\
@@ -1030,7 +1034,7 @@ class makeEtestcase(unittest.TestCase):
       """
       s=SimulationRT()
       s.initialize()
-      w=WaitProcessOR1(sim=s)
+      w=WaitProcessOR1(sim = s)
       s.activate(w,w.signalandwait())
       s.simulate(until=5)
 
@@ -1039,7 +1043,7 @@ class makeEtestcase(unittest.TestCase):
       """
       s=SimulationRT()
       s.initialize()
-      w=QueueProcessOR1(sim=s)
+      w=QueueProcessOR1(sim = s)
       s.activate(w,w.signalandqueue())
       s.simulate(until=5)
 
@@ -1189,7 +1193,7 @@ class makeTimeoutTestcase(unittest.TestCase):
             "at least one job failed to get resource"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[usetime,0]],"res.waitMon wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[usetime,0]],"res.waitMon wrong: %s"%res.waitMon
 
     def testTimeout1(self):
         """Test that timeout occurs when resource busy
@@ -1230,7 +1234,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert(not j2.gotResource),"Job_2 did not renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[timeout,0]],"res.waitMon wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[timeout,0]],"res.waitMon wrong: %s"%res.waitMon
 
     def testTimeout_MP(self):
         """Test that timeout occurs when resource busy.
@@ -1259,8 +1263,8 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert(j2.gotResource),"Job_3 did renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[j2_arrival,1],[j3_arrival,2],[usetime+j3_arrival,1],[usetime+j2_arrival+usetime,0]],\
-             "res.waitMon wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[j2_arrival,1],[j3_arrival,2],[usetime+j3_arrival,1],\
+              [usetime+j2_arrival+usetime,0]],"res.waitMon wrong: %s"%res.waitMon
 
     def testTimeout2(self):
         """Test that timeout occurs when resource has no capacity free
@@ -1302,7 +1306,7 @@ class makeTimeoutTestcase(unittest.TestCase):
         assert not j2.gotResource,"Job_2 got resource"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[0,2],[timeout,1],[timeout,0]],\
+        assert res.waitMon==[[0,0],[0,1],[0,2],[timeout,1],[timeout,0]],\
             "res.waitMon is wrong: %s"%res.waitMon
 
 def makeTOSuite():
@@ -1330,7 +1334,7 @@ class JobEvt(Process):
    """ Job class for testing event reneging
    """
    def __init__(self,server=None,name="",sim=None):
-        Process.__init__(self,name=name,sim=sim)
+        Process.__init__(self,name = name, sim = sim)
         self.res=server
         self.gotResource=None
 
@@ -1347,7 +1351,7 @@ class JobEvtMulti(Process):
    """ Job class for testing event reneging with multi-event lists
    """
    def __init__(self,server=None,name="",sim=None):
-        Process.__init__(self,name=name,sim=sim)
+        Process.__init__(self,name = name, sim=sim)
         self.res=server
         self.gotResource=None
 
@@ -1364,7 +1368,7 @@ class FireEvent(Process):
     """Fires reneging event
     """
     def __init__(self,name="",sim=None):
-        Process.__init__(self,name=name,sim=sim)
+        Process.__init__(self,name,sim=sim)
     def fire(self,fireDelay,event):
         yield hold,self,fireDelay
         event.signal()
@@ -1413,7 +1417,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
             "at least one job failed to get resource"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[usetime,0]],"res.waitMoni is wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[usetime,0]],"res.waitMoni is wrong: %s"%res.waitMon
 
     def testWaitEvent1(self):
         """Test that signalled event leads to renege when resource busy
@@ -1463,7 +1467,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         assert(not j2.gotResource),"Job_2 did not renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
 
     def testWaitEvent2(self):
         """Test that renege-triggering event can be one of an event list
@@ -1519,7 +1523,7 @@ class makeEventRenegeTestcase(unittest.TestCase):
         assert(not j2.gotResource),"Job_2 did not renege"
         assert not (res.waitQ or res.activeQ),\
             "job waiting or using resource"
-        assert res.waitMon==[[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
+        assert res.waitMon==[[0,0],[0,1],[eventtime,0]],"res.waitMon is wrong: %s"%res.waitMon
 
 def makeEvtRenegeSuite():
     suite = unittest.TestSuite()
