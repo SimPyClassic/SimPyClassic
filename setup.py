@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 from distutils.core import setup
 setup(
-      version = "2.1.0beta",
+      version = "2.1.0",
       author = "Klaus Muller, Tony Vignaux",
       author_email = "vignaux at user.sourceforge.net;kgmuller at users.sourceforge.net",
-      description = "Release 2.1.0beta of SimPy simulation package",
+      description = "Release 2.1.0 of SimPy simulation package",
       url = "http://SimPy.SourceForge.net",
       long_description=\
 """
