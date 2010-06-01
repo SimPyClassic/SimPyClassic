@@ -1,11 +1,16 @@
-Cheatsheets
+====================================
+Cheatsheets for quick reference 
 ====================================
 
 If you want to have a list of all SimPy commands, their
 syntax and parameters for your desktop, print out a copy
-of the **SimPy Cheatsheet**.
+of the **SimPy Cheatsheets** you are interested in. Alternative, bookmark
+them in your favorite browser.
 
-The Cheatsheet comes in the following formats:
+The Cheatsheets available are:
+
+Non-OO (traditional) SimPy API:
+====================================
 
 * `Excel A4 page`_
 * `Excel Letter page`_
@@ -17,4 +22,15 @@ The Cheatsheet comes in the following formats:
 .. _`PDF A4 page`: _static/Cheatsheet_A4.pdf
 .. _`PDF Letter page`: _static/Cheatsheet_Letter.pdf
 
+Advanced OO API:
+====================================
 
+* `OO Excel A4 page`_
+* `OO Excel Letter page`_
+* `OO PDF A4 page`_
+* `OO PDF Letter page`_
+   
+.. _`OO Excel A4 page`: _static/cheatsheetOO_A4.xls
+.. _`OO Excel Letter page`: _static/cheatsheetOO_Letter.xls
+.. _`OO PDF A4 page`: _static/CheatsheetOO_A4.pdf
+.. _`OO PDF Letter page`: _static/CheatsheetOO_Letter.pdf
