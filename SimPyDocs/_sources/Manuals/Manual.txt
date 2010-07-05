@@ -213,8 +213,9 @@ function is called to display the results::
 
   Report()  #  report results when the simulation finishes
   
- The advanced object-oriented application programmers interface
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The advanced object-oriented application programmers interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 An alternative, advanced object-oriented API interface was added in SimPy 2.0.  This API is
 described more fully in ``SimPyOO_API``\. It defines a class of
