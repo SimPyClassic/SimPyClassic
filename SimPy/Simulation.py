@@ -604,6 +604,10 @@ Globals.sim = Simulation()
 peek = Globals.sim.peek
 
 step = Globals.sim.step 
+
+allMonitors = Globals.sim.allMonitors
+
+allTallies = Globals.sim.allTallies
 # End backward compatibility
 
 if __name__ == '__main__':
