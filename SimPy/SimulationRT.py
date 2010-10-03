@@ -107,6 +107,10 @@ def simulate(until = 0, real_time = False, rel_speed = 1):
     return Globals.sim.simulate(until = until, real_time = real_time, rel_speed = rel_speed)
     
 wallclock = Globals.sim.wallclock
+
+allMonitors = Globals.sim.allMonitors
+
+allTallies = Globals.sim.allTallies 
 # End backward compatibility
 
 if __name__ == '__main__':

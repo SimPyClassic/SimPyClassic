@@ -78,6 +78,10 @@ def stopStepping():
 peek = Globals.sim.peek
 
 step = Globals.sim.step
+
+allMonitors = Globals.sim.allMonitors
+
+allTallies = Globals.sim.allTallies
     
 def simulate(callback = lambda :None, until = 0):
     return Globals.sim.simulate(callback = callback, until = until)

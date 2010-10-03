@@ -351,6 +351,8 @@ Globals.sim = SimulationTrace()
 trace = Globals.sim.trace
 step = Globals.sim.step
 peek = Globals.sim.peek
+allMonitors = Globals.sim.allMonitors
+allTallies = Globals.sim.allTallies
 # End backward compatibility
 
 if __name__ == '__main__':
