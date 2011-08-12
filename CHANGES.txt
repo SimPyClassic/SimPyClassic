@@ -14,3 +14,12 @@ v2.2 – 2011-:
 
 - [CHANGE] Restructured package layout to be conform to the `Hitchhiker’s Guide
   to packaging <http://guide.python-distribute.org/>`_
+
+
+v2.1 – 2010-06-03:
+------------------
+
+- [NEW] Documentation/tutorials on using the advanced OO API
+- [CHANGE] Significant code refactoring in Simulation.py, SimulationStep.py,
+  SimulationTrace.py, SimulationRT.py, and Lib.py. This resulted in a
+  significant reduction of code to be maintained.
