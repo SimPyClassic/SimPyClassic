@@ -1,0 +1,9 @@
+syntax: glob
+
+*.pyc
+*~
+.DS_Store
+_build/*
+dist/*
+MANIFEST
+*.egg-info/*
