@@ -1,6 +1,7 @@
 # coding=utf-8
 
-from SimPy import Globals, Simulation, SimulationStep, SimulationTrace
+from SimPy import (Globals, Simulation, SimulationStep, SimulationTrace,
+        SimulationRT)
 
 
 def pytest_generate_tests(metafunc):
@@ -11,6 +12,8 @@ def pytest_generate_tests(metafunc):
         metafunc.addcall(param='step')
         # Execute tests using a SimulationTrace instance.
         metafunc.addcall(param='trace')
+        # Execute tests using a SimulationRT instance.
+        metafunc.addcall(param='rt')
 
         # Execute tests using the global simulation object (SimPy 1.x style).
         metafunc.addcall(param='global-default')
@@ -18,6 +21,8 @@ def pytest_generate_tests(metafunc):
         metafunc.addcall(param='global-step')
         # Execute tests using the global SimulationTrace object.
         metafunc.addcall(param='global-trace')
+        # Execute tests using the global SimulationRT object.
+        metafunc.addcall(param='global-rt')
 
 
 def pytest_funcarg__sim(request):
@@ -27,11 +32,15 @@ def pytest_funcarg__sim(request):
         return SimulationStep.SimulationStep()
     elif request.param == 'trace':
         return SimulationTrace.SimulationTrace()
+    elif request.param == 'rt':
+        return SimulationRT.SimulationRT()
     elif request.param.startswith('global'):
         if request.param.endswith('default'):
             Globals.sim = Simulation.Simulation()
         elif request.param.endswith('step'):
-            Globals.sim = SimulationStep.Simulation()
+            Globals.sim = SimulationStep.SimulationStep()
         elif request.param.endswith('trace'):
-            Globals.sim = SimulationTrace.Simulation()
+            Globals.sim = SimulationTrace.SimulationTrace()
+        elif request.param.endswith('rt'):
+            Globals.sim = SimulationRT.SimulationRT()
         return Globals.sim
