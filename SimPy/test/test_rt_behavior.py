@@ -1,44 +1,36 @@
-#!/usr / bin / env python
 # coding=utf-8
+
 from SimPy.SimulationRT import *
-"""testRT_Behavior_OO.py
-Tests SimulationRT for degree to which simulation time
-and wallclock time can be synchronized.
 
-Non-OO API.
-"""
-# $Revision$ $Date$
-
-print "Under test: SimulationRT.py %s"% version
-__version__ = '2.1 $Revision$ $Date$ '
-print 'testRT_Behavior.py %s'%__version__
 
 class Ticker(Process):
     def tick(self):
         self.timing = []
         while True:
             yield hold,self,1
-            tSim = now()
-            tRT = rtnow()
+            tSim = self.sim.now()
+            tRT = self.sim.rtnow()
             self.timing.append((tSim,tRT))
-            
-initialize()
-t=Ticker()
-activate(t,t.tick())
-simulate(until=10,real_time=True,rel_speed=1)
 
-print "Speed ratio set: 1"
-print "------------------"
-for tSim,tRT in t.timing:
-    print "tSim:%s, tRT:%s, speed ratio:%s"%(tSim,tRT,tSim/tRT)
-      
-initialize()
-t=Ticker()
-activate(t,t.tick())
-simulate(until=10,real_time=True,rel_speed=5)
 
-print
-print "Speed ratio set: 5"
-print "------------------"
-for tSim,tRT in t.timing:
-    print "tSim:%s, tRT:%s, speed ratio:%s"%(tSim,tRT,tSim/tRT)
+def test_ticker():
+    """Tests SimulationRT for degree to which simulation time and wallclock
+    time can be synchronized."""
+    rel_speed = 20
+    sim_slow=SimulationRT()
+    t=Ticker(sim=sim_slow)
+    sim_slow.activate(t,t.tick())
+    sim_slow.simulate(until=10,real_time=True,rel_speed=rel_speed)
+
+    for tSim, tRT in t.timing:
+        assert tSim/tRT > rel_speed - 1
+
+    rel_speed = 40
+    sim_fast=SimulationRT()
+    sim_fast.initialize()
+    t=Ticker(sim=sim_fast)
+    sim_fast.activate(t,t.tick())
+    sim_fast.simulate(until=10,real_time=True,rel_speed=rel_speed)
+
+    for tSim, tRT in t.timing:
+        assert tSim/tRT > rel_speed - 1
