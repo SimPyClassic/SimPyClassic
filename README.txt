@@ -53,10 +53,10 @@ finds the SimPy module. If you get an error message like *ImportError: No
 module named SimPy*, check if the SimPy packages exists in your site-packages
 folder (like /Lib/site-packages).
 
-The tutorial and manuals are in the *docs/* folder. Many users have commented
-that the Bank tutorials are valuable in getting users started on building their
-own simple models. Even a few lines of Python and SimPy can model significant
-real systems.
+The tutorial and manuals are in the *docs/_build/html* folder. Many users have
+commented that the Bank tutorials are valuable in getting users started on
+building their own simple models. Even a few lines of Python and SimPy can
+model significant real systems.
 
 For more help, contact the `SimPy-Users mailing list
 <mailto:simpy-users@lists.sourceforge.net>`_. SimPy users are pretty helpful.

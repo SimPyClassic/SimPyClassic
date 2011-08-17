@@ -3,10 +3,12 @@ from distutils.core import setup
 import sys
 reload(sys).setdefaultencoding('Utf-8')
 
+import SimPy
+
 
 setup(
     name='SimPy',
-    version='2.1.0',
+    version=SimPy.__version__,
     author='Klaus Muller, Tony Vignaux, Ontje Lünsdorf, Stefan Scherfke',
     author_email=('vignaux at user.sourceforge.net; '
         'kgmuller at users.sourceforge.net; '
@@ -24,7 +26,8 @@ setup(
     classifiers=[
         'Programming Language :: Python',
         'Operating System :: OS Independent',
-        'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
+        'License :: OSI Approved :: GNU Library or Lesser General Public ' + \
+                'License (LGPL)',
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering',
