@@ -1,9 +1,7 @@
 # coding=utf-8
+
 from SimPy.SimulationRT import *
-"""testRT_Behavior_OO.py
-Tests SimulationRT for degree to which simulation time
-and wallclock time can be synchronized.
-"""
+
 
 class Ticker(Process):
     def tick(self):
@@ -16,6 +14,8 @@ class Ticker(Process):
 
 
 def test_ticker():
+    """Tests SimulationRT for degree to which simulation time and wallclock
+    time can be synchronized."""
     rel_speed = 20
     sim_slow=SimulationRT()
     t=Ticker(sim=sim_slow)
