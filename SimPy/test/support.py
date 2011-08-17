@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from SimPy.Simulation import Simulation
+from SimPy import Globals, Simulation, SimulationStep, SimulationTrace
 from SimPy import Globals
 
 
@@ -8,8 +8,12 @@ def pytest_generate_tests(metafunc):
     if 'sim' in metafunc.funcargnames:
         # Execute tests using the global simulation object (SimPy 1.x style).
         metafunc.addcall(param='global')
-        # Exeucte tests using a dedicated simulation instance (SimPy OO style).
+        # Execute tests using a dedicated simulation instance (SimPy OO style).
         metafunc.addcall(param='oo')
+        # Execute tests using a SimulationStep instance.
+        metafunc.addcall(param='step')
+        # Execute tests using a SimulationTrace instance.
+        metafunc.addcall(param='trace')
 
 
 def pytest_funcarg__sim(request):
@@ -18,4 +22,8 @@ def pytest_funcarg__sim(request):
         Globals.sim.initialize()
         return Globals.sim
     elif request.param == 'oo':
-        return Simulation()
+        return Simulation.Simulation()
+    elif request.param == 'step':
+        return SimulationStep.SimulationStep()
+    elif request.param == 'trace':
+        return SimulationTrace.SimulationTrace()
