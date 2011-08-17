@@ -3,7 +3,8 @@ syntax: glob
 *.pyc
 *~
 .DS_Store
-_build/*
+docs/_build/*
+docs/html/*
 dist/*
 MANIFEST
 *.egg-info/*

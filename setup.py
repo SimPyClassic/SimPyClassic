@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+# encoding: utf-8
 from distutils.core import setup
 import sys
 reload(sys).setdefaultencoding('Utf-8')
@@ -22,7 +23,7 @@ setup(
     packages=[
         'SimPy',
     ],
-    package_data=[],
+    package_data={},
     classifiers=[
         'Programming Language :: Python',
         'Operating System :: OS Independent',
