@@ -1,0 +1,101 @@
+---bank01L---
+ 5.0000 Klaus: Here I am
+15.0000 Klaus: I must leave
+---bank05L---
+10.5809 Klaus: Here I am
+20.5809 Klaus: I must leave
+---bank02L---
+ 2.0000 Tony: Here I am
+ 5.0000 Klaus: Here I am
+ 9.0000 Tony: I must leave
+12.0000 Evelyn: Here I am
+15.0000 Klaus: I must leave
+32.0000 Evelyn: I must leave
+---bank03L---
+ 0.0000 Customer00: Here I am
+10.0000 Customer01: Here I am
+12.0000 Customer00: I must leave
+20.0000 Customer02: Here I am
+22.0000 Customer01: I must leave
+30.0000 Customer03: Here I am
+32.0000 Customer02: I must leave
+40.0000 Customer04: Here I am
+42.0000 Customer03: I must leave
+52.0000 Customer04: I must leave
+---bank06L---
+ 0.0000 Customer00: Here I am
+12.0000 Customer00: I must leave
+21.1618 Customer01: Here I am
+32.8968 Customer02: Here I am
+33.1618 Customer01: I must leave
+33.3790 Customer03: Here I am
+36.3979 Customer04: Here I am
+44.8968 Customer02: I must leave
+45.3790 Customer03: I must leave
+48.3979 Customer04: I must leave
+---bank07L---
+   0.000 Customer00: Here I am     
+   0.000 Customer00: Waited  0.000
+  12.000 Customer00: Finished      
+  21.162 Customer01: Here I am     
+  21.162 Customer01: Waited  0.000
+  32.897 Customer02: Here I am     
+  33.162 Customer01: Finished      
+  33.162 Customer02: Waited  0.265
+  33.379 Customer03: Here I am     
+  36.398 Customer04: Here I am     
+  45.162 Customer02: Finished      
+  45.162 Customer03: Waited 11.783
+  57.162 Customer03: Finished      
+  57.162 Customer04: Waited 20.764
+  69.162 Customer04: Finished      
+---bank08L---
+  0.0000 Customer00: Here I am     
+  0.0000 Customer00: Waited  0.000
+  8.7558 Customer01: Here I am     
+ 10.6770 Customer02: Here I am     
+ 22.7622 Customer03: Here I am     
+ 32.7477 Customer04: Here I am     
+ 55.0607 Customer00: Finished      
+ 55.0607 Customer01: Waited 46.305
+ 61.8905 Customer01: Finished      
+ 61.8905 Customer02: Waited 51.213
+ 83.7556 Customer02: Finished      
+ 83.7556 Customer03: Waited 60.993
+108.7794 Customer03: Finished      
+108.7794 Customer04: Waited 76.032
+118.8254 Customer04: Finished      
+---bank09L---
+  0.0000 Customer00: Here I am     
+  0.0000 Customer00: Waited  0.000
+  8.7558 Customer01: Here I am     
+  8.7558 Customer01: Waited  0.000
+ 10.6770 Customer02: Here I am     
+ 20.6626 Customer03: Here I am     
+ 23.2580 Customer01: Finished      
+ 23.2580 Customer02: Waited 12.581
+ 30.0878 Customer02: Finished      
+ 30.0878 Customer03: Waited  9.425
+ 37.0790 Customer04: Here I am     
+ 51.9528 Customer03: Finished      
+ 51.9528 Customer04: Waited 14.874
+ 55.0607 Customer00: Finished      
+ 61.9988 Customer04: Finished      
+---bank10L---
+ 0.0000 Customer00: Here I am. [0, 0]
+ 0.0000 Customer00: Waited  0.000
+ 8.7558 Customer01: Here I am. [1, 0]
+ 8.7558 Customer01: Waited  0.000
+10.6770 Customer02: Here I am. [1, 1]
+20.6626 Customer03: Here I am. [2, 1]
+23.2580 Customer01: Finished
+23.2580 Customer03: Waited  2.595
+30.0878 Customer03: Finished
+37.0790 Customer04: Here I am. [2, 0]
+37.0790 Customer04: Waited  0.000
+55.0607 Customer00: Finished
+55.0607 Customer02: Waited 44.384
+62.1029 Customer04: Finished
+65.1067 Customer02: Finished
+---bank11L---
+Average wait for  50 completions was 2.466 minutes.

@@ -1,0 +1,37 @@
+c1 requests 1 unit at t = 0
+c2 requests 1 unit at t = 0
+c3 requests 1 unit at t = 0
+c4 requests 1 unit at t = 0
+c1 done at t = 100
+c2 done at t = 200
+c3 done at t = 300
+c4 done at t = 400
+
+(TimeAverage no. waiting: 1.5
+(Number) Average no. waiting: 1.5
+(Number) Var of no. waiting: 0.916666666667
+(Number) SD of no. waiting: 0.957427107756
+(TimeAverage no. in service: 1.0
+(Number) Average no. in service: 0.5
+(Number) Var of no. in service: 0.25
+(Number) SD of no. in service: 0.5
+========================================
+Time history for the "server" waitQ:
+[time, waitQ]
+[0, 1]
+[0, 2]
+[0, 3]
+[100, 2]
+[200, 1]
+[300, 0]
+========================================
+Time history for the "server" activeQ:
+[time, activeQ]
+[0, 1]
+[100, 0]
+[100, 1]
+[200, 0]
+[200, 1]
+[300, 0]
+[300, 1]
+[400, 0]

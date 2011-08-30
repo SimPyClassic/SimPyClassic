@@ -1,0 +1,14 @@
+c1 requests 1 unit at t = 0
+c2 requests 1 unit at t = 0
+c3 requests 1 unit at t = 0
+c4 requests 1 unit at t = 0
+c3 requests 1 unit at t = 0
+c6 requests 1 unit at t = 0
+c1 done at t = 100
+c2 done at t = 100
+c3 done at t = 200
+c4 done at t = 200
+c3 done at t = 300
+c6 done at t = 300
+Request order:  ['c1', 'c2', 'c3', 'c4', 'c3', 'c6']
+Service order:  ['c1', 'c2', 'c3', 'c4', 'c3', 'c6']

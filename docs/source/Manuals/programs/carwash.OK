@@ -1,0 +1,13 @@
+5 car -1 done by Carwash 0
+5 car -2 done by Carwash 1
+10 car -3 done by Carwash 0
+10 car -4 done by Carwash 1
+15 car 0 done by Carwash 0
+15 car 1 done by Carwash 1
+20 car 2 done by Carwash 0
+20 car 3 done by Carwash 1
+25 car 4 done by Carwash 0
+25 car 5 done by Carwash 1
+30 car 6 done by Carwash 0
+30 car 7 done by Carwash 1
+waitingCars [10, 11, 12, 13, 14]

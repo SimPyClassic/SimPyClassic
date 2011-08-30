@@ -1,0 +1,210 @@
+
+(Note: Terms in *italics* refer to other special terms.
+Items in ``code font`` are code fragments or specific code names.):
+
+activeQ
+   A *Resource* object automatically creates and maintains its
+   own activeQ, the queue (list) of process objects that are
+   currently using one of the Resource's units. See
+   `Resources`_. (See also the Glossary entry for *waitQ*.)
+
+activate
+   Commands a *process object* to being executing its *PEM*.
+   See `Starting and stopping SimPy process objects`_.
+   
+Backus-Naur Form (BNF) notation
+   This manual occasionally uses a modified Backus-Naur Form notation to
+   exhibit command syntax,
+   as in the description of the *activate* command::
+   
+     activate(p, p.PEM([args]) [,{at=t|delay=period}] [,prior=False])
+   
+   In this notation, square brackets [ ] indicate items that are optional, 
+   braces { } indicate items of which zero or more may be present, 
+   and a vertical bar | indicates a choice between alternatives 
+   (with none of them being a possibility).
+
+cancel
+   Deletes all of a *process object's* scheduled future events.
+   See `Starting and stopping SimPy process objects`_.
+
+entity
+   An alternative name for *process object*.
+
+event
+   A SimEvent object. See `Advanced synchronization/scheduling capabilities`_.
+
+FIFO
+   An attribute of a resource object (i.e., a `Resource`_, `Level`_,
+   or `Store`_)
+   indicating that an associated queue (e.g., the *ActiveQ*, *waitQ*,
+   *getQ*, or *putQ*) is to be
+   kept in FIFO order. 
+   (See also the Glossary entries for *PriorityQ* and *qType*.)
+   
+getQ
+   The queue of processes waiting to take something from a
+   `Level`_ or `Store`_ resource. See also the Glossary entry for *putQ*.
+
+interrupt
+   Requests a "victim" *process object* to interrupt (i.e., to immediately and
+   prematurely end) its current
+   ``yield hold,...`` command. (Note: A process object cannot interrupt itself.)
+   See `Asynchronous interruptions`_.
+
+Level
+   A particular type of *resource facility* that models the 
+   production and consumption of a
+   homogeneous undifferentiated "material." *Process objects* can increase or
+   decrease the amount of material in a Level resource facility. See `Levels`_.
+
+Monitor
+   A data recorder that compiles basic statistics as a function of time on
+   variables such
+   as waiting times and queue lengths. (Note: Monitors can also preserve complete
+   time-series
+   data for post-simulation analyses.) See `Recording Simulation Results`_.
+
+monitorType
+   The type of Recorder_ to be used for recording simulation results.
+   Usually this is either a Monitor_ or a Tally_. (See also the
+   Glossary entry for *Recorder*.)
+
+monitored
+   A (boolean) attribute of a *resource* object indicating whether to 
+   keep a record 
+   of its activity. See Recorder_. 
+
+passivate
+   Halts ("freezes") a *process object's* PEM. The process object  becomes 
+   "passive".
+   See `Starting and stopping SimPy Process Objects`_.
+
+PEM
+   An abbreviation for *Process Execution Method*, q.v.
+
+preempt
+   To force a *process* object currently using a *resource* unit 
+   to release it and make it
+   available for use by another process object. See `Preemptive requests for 
+   a Resource unit`_.
+
+preemptable
+   A settable attribute of *Resource* objects. The Resource object's
+   units are preemptable if
+   ``preemptable==True``, otherwise not. See `Preemptive requests for a Resource
+   unit`_.
+
+priority
+   A non-negative integer or real value controlling the order of *process* objects
+   in a queue. Higher values represent higher priority. Higher priority process
+   objects are placed ahead of lower priority ones in the queue. See also
+   the Glossary entry for *FIFO*.
+
+PriorityQ
+   An attribute of a resource object (i.e., a `Resource`_, `Level`_,
+   or `Store`_)
+   indicating that an associated queue (e.g., the *ActiveQ*, *waitQ*,
+   *getQ*, or *putQ*) is to be
+   kept in order of *priority*. 
+   (See also the Glossary entries for *FIFO*, *qType*.) 
+      
+process
+   We usually call both process objects and their classes "processes" 
+   (with a small "p").
+   Thus, "process" may refer to a *Process class* or to
+   a *process object*, depending on context. To avoid ambiguity
+   or for added emphasis
+   we often explicitly state whether a class or an object is intended.
+
+Process class
+   A class that inherits from SimPy's ``Process`` class and contains
+   at least one *Process Execution Method*.
+   Process classes may also contain other methods --
+   in particular they may contain an ``__init__`` method.
+   See `Processes`_.
+
+Process Execution Method
+   A *Process class* method that contains at least one ``yield ...``
+   statement. See `Defining a process`_.
+
+process object
+   An object created from (i.e., an instance of) a *Process class*. 
+   See `Processes`_.
+   
+putQ
+   The queue of processes waiting to add something to a `Level`_ 
+   or `Store`_ resource. See also the Glossary entry for *getQ*.
+
+reactivate
+   Reactivates ("unfreezes") a passivated or a terminated *process object's* PEM.
+   The *process object* becomes "active".  See `Starting and stopping SimPy Process
+   Objects`_.
+
+Recorder
+   A device for recording simulation results. Unless otherwise specified, it 
+   usually refers either to a `Monitor`_ or a `Tally`_. However,
+   Recorders also include histograms and observers.
+   See `Recording Simulation Results`_ 
+   for *Monitors*, *Tallys*, and the other devices for 
+   recording simulation results.  
+
+renege
+   To leave a queue before acquiring a resource unit. See `Reneging -- leaving
+   a queue before acquiring a resource`_.
+   
+resource
+   Same as "resource facility." 
+   A congestion point at which *process objects* may need to queue for access to
+   resources. The term "resource" (with a small "r") is used as a generic term 
+   for the individual resource facilities provided by SimPy (i.e.,
+   Resources_, Levels_, and Stores_).
+
+qType
+   An attribute of *resource* objects indicating whether an
+   associated queue is to be
+   kept in *FIFO* or *PriorityQ* order. See the Glossary entries 
+   for *waitQ*, *ActiveQ*, *putQ*,and *getQ*.
+   See also the treatment of these queues in the sections on
+   the individual resources (i.e., `Resources`_, `Levels`_, and `Stores`_).
+
+Resource
+   A particular type of *resource facility* that possesses several 
+   identical *resource units*.
+   A *process object* may acquire one (and only one) of the Resource's 
+   resource units. See Resources_ .
+
+Resource unit
+   One of the individual resources associated with a *Resource* type of
+   *resource facility*. See Resources_.
+
+SimEvent
+   The SimPy class for defining and creating SimEvent objects.  
+   Occasionally designates a SimEvent
+   object when context makes that usage clear.
+   See `Advanced synchronization/scheduling capabilities`_.
+
+Store
+   A particular type of *resource facility* that models the 
+   production and consumption of individual
+   items. *Process objects* can insert or remove items from the Store's list
+   of available items. See Stores_.
+
+Tally
+   A particular type of *Recorder* that compiles basic statistics as a 
+   function of time on variables such
+   as waiting times and queue lengths. (Note: Tallys do not preserve complete
+   time-series data for post-simulation analyses.) See 
+   `Recording Simulation Results`_.
+   (See also the Glossary entry for *monitorType*.)
+
+unit (of a Resource)
+   One of the individual resource capabilities provided by a *Resource*. See
+   `Resources`_.
+
+waitQ
+   A *Resource* object automatically creates and maintains its own *waitQ*, 
+   the queue (list) of process objects that have requested but not yet
+   received one of the Resource's units. See `Resources`_. 
+   (See also the Glossary entry for *activeQ*.)
+ 

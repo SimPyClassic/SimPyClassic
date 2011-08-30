@@ -1,0 +1,57 @@
+at  0.0000, add 10.0000 units, now amount = 10.0000
+day  1.0000, supplied  1.0115, now amount = 8.9885
+day  2.0000, supplied  1.1377, now amount = 7.8508
+day  3.0000, supplied  0.7743, now amount = 7.0766
+day  4.0000, supplied  1.4056, now amount = 5.6709
+day  5.0000, supplied  0.9736, now amount = 4.6973
+day  6.0000, supplied  1.1061, now amount = 3.5912
+day  7.0000, supplied  1.4067, now amount = 2.1845
+day  8.0000, supplied  1.2884, now amount = 0.8961
+day  9.0000, demand =  1.4426,                    shortfall = -0.5465
+at 10.0000, add 10.0000 units, now amount = 10.0000
+day 10.0000, supplied  1.5850, now amount = 8.4150
+day 11.0000, supplied  0.7974, now amount = 7.6176
+day 12.0000, supplied  0.8854, now amount = 6.7323
+day 13.0000, supplied  1.4893, now amount = 5.2430
+day 14.0000, supplied  1.0522, now amount = 4.1908
+day 15.0000, supplied  1.0492, now amount = 3.1416
+day 16.0000, supplied  1.2013, now amount = 1.9403
+day 17.0000, supplied  1.4026, now amount = 0.5377
+day 18.0000, demand =  1.0874,                    shortfall = -0.5497
+day 19.0000, demand =  1.3043,                    shortfall = -1.3043
+at 20.0000, add 10.0000 units, now amount = 10.0000
+day 20.0000, supplied  1.2737, now amount = 8.7263
+day 21.0000, supplied  0.9550, now amount = 7.7713
+day 22.0000, supplied  1.3646, now amount = 6.4067
+day 23.0000, supplied  0.8629, now amount = 5.5438
+day 24.0000, supplied  1.2893, now amount = 4.2545
+day 25.0000, supplied  1.1897, now amount = 3.0648
+day 26.0000, supplied  0.9708, now amount = 2.0940
+day 27.0000, supplied  1.1397, now amount = 0.9543
+day 28.0000, demand =  1.1286,                    shortfall = -0.1743
+day 29.0000, demand =  0.8891,                    shortfall = -0.8891
+at 30.0000, add 10.0000 units, now amount = 10.0000
+day 30.0000, supplied  0.9496, now amount = 9.0504
+day 31.0000, supplied  1.1515, now amount = 7.8988
+day 32.0000, supplied  1.3724, now amount = 6.5264
+day 33.0000, supplied  0.6977, now amount = 5.8287
+day 34.0000, supplied  1.2291, now amount = 4.5996
+day 35.0000, supplied  1.3502, now amount = 3.2494
+day 36.0000, supplied  1.0396, now amount = 2.2098
+day 37.0000, supplied  1.3442, now amount = 0.8656
+day 38.0000, demand =  1.0919,                    shortfall = -0.2263
+day 39.0000, demand =  1.4077,                    shortfall = -1.4077
+at 40.0000, add 10.0000 units, now amount = 10.0000
+day 40.0000, supplied  0.9053, now amount = 9.0947
+day 41.0000, supplied  1.2982, now amount = 7.7965
+day 42.0000, supplied  1.3458, now amount = 6.4508
+day 43.0000, supplied  1.2357, now amount = 5.2151
+day 44.0000, supplied  1.2822, now amount = 3.9329
+day 45.0000, supplied  1.1809, now amount = 2.7519
+day 46.0000, supplied  1.0891, now amount = 1.6629
+day 47.0000, supplied  1.1926, now amount = 0.4702
+day 48.0000, demand =  1.3927,                    shortfall = -0.9224
+day 49.0000, demand =  1.2690,                    shortfall = -1.2690
+
+Summary of results through end of day 49.0000:
+average stock =  4.4581, cumulative stockout =  7.2894

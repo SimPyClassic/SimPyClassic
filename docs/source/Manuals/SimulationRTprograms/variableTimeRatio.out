@@ -1,0 +1,18 @@
+At simulation time 0: set ratio simulation/wallclock time to 1
+now(): 1, sim. time elapsed: 1, wall clock elapsed:  0.998, sim/wall time ratio:  1.002
+now(): 2, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+now(): 3, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+now(): 4, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+now(): 5, sim. time elapsed: 1, wall clock elapsed:  0.999, sim/wall time ratio:  1.001
+At simulation time 5: ratio simulation/wallclock time now changed to 5
+now(): 6, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.027
+now(): 7, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.025
+now(): 8, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.026
+now(): 9, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.026
+now(): 10, sim. time elapsed: 1, wall clock elapsed:  0.199, sim/wall time ratio:  5.024
+At simulation time 10: ratio simulation/wallclock time now changed to 10
+now(): 11, sim. time elapsed: 1, wall clock elapsed:  0.099, sim/wall time ratio: 10.108
+now(): 12, sim. time elapsed: 1, wall clock elapsed:  0.099, sim/wall time ratio: 10.105
+now(): 13, sim. time elapsed: 1, wall clock elapsed:  0.099, sim/wall time ratio: 10.102
+now(): 14, sim. time elapsed: 1, wall clock elapsed:  0.099, sim/wall time ratio: 10.104
+now(): 15, sim. time elapsed: 1, wall clock elapsed:  0.099, sim/wall time ratio: 10.104

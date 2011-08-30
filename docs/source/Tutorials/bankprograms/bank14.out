@@ -1,0 +1,21 @@
+ 0.0000 Customer00: Here I am but the door is shut.
+ 5.6941 Customer01: Here I am but the door is shut.
+15.8155 Customer02: Here I am but the door is shut.
+22.2064 Doorman: Ladies and Gentlemen! You may all enter.
+22.2064 Customer00: I can  go in!
+22.2064 Customer00: Waited 22.206
+22.2064 Customer01: I can  go in!
+22.2064 Customer01: Waited 16.512
+22.2064 Customer02: I can  go in!
+22.2064 Customer02: Waited  6.391
+22.4603 Customer03: Here I am and the door is open.
+22.4603 Customer03: I can  go in!
+22.4603 Customer03: Waited  0.000
+24.8884 Customer00: Finished    
+30.8017 Customer04: Here I am and the door is open.
+30.8017 Customer04: I can  go in!
+30.8017 Customer04: Waited  0.000
+57.5367 Customer01: Finished    
+58.6695 Customer02: Finished    
+91.0096 Customer03: Finished    
+93.5228 Customer04: Finished    
