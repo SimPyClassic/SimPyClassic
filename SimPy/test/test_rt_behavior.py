@@ -16,7 +16,7 @@ class Ticker(Process):
 def test_ticker():
     """Tests SimulationRT for degree to which simulation time and wallclock
     time can be synchronized."""
-    rel_speed = 20
+    rel_speed = 10
     sim_slow=SimulationRT()
     t=Ticker(sim=sim_slow)
     sim_slow.activate(t,t.tick())
@@ -25,7 +25,7 @@ def test_ticker():
     for tSim, tRT in t.timing:
         assert tSim/tRT > rel_speed - 1
 
-    rel_speed = 40
+    rel_speed = 20
     sim_fast=SimulationRT()
     sim_fast.initialize()
     t=Ticker(sim=sim_fast)
