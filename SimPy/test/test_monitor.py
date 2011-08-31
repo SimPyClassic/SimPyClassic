@@ -356,6 +356,7 @@ class makeEquivTestCase(unittest.TestCase):
         tHistoAct = r.actMon.getHistogram()
         tHistoWait = r.waitMon.getHistogram()
 
+        print mHistoAct, tHistoAct
         assert mHistoAct == tHistoAct, 'actMon histograms are different'
         assert mHistoWait == tHistoWait, 'waitMon histograms are different'
 
