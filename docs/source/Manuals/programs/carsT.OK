@@ -1,0 +1,51 @@
+0 activate <Car1> at time: 4.0 prior: False
+0 activate <Car2> at time: 0 prior: False
+0 activate <Car3> at time: 3.0 prior: False
+0 activate <Car4> at time: 3.0 prior: False
+0 Car2 Starting
+0 request <Car2> <gasStation>  priority: default 
+. . .waitQ: [] 
+. . .activeQ: ['Car2']
+0 Car2 Got a pump
+0 hold <Car2> delay: 100.0
+3.0 Car3 Starting
+3.0 request <Car3> <gasStation>  priority: default 
+. . .waitQ: [] 
+. . .activeQ: ['Car2', 'Car3']
+3.0 Car3 Got a pump
+3.0 hold <Car3> delay: 100.0
+3.0 Car4 Starting
+3.0 request <Car4> <gasStation>  priority: default 
+. . .waitQ: ['Car4'] 
+. . .activeQ: ['Car2', 'Car3']
+4.0 Car1 Starting
+4.0 request <Car1> <gasStation>  priority: default 
+. . .waitQ: ['Car4', 'Car1'] 
+. . .activeQ: ['Car2', 'Car3']
+100.0 reactivate <Car4> time: 100.0 prior: 1
+100.0 release <Car2> <gasStation> 
+. . .waitQ: ['Car1'] 
+. . .activeQ: ['Car3', 'Car4']
+100.0 Car2 Leaving
+100.0 <Car2> terminated
+100.0 Car4 Got a pump
+100.0 hold <Car4> delay: 100.0
+103.0 reactivate <Car1> time: 103.0 prior: 1
+103.0 release <Car3> <gasStation> 
+. . .waitQ: [] 
+. . .activeQ: ['Car4', 'Car1']
+103.0 Car3 Leaving
+103.0 <Car3> terminated
+103.0 Car1 Got a pump
+103.0 hold <Car1> delay: 100.0
+200.0 release <Car4> <gasStation> 
+. . .waitQ: [] 
+. . .activeQ: ['Car1']
+200.0 Car4 Leaving
+200.0 <Car4> terminated
+203.0 release <Car1> <gasStation> 
+. . .waitQ: [] 
+. . .activeQ: []
+203.0 Car1 Leaving
+203.0 <Car1> terminated
+Current time is  203.0

@@ -1,0 +1,63 @@
+  0.0000 Clerk: leaves.  Free:1, 0 waiting
+  0.0000 Customer00: Arrived     
+  0.0000 Customer00: Got counter 
+  6.8329 Customer00: Finished    
+ 22.2064 Customer01: Arrived     
+ 22.2064 Customer01: Got counter 
+ 30.1802 Customer01: Finished    
+ 32.3277 Customer02: Arrived     
+ 32.3277 Customer02: Got counter 
+ 34.5627 Customer03: Arrived     
+ 42.3374 Customer02: Finished    
+ 42.3374 Customer03: Got counter 
+ 46.4642 Customer03: Finished    
+ 61.7697 Customer04: Arrived     
+ 61.7697 Customer04: Got counter 
+ 62.7137 Customer05: Arrived     
+ 64.8080 Customer06: Arrived     
+ 75.8700 Customer07: Arrived     
+ 75.8700 Clerk: needed .  Free:0, 2 waiting
+ 75.8700 Customer05: Got counter 
+ 82.5885 Customer08: Arrived     
+ 82.8967 Customer05: Finished    
+ 82.8967 Customer06: Got counter 
+ 84.1697 Customer09: Arrived     
+ 94.1098 Customer04: Finished    
+ 94.1098 Customer07: Got counter 
+103.4250 Customer07: Finished    
+103.4250 Customer08: Got counter 
+110.6135 Customer10: Arrived     
+115.0130 Customer11: Arrived     
+116.3242 Customer12: Arrived     
+123.1011 Customer08: Finished    
+123.1011 Customer09: Got counter 
+123.6851 Customer09: Finished    
+123.6851 Customer10: Got counter 
+125.0031 Customer13: Arrived     
+125.1319 Customer10: Finished    
+125.1319 Customer11: Got counter 
+128.4410 Customer06: Finished    
+128.4410 Customer12: Got counter 
+130.1398 Customer14: Arrived     
+136.6450 Customer15: Arrived     
+140.6794 Customer12: Finished    
+140.6794 Customer13: Got counter 
+143.9416 Customer16: Arrived     
+147.7832 Customer11: Finished    
+147.7832 Customer14: Got counter 
+154.7644 Customer13: Finished    
+154.7644 Customer15: Got counter 
+159.2281 Customer15: Finished    
+159.2281 Customer16: Got counter 
+159.2825 Customer14: Finished    
+159.2825 Clerk: leaves.  Free:0, 0 waiting
+160.7464 Customer17: Arrived     
+162.5982 Customer16: Finished    
+162.5982 Customer17: Got counter 
+164.8361 Customer17: Finished    
+184.4825 Customer18: Arrived     
+184.4825 Customer18: Got counter 
+190.1247 Customer19: Arrived     
+194.5255 Customer18: Finished    
+194.5255 Customer19: Got counter 
+199.1828 Customer19: Finished    

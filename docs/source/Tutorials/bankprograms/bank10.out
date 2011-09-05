@@ -1,0 +1,15 @@
+ 0.0000 Customer00: Here I am. [0, 0]
+ 0.0000 Customer00: Waited  0.000
+ 8.7558 Customer01: Here I am. [1, 0]
+ 8.7558 Customer01: Waited  0.000
+10.6770 Customer02: Here I am. [1, 1]
+20.6626 Customer03: Here I am. [2, 1]
+23.2580 Customer01: Finished
+23.2580 Customer03: Waited  2.595
+30.0878 Customer03: Finished
+37.0790 Customer04: Here I am. [2, 0]
+37.0790 Customer04: Waited  0.000
+55.0607 Customer00: Finished
+55.0607 Customer02: Waited 44.384
+62.1029 Customer04: Finished
+65.1067 Customer02: Finished

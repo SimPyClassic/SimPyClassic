@@ -1,0 +1,91 @@
+
+Advisory messages
++++++++++++++++++
+
+These messages are returned by ``simulate( )``, as in
+``message=simulate(until=123)``.
+
+Upon a normal end of a simulation, ``simulate( )`` returns the message:
+
+- **SimPy: Normal exit**. This means that no errors have occurred and
+  the simulation has run to the time specified by the ``until`` parameter.
+
+The following messages, returned by ``simulate( )``, are produced at a premature
+termination of the simulation but allow continuation of the program.
+
+- **SimPy: No more events at time x**. All processes were completed prior
+  to the *endtime* given in *simulate(until=endtime)*.
+
+- **SimPy: No activities scheduled**. No activities were scheduled
+  when *simulate( )* was called.
+
+Fatal error messages
+++++++++++++++++++++
+
+These messages are generated when SimPy-related fatal  exceptions occur.
+They end the SimPy program. Fatal SimPy error messages are output to
+*sysout*.
+
+- **Fatal SimPy error: activating function which is not a generator (contains no 'yield')**.
+  A process tried to (re)activate a function which is not a
+  SimPy process (=Python generator). SimPy processes must contain
+  at least one *yield . . .* statement.
+
+- **Fatal SimPy error: Simulation not initialized**. The SimPy program
+  called *simulate( )* before calling *initialize( )*.
+
+- **SimPy: Attempt to schedule event in the past**: A *yield hold* statement
+  has a negative delay time parameter.
+
+- **SimPy: initialBuffered exceeds capacity**: Attempt to initialize a Store
+  or Level with more units in the buffer than its capacity allows.
+
+- **SimPy: initialBuffered param of Level negative: x**: Attempt to
+  initialize a Level with a negative amount x in the buffer.
+
+- **SimPy: Level: wrong type of initialBuffered (parameter=x)**: Attempt to
+  initialize a buffer with a non-numerical initial buffer content x.
+
+- **SimPy: Level: put parameter not a number**: Attempt to add a
+  non-numerical amount to a Level's buffer.
+
+- **SimPy: Level: put parameter not positive number**: Attempt to add
+  a negative number to a Level's amount.
+
+- **SimPy: Level: get parameter not positive number: x**: Attempt to
+  get a negative amount x from a Level.
+
+- **SimPy: Store: initialBuffered not a list**: Attempt to initialize
+  a Store with other than a list of items in the buffer.
+
+- **SimPy: Item to put missing in yield put stmt**: A *yield put* was
+  malformed by not having a parameter for the item(s) to put into the
+  Store.
+
+- **SimPy: put parameter is not a list**: *yield put* for a Store must
+  have a parameter which is a list of items to put into the buffer.
+
+- **SimPy: Store: get parameter not positive number: x**: A *yield
+  get* for a Store had a negative value for the number to get from the
+  buffer.
+
+- **SimPy: Fatal error: illegal command: yield x**: A *yield*
+  statement with an undefined command code (first parameter) x was
+  executed.
+
+
+Monitor error messages
+++++++++++++++++++++++
+
+- **SimPy: No observations for mean**. No observations were made by the
+  monitor before attempting to calculate the mean.
+
+- **SimPy: No observations for sample variance**. No observations were made by the
+  monitor before attempting to calculate the sample variance.
+
+- **SimPy: No observations for timeAverage**, No observations
+  were made by the monitor before attempting to calculate the time-average.
+
+- **SimPy: No elapsed time for timeAverage**. No simulation
+  time has elapsed before attempting to calculate the time-average.
+

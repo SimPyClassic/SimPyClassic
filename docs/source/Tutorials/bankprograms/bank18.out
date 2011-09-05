@@ -1,0 +1,67 @@
+  0.0000 Customer00: Arrived     
+  0.0000 Customer00: Got counter 
+  5.6941 Customer01: Arrived     
+ 12.1456 Customer00: Finished    
+ 12.1456 Customer01: Got counter 
+ 12.3390 Customer02: Arrived     
+ 14.8276 Customer01: Finished    
+ 14.8276 Customer02: Got counter 
+ 20.6804 Customer03: Arrived     
+ 24.1194 Customer04: Arrived     
+ 25.0634 Customer05: Arrived     
+ 33.3096 Clerk: urgent.  Free:0, 3 waiting
+ 47.4760 Customer02: Finished    
+ 47.4760 Clerk: leaves.  Free:0, 3 waiting
+ 50.4760 Clerk: returns. Free:0, 2 waiting
+ 50.4760 Customer03: Got counter 
+ 52.0135 Customer06: Arrived     
+ 53.6175 Clerk: urgent.  Free:0, 3 waiting
+ 58.7319 Customer07: Arrived     
+ 63.7504 Customer03: Finished    
+ 63.7504 Clerk: leaves.  Free:0, 4 waiting
+ 64.5874 Customer08: Arrived     
+ 66.1686 Customer09: Arrived     
+ 66.7504 Clerk: returns. Free:0, 5 waiting
+ 66.7504 Customer04: Got counter 
+ 76.0656 Customer04: Finished    
+ 76.0656 Customer05: Got counter 
+ 95.7417 Customer05: Finished    
+ 95.7417 Customer06: Got counter 
+101.0212 Customer06: Finished    
+101.0212 Customer07: Got counter 
+102.5946 Customer07: Finished    
+102.5946 Customer08: Got counter 
+104.1222 Customer10: Arrived     
+104.6088 Customer11: Arrived     
+105.8145 Customer12: Arrived     
+106.4160 Clerk: urgent.  Free:0, 4 waiting
+110.9511 Customer13: Arrived     
+113.0093 Customer08: Finished    
+113.0093 Clerk: leaves.  Free:0, 5 waiting
+116.0093 Clerk: returns. Free:0, 4 waiting
+116.0093 Customer09: Got counter 
+123.8156 Customer09: Finished    
+123.8156 Customer10: Got counter 
+129.8273 Customer14: Arrived     
+131.3074 Clerk: urgent.  Free:0, 4 waiting
+132.5716 Customer10: Finished    
+132.5716 Clerk: leaves.  Free:0, 4 waiting
+135.5716 Clerk: returns. Free:0, 3 waiting
+135.5716 Customer11: Got counter 
+141.5647 Customer15: Arrived     
+145.2845 Customer16: Arrived     
+147.0709 Customer11: Finished    
+147.0709 Customer12: Got counter 
+148.0929 Customer17: Arrived     
+149.9579 Customer18: Arrived     
+155.6000 Customer19: Arrived     
+160.7788 Clerk: urgent.  Free:0, 7 waiting
+175.5542 Customer12: Finished    
+175.5542 Clerk: leaves.  Free:0, 7 waiting
+178.5542 Clerk: returns. Free:0, 6 waiting
+178.5542 Customer13: Got counter 
+183.2114 Customer13: Finished    
+183.2114 Customer14: Got counter 
+189.1412 Customer14: Finished    
+189.1412 Customer15: Got counter 
+199.9505 Clerk: urgent.  Free:0, 4 waiting

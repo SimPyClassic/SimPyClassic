@@ -1,0 +1,13 @@
+0 Car2 Starting
+0 Car2 Got a pump
+3.0 Car3 Starting
+3.0 Car3 Got a pump
+3.0 Car4 Starting
+4.0 Car1 Starting
+100.0 Car2 Leaving
+100.0 Car4 Got a pump
+103.0 Car3 Leaving
+103.0 Car1 Got a pump
+200.0 Car4 Leaving
+203.0 Car1 Leaving
+Current time is  203.0

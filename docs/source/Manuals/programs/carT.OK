@@ -1,0 +1,11 @@
+0 activate <Car1> at time: 6.0 prior: False
+0 activate <Car2> at time: 0 prior: False
+0 Car2 Starting
+0 hold <Car2> delay: 100.0
+6.0 Car1 Starting
+6.0 hold <Car1> delay: 100.0
+100.0 Car2 Arrived
+100.0 <Car2> terminated
+106.0 Car1 Arrived
+106.0 <Car1> terminated
+Current time is  106.0
