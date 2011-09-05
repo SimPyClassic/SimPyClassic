@@ -2,18 +2,13 @@ Changelog for SimPy
 ==============================
 
 
-v3.0 – 2011-:
-------------------
-
-- [NEW] Python 3 compatibility \o/
-- [CHANGE] Many API changes (see docs)
-
-
 v2.2 – 2011-:
 ------------------
 
 - [CHANGE] Restructured package layout to be conform to the `Hitchhiker’s Guide
   to packaging <http://guide.python-distribute.org/>`_
+- [CHANGE] Tests have been ported to pytest.
+- [CHANGE] Documentation improvements and clean-ups.
 
 
 v2.1 – 2010-06-03:
