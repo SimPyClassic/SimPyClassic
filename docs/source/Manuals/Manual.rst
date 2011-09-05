@@ -3193,7 +3193,7 @@ Glossary
 .. some useful stuff used above
 
 
-.. |simpylogo| image:: images/sm_SimPy_Logo.png
+.. .. |simpylogo| image:: images/sm_SimPy_Logo.png
 .. _`simpydownload`: http://sourceforge.net/projects/simpy/
 
 .. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
