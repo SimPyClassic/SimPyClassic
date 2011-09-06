@@ -30,10 +30,8 @@ Simulation with SimPy - In Depth Manual
    :depth: 2
 
 
-
-
-This document describes SimPy version 2.0.  Changes from version 1.9.1
-are listed in `Appendix A0`_.
+This document describes SimPy version 2.2.  Changes from the previous
+version are listed in `Appendix A0`_.
 
 
 .. note::

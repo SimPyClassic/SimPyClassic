@@ -1,11 +1,11 @@
 =================================
-Welcome to SimPy's documentation!
+Documentation for SimPy
 =================================
 
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    SimPy_Overview
    Acknowledgments
