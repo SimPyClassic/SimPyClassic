@@ -2,6 +2,9 @@
 SimPy Overview
 ==============
 
+.. toctree::
+   :maxdepth: 1
+
 SimPy_ is a process-based discrete-event simulation language based on standard
 Python and released under the GNU LGPL. It provides the modeller with
 components of a simulation model including *processes*, for active components

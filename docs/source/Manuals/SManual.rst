@@ -20,7 +20,7 @@
 .. |svnversion| replace:: $Revision: 470 $
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
-.. |init| replace:: ``_ginit__``
+.. |init| replace:: ``__init__``
 .. ================================================================
 
 

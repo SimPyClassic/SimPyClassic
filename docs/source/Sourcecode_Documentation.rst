@@ -1,10 +1,11 @@
-Sourcecode Documentation
+========================
+ Sourcecode Documentation
 ========================
 
 This distribution contains automatically generated, browseable sourcecode
 documentation at  *SimPyDocs/SimPy_Sourcecode_Documentation/index.html*.
 
-Users should bookmark this link in their browser. This  documentation is most
+Users should bookmark this link in their browser. This documentation is most
 useful for looking up method parameters and for understanding how SimPy is
 structured and built.
 

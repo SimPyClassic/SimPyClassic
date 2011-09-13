@@ -2,7 +2,7 @@
 Acknowledgments
 ===============
 
-SimPy 2.0 has been primarily developed by Stefan Scherfke and  Ontje Lünsdorf,
+SimPy |release| has been primarily developed by Stefan Scherfke and  Ontje Lünsdorf,
 starting from SimPy 1.9. Their work has  resulted in a most elegant combination
 of an object oriented API with the existing API, maintaining full backward
 compatibility.  It has been quite easy to integrate their product into the

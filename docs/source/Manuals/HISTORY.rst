@@ -14,6 +14,11 @@ The package has been hosted on Sourceforge.net since 15 September 2002.
 Sourceforge.net's service has always been outstanding. It is essential to
 the SimPy project! Thanks, all you people at SourceForge!
 
+September 2011: Release 2.2b1
+=============================
+
+Worked on tests.......
+
 April 2009: Release 2.0.1
 ==========================
 

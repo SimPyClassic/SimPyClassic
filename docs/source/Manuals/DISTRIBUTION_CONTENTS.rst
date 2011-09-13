@@ -35,3 +35,5 @@ SimPy |release| contains the following files:
 * docs/examples - some SimPy models (in traditional and Object Oriented API)
 
     * Bankmodels - a sub-directory with the models of the Bank tutorials (in traditional and Object Oriented API)
+
+ *  LICENSE.txt - GNU Lesser General Public Licence text

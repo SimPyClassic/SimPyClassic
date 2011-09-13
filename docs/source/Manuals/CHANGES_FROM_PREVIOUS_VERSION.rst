@@ -1,8 +1,8 @@
-Changes from Release 2.0.0
+Changes from Release |release|
 ==========================
 
 This section addresses the difference between SimPy versions 2.0 and release
-2.0.1 in terms of changes and additions.
+|release| in terms of changes and additions.
 
 Bug fixes
 ---------
