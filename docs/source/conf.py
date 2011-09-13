@@ -56,7 +56,7 @@ authors = [
     'Stefan Scherfke',
 ]
 project = u'SimPy'
-copyright = '2002, ' + ', '.join(authors)
+copyright = '2002-2011, ' + ', '.join(authors)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -126,7 +126,7 @@ html_theme = 'default'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = None
+html_logo = "_static/sm_SimPy_Logo.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32

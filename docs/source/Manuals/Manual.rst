@@ -30,10 +30,8 @@ Simulation with SimPy - In Depth Manual
    :depth: 2
 
 
-
-
-This document describes SimPy version 2.0.  Changes from version 1.9.1
-are listed in `Appendix A0`_.
+This document describes SimPy version 2.2.  Changes from the previous
+version are listed in `Appendix A0`_.
 
 
 .. note::
@@ -3193,7 +3191,7 @@ Glossary
 .. some useful stuff used above
 
 
-.. |simpylogo| image:: images/sm_SimPy_Logo.png
+.. .. |simpylogo| image:: images/sm_SimPy_Logo.png
 .. _`simpydownload`: http://sourceforge.net/projects/simpy/
 
 .. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html

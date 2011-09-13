@@ -5,9 +5,9 @@
 .. highlight:: python
    :linenothreshold: 5
 
-.. ======================================================
-   Basic SimPy - Manual For First Time Users
-   ======================================================
+======================================================
+SimPy For First Time Users
+======================================================
 
 :Authors: G A Vignaux and Klaus Muller
 :Date:  |today|
@@ -24,8 +24,8 @@
 .. ================================================================
 
 
-.. .. contents:: Contents
-      :depth: 2
+.. contents:: Contents
+   :depth: 2
 
 
 
