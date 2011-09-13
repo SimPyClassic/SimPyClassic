@@ -45,6 +45,12 @@ You can also download and install SimPy manually::
     $ python setup.py install
 
 
+If you want to upgrade an existing installation of SimPy, just add the ``-U``
+option to *pip* or *easy_install*, e.g.::
+
+    $ pip install -U SimPy
+
+
 Getting started
 ---------------
 

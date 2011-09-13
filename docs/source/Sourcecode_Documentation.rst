@@ -1,5 +1,5 @@
 ========================
- Sourcecode Documentation
+Sourcecode Documentation
 ========================
 
 This distribution contains automatically generated, browseable sourcecode

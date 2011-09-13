@@ -1,5 +1,5 @@
 Changes from Release |release|
-==========================
+==============================
 
 This section addresses the difference between SimPy versions 2.0 and release
 |release| in terms of changes and additions.
