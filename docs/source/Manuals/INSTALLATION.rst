@@ -10,8 +10,15 @@ This file describes the installation of SimPy |release|.
 
 2. Download and unpack the SimPy archive into a folder (using option "Use
    folder names" in WinZip, "Re-create folders" in Linux Archive Manager, or
+<<<<<<< local
+   similar option in your unpacker). This will create a |release| folder with
+   all source code and documentation.	Run "python setup.py install" in that
+   folder. This will install the SimPy programs in a folder on the Python
+   search path (typically /Lib/site-packages).
+=======
    similar option in your unpacker). This will create a SimPy-|release| folder with
    all source code and documentation.	
+>>>>>>> other
 
 3. You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_
 (or ``easy_install``)::
