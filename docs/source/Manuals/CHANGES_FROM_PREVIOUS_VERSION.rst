@@ -1,27 +1,12 @@
 Changes from Release |release|
 ==============================
 
-This section addresses the difference between SimPy versions 2.0 and release
+This section addresses the difference between previous SimPy version 2.1.0 and 
 |release| in terms of changes and additions.
 
-Bug fixes
----------
+Changes from 2.1.0 to 2.2.b1
+----------------------------
 
-- Repaired a number of coding errors in several
-  models in the SimPyModels folder.
-
-- Repaired SimulationRT.py bug introduced by recoding for the OO API.
-
-- Repaired errors in sample programs in documents:
-
-  * Simulation with SimPy - In Depth Manual
-  * SimPy's Object Oriented API Manual
-  * Simulation With Real Time Synchronization Manual
-  * SimPlot Manual
-  * Publication-quality Plot Production With Matplotlib Manual
-
-Additions
----------
-
-- Tests for real time behavior (testRT_Behavior.py and
-  testRT_Behavior_OO.py in folder SimPy).
+- The Unix tests have been rewritten
+- The directory sturcture of the release has been simplified
+- The documentation has had some minor changes

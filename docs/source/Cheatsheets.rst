@@ -2,7 +2,8 @@ Cheatsheets
 ===========
 
 If you want to have a list of all SimPy commands, their syntax and parameters
-for your desktop, print out a copy of the **SimPy Cheatsheet**.
+for your desktop, print out a copy of the **SimPy Cheatsheet**, or better yet bookmark
+them in your favorite browser.
 
 The Cheatsheet comes in the following formats:
 

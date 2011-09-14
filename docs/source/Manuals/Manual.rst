@@ -30,7 +30,7 @@ Simulation with SimPy - In Depth Manual
    :depth: 2
 
 
-This document describes SimPy version 2.2.  Changes from the previous
+This document describes SimPy version |release|.  Changes from the previous
 version are listed in `Appendix A0`_.
 
 
@@ -39,8 +39,10 @@ version are listed in `Appendix A0`_.
    This document does **not** describe the object oriented (OO) API
    which has been added to SimPy with version 2.0. SimPy 2.0
    is fully backward compatible with previous versions. The
-   procedural API and the OO API co-exist happily in SimPy 2.0.
+   procedural API and the OO API co-exist happily in SimPy 2.x.
 
+.. [#] The variable ``version``, imported from ``SimPy.Simulation``,
+       contains the revision number and date of the current version.
 
 Introduction
 -------------------
@@ -140,6 +142,7 @@ expound it here. You can find out more about it and download it from
 the Python_ web-site (http://www.Python.org). SimPy requires *Python*
 2.3 or later.
 
+[Return to Top_ ]
 
 Simulation with SimPy
 -------------------------
@@ -211,8 +214,8 @@ function is called to display the results::
   Report()  #  report results when the simulation finishes
 
 
-The object-oriented programmers interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The object-oriented interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An object-oriented API interface was added in SimPy 2.0.  It is
 described more fully in ``SimPyOO_API``\. It defines a class of
@@ -230,8 +233,8 @@ at the end of the previous subsection would look like this::
 
   Report()  #  report results when the simulation finishes
 
-Further examples of the OO style exist in the *SimPyModels* directory.
-
+Further examples of the OO style exist in the *SimPyModels* directory 
+and the *Bank Tutorial*. 
 
 Alternative SimPy simulation libraries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -264,6 +267,8 @@ capabilities, plus additional facilities:
    for user control. The event list, Process and Resource objects are
    shown in windows. This is useful for debugging models and for teaching
    discrete event simulation with SimPy.
+
+[Return to Top_ ]
 
 .. ==================================================================
 
@@ -366,7 +371,7 @@ Creating a process object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An entity (process object) is created in the usual Python manner by
-calling the Class. Process classes have a single argument, ``name``
+calling the class. Process classes have a single argument, ``name``
 which can be specified if no |init| method is defined. It defaults to
 ``'a_process'``. It can be over-ridden if an |init| method is defined.
 
@@ -377,6 +382,15 @@ For example to create a new ``Message`` object with a name
 
 
 --------
+
+.. note:: When working through this and all other SimPy manuals,
+   the reader is encouraged to type in, run and experiment with 
+   all examples as she goes. No better way of learning exists
+   than **doing**! A suggestion: if you want to see how a SimPy
+   model is being executed, *trace* it by replacing `from SimPy.Simulation 
+   import *` with `from SimPy.SimulationTrace import *`.
+   Any Python environment is suitable -- an interactive Python session,
+   IDLE, IPython, Scite . . . 
 
 .. _`Example 1`:
 
@@ -3030,6 +3044,7 @@ under- and over-count bins)::
    * ``r.accum(y [,t])`` records the current value of ``y`` and time ``t``
      (the current time, ``now( )``, if ``t`` is missing). (DO NOT USE)
 
+[Return to Top_ ]
 
 .. -------------------------------------------------------------------------
 
@@ -3050,6 +3065,7 @@ David Mertz, *Charming Python: SimPy simplifies complex models*, IBM
 Developer Works, Dec 2002,
 http://www-106.ibm.com/developerworks/linux/library/l-simpy.html
 
+[Return to Top_ ]
 
 Acknowledgments
 -------------------
@@ -3066,21 +3082,20 @@ Appendices
 -------------
 
 
-A0. Changes from the previous  version of SimPy
+A0. Changes from the previous version of SimPy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SimPy 2.0 differs from version 1.9.1 in the following ways:
+SimPy 2.2b1 differs from version 2.1 in the following ways:
 
 **Additions:**
 
-- New (object oriented) API added.
-- Documentation on running SimPy in parallel processes on multiple CPUs,
-  cores or computerswith Parallel Pythonf
+
 
 **Changes:**
 
-- The documentation is now formattted using the Sphinx documentation generator.
-
+- The Unix tests have been rewritten
+- The directory sturcture of the release has been simplified
+- The documentation has had some minor changes
 
 
 
@@ -3174,6 +3189,7 @@ This capability can be used to implement, e.g., interactive game applications or
 to demonstrate a model's execution in real time.
 
 
+[Return to Top_ ]
 
 .. _glossary:
 

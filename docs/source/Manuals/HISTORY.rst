@@ -4,7 +4,7 @@ SimPy History
 
 SimPy is based on ideas from Simula and Simscript but uses standard
 Python. It combines two previous packages, SiPy, in Simula-Style
-(Klaus Muller) and SimPy, in Simscript style (Tony.Vignaux and
+(Klaus Muller) and SimPy, in Simscript style (Tony Vignaux and
 Chang Chui)
 
 SimPy is based on efficient implementation of co-routines using
@@ -17,7 +17,51 @@ the SimPy project! Thanks, all you people at SourceForge!
 September 2011: Release 2.2b1
 =============================
 
-Worked on tests.......
+- The Unix tests have been rewritten
+- The directory sturcture of the release has been simplified
+- The documentation has had some minor changes
+
+May 2010: Version 2.1.0
+=======================
+
+A major release of SimPy, with a new code base, a (small) number of additions to the API, and
+added documentation.
+
+Additions
+~~~~~~~~~~~
+
+- A function `step` has been added to the API. When called, it executes 
+  the next scheduled event. (`step` is actually a method of Simulation.)
+- Another new function is `peek`. It returns the time of the next event. 
+  By using `peek` and `step` together, one can easily write e.g. an
+  interactive program to step through a simulation event by event.
+- A simple interactive debugger ``stepping.py`` has been added. It allows
+  stepping through a simulation, with options to skip to a certain time, 
+  skip to the next event of a given process, or viewing the event list.
+- Versions of the Bank tutorials (documents and programs) using the advanced 
+  object-oriented API have been added.
+- A new document describes tools for gaining insight into and debugging SimPy
+  models.
+
+Changes
+~~~~~~~~~~
+
+- Major re-structuring of SimPy code, resulting in much less
+  SimPy code -- great for the maintainers.
+- Checks have been added which test whether entities belong to the 
+  same `Simulation` instance.
+- The `Monitor` and `Tally` methods `timeAverage` and `timeVariance` 
+  now calculate only with the observed time-series. No value is 
+  assumed for the period prior to the first observation.
+- Changed class `Lister` so that circular references between
+  objects no longer lead to stack overflow and crash.
+  
+Repairs
+~~~~~~~~~
+
+- Functions `allEventNotices` and `allEventTimes` are working again.
+- Error messages for methods in SimPy.Lib work again.
+
 
 April 2009: Release 2.0.1
 ==========================
