@@ -14,7 +14,7 @@ This file describes the installation of SimPy |release|.
    all source code and documentation.	
 
 3. You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_
-(or ``easy_install``)::
+   (or ``easy_install``)::
 
     $ pip install SimPy-|release|
     $ # or:
