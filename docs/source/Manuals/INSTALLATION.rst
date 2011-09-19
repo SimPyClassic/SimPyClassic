@@ -24,17 +24,19 @@ This file describes the installation of SimPy |release|.
    SimPy. This also applies to the installing SimPy manually as described
    below.
 
-#. To manually install SimPy or to execute the examples, download and unpack
+#. To manually install a SimPy tarball, or to execute the examples, download and unpack
    the SimPy archive into a folder (using option "Use folder names" in WinZip,
    "Re-create folders" in Linux Archive Manager, or similar option in your
    unpacker). This will create a SimPy-|release| folder with all source code
    and documentation.
 
    Open a terminal, *cd* to the SimPy folder and execute
-   *setup.py*::
+  *setup.py* or *easy_install .*::
 
     $ cd where/you/put/simpy/SimPy-x.y
     $ python setup.py install
+    or
+    $ easy_install .
 
    If you do not have permissions to perform the installation as root, you can
    install SimPy into a non-standard folder::

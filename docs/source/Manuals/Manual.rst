@@ -3093,7 +3093,7 @@ SimPy 2.2b1 differs from version 2.1 in the following ways:
 
 **Changes:**
 
-- The Unix tests have been rewritten
+- The Unit tests have been rewritten
 - The directory structure of the release has been simplified
 - The documentation has had some minor changes
 
