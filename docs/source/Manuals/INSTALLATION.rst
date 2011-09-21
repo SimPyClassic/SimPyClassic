@@ -4,47 +4,55 @@ Installation
 
 This file describes the installation of SimPy |release|.
 
-1. Check that you have Python 2.3 or above. Python 3 is not yet supported, but we are
-   working on it. If necessary, download Python from http://www.python.org and
-   install it.
+#. Check that you have Python 2.3 or above. Python 3 is not yet supported, but
+   we are working on it. If necessary, download Python from http://python.org
+   and install it.
 
-2. Download and unpack the SimPy archive into a folder (using option "Use
-   folder names" in WinZip, "Re-create folders" in Linux Archive Manager, or
-   similar option in your unpacker). This will create a SimPy-|release| folder with
-   all source code and documentation.	
+#. You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_
+   (or ``easy_install``)::
 
-3. You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_
-(or ``easy_install``)::
-
-    $ pip install SimPy-|release|
+    $ pip install SimPy
     $ # or:
-    $ easy_install SimPy-|release|
+    $ easy_install SimPy
 
-   Remember on Linux/MacOS/Unix you may need *root* privileges to be install
+   If SimPy is already installed, use the *-U* option for pip/easy_install to
+   upgrade::
+
+    $ pip install -U SimPy
+
+   Remember, on Linux/MacOS/Unix you may need *root* privileges to install
    SimPy. This also applies to the installing SimPy manually as described
    below.
-  
-   You can also download and install SimPy manually::
 
-    $ cd where/you/put/simpy/SimPy-|release|
+#. To manually install a SimPy tarball, or to execute the examples, download
+   and unpack the SimPy archive into a folder (using option "Use folder names"
+   in WinZip, "Re-create folders" in Linux Archive Manager, or similar option
+   in your unpacker). This will create a SimPy-|release| folder with all source
+   code and documentation.
+
+   Open a terminal, *cd* to the SimPy folder and execute *setup.py* or
+   *easy_install .* or *pip install .*::
+
+    $ cd where/you/put/simpy/SimPy-x.y
     $ python setup.py install
+    $ # or
+    $ easy_install .
+    $ # or
+    $ pip install .
 
-   You can install a new SimPy distribution to a non-standard folder::
+   If you do not have permissions to perform the installation as root, you can
+   install SimPy into a non-standard folder::
 
-    $ cd where/you/put/simpy/SimPy-|release|
-    $ python setup.py install --home<dir>
+    $ cd where/you/put/simpy/SimPy-x.y
+    $ python setup.py install --home <dir>
 
-    This is useful if you do not have permission perform the installation as
-    described above.
-
-
-4. Run one or more of the programs under *docs/examples to see
+#. Run one or more of the programs under *docs/examples* to see
    whether Python finds the SimPy module. If you get an error message
    like *ImportError: No module named SimPy*, move the SimPy folder
    into a directory which you know to be on the Python module search
    path (like /Lib/site-packages).
 
-5. The tutorial and manuals are in the *docs/html* folder. Many users have
+#. The tutorial and manuals are in the *docs/html* folder. Many users have
    commented that the Bank tutorials are valuable in getting users started on
    building their own simple models. Even a few lines of Python and SimPy can
    model significant real systems.

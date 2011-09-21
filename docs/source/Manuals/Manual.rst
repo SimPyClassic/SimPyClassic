@@ -3093,8 +3093,8 @@ SimPy 2.2b1 differs from version 2.1 in the following ways:
 
 **Changes:**
 
-- The Unix tests have been rewritten
-- The directory sturcture of the release has been simplified
+- The Unit tests have been rewritten
+- The directory structure of the release has been simplified
 - The documentation has had some minor changes
 
 
@@ -3237,9 +3237,7 @@ Glossary
     :height: 37
     :alt:  SourceForge Logo
 
-.. ----------------------------------------------------------------------------
-.. $Revision: 313 $ $Date: 2009-04-05 11:25:11 +1200 (Sun, 05 Apr 2009) $
-.. ----------------------------------------------------------------------------
+
 
 
 

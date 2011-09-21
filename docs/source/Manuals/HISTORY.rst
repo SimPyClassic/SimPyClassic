@@ -17,7 +17,7 @@ the SimPy project! Thanks, all you people at SourceForge!
 September 2011: Release 2.2b1
 =============================
 
-- The Unix tests have been rewritten
+- The Unit tests have been rewritten. 
 - The directory sturcture of the release has been simplified
 - The documentation has had some minor changes
 
