@@ -5,3 +5,7 @@ became active maintainers in 2011.
 
 In 2011, Karen Turner came on board to generally help with all the bits and
 pieces that may get forgotten :-)
+
+We’d also like to thank:
+
+- Johannes Koomer for a fix for Store._put.

@@ -9,6 +9,8 @@ v2.2 – 2011-:
   to packaging <http://guide.python-distribute.org/>`_
 - [CHANGE] Tests have been ported to pytest.
 - [CHANGE] Documentation improvements and clean-ups.
+- [FIX] Fixed incorrect behavior of Store._put, thanks to Johannes Koomer for
+  the fix.
 
 
 v2.1 – 2010-06-03:
