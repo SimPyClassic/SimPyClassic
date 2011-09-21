@@ -524,7 +524,7 @@ the full SimPy Manual. ``prior`` is an advanced technique for fine control
 of PEM priorities but seldom affects simulated operations and so
 normally can be ignored/)
 
-.. include:: programs/carT.OK
+.. include:: programs/carT.out
    :literal:
 
 
@@ -685,7 +685,7 @@ request a ``pump`` and use it for 100 time units:
 
 This program results in the following output:
 
-.. literalinclude:: programs/cars.OK
+.. literalinclude:: programs/cars.out
 
 
 And, if we use ``SimPy.SimulationTrace`` to get an automatic trace we
@@ -973,7 +973,7 @@ for every event executed. (The ``request`` at time ``3.0``, for
 example, lists the contents of the ``waitQ`` and the ``activeQ`` for
 the ``gasstation``.)
 
-.. literalinclude:: programs/carsT.OK
+.. literalinclude:: programs/carsT.out
    :linenos:
 
 ..

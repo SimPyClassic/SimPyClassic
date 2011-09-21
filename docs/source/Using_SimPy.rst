@@ -11,3 +11,4 @@ Using SimPy
    Manuals/Tracing
    Manuals/SimRTManual
    Manuals/SimStepManual
+   Manuals/Examples
