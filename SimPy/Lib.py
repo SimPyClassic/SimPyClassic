@@ -1,10 +1,10 @@
 # coding=utf-8
 """
-This file contains Simerror, FatalSimerror, Process, SimEvent, 
-the resources Resource, Level and Storage 
+This file contains Simerror, FatalSimerror, Process, SimEvent,
+the resources Resource, Level and Storage
 as well as their dependencies Buffer, Queue, FIFO and PriorityQ.
 """
-# $Revision$ $Date$ kgm
+# $Revision: 515 $ $Date: 2010-05-27 18:21:06 +0200 (Do, 27 Mai 2010) $ kgm
 # SimPy version: 2.1
 import inspect
 import new
@@ -48,7 +48,7 @@ class Process(Lister):
         self._priority={}
         self._getpriority={}
         self._putpriority={}
-        self._terminated = False     
+        self._terminated = False
         self._inInterrupt = False
         self.eventsFired = [] #which events process waited / queued for occurred
         if hasattr(sim, 'trace'):
@@ -57,7 +57,7 @@ class Process(Lister):
             self._doTracing = False
 
     def active(self):
-        return self._nextTime <> None and not self._inInterrupt 
+        return self._nextTime <> None and not self._inInterrupt
 
     def passive(self):
         return self._nextTime is None and not self._terminated
@@ -70,8 +70,8 @@ class Process(Lister):
 
     def queuing(self, resource):
         return self in resource.waitQ
-          
-    def cancel(self, victim): 
+
+    def cancel(self, victim):
         """Application function to cancel all event notices for this Process
         instance;(should be all event notices for the _generator_)."""
         self.sim._unpost(whom = victim)
@@ -93,7 +93,7 @@ class Process(Lister):
         if not (type(pem) == types.GeneratorType):
             raise FatalSimerror('activating function which'+
                            ' is not a generator (contains no \'yield\')')
-        if not self._terminated and not self._nextTime: 
+        if not self._terminated and not self._nextTime:
             #store generator reference in object; needed for reactivation
             self._nextpoint = pem
             if at == 'undefined':
@@ -106,14 +106,14 @@ class Process(Lister):
                 self.sim.trace.recordActivate(who = self, when = zeit,
                                                prior = prior)
             self.sim._post(what = self, at = zeit, prior = prior)
-            
+
     def _hold(self, a):
         if len(a[0]) == 3: ## yield hold,self,delay
             delay = a[0][2]
             if delay < 0:
                 raise FatalSimerror('hold: delay time negative: %s, in %s' % (
                                      delay, str(a[0][1])))
-        else:              ## yield hold,self     
+        else:              ## yield hold,self
             delay = 0
         who = a[1]
         self.interruptLeft = delay
@@ -175,14 +175,14 @@ class Process(Lister):
                     res.waitMon.observe(len(res.waitQ),t = self.sim.now())
             return test
         elif isinstance(res, Store):
-            test = len(self.got)  
+            test = len(self.got)
             if test:
                 self.cancel(self._holder)
             else:
                 res.getQ.remove(self)
                 if res.monitored:
                     res.getQMon.observe(len(res.getQ),t = self.sim.now())
-            return test 
+            return test
         elif isinstance(res, Level):
             test = not (self.got is None)
             if test:
@@ -191,12 +191,12 @@ class Process(Lister):
                 res.getQ.remove(self)
                 if res.monitored:
                     res.getQMon.observe(len(res.getQ),t = self.sim.now())
-            return test 
+            return test
 
     def stored(self, buffer):
         """Test for reneging for 'yield put . . .' compound statement (Level and
         Store. Returns True if not reneged.
-        If self not in buffer.putQ, kill wakeup process, else take self out of 
+        If self not in buffer.putQ, kill wakeup process, else take self out of
         buffer.putQ (reneged)"""
         test = self in buffer.putQ
         if test:    #reneged
@@ -225,7 +225,7 @@ class SimEvent(Lister):
             self._doTracing = True
         else:
             self._doTracing = False
-        
+
     def signal(self, param = None):
         """Produces a signal to self;
         Fires this event (makes it occur).
@@ -269,7 +269,7 @@ class SimEvent(Lister):
             if not (proc.sim == self.sim):
                 raise FatalSimerror,\
                 "waitevent: Process %s, SimEvent %s not in "\
-                "same Simulation instance"%(proc.name,self.name) 
+                "same Simulation instance"%(proc.name,self.name)
         proc.eventsFired = []
         if not self.occurred:
             self.waits.append([proc, [self]])
@@ -292,7 +292,7 @@ class SimEvent(Lister):
                 if not (proc.sim == ev.sim):
                     raise FatalSimerror,\
                     "waitevent: Process %s, SimEvent %s not in "\
-                    "same Simulation instance"%(proc.name,ev.name) 
+                    "same Simulation instance"%(proc.name,ev.name)
             if ev.occurred:
                 anyoccur = True
                 proc.eventsFired.append(ev)
@@ -317,7 +317,7 @@ class SimEvent(Lister):
             if not (proc.sim == self.sim):
                 raise FatalSimerror,\
                 "queueevent: Process %s, SimEvent %s not in "\
-                "same Simulation instance"%(proc.name,self.name) 
+                "same Simulation instance"%(proc.name,self.name)
         if not self.occurred:
             self.queues.append([proc, [self]])
             proc._nextTime = None #passivate calling process
@@ -339,7 +339,7 @@ class SimEvent(Lister):
                 if not (proc.sim == ev.sim):
                     raise FatalSimerror,\
                     "yield queueevent: Process %s, SimEvent %s not in "\
-                    "same Simulation instance"%(proc.name,ev.name) 
+                    "same Simulation instance"%(proc.name,ev.name)
             if ev.occurred:
                 anyoccur = True
                 proc.eventsFired.append(ev)
@@ -368,12 +368,12 @@ class Queue(list):
 
     def leave(self):
         pass
-        
+
     def takeout(self, obj):
         self.remove(obj)
         if self.monit:
             self.moni.observe(len(self), t = self.moni.sim.now())
-    
+
 class FIFO(Queue):
     def __init__(self, res, moni):
         Queue.__init__(self, res, moni)
@@ -382,10 +382,10 @@ class FIFO(Queue):
         self.append(obj)
         if self.monit:
             self.moni.observe(len(self),t = self.moni.sim.now())
-            
+
     def enterGet(self, obj):
         self.enter(obj)
-        
+
     def enterPut(self, obj):
         self.enter(obj)
 
@@ -417,7 +417,7 @@ class PriorityQ(FIFO):
             self.append(obj)
         if self.monit:
             self.moni.observe(len(self),t = self.moni.sim.now())
-            
+
     def enterGet(self, obj):
         """Handles getQ in Buffer"""
         if len(self):
@@ -434,7 +434,7 @@ class PriorityQ(FIFO):
             self.append(obj)
         if self.monit:
             self.moni.observe(len(self),t = self.moni.sim.now())
-            
+
     def enterPut(self, obj):
         """Handles putQ in Buffer"""
         if len(self):
@@ -456,14 +456,14 @@ class Resource(Lister):
     """Models shared, limited capacity resources with queuing;
     FIFO is default queuing discipline.
     """
-    
+
     def __init__(self, capacity = 1, name = 'a_resource', unitName = 'units',
                  qType = FIFO, preemptable = 0, monitored = False,
                  monitorType = Monitor,sim = None):
         """
         monitorType={Monitor(default) | Tally}
         """
-        
+
         if sim is None: sim = Globals.sim # Use global simulation if sim is Non
         self.sim = sim
         self.name = name          # resource name
@@ -491,7 +491,7 @@ class Resource(Lister):
         # Initialize monitors
         if self.monitored:
             monact.observe(t = self.sim.now(), y = len(self.activeQ))
-            monwait.observe(t = self.sim.now(), y = len(self.waitQ))        
+            monwait.observe(t = self.sim.now(), y = len(self.waitQ))
 
     def _request(self, arg):
         """Process request event for this resource"""
@@ -515,7 +515,7 @@ class Resource(Lister):
                 # Keep track of preempt level
                 z._preempted += 1
                 # suspend lowest priority process being served
-                # record remaining service time at first preempt only 
+                # record remaining service time at first preempt only
                 if z._preempted == 1:
                     z._remainService = z._nextTime - self.sim._t
                     # cancel only at first preempt
@@ -683,7 +683,7 @@ class Level(Buffer):
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
                 "put: Process %s, Level %s not in "\
-                "same Simulation instance"%(obj.name,self.name) 
+                "same Simulation instance"%(obj.name,self.name)
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
             obj._putpriority[self] = arg[0][4]
             whatToPut = arg[0][3]
@@ -730,7 +730,7 @@ class Level(Buffer):
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
                 "get: Process %s, Level %s not in "\
-                "same Simulation instance"%(obj.name,self.name) 
+                "same Simulation instance"%(obj.name,self.name)
         obj.got = None
         if len(arg[0]) == 5:        # yield get, self, buff, whattoget, priority
             obj._getpriority[self] = arg[0][4]
@@ -782,11 +782,11 @@ class Store(Buffer):
     def getnrBuffered(self):
         return len(self.theBuffer)
     nrBuffered = property(getnrBuffered)
-    
+
     def getbuffered(self):
         return self.theBuffer
     buffered = property(getbuffered)
-        
+
     def __init__(self,**pars):
         Buffer.__init__(self,**pars)
         self.theBuffer = []
@@ -803,7 +803,7 @@ class Store(Buffer):
             else:
                 ## buffer receives list of objects
                 self.theBuffer[:] = self.initialBuffered
-        elif self.initialBuffered is None: 
+        elif self.initialBuffered is None:
             self.theBuffer = []
         else:
             raise FatalSimerror\
@@ -811,25 +811,25 @@ class Store(Buffer):
         if self.monitored:
             self.bufferMon.observe(y = self.nrBuffered, t = self.sim.now())
         self._sort = None
-            
 
-    
+
+
     def addSort(self, sortFunc):
         """Adds buffer sorting to this instance of Store. It maintains
         theBuffer sorted by the sortAttr attribute of the objects in the
         buffer.
         The user - provided 'sortFunc' must look like this:
-        
+
         def mySort(self, par):
             tmplist = [(x.sortAttr, x) for x in par]
             tmplist.sort()
             return [x for (key, x) in tmplist]
-        
+
         """
 
         self._sort = new.instancemethod(sortFunc, self, self.__class__)
         self.theBuffer = self._sort(self.theBuffer)
-        
+
     def _put(self, arg):
         """Handles put requests for Store instances"""
         obj = arg[1]
@@ -838,7 +838,7 @@ class Store(Buffer):
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
                 "put: Process %s, Store %s not in "\
-                "same Simulation instance"%(obj.name,self.name)       
+                "same Simulation instance"%(obj.name,self.name)
         whichSim=self.sim
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
             obj._putpriority[self] = arg[0][4]
@@ -865,8 +865,16 @@ class Store(Buffer):
             # service any waiting getters
             # service in queue order: do not serve second in queue before first
             # has been served
-            while self.nrBuffered > 0 and len(self.getQ):
-                proc = self.getQ[0]
+            #
+            # [jkoomen@xeroxlabs.com / 2011-08-16]
+            # Documentation says that
+            # "yield get requests with a numerical parameter are honored in priority/FIFO order"
+            # but
+            # "yield get requests with a filter function parameter are not necessarily honored in priority/FIFO order, but rather according to the filter function."
+#            while self.nrBuffered > 0 and len(self.getQ):
+            idx = 0
+            while self.nrBuffered > 0 and idx < len(self.getQ):
+                proc = self.getQ[idx]
                 if inspect.isfunction(proc._nrToGet):
                     movCand = proc._nrToGet(self.theBuffer) #predicate parameter
                     if movCand:
@@ -879,7 +887,8 @@ class Store(Buffer):
                                     y = self.nrBuffered, t = whichSim._t)
                         whichSim._post(what = proc, at = whichSim._t) # continue a blocked get requestor
                     else:
-                        break
+#                        break
+                        idx += 1
                 else: #numerical parameter
                     if proc._nrToGet <= self.nrBuffered:
                         nrToGet = proc._nrToGet
@@ -890,11 +899,11 @@ class Store(Buffer):
                             self.bufferMon.observe(
                                        y = self.nrBuffered, t = whichSim._t)
                         # take this get requestor's record out of queue:
-                        self.getQ.takeout(proc) 
+                        self.getQ.takeout(proc)
                         whichSim._post(what = proc, at = whichSim._t) # continue a blocked get requestor
                     else:
                         break
-                    
+
             whichSim._post(what = obj, at = whichSim._t, prior = 1) # continue the put requestor
 
     def _get(self, arg):
@@ -906,7 +915,7 @@ class Store(Buffer):
             if not (obj.sim == self.sim):
                 raise FatalSimerror,\
                 "get: Process %s, Store %s not in "\
-                "same Simulation instance"%(obj.name,self.name) 
+                "same Simulation instance"%(obj.name,self.name)
         whichSim=obj.sim
         obj.got = []                  # the list of items retrieved by 'get'
         if len(arg[0]) == 5:        # yield get, self, buff, whattoget, priority
@@ -921,21 +930,21 @@ class Store(Buffer):
                 filtfunc = arg[0][3]
             else:
                 nrToGet = arg[0][3]
-        else:                       # yield get, self, buff 
+        else:                       # yield get, self, buff
             obj._getpriority[self] = Buffer.priorityDefault
             nrToGet = 1
         if not filtfunc: #number specifies nr items to get
             if nrToGet < 0:
                 raise FatalSimerror\
-                    ('Store: get parameter not positive number: %s'%nrToGet)            
+                    ('Store: get parameter not positive number: %s'%nrToGet)
             if self.nrBuffered < nrToGet:
                 obj._nrToGet = nrToGet
                 self.getQ.enterGet(obj)
                 # passivate / block queuing 'get' process
-                obj._nextTime = None          
+                obj._nextTime = None
             else:
                 for i in range(nrToGet):
-                    obj.got.append(self.theBuffer.pop(0)) # move items from 
+                    obj.got.append(self.theBuffer.pop(0)) # move items from
                                                 # buffer to requesting process
                 if self.monitored:
                     self.bufferMon.observe(y = self.nrBuffered, t = whichSim.now())
@@ -943,7 +952,7 @@ class Store(Buffer):
                 # reactivate any put requestors for which space is now available
                 # serve in queue order: do not serve second in queue before first
                 # has been served
-                while len(self.putQ): 
+                while len(self.putQ):
                     proc = self.putQ[0]
                     if len(proc._whatToPut) + self.nrBuffered <= self.capacity:
                         for i in proc._whatToPut:
@@ -953,7 +962,7 @@ class Store(Buffer):
                         if self.monitored:
                             self.bufferMon.observe(
                                         y = self.nrBuffered, t = whichSim.now())
-                        self.putQ.takeout(proc) # dequeue requestor's record 
+                        self.putQ.takeout(proc) # dequeue requestor's record
                         whichSim._post(proc, at = whichSim._t) # continue a blocked put requestor
                     else:
                         break
@@ -969,7 +978,7 @@ class Store(Buffer):
                 # reactivate any put requestors for which space is now available
                 # serve in queue order: do not serve second in queue before first
                 # has been served
-                while len(self.putQ): 
+                while len(self.putQ):
                     proc = self.putQ[0]
                     if len(proc._whatToPut) + self.nrBuffered <= self.capacity:
                         for i in proc._whatToPut:
@@ -979,7 +988,7 @@ class Store(Buffer):
                         if self.monitored:
                             self.bufferMon.observe(
                                         y = self.nrBuffered, t = whichSim.now())
-                        self.putQ.takeout(proc) # dequeue requestor's record 
+                        self.putQ.takeout(proc) # dequeue requestor's record
                         whichSim._post(proc, at = whichSim._t) # continue a blocked put requestor
                     else:
                         break
@@ -987,4 +996,4 @@ class Store(Buffer):
                 obj._nrToGet = filtfunc
                 self.getQ.enterGet(obj)
                 # passivate / block queuing 'get' process
-                obj._nextTime = None   
+                obj._nextTime = None
