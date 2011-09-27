@@ -15,11 +15,8 @@ The distribution contains in-depth documentation, tutorials, and a large number
 of simulation models.
 
 Simulation model developers are encouraged to share their SimPy modeling
-techniques with the SimPy community. Please post a message to the `simpy-Users
-mailing list <mailto:simpy-users at lists.sourceforge.net>`_
-
-Subscribe to simpy-users mailing list:
-http://lists.sourceforge.net/lists/listinfo/simpy-users
+techniques with the SimPy community. Please post a message to the SimPy-Users
+mailing list: http://lists.sourceforge.net/lists/listinfo/simpy-users
 
 Software developers are also encouraged to interface SimPy with other Python-
 accessible packages, such as GUI, database or mapping and to share these new

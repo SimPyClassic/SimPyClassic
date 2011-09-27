@@ -22,6 +22,7 @@ setup(
     license='GNU LGPL',
     packages=[
         'SimPy',
+        'SimPy.test',
     ],
     package_data={},
     classifiers=[
