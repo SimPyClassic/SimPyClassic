@@ -14,12 +14,16 @@ The package has been hosted on Sourceforge.net since 15 September 2002.
 Sourceforge.net's service has always been outstanding. It is essential to
 the SimPy project! Thanks, all you people at SourceForge!
 
-September 2011: Release 2.2b1
-=============================
+September 2011: Release 2.2
+===========================
 
-- The Unit tests have been rewritten. 
-- The directory sturcture of the release has been simplified
-- The documentation has had some minor changes
+- Restructured package layout to be conform to the `Hitchhiker’s Guide
+  to packaging <http://guide.python-distribute.org/>`_
+- Tests have been ported to pytest.
+- Documentation improvements and clean-ups.
+- Fixed incorrect behavior of Store._put, thanks to Johannes Koomer for
+  the fix.
+
 
 May 2010: Version 2.1.0
 =======================
@@ -30,15 +34,15 @@ added documentation.
 Additions
 ~~~~~~~~~~~
 
-- A function `step` has been added to the API. When called, it executes 
+- A function `step` has been added to the API. When called, it executes
   the next scheduled event. (`step` is actually a method of Simulation.)
-- Another new function is `peek`. It returns the time of the next event. 
+- Another new function is `peek`. It returns the time of the next event.
   By using `peek` and `step` together, one can easily write e.g. an
   interactive program to step through a simulation event by event.
 - A simple interactive debugger ``stepping.py`` has been added. It allows
-  stepping through a simulation, with options to skip to a certain time, 
+  stepping through a simulation, with options to skip to a certain time,
   skip to the next event of a given process, or viewing the event list.
-- Versions of the Bank tutorials (documents and programs) using the advanced 
+- Versions of the Bank tutorials (documents and programs) using the advanced
   object-oriented API have been added.
 - A new document describes tools for gaining insight into and debugging SimPy
   models.
@@ -48,14 +52,14 @@ Changes
 
 - Major re-structuring of SimPy code, resulting in much less
   SimPy code -- great for the maintainers.
-- Checks have been added which test whether entities belong to the 
+- Checks have been added which test whether entities belong to the
   same `Simulation` instance.
-- The `Monitor` and `Tally` methods `timeAverage` and `timeVariance` 
-  now calculate only with the observed time-series. No value is 
+- The `Monitor` and `Tally` methods `timeAverage` and `timeVariance`
+  now calculate only with the observed time-series. No value is
   assumed for the period prior to the first observation.
 - Changed class `Lister` so that circular references between
   objects no longer lead to stack overflow and crash.
-  
+
 Repairs
 ~~~~~~~~~
 
