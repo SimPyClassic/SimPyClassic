@@ -3,7 +3,7 @@
 # $Revision$ $Date$ kgm
 """SimulationRT 2.1 Provides synchronization of real time and SimPy simulation time.
 Implements SimPy Processes, resources, and the backbone simulation scheduling
-by coroutine calls. 
+by coroutine calls.
 Based on generators (Python 2.3 and later; not 3.0)
 
 LICENSE:
@@ -32,12 +32,9 @@ from SimPy.Simulation import *
 
 __TESTING = False
 version = __version__ = '2.1 $Revision$ $Date$'
-if __TESTING: 
-    print 'SimPy.SimulationRT %s' %__version__,
-    if __debug__:
-        print '__debug__ on'
-    else:
-        print
+if __TESTING:
+    debug = '__debug__ on' if __debug__ else ''
+    print('SimPy.SimulationRT %s, %s' % (__version__, debug))
 
 class SimulationRT(Simulation):
     def __init__(self):
@@ -88,7 +85,7 @@ class SimulationRT(Simulation):
                 return 'SimPy: Normal exit'
             else:
                 return 'SimPy: No activities scheduled'
-        except Simerror, error:
+        except Simerror as error:
             return 'SimPy: ' + error.value
         finally:
             self._stop = True
@@ -102,19 +99,19 @@ def rtnow():
     return Globals.sim.rtnow()
 
 rtset =  Globals.sim.rtset
-    
+
 def simulate(until = 0, real_time = False, rel_speed = 1):
     return Globals.sim.simulate(until = until, real_time = real_time, rel_speed = rel_speed)
-    
+
 wallclock = Globals.sim.wallclock
 
 allMonitors = Globals.sim.allMonitors
 
-allTallies = Globals.sim.allTallies 
+allTallies = Globals.sim.allTallies
 # End backward compatibility
 
 if __name__ == '__main__':
-    print 'SimPy.SimulationRT %s' %__version__
+    print('SimPy.SimulationRT %s' %__version__)
     ############# Test / demo functions #############
     def test_demo():
         class Aa(Process):
@@ -127,30 +124,30 @@ if __name__ == '__main__':
             def life(self, priority):
                 for i in range(1):
                     Aa.sequIn.append(self.name)
-                    print now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
-                    print 'waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ]
-                    print 'activeQ: ',[(k.name, k._priority[rrr]) \
-                               for k in rrr.activeQ]
+                    print(now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
+                    print('waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ])
+                    print('activeQ: ',[(k.name, k._priority[rrr]) \
+                               for k in rrr.activeQ])
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                    'Inconsistent resource unit numbers'
-                    print now(),self.name, 'requests 1 ', rrr.unitName
+                    print(now(),self.name, 'requests 1 ', rrr.unitName)
                     yield request, self, rrr, priority
-                    print now(),self.name, 'has 1 ', rrr.unitName
-                    print now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
-                    print now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
+                    print(now(),self.name, 'has 1 ', rrr.unitName)
+                    print(now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
+                    print(now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                    'Inconsistent resource unit numbers'
                     yield hold, self, self.holdtime
-                    print now(),self.name, 'gives up 1', rrr.unitName
+                    print(now(),self.name, 'gives up 1', rrr.unitName)
                     yield release, self, rrr
                     Aa.sequOut.append(self.name)
-                    print now(),self.name, 'has released 1 ', rrr.unitName
-                    print 'waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ]
-                    print now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
+                    print(now(),self.name, 'has released 1 ', rrr.unitName)
+                    print('waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ])
+                    print(now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                            'Inconsistent resource unit numbers'
 
@@ -161,14 +158,14 @@ if __name__ == '__main__':
             def observe(self, step, processes, res):
                 while now() < 11:
                     for i in processes:
-                        print ' %s %s: act:%s, pass:%s, term: %s, interr:%s, qu:%s'\
+                        print(' %s %s: act:%s, pass:%s, term: %s, interr:%s, qu:%s'\
                               %(now(),i.name, i.active(),i.passive(),i.terminated()\
-                            ,i.interrupted(),i.queuing(res))
-                    print
+                            ,i.interrupted(),i.queuing(res)))
+                    print()
                     yield hold, self, step
-                
-        print'\n+++test_demo output'
-        print '****First case == priority queue, resource service not preemptable'
+
+        print('\n+++test_demo output')
+        print('****First case == priority queue, resource service not preemptable')
         initialize()
         rrr = Resource(5, name = 'Parking', unitName = 'space(s)', qType = PriorityQ,
                      preemptable = 0)
@@ -180,11 +177,11 @@ if __name__ == '__main__':
         o = Observer()
         activate(o, o.observe(1, procs, rrr))
         a = simulate(until = 10000, real_time = True, rel_speed = 1)
-        print a
-        print 'Input sequence: ', Aa.sequIn
-        print 'Output sequence: ', Aa.sequOut
-    
-        print '\n****Second case == priority queue, resource service preemptable'
+        print(a)
+        print('Input sequence: ', Aa.sequIn)
+        print('Output sequence: ', Aa.sequOut)
+
+        print('\n****Second case == priority queue, resource service preemptable')
         initialize()
         rrr = Resource(5, name = 'Parking', unitName = 'space(s)', qType = PriorityQ,
                      preemptable = 1)
@@ -198,81 +195,81 @@ if __name__ == '__main__':
         Aa.sequIn = []
         Aa.sequOut = []
         a = simulate(until = 10000)
-        print a
-        print 'Input sequence: ', Aa.sequIn
-        print 'Output sequence: ', Aa.sequOut   
-    
+        print(a)
+        print('Input sequence: ', Aa.sequIn)
+        print('Output sequence: ', Aa.sequOut)
+
     def test_interrupt():
         class Bus(Process):
             def __init__(self, name):
                 Process.__init__(self, name)
-    
+
             def operate(self, repairduration = 0):
-                print now(),rtnow(),'>> %s starts' % (self.name)
+                print(now(),rtnow(),'>> %s starts' % (self.name))
                 tripleft = 1000
                 while tripleft > 0:
                     yield hold, self, tripleft
                     if self.interrupted():
-                        print 'interrupted by %s' %self.interruptCause.name
-                        print '%s(%s): %s breaks down ' %(now(),rtnow(),self.name)
+                        print('interrupted by %s' %self.interruptCause.name)
+                        print('%s(%s): %s breaks down ' %(now(),rtnow(),self.name))
                         tripleft = self.interruptLeft
                         self.interruptReset()
-                        print 'tripleft ', tripleft
+                        print('tripleft ', tripleft)
                         reactivate(br, delay = repairduration) # breakdowns only during operation
                         yield hold, self, repairduration
-                        print now(),rtnow(),' repaired'
+                        print(now(),rtnow(),' repaired')
                     else:
                         break # no breakdown, ergo bus arrived
-                print now(),'<< %s done' % (self.name)
-    
+                print(now(),'<< %s done' % (self.name))
+
         class Breakdown(Process):
             def __init__(self, myBus):
                 Process.__init__(self, name = 'Breakdown ' + myBus.name)
                 self.bus = myBus
-    
+
             def breakBus(self, interval):
-    
+
                 while True:
                     yield hold, self, interval
                     if self.bus.terminated(): break
                     self.interrupt(self.bus)
-                    
-        print'\n\n+++test_interrupt'
+
+        print('\n\n+++test_interrupt')
         initialize()
         b = Bus('Bus 1')
         activate(b, b.operate(repairduration = 20))
         br = Breakdown(b)
         activate(br, br.breakBus(200))
-        print simulate(until = 4000, real_time = True, rel_speed = 200)
-    
+        print(simulate(until = 4000, real_time = True, rel_speed = 200))
+
     def testSimEvents():
         class Waiter(Process):
             def waiting(self, theSignal):
                 while True:
                     yield waitevent, self, theSignal
-                    print '%s: process \'%s\' continued after waiting for %s' % (now(),self.name, theSignal.name)
+                    print('%s: process \'%s\' continued after waiting for %s' % (now(),self.name, theSignal.name))
                     yield queueevent, self, theSignal
-                    print '%s: process \'%s\' continued after queueing for %s' % (now(),self.name, theSignal.name)
-                    
+                    print('%s: process \'%s\' continued after queueing for %s' % (now(),self.name, theSignal.name))
+
         class ORWaiter(Process):
             def waiting(self, signals):
                 while True:
                     yield waitevent, self, signals
-                    print now(),'one of %s signals occurred' % [x.name for x in signals]
-                    print '\t%s (fired / param)'%[(x.name, x.signalparam) for x in self.eventsFired]
+                    print(now(),'one of %s signals occurred' % [x.name for x in signals])
+                    print('\t%s (fired / param)'%[(x.name, x.signalparam) for x in self.eventsFired])
                     yield hold, self, 1
-                    
+
         class Caller(Process):
             def calling(self):
                 while True:
                     signal1.signal('wake up!')
-                    print '%s: signal 1 has occurred'%now()
+                    print('%s: signal 1 has occurred'%now())
                     yield hold, self, 10
                     signal2.signal('and again')
                     signal2.signal('sig 2 again')
-                    print '%s: signal1, signal2 have occurred'%now()
+                    print('%s: signal1, signal2 have occurred'%now())
                     yield hold, self, 10
-        print'\n\n+++testSimEvents output'
+        print('\n\n+++testSimEvents output')
         initialize()
         signal1 = SimEvent('signal 1')
         signal2 = SimEvent('signal 2')
@@ -288,42 +285,42 @@ if __name__ == '__main__':
         activate(w4, w4.waiting([signal1, signal2]),prior = True)
         c = Caller('Caller')
         activate(c, c.calling())
-        print simulate(until = 100)
-        
+        print(simulate(until = 100))
+
     def testwaituntil():
         """
         Demo of waitUntil capability.
-    
+
         Scenario:
         Three workers require sets of tools to do their jobs. Tools are shared, scarce
         resources for which they compete.
         """
-    
-    
+
+
         class Worker(Process):
             def __init__(self, name, heNeeds = []):
                 Process.__init__(self, name)
                 self.heNeeds = heNeeds
             def work(self):
-    
+
                 def workerNeeds():
                     for item in self.heNeeds:
                         if item.n == 0:
                             return False
                     return True
-                         
+
                 while now() < 8 * 60:
                     yield waituntil, self, workerNeeds
                     for item in self.heNeeds:
                         yield request, self, item
-                    print '%s %s has %s and starts job' % (now(),self.name,
-                        [x.name for x in self.heNeeds])
+                    print('%s %s has %s and starts job' % (now(),self.name,
+                        [x.name for x in self.heNeeds]))
                     yield hold, self, random.uniform(10, 30)
                     for item in self.heNeeds:
                         yield release, self, item
                     yield hold, self, 2 #rest
-        
-        print '\n+++\nwaituntil demo output'
+
+        print('\n+++\nwaituntil demo output')
         initialize()
         brush = Resource(capacity = 1, name = 'brush')
         ladder = Resource(capacity = 2, name = 'ladder')
@@ -336,9 +333,9 @@ if __name__ == '__main__':
         treeguy = Worker('treeguy',[saw, ladder])
         activate(treeguy, treeguy.work())
         for who in (painter, roofer, treeguy):
-            print '%s needs %s for his job' % (who.name,[x.name for x in who.heNeeds])
-        print
-        print simulate(until = 9 * 60)
+            print('%s needs %s for his job' % (who.name,[x.name for x in who.heNeeds]))
+        print()
+        print(simulate(until = 9 * 60))
     test_demo()
     # Run tests
     test_interrupt()

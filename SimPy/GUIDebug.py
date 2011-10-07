@@ -1,4 +1,8 @@
-from Tkinter import *
+try:  # Python 3
+    from tkinter import *
+except:  # Python 2
+    from Tkinter import *
+
 from SimPy.SimulationStep import now,Globals
 
 # Creates and controls the GUI of the program
@@ -7,14 +11,14 @@ class GUIController(object):
     def __init__(self):
         self.root = Tk()
         self.root.withdraw()
-        
+
         self.saveNextEvent()
-        
+
         self.eventWin = EventWindow(self)
         self.wlist = []
         self.plist = []
         self.rlist = []
-                
+
     # Adds a new Window to the GUI
     def addNewWindow(self,obj,name,hook):
         self.wlist += [GenericWindow(obj,hook,self,name)]
@@ -26,50 +30,50 @@ class GUIController(object):
     # Adds a new Resource to the GUI
     def addNewResource(self,obj,name,hook):
         self.rlist += [ResourceWindow(obj,hook,self,name)]
-        
+
     # Updates all the windows currently up
     def updateAllWindows(self):
-        
+
         for w in self.wlist: w.update()
         for p in self.plist: p.update()
         for r in self.rlist: r.update()
         if self.eventWin.window: self.eventWin.update()
-        
+
         self.organizeWindows()
-        
+
         self.saveNextEvent()
-    
+
     # removes all instances of window in lists
     def removeWindow(self, w):
         f = lambda win: win is not w
-        self.wlist = filter(f,self.wlist)
-        self.plist = filter(f,self.plist)
-        self.rlist = filter(f,self.rlist)
-    
-    # save next event to be run	
+        self.wlist = list(filter(f, self.wlist))
+        self.plist = list(filter(f, self.plist))
+        self.rlist = list(filter(f, self.rlist))
+
+    # save next event to be run
     def saveNextEvent(self):
         #from SimPy.SimulationTrace import _e
 
         tempList=[]
         tempList[:]=Globals.sim._timestamps
         tempList.sort()
-                
+
         for ev in tempList:
-                
+
             # return only event notices which are not cancelled
             if ev[3]: continue
-            
+
             # save next event
             self.nextEvent = ev
             return
 
         self.nextEvent = (None,None,None,None)
-        
+
     def organizeWindows(self):
-        
+
         # event window
-        eventWindowHeight = 0		
-        
+        eventWindowHeight = 0
+
         # only organize event window only if it exists
         if self.eventWin.window:
             eventWindowHeight = 40 + 20 * self.eventWin.table.size()
@@ -77,45 +81,45 @@ class GUIController(object):
 
         # generic windows
         count = -1
-        
+
         for win in self.wlist:
             count += 1
-            
+
             (w,h,x,y) = win.getWindowSize()
             win.setWindowSize(w, h, 20, 40 + eventWindowHeight + 40 )
-            
+
             eventWindowHeight += h + 40
-        
+
         # process windows
         xCount = -1
         yCount = 0
-        
+
         for p in self.plist:
             xCount += 1
-             
+
             yCoord = 40 + 150 * xCount
             xCoord = 550 + 210 * yCount
-             
+
             p.setWindowSize(200,120, xCoord, yCoord )
-             
+
             if yCoord >= 600:
                 xCount = -1
                 yCount += 1
-        
+
         # resource windows
         count = -1
         for r in self.rlist:
             count += 1
-            
+
             windowHeight = 0
             windowHeight += 20 # capacity title
             windowHeight += 105 # empty table sizes
-            
+
             windowHeight += (r.activeT.size() + r.waitT.size()) * 17 # add size for each row
-            
+
             r.setWindowSize(200, windowHeight , 20 + 220 * count , 40 + eventWindowHeight + 40)
-            
-            
+
+
 
 # Creates a basic window that shows a user made hook.
 class GenericWindow(object):
@@ -131,17 +135,17 @@ class GenericWindow(object):
         else:
             self.title = title
         self.initGUI()
-        
+
 
     def setWindowSize(self,w,h,x,y):
         newG = "%dx%d+%d+%d" % (w,h,x,y)
         self.window.geometry(newG)
-        
+
     def setWindowOrigin(self,x,y):
         (w,h,xx,yy) = self.getWindowSize()
         newG = "%dx%d+%d+%d" % (w,h,x,y)
         self.window.geometry(newG)
-        
+
     def getWindowSize(self):
         g = self.window.geometry()
         return [int(i) for i in g.replace('+','x').split('x')]
@@ -158,14 +162,14 @@ class GenericWindow(object):
         if txt != "": txt += '\n'
         self.hookTxt = Label(self.window,text=txt,justify=LEFT)
         self.hookTxt.pack()
-    
+
     # Updates the window
     def update(self):
         txt = self.hook()
         if txt != "": txt += '\n'
         self.hookTxt["text"] = txt
 
-# Class that creates the event window for the simulation that 
+# Class that creates the event window for the simulation that
 # displays the time and event.
 class EventWindow(GenericWindow):
 
@@ -173,19 +177,19 @@ class EventWindow(GenericWindow):
         self.window = Toplevel()
         self.window.protocol("WM_DELETE_WINDOW", self._destroyWindow)
         self.guiCtrl = guiCtrl
-        self.initGUI()	
+        self.initGUI()
 
-    # Creates the initial window using a two column window with a 
+    # Creates the initial window using a two column window with a
     # status bar on the bottom
     def initGUI(self):
         self.window.title("Event List")
         # Creates the table
         self.table = MultiListbox(self.window,(('', 1), ('Time',15),
                                    ('Process',20),('Next Line',5)))
-        # Adds the status bar to display the current simulation time	
+        # Adds the status bar to display the current simulation time
         self.status = StatusBar(self.window)
         self.status.pack(side=TOP, fill=X)
-        
+
         self.update()
 
     # Updates the window
@@ -205,41 +209,41 @@ class EventWindow(GenericWindow):
         tempList=[]
         tempList[:]=Globals.sim._timestamps
         tempList.sort()
-        
+
         ev = self.guiCtrl.nextEvent
-        
+
         nextLine = 0
         if( ev[2] ):
             if( ev[2]._nextpoint ):
                 nextLine = ev[2]._nextpoint.gi_frame.f_lineno
-        
+
         if ev[0]:
-            self.table.insert(END,('  >>', 
+            self.table.insert(END,('  >>',
                    str(ev[0]), ev[2].name, nextLine ))
-        
+
         count = -1
         for ev in tempList:
-                
+
             # return only event notices which are not cancelled
             if ev[3]: continue
-            
+
             count += 1
-            
+
             currentEvent = ''
             #if count == 0 and now() == ev[0]:
             #	currentEvent = '  >>'
-        
+
             nextLine = 0
             if( ev[2] ):
                 if( ev[2]._nextpoint ):
                     nextLine = ev[2]._nextpoint.gi_frame.f_lineno
-            
-            self.table.insert(END,(currentEvent, 
+
+            self.table.insert(END,(currentEvent,
                        str(ev[0]), ev[2].name, nextLine ))
-            
+
         self.table.pack(expand=YES,fill=BOTH)
 
-# Creates a Process Window that shows the status, Next Event time, 
+# Creates a Process Window that shows the status, Next Event time,
 # if the Process is currently interupted, and an optional user hook.
 class ProcessWindow(GenericWindow):
 
@@ -251,61 +255,61 @@ class ProcessWindow(GenericWindow):
 
     # Initializes the window
     def initGUI(self):
-        Label(self.window,text="%s" % (self.proc.name)).pack()		
+        Label(self.window,text="%s" % (self.proc.name)).pack()
         # Creates the table
         self.table = MultiListbox(self.window,((None,10),(None,15)))
         self.status = StatusBar(self.window)
         self.status.pack(side=BOTTOM, fill=X)
-         
+
         GenericWindow.initGUI(self)
         self.setWindowSize(0,0,-1000,-1000)
-        
+
         self.update()
 
     # Updates the window
     def update(self):
-        
+
         # If the process has been terminated close the window
         if self.proc.terminated():
             self._destroyWindow()
             return
-        
+
         if self.isRunning():
             self.status.label["text"] = "Running!"
             self.status.label["fg"] = "red"#"green"
         else:
             self.status.label["text"] = ""
             self.status.label["fg"] = "white"
-       
+
         self.table.delete(0,self.table.size())
-        
+
         if self.proc.active() == False:
             status = "Passive"
         else:
             status = "Active"
-            
+
         if self.proc._nextTime:
             nextEvent = self.proc._nextTime
         else:
             nextEvent = ""
-        
+
         if self.proc.interrupted() == True:
             interrupted = "True"
         else:
             interrupted = "False"
-            
+
         self.table.insert(END,("  Status:", status))
         self.table.insert(END,("  Next Event:", nextEvent))
         self.table.insert(END,("  Interrupted:", interrupted ))
-        
+
         self.table.pack(expand=YES,fill=BOTH)
-        
+
         GenericWindow.update(self)
-        
+
     def isRunning(self):
         return self.guiCtrl.nextEvent[2] is self.proc
-        
-# Creates a Resource Window that displays the capacity, waitQ, 
+
+# Creates a Resource Window that displays the capacity, waitQ,
 # activeQ and an optional user hook
 class ResourceWindow(GenericWindow):
 
@@ -314,23 +318,23 @@ class ResourceWindow(GenericWindow):
         if name:
             obj.name = name
         GenericWindow.__init__(self,obj,hook, guiCtrl,"Resource")
-        
+
     # Initializes the window with the two tables for the waitQ and activeQ
     def initGUI(self):
         Label(self.window,text="%s\tCapacity: %d" % (self.resource.name,self.resource.capacity)).pack()
-        
+
         self.activeT = MultiListbox(self.window,(('#',5),('ActiveQ',20)))
         self.waitT = MultiListbox(self.window,(('#',5),('WaitQ',20)))
         self.updateQTables()
 
         GenericWindow.initGUI(self)
         self.setWindowSize(0,0,-1000,-1000)
-    
+
     # Updates the window
-    def update(self):	
+    def update(self):
         GenericWindow.update(self)
         self.updateQTables()
-        
+
     # Updates the waitQ and activeQ tables
     def updateQTables(self):
         self.activeT.delete(0,END)
@@ -340,16 +344,16 @@ class ResourceWindow(GenericWindow):
             col1 = '%d' % (i+1)
             col2 = self.resource.activeQ[i].name
             self.activeT.insert(END,("   " + col1,col2))
-        # Update the waitQ	
+        # Update the waitQ
         for i in range(len(self.resource.waitQ)):
             col1 = '%d' % (i+1)
             col2 = self.resource.waitQ[i].name
             self.waitT.insert(END,("   " + col1,col2))
-            
+
         self.activeT.pack(expand=YES,fill=BOTH)
         self.waitT.pack(expand=YES,fill=BOTH)
         self.window.update()
-            
+
 # A class that creates a multilistbox with a scrollbar
 class MultiListbox(Frame):
     def __init__(self, master, lists):
@@ -357,14 +361,14 @@ class MultiListbox(Frame):
         self.lists = []
         for l,w in lists:
             frame = Frame(self); frame.pack(side=LEFT, expand=YES, fill=BOTH)
-            
+
             if l is None:
                 None
             elif l is '':
                 Label(frame, text='', borderwidth=1, relief=FLAT).pack(fill=X)
             else:
                 Label(frame, text=l, borderwidth=1, relief=SOLID).pack(fill=X)
-                
+
             lb = Listbox(frame, width=w, height=0, borderwidth=0, selectborderwidth=0,
                  relief=FLAT, exportselection=FALSE)
             lb.pack(expand=YES, fill=BOTH)
@@ -380,7 +384,7 @@ class MultiListbox(Frame):
         self.selection_clear(0, END)
         self.selection_set(row)
         return 'break'
- 
+
     def _button2(self, x, y):
         for l in self.lists: l.scan_mark(x, y)
         return 'break'
@@ -391,7 +395,7 @@ class MultiListbox(Frame):
 
     def _scroll(self, *args):
         for l in self.lists:
-            apply(l.yview, args)
+            l.yview(*args)
 
     def curselection(self):
         return self.lists[0].curselection()
@@ -404,7 +408,7 @@ class MultiListbox(Frame):
         result = []
         for l in self.lists:
             result.append(l.get(first,last))
-        if last: return apply(map, [None] + result)
+        if last: return list(map(*[None] + result))
         return result
 
     def index(self, index):
@@ -439,7 +443,7 @@ class MultiListbox(Frame):
         for l in self.lists:
             l.selection_set(first, last)
 
-# Creates a statusbar 
+# Creates a statusbar
 class StatusBar(Frame):
 
     def __init__(self, master):

@@ -27,7 +27,7 @@ class Lister(object):
 
    def attrnames(self):
        result = ''
-       for attr in self.__dict__.keys():
+       for attr in self.__dict__:
            # Ignore built-in and private attributes
            if not (attr[:2] == '__' or attr[0] == '_'):
                result += '\t' * Lister.indent + '.%s=%s\n' % (attr,

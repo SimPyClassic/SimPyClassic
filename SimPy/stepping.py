@@ -7,6 +7,7 @@ Usage:
     (simulation model)
     stepping.stepping(Globals) # instead of 'simulate(until = endtime)
 """
+import sys
 # $Revision: 464 $ $Date: 2010-04-05 05:59:53 +0200 (Mo, 05 Apr 2010) $ kgm
 # SimPy version: 2.1
 def stepping(glob):
@@ -17,20 +18,22 @@ def stepping(glob):
     evlist = asim._timestamps
     while True:
         if not evlist:
-            print "No more events at t=%s"%asim.now()
+            print("No more events at t=%s"%asim.now())
             break
         tEvt = evlist[0][0]
         who = evlist[0][2]
         while evlist[0][3]: #skip cancelled event notices
             step()
-        print "\nTime now: %s, next event at: t=%s for process: %s "\
-              %(asim.now(),tEvt,who.name)
+        print("\nTime now: %s, next event at: t=%s for process: %s "\
+              %(asim.now(),tEvt,who.name))
 
         while True:
-            cmd = raw_input("Command ('h' for help): ")
+            if sys.version_info.major == 2:
+                input = raw_input
+            cmd = input("Command ('h' for help): ")
             if cmd == "h":
                 for i in help:
-                    print i, ":", help[i]
+                    print(i, ":", help[i])
             else:
                 break
         try:
@@ -43,32 +46,32 @@ def stepping(glob):
             elif cmd == 'r':
                 while evlist:
                     asim.step()
-                print "Run ended at t=%s"%asim.now()
-                break   
+                print("Run ended at t=%s"%asim.now())
+                break
             elif cmd == 'e':
                 asim.stopSimulation()
                 break
             elif cmd == 'l':
-                print "Events scheduled: \n%s"%asim.allEventNotices() 
+                print("Events scheduled: \n%s"%asim.allEventNotices())
             elif cmd[0] == 'p':
-                while evlist and evlist[0][2].name <> cmd[1:]:
-                    asim.step()                    
+                while evlist and evlist[0][2].name != cmd[1:]:
+                    asim.step()
             else:
-                print "%s not a valid command" % cmd
-                
+                print("%s not a valid command" % cmd)
+
 if __name__ == "__main__":
     from SimPy.SimulationTrace import *
-    
+
     class Car(Process):
         def drive(self, speed, howlong):
             going = speed
             yield hold,self,howlong
             going = 0
-        
+
     initialize()
     b = Car(name = "Beemer")
     activate(b, b.drive(speed = 180, howlong = 45))
     c = Car(name = "Caddy")
     activate(c, c.drive(speed = 120, howlong = 120), at = 25)
     stepping(Globals)
-    
+
