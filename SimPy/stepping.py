@@ -6,10 +6,11 @@ Usage:
     import stepping
     (simulation model)
     stepping.stepping(Globals) # instead of 'simulate(until = endtime)
+
 """
 import sys
-# $Revision: 464 $ $Date: 2010-04-05 05:59:53 +0200 (Mo, 05 Apr 2010) $ kgm
-# SimPy version: 2.1
+
+
 def stepping(glob):
     asim = glob.sim
     help = {'s':"next event",'r':"run to end",'e':"end run",

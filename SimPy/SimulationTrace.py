@@ -5,26 +5,8 @@
 Implements SimPy Processes, Resources, Buffers, and the backbone simulation
 scheduling by coroutine calls. Provides data collection through classes
 Monitor and Tally.
-Based on generators (Python 2.3 and later; not 3.0)
+Based on generators.
 
-LICENSE:
-Copyright (C) 2002, 2005, 2006, 2007, 2008  Klaus G. Muller, Tony Vignaux
-mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
-
-    This library is free software; you can redistribute it and / or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111 - 1307  USA
-END OF LICENSE
 """
 from __future__ import print_function
 
@@ -33,10 +15,9 @@ from SimPy.Simulation import *
 
 
 __TESTING = False
-version = __version__ = '2.1 $Revision$ $Date$'
 if __TESTING:
     debug = '__debug__ on' if __debug__ else ''
-    print('SimPy.SimulationTrace %s, %s' % (__version__, debug))
+    print('SimPy.SimulationTrace %s, %s' % (SimPy.__version__, debug))
 
 def trace_dispatch(trace, command, func):
     """
@@ -354,7 +335,7 @@ allTallies = Globals.sim.allTallies
 # End backward compatibility
 
 if __name__ == '__main__':
-    print('SimPy.SimulationTrace %s' %__version__)
+    print('SimPy.SimulationTrace %s' % SimPy.__version__)
     ############# Test / demo functions #############
     def test_demo():
         class Aa(Process):

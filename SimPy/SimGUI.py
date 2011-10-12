@@ -1,32 +1,7 @@
-#!/usr / bin / env python
 # coding=utf-8
-# $Revision$ $Date$ kgm
-"""SimGUI 2.1  Provides a Tk / Tkinter - based framework for SimPy simulation
+"""
+SimGUI 2.1  Provides a Tk / Tkinter - based framework for SimPy simulation
 models.
-
-LICENSE:
-Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008  Klaus G. Muller, Tony Vignaux
-mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
-
-    This library is free software; you can redistribute it and / or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111 - 1307  USA
-END OF LICENSE
-
-SimGUI uses a Tkinter - based console for conversing with the Python interpreter,
-developed by Ka - Ping Yee, <ping@lfw.org>.
-
-
 
 """
 try:  # Python 3
@@ -39,7 +14,6 @@ except: # Python 2
 from Canvas import Line, CanvasText, Rectangle
 from . import tkconsole as tkcons
 
-__version__ = '2.1.0 $Revision$ $Date$'
 
 class SimGUI(object):
     def __init__(self, win, title = 'SimGUI', doc = 'No doc string found', consoleHeight = 50):
@@ -299,7 +273,7 @@ class Parameters:
         return "".join(res)
 
 if __name__ == '__main__':
-    print('SimGUI.py %s' % __version__)
+    print('SimGUI.py')
     from SimPy.Simulation import *
     from SimPy.Monitor import *
     from random import Random

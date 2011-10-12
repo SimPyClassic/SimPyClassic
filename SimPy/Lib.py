@@ -1,11 +1,10 @@
 # coding=utf-8
 """
-This file contains Simerror, FatalSimerror, Process, SimEvent,
-the resources Resource, Level and Storage
-as well as their dependencies Buffer, Queue, FIFO and PriorityQ.
+This file contains Simerror, FatalSimerror, Process, SimEvent, the resources
+Resource, Level and Storage as well as their dependencies Buffer, Queue, FIFO
+and PriorityQ.
+
 """
-# $Revision: 515 $ $Date: 2010-05-27 18:21:06 +0200 (Do, 27 Mai 2010) $ kgm
-# SimPy version: 2.1
 import inspect
 import sys
 import types
@@ -15,6 +14,7 @@ from SimPy.Recording import Monitor, Tally
 
 # Required for backward compatiblity
 import SimPy.Globals as Globals
+
 
 class Simerror(Exception):
     """ SimPy error which terminates "simulate" with an error message"""

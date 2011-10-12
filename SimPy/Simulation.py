@@ -1,29 +1,9 @@
-#!/usr / bin / env python
 # coding=utf-8
-# $Revision$ $Date: 2008-09-10 17:25:13 +0200 (Mi, 10 Sep 2008)
-"""Simulation 2.1 Implements SimPy Processes, Resources, Buffers, and the backbone simulation
+"""
+Simulation implements SimPy Processes, Resources, Buffers, and the backbone simulation
 scheduling by coroutine calls. Provides data collection through classes
 Monitor and Tally.
-Based on generators (Python 2.3 and later; not 3.0)
-
-LICENSE:
-Copyright (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010  Klaus G. Muller, Tony Vignaux
-mailto: kgmuller at xs4all.nl and Tony.Vignaux at vuw.ac.nz
-
-    This library is free software; you can redistribute it and / or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111 - 1307  USA
-END OF LICENSE
+Based on generators
 
 """
 
@@ -38,6 +18,7 @@ from SimPy.Lib import Process, SimEvent, PriorityQ, Resource, Level, \
                       Store, Simerror, FatalSimerror
 
 # Required for backward compatibility
+import SimPy
 import SimPy.Globals as Globals
 from SimPy.Globals import initialize, simulate, now, stopSimulation, \
         allEventNotices, allEventTimes, startCollection,\
@@ -45,10 +26,10 @@ from SimPy.Globals import initialize, simulate, now, stopSimulation, \
 
 
 __TESTING = False
-version = __version__ = '2.1 $Revision$ $Date$'
+
 if __TESTING:
     debug = '__debug__ on' if __debug__ else ''
-    print('SimPy.Simulation %s, %s' % (__version__, debug))
+    print('SimPy.Simulation %s, %s' % (SimPy.__version__, debug))
 
 # yield keywords
 hold = 1
@@ -608,7 +589,7 @@ allTallies = Globals.sim.allTallies
 # End backward compatibility
 
 if __name__ == '__main__':
-    print('SimPy.Simulation %s' %__version__)
+    print('SimPy.Simulation %s' % SimPy.__version__)
     ############# Test / demo functions #############
     def test_demo():
         class Aa(Process):
