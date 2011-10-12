@@ -15,7 +15,7 @@ from heapq import heappush, heappop
 from SimPy.Lister import Lister
 from SimPy.Recording import Monitor, Tally
 from SimPy.Lib import Process, SimEvent, PriorityQ, Resource, Level, \
-                      Store, Simerror, FatalSimerror
+                      Store, Simerror, FatalSimerror, FIFO
 
 # Required for backward compatibility
 import SimPy
