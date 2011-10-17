@@ -9,7 +9,7 @@ techniques with the SimPy community. Please "post a message to the simpy-Users
 mailing list", simpy-users@lists.sourceforge.net.
 
 "Subscribe to simpy-users mailing list.",
-http://lists.sourceforge.net/lists/listinfo/simpy-users
+https://lists.sourceforge.net/lists/listinfo/simpy-users
 
 Software developers are encouraged to interface SimPy with other 
 Python-accessible packages, such as GUI, data base or mapping and to share these new

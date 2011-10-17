@@ -709,7 +709,7 @@ normal, log-normal, Weibull, and vonMises.  It can also generate
 random variates from some discrete distributions. Consult the module's
 documentation for details.  Excellent brief descriptions of these
 distributions, and many others, can be found in the `Wikipedia
-<http://www.wikipedia.com/>`_.
+<http://www.wikipedia.org/>`_.
 
 Python's ``random`` module can be used in two ways: you can import the
 methods directly or you can import the ``Random`` class and make your
@@ -1001,7 +1001,7 @@ the ``gasstation``.)
 .. _monitors: `Monitors and Recording Simulation Results`_
 
 
-.. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
+.. _`Python random module`: http://docs.python.org/library/random.html
 .. _Python: http://www.Python.org
 
 .. ----------------------------------------------------------------------------
