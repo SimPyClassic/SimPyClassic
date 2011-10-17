@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # encoding: utf-8
 from distutils.core import setup
-import sys
-reload(sys).setdefaultencoding('Utf-8')
+# import sys
+# reload(sys).setdefaultencoding('Utf-8')
 
 import SimPy
 
@@ -22,6 +22,7 @@ setup(
     license='GNU LGPL',
     packages=[
         'SimPy',
+        'SimPy.test',
     ],
     package_data={},
     classifiers=[

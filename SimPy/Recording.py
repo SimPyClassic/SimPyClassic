@@ -2,10 +2,8 @@
 """
 This file contains the classes for recording simulation results, Histogram,
 Monitor and Tally.
-"""
-# $Revision$ $Date$
-# SimPy version: 2.1.0
 
+"""
 # Required for backward compatibility
 import SimPy.Globals as Globals
 
@@ -23,7 +21,7 @@ class Histogram(list):
         self._nrObs = 0
         self._sum = 0
         self[:] = [[low + (i - 1) * self.binsize, 0] for i in range(self.nbins + 2)]
-       
+
     def addIn(self, y):
         """ add a value into the correct bin"""
         self._nrObs += 1
@@ -33,7 +31,7 @@ class Histogram(list):
         if b > self.nbins + 1: b = self.nbins + 1
         assert 0 <= b <=self.nbins + 1, 'Histogram.addIn: b out of range: %s'%b
         self[b][1] += 1
-        
+
     def __str__(self):
         histo = self
         ylab = 'value'
@@ -92,7 +90,7 @@ class Monitor(list):
         self.ylab = ylab
         self.tlab = tlab
         self.sim.allMonitors.append(self)
-        
+
     def setHistogram(self, name = '', low = 0.0, high = 100.0, nbins = 10):
         """Sets histogram parameters.
         Must be called before call to getHistogram"""
@@ -110,7 +108,7 @@ class Monitor(list):
     def tally(self, y):
         """ deprecated: tally for backward compatibility"""
         self.observe(y, 0)
-                   
+
     def accum(self, y,t = None):
         """ deprecated:  accum for backward compatibility"""
         self.observe(y, t)
@@ -120,19 +118,19 @@ class Monitor(list):
         self[:] = []
         if t is None: t = self.sim.now()
         self.startTime = t
-        
+
     def tseries(self):
         """ the series of measured times"""
-        return list(zip(*self)[0])
+        return list(zip(*self))[0]
 
     def yseries(self):
         """ the series of measured values"""
-        return list(zip(*self)[1])
+        return list(zip(*self))[1]
 
     def count(self):
         """ deprecated: the number of observations made """
         return self.__len__()
-        
+
     def total(self):
         """ the sum of the y"""
         if self.__len__() == 0:  return 0
@@ -145,7 +143,7 @@ class Monitor(list):
     def mean(self):
         """ the simple average of the monitored variable"""
         try: return 1.0 * self.total() / self.__len__()
-        except:  print 'SimPy: No observations  for mean'
+        except:  print('SimPy: No observations  for mean')
 
     def var(self):
         """ the sample variance of the monitored variable """
@@ -155,8 +153,8 @@ class Monitor(list):
         for i in range(self.__len__()):
             ssq += self[i][1] ** 2 # replace by sum() eventually
         try: return (ssq - float(tot * tot) / n) / n
-        except: print 'SimPy: No observations for sample variance'
-        
+        except: print('SimPy: No observations for sample variance')
+
     def timeAverage(self, t = None):
         """ the time - weighted average of the monitored variable.
 
@@ -165,7 +163,7 @@ class Monitor(list):
         """
         N = self.__len__()
         if N  == 0:
-            print 'SimPy: No observations for timeAverage'
+            print('SimPy: No observations for timeAverage')
             return None
 
         if t is None: t = self.sim.now()
@@ -180,7 +178,7 @@ class Monitor(list):
         sum += ylast * (t - tlast)
         T = t - self[0][0]
         if T == 0:
-             print 'SimPy: No elapsed time for timeAverage'
+             print('SimPy: No elapsed time for timeAverage')
              return None
         return sum / float(T)
 
@@ -192,7 +190,7 @@ class Monitor(list):
         """
         N = self.__len__()
         if N  == 0:
-            print 'SimPy: No observations for timeVariance'
+            print('SimPy: No observations for timeVariance')
             return None
         if t is None: t = self.sim.now()
         sm = 0.0
@@ -210,7 +208,7 @@ class Monitor(list):
         ssq += ylast * ylast * (t - tlast)
         T = t - self[0][0]
         if T == 0:
-             print 'SimPy: No elapsed time for timeVariance'
+             print('SimPy: No elapsed time for timeVariance')
              return None
         mn = sm / float(T)
         return ssq / float(T) - mn * mn
@@ -223,7 +221,7 @@ class Monitor(list):
         ys = self.yseries()
         for y in ys: h.addIn(y)
         return h
-        
+
     def getHistogram(self):
         """Returns a histogram based on the parameters provided in
         preceding call to setHistogram.
@@ -232,7 +230,7 @@ class Monitor(list):
         h = self.histo
         for y in ys: h.addIn(y)
         return h
-    
+
     def printHistogram(self, fmt = '%s'):
         """Returns formatted frequency distribution table string from Monitor.
         Precondition: setHistogram must have been called.
@@ -242,7 +240,7 @@ class Monitor(list):
             histo = self.getHistogram()
         except:
             raise FatalSimerror('histogramTable: call setHistogram first'\
-                                ' for Monitor %s'%self.name)            
+                                ' for Monitor %s'%self.name)
         ylab = self.ylab
         nrObs = self.count()
         width = len(str(nrObs))
@@ -275,7 +273,7 @@ class Monitor(list):
                    str(cum).rjust(width),(float(cum) / nrObs) * 100, '%')
                    )
         return ' '.join(res)
-        
+
 class Tally:
     def __init__(self, name = 'a_Tally', ylab = 'y', tlab = 't', sim = None):
         if not sim: sim = Globals.sim # use global simulation if sim is None
@@ -291,10 +289,10 @@ class Tally:
         self._integral = 0.0    # time - weighted sum
         self._integral2 = 0.0   # time - weighted sum of squares
         self.sim.allTallies.append(self)
-        
+
     def setHistogram(self, name = '', low = 0.0, high = 100.0, nbins = 10):
         """Sets histogram parameters.
-        Must be called to prior to observations initiate data collection 
+        Must be called to prior to observations initiate data collection
         for histogram.
         """
         if name == '':
@@ -317,7 +315,7 @@ class Tally:
         self._sum_of_squares += y * y
         if self.histo:
             self.histo.addIn(y)
-         
+
     def reset(self, t = None):
         if t is None:
             t = self.sim.now()
@@ -330,7 +328,7 @@ class Tally:
         self._integral2 = 0.0
         self._sum = 0.0
         self._sum_of_squares = 0.0
- 
+
     def count(self):
         return self._count
 
@@ -347,9 +345,9 @@ class Tally:
         if (t > self.startTime):
             return 1.0 * integ / (t - self.startTime)
         else:
-            print 'SimPy: No elapsed time for timeAverage'
+            print('SimPy: No elapsed time for timeAverage')
             return None
- 
+
     def var(self):
         return 1.0 * (self._sum_of_squares - (1.0 * (self._sum * self._sum)\
                / self._count)) / (self._count)
@@ -370,20 +368,20 @@ class Tally:
         if (t > self.startTime):
             return 1.0 * twinteg2 / (t - self.startTime) - twAve * twAve
         else:
-            print 'SimPy: No elapsed time for timeVariance'
+            print('SimPy: No elapsed time for timeVariance')
             return None
 
 
-        
+
     def __len__(self):
         return self._count
 
     def __eq__(self, l):
         return len(l) == self._count
-        
+
     def getHistogram(self):
         return self.histo
-    
+
     def printHistogram(self, fmt = '%s'):
         """Returns formatted frequency distribution table string from Tally.
         Precondition: setHistogram must have been called.
@@ -393,7 +391,7 @@ class Tally:
             histo = self.getHistogram()
         except:
             raise FatalSimerror('histogramTable: call setHistogram first'\
-                                ' for Tally %s'%self.name)            
+                                ' for Tally %s'%self.name)
         ylab = self.ylab
         nrObs = self.count()
         width = len(str(nrObs))

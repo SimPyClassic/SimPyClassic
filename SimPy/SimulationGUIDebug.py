@@ -1,5 +1,10 @@
+import sys
 from SimPy.SimulationStep import *
-from Tkinter import *
+try:  # Python 3
+    from tkinter import *
+except:
+    from Tkinter import *
+
 import SimPy.SimulationStep, GUIDebug
 
 # global variables
@@ -17,22 +22,22 @@ NO_STEP = 2
 
 # register new object for windowing
 def register(obj,hook=lambda :"",name=None):
-    
+
     global _registeredClasses
-    
+
     # if process subclass is given register it
     if type(obj) == TypeType and issubclass(obj, Process):
         _registeredClasses += [(obj,name,hook)]
-        
-    # if instance of process is given register it	
+
+    # if instance of process is given register it
     elif issubclass(type(obj), Process):
         _guiCtrl.addNewProcess(obj,name,hook)
-        
-    # if instance of Resource is given register it	
+
+    # if instance of Resource is given register it
     elif issubclass(type(obj), Resource):
         _guiCtrl.addNewResource(obj,name,hook)
-    
-    # else create a generic window with hook	
+
+    # else create a generic window with hook
     else:
         _guiCtrl.addNewWindow(obj,name,hook)
 
@@ -57,19 +62,19 @@ def newBreakpoint(newBpt):
 
 # set the current run mode of simulation
 def setRunMode(runMode):
-    
+
     global _runMode
     _runMode = runMode
 
 # initialize the simulation and the GUI
 def initialize():
-    
+
     SimPy.SimulationStep.initialize()
-    
+
     # create gui controller
     global _guiCtrl
     _guiCtrl = GUIDebug.GUIController()
-    
+
     # initialize run mode if not already set
     global _runMode
     if not _runMode:
@@ -77,37 +82,37 @@ def initialize():
 
 # simulation function
 def simulate(callback=lambda :None, until=0):
-    
+
     global _runMode
-    
+
     # print usage
     if( _runMode == STEP ):
-        print "Breakpoint Usage:"
-        print "  [c]   Continue simulation"
-        print "  [s]   Step to next event"
-        print "  [b #] Add new breakpoint"
-        print
-        print "  [q]   Quit debugger"
-        print
-    
+        print("Breakpoint Usage:")
+        print("  [c]   Continue simulation")
+        print("  [s]   Step to next event")
+        print("  [b #] Add new breakpoint")
+        print()
+        print("  [q]   Quit debugger")
+        print()
+
     # set global variables
     global _until
     _until = until
-    
+
     global _callback
     _callback = callback
-    
+
     # initialize to step command
     global _lastCommandIssued
     _lastCommandIssued = "s"
-    
+
     # only prompt user if we are in STEP mode
     if( _runMode == STEP): promptUser()
-    
+
     # quit if user entered 'q'
     if( _lastCommandIssued == 'q'):
         return
-    
+
     # begin simulation
     global _simStarted
     _simStarted = True
@@ -116,78 +121,80 @@ def simulate(callback=lambda :None, until=0):
 
 # check for breakpoints
 def callbackFunction():
-    
+
     global _breakpoints,_runMode,_guiCtrl
-    
+
     # NO_STEP mode means we update windows and take no breaks
     # this is used for compatibility with REAL debuggers
     if( _runMode == NO_STEP ):
         _guiCtrl.updateAllWindows()
         return
-    
+
     if( 0 == len(_breakpoints) ):
         return
-    
+
     # this is a breakpoint
     if( now() >= _breakpoints[0] ):
-        
+
         # update gui
         _guiCtrl.updateAllWindows()
-    
+
         # remove past times from breakpoints list
         while( 0 != len(_breakpoints) and now() >= _breakpoints[0] ):
             _breakpoints.pop(0)
-    
+
         # call user's callback function
         global _callback
         _callback()
-    
+
         promptUser()
 
 # prompt user for next command
 def promptUser():
-    
-    global _simStarted	
-    
+
+    global _simStarted
+
     # set prompt text
     prompt = '(SimDB) > '
-    
+
     # pause for breakpoint
     while( 1 ):
-        input = raw_input( prompt )
-        
+        if sys.version_info.major == 2:
+            input = raw_input
+        user_input = input( prompt )
+
         # take a look at the last command issued
         global _lastCommandIssued
-        
-        if 0 == len(input):
-            input = _lastCommandIssued
-        
-        _lastCommandIssued = input
-        
+
+        if 0 == len(user_input):
+            user_input = _lastCommandIssued
+
+        _lastCommandIssued = user_input
+
         # continue
-        if( "c" == input ):
+        if( "c" == user_input ):
             break
-            
+
         # step
-        elif( "s" == input ):
+        elif( "s" == user_input ):
             global _breakpoints
             _breakpoints.insert(0,0)
             break
-            
+
         # add breakpoint
-        elif( 0 == input.find("b")):
+        elif( 0 == user_input.find("b")):
             try:
-                for i in eval( input[1:] + "," ):
+                for i in eval( user_input[1:] + "," ):
                     newBreakpoint( int(i) )
             except SyntaxError:
-                print "missing breakpoint values"
-                
+                print("missing breakpoint values")
+
         # quit
-        elif( "q" == input ):
+        elif( "q" == user_input ):
             SimPy.SimulationStep.stopSimulation()
             return
-            
+
         else:
-            print "  unknown command"
+            print("  unknown command")
 
 

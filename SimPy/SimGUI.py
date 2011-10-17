@@ -1,41 +1,19 @@
-#!/usr / bin / env python
 # coding=utf-8
-# $Revision$ $Date$ kgm
-"""SimGUI 2.1  Provides a Tk / Tkinter - based framework for SimPy simulation
+"""
+SimGUI 2.1  Provides a Tk / Tkinter - based framework for SimPy simulation
 models.
 
-LICENSE:
-Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008  Klaus G. Muller, Tony Vignaux
-mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
-
-    This library is free software; you can redistribute it and / or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111 - 1307  USA
-END OF LICENSE
-
-SimGUI uses a Tkinter - based console for conversing with the Python interpreter,
-developed by Ka - Ping Yee, <ping@lfw.org>.
-
-
-    
 """
+try:  # Python 3
+    from tkinter import *
+    from tkinter.messagebox import *
+except: # Python 2
+    from Tkinter import *
+    from tkMessageBox import *
 
-from Tkinter import *
-from tkMessageBox import *
 from Canvas import Line, CanvasText, Rectangle
-import tkconsole as tkcons
+from . import tkconsole as tkcons
 
-__version__ = '2.1.0 $Revision$ $Date$'
 
 class SimGUI(object):
     def __init__(self, win, title = 'SimGUI', doc = 'No doc string found', consoleHeight = 50):
@@ -50,7 +28,7 @@ class SimGUI(object):
 
     def mainloop(self):
         self.root.mainloop()
-        
+
     def makeMenu(self):
         self.top = Menu(self.win)                 #win = top - level window
         self.win.config(menu = self.top)
@@ -115,10 +93,13 @@ class SimGUI(object):
 
     def writeStatusLine(self, text = ''):
         self.topconsole.config(text = text)
-        self.root.update()        
+        self.root.update()
 
     def saveConsole(self):
-        from tkFileDialog import asksaveasfilename
+        try:  # Python 3
+            from tkinter.filedialog import asksaveasfilename
+        except:  # Python 2
+            from tkFileDialog import asksaveasfilename
         #get the Console content
         content = self.console.get('1.0', END + ' - 1c')
         #get a file name to save to
@@ -128,7 +109,7 @@ class SimGUI(object):
         fi = open(filename, 'wb')
         fi.write(content)
         fi.close()
-        
+
     def clearConsole(self):
         self.console.delete('1.0', END)
 
@@ -175,11 +156,11 @@ class SimGUI(object):
 
     def findMonitors(self):
         self._monitors = []
-        for k in self.__dict__.keys():
+        for k in self.__dict__:
             a = self.__dict__[k]
-            if isinstance(a, list) and hasattr(a, 'tseries') and hasattr(a, 'yseries'):                                 
+            if isinstance(a, list) and hasattr(a, 'tseries') and hasattr(a, 'yseries'):
                 self._monitors.append(a)
-                    
+
     def showMonitors(self):
         if self.noRunYet:
             showwarning('SimGUI warning', 'Run simulation first!')
@@ -203,29 +184,29 @@ class SimGUI(object):
             for this in dat:
                 self.writeConsole('%s%s%s' % (this[0],sep, this[1]))
             self.writeConsole()
-            
+
     def findParameters(self):
         """Finds the instance of Parameters (there may only be one)
         and associates it with self._parameters"""
         self._parameters = None
-        for k in self.__dict__.keys():
+        for k in self.__dict__:
             a = self.__dict__[k]
             if isinstance(a, Parameters):
                 self._parameters = a
-            
+
     def changeParameters(self):
         """Offers entry fields for parameter change"""
-        
+
         self.findParameters()
         if not self._parameters:
-            showwarning('SimGUI warning', 'No Parameters instance found.') 
+            showwarning('SimGUI warning', 'No Parameters instance found.')
             return
         t1 = Toplevel(self.root)
         top = Frame(t1)
         self.lbl={}
         self.ent={}
         i = 1
-        for p in self._parameters.__dict__.keys():
+        for p in self._parameters.__dict__:
             self.lbl[p] = Label(top, text = p)
             self.lbl[p].grid(row = i, column = 0)
             self.ent[p] = Entry(top)
@@ -235,10 +216,10 @@ class SimGUI(object):
         top.pack(side = TOP, fill = BOTH, expand = YES)
         commitBut = Button(top, text = 'Change parameters', command = self.commit)
         commitBut.grid(row = i, column = 1)
-        
+
     def commit(self):
         """Commits parameter changes, i.e. updates self._parameters"""
-        for p in self._parameters.__dict__.keys():
+        for p in self._parameters.__dict__:
             this = self._parameters.__dict__
             tipo = type(this[p])
             if tipo == type(1):
@@ -276,7 +257,7 @@ class SimGUI(object):
         i = Toplevel(self.root)
         interpreter = tkcons.Console(parent = i)
         interpreter.dict['SimPy'] = self
-        interpreter.pack(fill = BOTH, expand = 1)        
+        interpreter.pack(fill = BOTH, expand = 1)
 
 class Parameters:
     def __init__(self,**kwds):
@@ -287,12 +268,12 @@ class Parameters:
         return str(self.__dict__)
     def show(self):
         res = []
-        for i in self.__dict__.keys():
+        for i in self.__dict__:
             res.append('%s : %s\n' % (i, self.__dict__[i]))
         return "".join(res)
 
 if __name__ == '__main__':
-    print 'SimGUI.py %s'%__version__
+    print('SimGUI.py')
     from SimPy.Simulation import *
     from SimPy.Monitor import *
     from random import Random
@@ -303,7 +284,7 @@ if __name__ == '__main__':
             Process.__init__(self)
             self.SEED = seed
 
-        def generate(self, number, interval):       
+        def generate(self, number, interval):
             rv = Random(self.SEED)
             for i in range(number):
                 c = Customer(name = 'Customer%02d' % (i,))
@@ -321,8 +302,8 @@ if __name__ == '__main__':
         def __init__(self, name):
             Process.__init__(self)
             self.name = name
-            
-        def visit(self, timeInBank = 0):       
+
+        def visit(self, timeInBank = 0):
             arrive = now()
             Qlength = [NoInSystem(counter[i]) for i in range(Nc)]
             ##print '%7.4f %s: Here I am. %s   '%(now(),self.name, Qlength)
@@ -367,7 +348,7 @@ if __name__ == '__main__':
         gui.writeConsole('%s simulation run(s) completed\n'%nrRuns)
         gui.writeConsole('Parameters:\n%s'%gui.params.show())
         gui.writeStatusLine('Time: %.2f '%now())
-     
+
     def statistics():
         if gui.noRunYet:
             showwarning(title = 'Model warning',
@@ -384,7 +365,7 @@ Model: Simulate customers arriving at random, using a Source, requesting service
 from two counters each with their own queue with random servicetime.
 
 Uses Monitor objects to record waiting times and total service times."""
-    
+
     def showAuthors():
         gui.showTextBox(text = 'Tony Vignaux\nKlaus Muller', title = 'Author information')
     class MyGUI(SimGUI):
@@ -396,7 +377,7 @@ Uses Monitor objects to record waiting times and total service times."""
                                   command = statistics, underline = 0)
             self.run.add_command(label = 'Run',
                                  command = model, underline = 0)
-            
+
 
 
     root = Tk()

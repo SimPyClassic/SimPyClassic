@@ -24,7 +24,7 @@ class PActions(Process):
 
    def ACTIONS(self):
         yield hold,self,self.T
-    
+
 class ToStop(Process):
     """For testing stopSimulation
     """
@@ -32,7 +32,7 @@ class ToStop(Process):
         yield hold,self,self.sim.now()+stopTime
         self.sim.stopSimulation()
         yield hold,self,10
-        
+
 class ToCollect(Process):
     """For testing startCollection
     """
@@ -43,7 +43,7 @@ class ToCollect(Process):
             mon2.observe(self.sim.now())
             tal1.observe(self.sim.now())
             tal2.observe(self.sim.now())
-            
+
 class ForEvtTimes(Process):
     """For testing allEventTimes
     """
@@ -161,18 +161,18 @@ def test_resource_init(sim):
     assert R.unitName =="units", "Not the correct unit name"
     R = Resource(capacity=3,name="3-version",unitName="blobs",sim=sim)
     assert R.name =="3-version" , "Wrong name, it is"+R.name
-    assert R.capacity == 3, "Not capacity 3, it is "+`R.capacity`
+    assert R.capacity == 3, "Not capacity 3, it is "+repr(R.capacity)
     assert R.unitName =="blobs", "Not the correct unit name"
     ## next test 0 capacity is allowed
     R = Resource(capacity=0,name="0-version",sim=sim)
-    assert R.capacity ==0, "Not capacity 0, it is "+`R.capacity`
+    assert R.capacity ==0, "Not capacity 0, it is "+repr(R.capacity)
 
 def test_resource_request(sim):
     """Test request"""
     ## now test requesting: ------------------------------------
     R0 = Resource(name='',capacity=0, sim=sim)
     assert R0.name == "", "Not null name"
-    assert R0.capacity == 0, "Not capacity 0, it is "+`R0.capacity`
+    assert R0.capacity == 0, "Not capacity 0, it is "+repr(R0.capacity)
     R1 = Resource(capacity=0,name="3-version",unitName="blobs", sim=sim)
     J= Job(name="job",server=R1, sim=sim)
     sim.activate(J,J.execute(), at=0.0) # this requests a unit of R1
@@ -1361,7 +1361,7 @@ def test_static(sim):
     """Tests initialization of Level instances
     """
     a=Level(sim=sim)
-    assert a.capacity==sys.maxint,"wrong capacity:%s"%a
+    assert a.capacity==sys.maxsize,"wrong capacity:%s"%a
     assert a.amount==0,"wrong buffer content: %s"%a
     assert a.name=="a_level","wrong name: %s"%a
     assert not a.monitored,"should not be monitored: %s"%a
@@ -1597,7 +1597,7 @@ def test_static(sim):
     """Store: tests initialization of Store instances
     """
     a=Store(sim=sim)
-    assert a.capacity==sys.maxint,"wrong capacity:%s"%a
+    assert a.capacity==sys.maxsize,"wrong capacity:%s"%a
     assert a.nrBuffered==0,"wrong buffer content: %s"%a
     assert a.name=="a_store","wrong name: %s"%a
     assert not a.monitored,"should not be monitored: %s"%a

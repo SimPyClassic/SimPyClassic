@@ -2,7 +2,7 @@ Changelog for SimPy
 ==============================
 
 
-v2.2 – 2011-:
+v2.2 – 2011-09-27:
 ------------------
 
 - [CHANGE] Restructured package layout to be conform to the `Hitchhiker’s Guide

@@ -2,43 +2,22 @@
 # coding=utf-8
 # $Revision$ $Date$ kgm
 """SimulationTrace 2.1 Traces execution of SimPy models.
-Implements SimPy Processes, Resources, Buffers, and the backbone simulation 
-scheduling by coroutine calls. Provides data collection through classes 
+Implements SimPy Processes, Resources, Buffers, and the backbone simulation
+scheduling by coroutine calls. Provides data collection through classes
 Monitor and Tally.
-Based on generators (Python 2.3 and later; not 3.0)
+Based on generators.
 
-LICENSE:
-Copyright (C) 2002, 2005, 2006, 2007, 2008  Klaus G. Muller, Tony Vignaux
-mailto: kgmuller@xs4all.nl and Tony.Vignaux@vuw.ac.nz
-
-    This library is free software; you can redistribute it and / or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111 - 1307  USA
-END OF LICENSE
 """
+from __future__ import print_function
 
 from SimPy.Lister import *
 from SimPy.Simulation import *
 
 
 __TESTING = False
-version = __version__ = '2.1 $Revision$ $Date$'
-if __TESTING: 
-    print 'SimPy.SimulationTrace %s' %__version__,
-    if __debug__:
-        print '__debug__ on'
-    else:
-        print
+if __TESTING:
+    debug = '__debug__ on' if __debug__ else ''
+    print('SimPy.SimulationTrace %s, %s' % (SimPy.__version__, debug))
 
 def trace_dispatch(trace, command, func):
     """
@@ -103,12 +82,12 @@ class Trace(Lister):
               waitevent:'waitevent', queueevent:'queueevent', waituntil:'waituntil',
             get:'get', put:'put'}
 
-    def __init__(self, start = 0, end = 10000000000L, toTrace=\
+    def __init__(self, start = 0, end = 10000000000, toTrace=\
                  ['hold', 'activate', 'cancel', 'reactivate', 'passivate', 'request',
                   'release', 'interrupt', 'terminated', 'waitevent', 'queueevent',
-                  'signal', 'waituntil', 'put', 'get' 
+                  'signal', 'waituntil', 'put', 'get'
                  ],outfile = sys.stdout,sim=None):
-                        
+
         Trace.commandsproc={hold:Trace.thold, passivate:Trace.tpassivate,
                             request:Trace.trequest, release:Trace.trelease,
                             waitevent:Trace.twaitevent,
@@ -132,7 +111,7 @@ class Trace(Lister):
                             waituntil:Trace.twaituntil,
                             get:Trace.tget, put:Trace.tput}
         self.start = 0
-        self.end = 10000000000L
+        self.end = 10000000000
         self.toTrace = ['hold', 'activate', 'cancel', 'reactivate', 'passivate', 'request',
                         'release', 'interrupt', 'terminated', 'waitevent', 'queueevent',
                         'signal', 'waituntil', 'put', 'get']
@@ -141,7 +120,7 @@ class Trace(Lister):
         self._comment = None
 
     def tchange(self,**kmvar):
-        for v in kmvar.keys():
+        for v in kmvar:
             if v == 'start':
                 self.start = kmvar[v]
             elif v == 'end':
@@ -149,8 +128,8 @@ class Trace(Lister):
             elif v == 'toTrace':
                 self.toTrace = kmvar[v]
             elif v == 'outfile':
-                self.outfile = kmvar[v]                
-                
+                self.outfile = kmvar[v]
+
     def tstart(self):
         self.tracego = True
 
@@ -168,7 +147,7 @@ class Trace(Lister):
         except:
             return 'delay: 0'
     thold = classmethod(thold)
-    
+
     def trequest(self, par):
         res = par[0][2]
         if len(par[0]) == 4:
@@ -179,14 +158,14 @@ class Trace(Lister):
         aQ = [x.name for x in res.activeQ]
         return '<%s> %s \n. . .waitQ: %s \n. . .activeQ: %s' % (res.name, priority, wQ, aQ)
     trequest = classmethod(trequest)
-    
+
     def trelease(self, par):
         res = par[0][2]
         wQ = [x.name for x in res.waitQ]
         aQ = [x.name for x in res.activeQ]
         return '<%s> \n. . .waitQ: %s \n. . .activeQ: %s' % (res.name, wQ, aQ)
     trelease = classmethod(trelease)
-    
+
     def tpassivate(self, par):
         return ""
     tpassivate = classmethod(tpassivate)
@@ -194,7 +173,7 @@ class Trace(Lister):
     def tactivate(self, par):
         pass
     tactivate = classmethod(tactivate)
-    
+
     def twaitevent(self, par):
         evt = par[0][2]
         if type(evt) == list or type(evt) == tuple:
@@ -203,16 +182,16 @@ class Trace(Lister):
         else:
             return 'waits for event <%s > '%evt.name
     twaitevent = classmethod(twaitevent)
-    
+
     def tqueueevent(self, par):
         evt = par[0][2]
         if type(evt) == list or type(evt) == tuple:
             enames = [x.name for x in evt]
-            return 'queues for events <%s > '%enames          
+            return 'queues for events <%s > '%enames
         else:
             return 'queues for event <%s > '%evt.name
     tqueueevent = classmethod(tqueueevent)
-    
+
     def tsignal(self, evt):
         wQ = [x.name for x in evt.waits]
         qQ = [x.name for x in evt.queues]
@@ -220,12 +199,12 @@ class Trace(Lister):
                 %(evt.name, evt.occurred, wQ, qQ)
         pass
     tsignal = classmethod(tsignal)
-    
+
     def twaituntil(self, par):
         condition = par[0][2]
-        return 'for condition <%s > '%condition.func_name
+        return 'for condition <%s > '%condition.__name__
     twaituntil = classmethod(twaituntil)
-    
+
     def tget(self, par):
         buff = par[0][2]
         if len(par[0]) == 5:
@@ -246,7 +225,7 @@ class Trace(Lister):
         return '%s <%s> %s \n. . .getQ: %s \n. . .putQ: %s \n. . .in buffer: %s'\
             %(toGet, buff.name, priority, getQ, putQ, inBuffer)
     tget = classmethod(tget)
-    
+
     def tput(self, par):
         buff = par[0][2]
         if len(par[0]) == 5:
@@ -270,82 +249,82 @@ class Trace(Lister):
         return '%s <%s> %s \n. . .getQ: %s \n. . .putQ: %s \n. . .in buffer: %s'\
             %(toPut, buff.name, priority, getQ, putQ, inBuffer)
     tput = classmethod(tput)
-    
+
     def recordEvent(self, command, whole):
         if self.ifTrace(Trace.commands[command] in self.toTrace):
             if not type(whole[0][0]) == tuple:
-                print >> self.outfile, whole[0][1].sim.now(),\
+                print(whole[0][1].sim.now(),\
                     Trace.commands[command],\
                     ' < ' + whole[0][1].name + ' > ',\
-                    Trace.commandsproc[command](whole)
+                    Trace.commandsproc[command](whole), file=self.outfile)
                 if self._comment:
-                    print >> self.outfile, '----', self._comment
+                    print('----', self._comment, file=self.outfile)
             else:
-                print >> self.outfile, whole[0][0][1].sim.now(),\
+                print(whole[0][0][1].sim.now(),\
                          Trace.commands[command],\
                          ' < ' + whole[0][0][1].name + ' > '+\
-                         Trace.commandsproc[command](whole[0])
-                print >> self.outfile, '|| RENEGE COMMAND:'
+                         Trace.commandsproc[command](whole[0]), file=self.outfile)
+                print('|| RENEGE COMMAND:', file=self.outfile)
                 command1 = whole[0][1][0]
-                print >> self.outfile, '||\t', Trace.commands[command1],\
+                print('||\t', Trace.commands[command1],\
                     ' < ' + whole[0][1][1].name + ' > ',\
-                      Trace.commandsproc[command1]((whole[0][1],))
+                      Trace.commandsproc[command1]((whole[0][1],)), file=self.outfile)
                 if self._comment:
-                    print >> self.outfile, '----', self._comment
-                
+                    print('----', self._comment, file=self.outfile)
+
         self._comment = None
 
     def recordInterrupt(self, who, victim):
         if self.ifTrace('interrupt' in self.toTrace):
-            print >> self.outfile, '%s interrupt by: <%s > of: <%s >'\
-                                   %(who.sim.now(),who.name, victim.name)
+            print('%s interrupt by: <%s > of: <%s >'\
+                                   %(who.sim.now(),who.name, victim.name), file=self.outfile)
             if self._comment:
-                print >> self.outfile, '----', self._comment
+                print('----', self._comment, file=self.outfile)
         self._comment = None
-                
+
     def recordCancel(self, who, victim):
         if self.ifTrace('cancel' in self.toTrace):
-            print >> self.outfile, '%s cancel by: <%s > of: <%s > '\
-            %(who.sim.now(),who.name, victim.name)
+            print('%s cancel by: <%s > of: <%s > '\
+            %(who.sim.now(),who.name, victim.name), file=self.outfile)
             if self._comment:
-                print >> self.outfile, '----', self._comment
+                print('----', self._comment, file=self.outfile)
         self._comment = None
-        
+
     def recordActivate(self, who, when, prior):
         if self.ifTrace('activate' in self.toTrace):
-            print >> self.outfile, '%s activate <%s > at time: %s prior: %s'\
-                     %(who.sim.now(),who.name,when, prior)
+            print('%s activate <%s > at time: %s prior: %s'\
+                     %(who.sim.now(),who.name,when, prior), file=self.outfile)
             if self._comment:
-                print >> self.outfile, '----', self._comment
-        self._comment = None                                                                       
+                print('----', self._comment, file=self.outfile)
+        self._comment = None
 
     def recordReactivate(self, who, when, prior):
         if self.ifTrace('reactivate' in self.toTrace):
-            print >> self.outfile, '%s reactivate <%s > time: %s prior: %s'\
-                     %(who.sim.now(),who.name,when, prior)
+            print('%s reactivate <%s > time: %s prior: %s'\
+                     %(who.sim.now(),who.name,when, prior), file=self.outfile)
             if self._comment:
-                print >> self.outfile, '----', self._comment
+                print('----', self._comment, file=self.outfile)
         self._comment = None
-        
+
     def recordSignal(self, evt):
         if self.ifTrace('signal' in self.toTrace):
-            print >> self.outfile, '%s event <%s > is signalled' \
-                                   %(evt.sim.now(),evt.name)
+            print('%s event <%s > is signalled' \
+                                   %(evt.sim.now(),evt.name), file=self.outfile)
             if self._comment:
-                print >> self.outfile, '----', self._comment
+                print('----', self._comment, file=self.outfile)
         self._comment = None
 
     def tterminated(self, who):
         if self.ifTrace('terminated' in self.toTrace):
-            print >> self.outfile, '%s <%s > terminated'\
-                     %(who.sim.now(),who.name)
+            print('%s <%s > terminated'\
+                     %(who.sim.now(),who.name), file=self.outfile)
             if self._comment:
-                print >> self.outfile, '----', self._comment
-        self._comment = None        
+                print('----', self._comment, file=self.outfile)
+        self._comment = None
 
     def ttext(self, par):
         self._comment = par
-  
+
 # For backward compatibility
 Globals.sim = SimulationTrace()
 trace = Globals.sim.trace
@@ -356,7 +335,7 @@ allTallies = Globals.sim.allTallies
 # End backward compatibility
 
 if __name__ == '__main__':
-    print 'SimPy.SimulationTrace %s' %__version__
+    print('SimPy.SimulationTrace %s' % SimPy.__version__)
     ############# Test / demo functions #############
     def test_demo():
         class Aa(Process):
@@ -365,52 +344,52 @@ if __name__ == '__main__':
             def __init__(self, holdtime, name,sim=None):
                 Process.__init__(self, name,sim=sim)
                 self.holdtime = holdtime
-    
+
             def life(self, priority):
                 for i in range(1):
                     Aa.sequIn.append(self.name)
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
-                    print 'waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ]
-                    print 'activeQ: ',[(k.name, k._priority[rrr]) \
-                               for k in rrr.activeQ]
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
+                    print('waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ])
+                    print('activeQ: ',[(k.name, k._priority[rrr]) \
+                               for k in rrr.activeQ])
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                    'Inconsistent resource unit numbers'
-                    print self.sim.now(),self.name, 'requests 1 ', rrr.unitName
+                    print(self.sim.now(),self.name, 'requests 1 ', rrr.unitName)
                     yield request, self, rrr, priority
-                    print self.sim.now(),self.name, 'has 1 ', rrr.unitName
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
+                    print(self.sim.now(),self.name, 'has 1 ', rrr.unitName)
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                    'Inconsistent resource unit numbers'
                     yield hold, self, self.holdtime
-                    print self.sim.now(),self.name, 'gives up 1', rrr.unitName
+                    print(self.sim.now(),self.name, 'gives up 1', rrr.unitName)
                     yield release, self, rrr
                     Aa.sequOut.append(self.name)
-                    print self.sim.now(),self.name, 'has released 1 ', rrr.unitName
-                    print 'waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ]
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
+                    print(self.sim.now(),self.name, 'has released 1 ', rrr.unitName)
+                    print('waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ])
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                            'Inconsistent resource unit numbers'
-    
+
         class Observer(Process):
             def __init__(self,**vars):
                 Process.__init__(self,**vars)
-    
+
             def observe(self, step, processes, res):
                 while self.sim.now() < 11:
                     for i in processes:
-                        print '++ %s process: %s: active:%s, passive:%s, terminated: %s, interrupted:%s, queuing:%s'\
+                        print('++ %s process: %s: active:%s, passive:%s, terminated: %s, interrupted:%s, queuing:%s'\
                               %(self.sim.now(),i.name, i.active(),i.passive(),\
-                                i.terminated(),i.interrupted(),i.queuing(res))
-                    print
+                                i.terminated(),i.interrupted(),i.queuing(res)))
+                    print()
                     yield hold, self, step
-                
-        print'\n+++test_demo output'
-        print '****First case == priority queue, resource service not preemptable'
+
+        print('\n+++test_demo output')
+        print('****First case == priority queue, resource service not preemptable')
         s=SimulationTrace()
         s.initialize()
         rrr = Resource(5, name = 'Parking', unitName = 'space(s)', qType = PriorityQ,
@@ -423,11 +402,11 @@ if __name__ == '__main__':
         o = Observer(sim=s)
         s.activate(o, o.observe(1, procs, rrr))
         a = s.simulate(until = 10000)
-        print a
-        print 'Input sequence: ', Aa.sequIn
-        print 'Output sequence: ', Aa.sequOut
-    
-        print '\n****Second case == priority queue, resource service preemptable'
+        print(a)
+        print('Input sequence: ', Aa.sequIn)
+        print('Output sequence: ', Aa.sequOut)
+
+        print('\n****Second case == priority queue, resource service preemptable')
         s=SimulationTrace()
         s.initialize()
         rrr = Resource(5, name = 'Parking', unitName = 'space(s)', qType = PriorityQ,
@@ -442,54 +421,54 @@ if __name__ == '__main__':
         Aa.sequIn = []
         Aa.sequOut = []
         a = s.simulate(until = 10000)
-        print a
-        print 'Input sequence: ', Aa.sequIn
-        print 'Output sequence: ', Aa.sequOut   
-    
+        print(a)
+        print('Input sequence: ', Aa.sequIn)
+        print('Output sequence: ', Aa.sequOut)
+
     def test_interrupt():
         class Bus(Process):
             def __init__(self, **vars):
                 Process.__init__(self, **vars)
-    
+
             def operate(self, repairduration = 0):
-                print self.sim.now(),'>> %s starts' % (self.name)
+                print(self.sim.now(),'>> %s starts' % (self.name))
                 tripleft = 1000
                 while tripleft > 0:
                     yield hold, self, tripleft
                     if self.interrupted():
-                        print 'interrupted by %s' %self.interruptCause.name
-                        print '%s: %s breaks down ' %(now(),self.name)
+                        print('interrupted by %s' %self.interruptCause.name)
+                        print('%s: %s breaks down ' %(now(),self.name))
                         tripleft = self.interruptLeft
                         self.interruptReset()
-                        print 'tripleft ', tripleft
+                        print('tripleft ', tripleft)
                         s.reactivate(br, delay = repairduration) # breakdowns only during operation
                         yield hold, self, repairduration
-                        print self.sim.now(),' repaired'
+                        print(self.sim.now(),' repaired')
                     else:
                         break # no breakdown, ergo bus arrived
-                print self.sim.now(),'<< %s done' % (self.name)
-    
+                print(self.sim.now(),'<< %s done' % (self.name))
+
         class Breakdown(Process):
             def __init__(self, myBus,sim=None):
                 Process.__init__(self, name = 'Breakdown ' + myBus.name,sim=sim)
                 self.bus = myBus
-    
+
             def breakBus(self, interval):
-    
+
                 while True:
                     yield hold, self, interval
                     if self.bus.terminated(): break
                     self.interrupt(self.bus)
-                    
-        print'\n\n+++test_interrupt'
+
+        print('\n\n+++test_interrupt')
         s=SimulationTrace()
         s.initialize()
         b = Bus(name='Bus 1',sim=s)
         s.activate(b, b.operate(repairduration = 20))
         br = Breakdown(b,sim=s)
         s.activate(br, br.breakBus(200))
-        print s.simulate(until = 4000)
-    
+        print(s.simulate(until = 4000))
+
     def testSimEvents():
         class Waiter(Process):
             def __init__(self,**vars):
@@ -497,36 +476,36 @@ if __name__ == '__main__':
             def waiting(self, theSignal):
                 while True:
                     yield waitevent, self, theSignal
-                    print '%s: process \'%s\' continued after waiting for %s' %\
-                          (self.sim.now(),self.name, theSignal.name)
+                    print('%s: process \'%s\' continued after waiting for %s' %\
+                          (self.sim.now(),self.name, theSignal.name))
                     yield queueevent, self, theSignal
-                    print '%s: process \'%s\' continued after queueing for %s' % (now(),self.name, theSignal.name)
-                    
+                    print('%s: process \'%s\' continued after queueing for %s' % (now(),self.name, theSignal.name))
+
         class ORWaiter(Process):
             def __init__(self,**vars):
                 Process.__init__(self,**vars)
             def waiting(self, signals):
                 while True:
                     yield waitevent, self, signals
-                    print self.sim.now(),'one of %s signals occurred' %\
-                          [x.name for x in signals]
-                    print '\t%s (fired / param)'%\
-                          [(x.name, x.signalparam) for x in self.eventsFired]
+                    print(self.sim.now(),'one of %s signals occurred' %\
+                          [x.name for x in signals])
+                    print('\t%s (fired / param)'%\
+                          [(x.name, x.signalparam) for x in self.eventsFired])
                     yield hold, self, 1
-                    
+
         class Caller(Process):
             def __init__(self,**vars):
                 Process.__init__(self,**vars)
             def calling(self):
                 while True:
                     signal1.signal('wake up!')
-                    print '%s: signal 1 has occurred'%now()
+                    print('%s: signal 1 has occurred'%now())
                     yield hold, self, 10
                     signal2.signal('and again')
                     signal2.signal('sig 2 again')
-                    print '%s: signal1, signal2 have occurred'%now()
+                    print('%s: signal1, signal2 have occurred'%now())
                     yield hold, self, 10
-        print'\n+++testSimEvents output'
+        print('\n+++testSimEvents output')
         s=SimulationTrace()
         s.initialize()
         signal1 = SimEvent('signal 1',sim=s)
@@ -543,12 +522,12 @@ if __name__ == '__main__':
         s.activate(w4, w4.waiting([signal1, signal2]),prior = True)
         c = Caller(name='Caller',sim=s)
         s.activate(c, c.calling())
-        print s.simulate(until = 100)
-        
+        print(s.simulate(until = 100))
+
     def testwaituntil():
         """
         Demo of waitUntil capability.
-    
+
         Scenario:
         Three workers require sets of tools to do their jobs. Tools are shared,
         scarce resources for which they compete.
@@ -563,19 +542,19 @@ if __name__ == '__main__':
                         if item.n == 0:
                             return False
                     return True
-                    
+
                 while self.sim.now() < 8 * 60:
                     yield waituntil, self, workerNeeds
                     for item in self.heNeeds:
                         yield request, self, item
-                    print '%s %s has %s and starts job' % (self.sim.now(),self.name,
-                        [x.name for x in self.heNeeds])
+                    print('%s %s has %s and starts job' % (self.sim.now(),self.name,
+                        [x.name for x in self.heNeeds]))
                     yield hold, self, random.uniform(10, 30)
                     for item in self.heNeeds:
                         yield release, self, item
                     yield hold, self, 2 #rest
-                    
-        print '\n+++ nwaituntil demo output'
+
+        print('\n+++ nwaituntil demo output')
         random.seed(12345)
         s=SimulationTrace()
         s.initialize()
@@ -590,20 +569,20 @@ if __name__ == '__main__':
         treeguy = Worker('treeguy',[saw, ladder],sim=s)
         s.activate(treeguy, treeguy.work())
         for who in (painter, roofer, treeguy):
-            print '%s needs %s for his job' %\
-                  (who.name,[x.name for x in who.heNeeds])
-        print
-        print s.simulate(until = 9 * 60)
-        
+            print('%s needs %s for his job' %\
+                  (who.name,[x.name for x in who.heNeeds]))
+        print()
+        print(s.simulate(until = 9 * 60))
+
     ## -------------------------------------------------------------
     ##                    TEST COMPOUND 'YIELD REQUEST' COMMANDS
     ## -------------------------------------------------------------
-    
+
     ## -------------------------------------------------------------
     ##             TEST 'yield (request, self, res),(hold, self, delay)'
     ##                   == timeout renege
     ## -------------------------------------------------------------
-    
+
     class JobTO(Process):
        """ Job class for testing timeout reneging
        """
@@ -611,8 +590,8 @@ if __name__ == '__main__':
             Process.__init__(self, name,sim=sim)
             self.res = server
             self.gotResource = None
-            
-       def execute(self, timeout, usetime):       
+
+       def execute(self, timeout, usetime):
             yield (request, self, self.res),(hold, self, timeout)
             if self.acquired(self.res):
                 self.gotResource = True
@@ -620,8 +599,8 @@ if __name__ == '__main__':
                 yield release, self, self.res
             else:
                 self.gotResource = False
-                
-    
+
+
     def testNoTimeout():
         """Test that resource gets acquired without timeout
         """
@@ -640,7 +619,7 @@ if __name__ == '__main__':
             'at least one job failed to get resource'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-                
+
     def testTimeout1():
         """Test that timeout occurs when resource busy
         """
@@ -659,7 +638,7 @@ if __name__ == '__main__':
         assert(not j2.gotResource),'Job_2 did not renege'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-    
+
     def testTimeout2():
         """Test that timeout occurs when resource has no capacity free
         """
@@ -677,8 +656,8 @@ if __name__ == '__main__':
         assert not j1.gotResource, 'Job_1 got resource'
         assert not j2.gotResource, 'Job_2 got resource'
         assert not (res.waitQ or res.activeQ),\
-            'job waiting or using resource'  
-    
+            'job waiting or using resource'
+
     ## ------------------------------------------------------------------
     ##             TEST 'yield (request, self, res),(waitevent, self, event)'
     ##                   == event renege
@@ -690,8 +669,8 @@ if __name__ == '__main__':
             Process.__init__(self, name,sim=sim)
             self.res = server
             self.gotResource = None
-            
-       def execute(self, event, usetime):       
+
+       def execute(self, event, usetime):
             yield (request, self, self.res),(waitevent, self, event)
             if self.acquired(self.res):
                 self.gotResource = True
@@ -699,7 +678,7 @@ if __name__ == '__main__':
                 yield release, self, self.res
             else:
                 self.gotResource = False
-                
+
     class JobEvtMulti(Process):
        """ Job class for testing event reneging with multi - event lists
        """
@@ -707,8 +686,8 @@ if __name__ == '__main__':
             Process.__init__(self, name,sim=sim)
             self.res = server
             self.gotResource = None
-            
-       def execute(self, eventlist, usetime):       
+
+       def execute(self, eventlist, usetime):
             yield (request, self, self.res),(waitevent, self, eventlist)
             if self.acquired(self.res):
                 self.gotResource = True
@@ -716,7 +695,7 @@ if __name__ == '__main__':
                 yield release, self, self.res
             else:
                 self.gotResource = False
-                
+
     class FireEvent(Process):
         """Fires reneging event
         """
@@ -725,7 +704,7 @@ if __name__ == '__main__':
         def fire(self, fireDelay, event):
             yield hold, self, fireDelay
             event.signal()
-                
+
     def testNoEvent():
         """Test that processes acquire resource normally if no event fires
         """
@@ -745,7 +724,7 @@ if __name__ == '__main__':
             'at least one job failed to get resource'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-     
+
     def testWaitEvent1():
         """Test that signalled event leads to renege when resource busy
         """
@@ -768,7 +747,7 @@ if __name__ == '__main__':
         assert(not j2.gotResource),'Job_2 did not renege'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-                
+
     def testWaitEvent2():
         """Test that renege - triggering event can be one of an event list
         """
@@ -794,7 +773,7 @@ if __name__ == '__main__':
         assert(not j2.gotResource),'Job_2 did not renege'
         assert not (res.waitQ or res.activeQ),\
             'job waiting or using resource'
-            
+
     testNoTimeout()
     testTimeout1()
     testTimeout2()

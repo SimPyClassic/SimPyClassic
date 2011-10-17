@@ -1,13 +1,11 @@
 # coding=utf-8
 """
-This file contains Simerror, FatalSimerror, Process, SimEvent,
-the resources Resource, Level and Storage
-as well as their dependencies Buffer, Queue, FIFO and PriorityQ.
+This file contains Simerror, FatalSimerror, Process, SimEvent, the resources
+Resource, Level and Storage as well as their dependencies Buffer, Queue, FIFO
+and PriorityQ.
+
 """
-# $Revision: 515 $ $Date: 2010-05-27 18:21:06 +0200 (Do, 27 Mai 2010) $ kgm
-# SimPy version: 2.1
 import inspect
-import new
 import sys
 import types
 
@@ -17,13 +15,14 @@ from SimPy.Recording import Monitor, Tally
 # Required for backward compatiblity
 import SimPy.Globals as Globals
 
+
 class Simerror(Exception):
     """ SimPy error which terminates "simulate" with an error message"""
     def __init__(self, value):
         self.value = value
 
     def __str__(self):
-        return `self.value`
+        return repr(self.value)
 
 class FatalSimerror(Simerror):
     """ SimPy error which terminates script execution with an exception"""
@@ -38,7 +37,8 @@ class Process(Lister):
         self.sim = sim
         #the reference to this Process instances single process (==generator)
         self._nextpoint = None
-        if isinstance(name, basestring):
+        if isinstance(name, str) or (sys.version_info.major == 2 and
+                isinstance(name, basestring)):
             self.name = name
         else:
             raise FatalSimerror("Process name parameter '%s' is not a string"%name)
@@ -57,7 +57,7 @@ class Process(Lister):
             self._doTracing = False
 
     def active(self):
-        return self._nextTime <> None and not self._inInterrupt
+        return self._nextTime != None and not self._inInterrupt
 
     def passive(self):
         return self._nextTime is None and not self._terminated
@@ -267,9 +267,8 @@ class SimEvent(Lister):
         # test that process and SimEvent belong to same Simulation instance
         if __debug__:
             if not (proc.sim == self.sim):
-                raise FatalSimerror,\
-                "waitevent: Process %s, SimEvent %s not in "\
-                "same Simulation instance"%(proc.name,self.name)
+                raise FatalSimerror("waitevent: Process %s, SimEvent %s not in "
+                        "same Simulation instance" % (proc.name,self.name))
         proc.eventsFired = []
         if not self.occurred:
             self.waits.append([proc, [self]])
@@ -290,9 +289,9 @@ class SimEvent(Lister):
             # test that process and SimEvent belong to same Simulation instance
             if __debug__:
                 if not (proc.sim == ev.sim):
-                    raise FatalSimerror,\
-                    "waitevent: Process %s, SimEvent %s not in "\
-                    "same Simulation instance"%(proc.name,ev.name)
+                    raise FatalSimerror(
+                                        "waitevent: Process %s, SimEvent %s not in "\
+                                        "same Simulation instance"%(proc.name,ev.name))
             if ev.occurred:
                 anyoccur = True
                 proc.eventsFired.append(ev)
@@ -315,9 +314,8 @@ class SimEvent(Lister):
         # test that process and SimEvent belong to same Simulation instance
         if __debug__:
             if not (proc.sim == self.sim):
-                raise FatalSimerror,\
-                "queueevent: Process %s, SimEvent %s not in "\
-                "same Simulation instance"%(proc.name,self.name)
+                raise FatalSimerror("queueevent: Process %s, SimEvent %s not in "
+                        "same Simulation instance"%(proc.name,self.name))
         if not self.occurred:
             self.queues.append([proc, [self]])
             proc._nextTime = None #passivate calling process
@@ -337,9 +335,8 @@ class SimEvent(Lister):
         # test that process and SimEvent belong to same Simulation instance
             if __debug__:
                 if not (proc.sim == ev.sim):
-                    raise FatalSimerror,\
-                    "yield queueevent: Process %s, SimEvent %s not in "\
-                    "same Simulation instance"%(proc.name,ev.name)
+                    raise FatalSimerror("yield queueevent: Process %s, SimEvent %s not in "
+                            "same Simulation instance"%(proc.name,ev.name))
             if ev.occurred:
                 anyoccur = True
                 proc.eventsFired.append(ev)
@@ -499,9 +496,8 @@ class Resource(Lister):
         # test that process and Resource belong to same Simulation instance
         if __debug__:
             if not (obj.sim == self.sim):
-                raise FatalSimerror,\
-                "yield request: Process %s, Resource %s not in "\
-                "same Simulation instance"%(obj.name,self.name)
+                raise FatalSimerror("yield request: Process %s, Resource %s not in "\
+                        "same Simulation instance"%(obj.name,self.name))
         if len(arg[0]) == 4:        # yield request, self, resource, priority
             obj._priority[self] = arg[0][3]
         else:                       # yield request, self, resource
@@ -591,7 +587,8 @@ class Buffer(Lister):
                 sim = None):
         if sim is None: sim = Globals.sim # Use global simulation if sim is None
         self.sim = sim
-        if capacity == 'unbounded': capacity = sys.maxint
+        if capacity == 'unbounded':
+            capacity = sys.maxsize
         self.capacity = capacity
         self.name = name
         self.putQType = putQType
@@ -648,8 +645,7 @@ class Level(Buffer):
         if (type(self.capacity) != type(1.0) and\
                 type(self.capacity) != type(1)) or\
                 self.capacity < 0:
-                raise FatalSimerror\
-                    ('Level: capacity parameter not a positive number: %s'\
+                raise FatalSimerror('Level: capacity parameter not a positive number: %s'\
                     %self.initialBuffered)
 
         if type(self.initialBuffered) == type(1.0) or\
@@ -660,15 +656,13 @@ class Level(Buffer):
                 self.nrBuffered = self.initialBuffered ## nr items initially in buffer
                                         ## buffer is just a counter (int type)
             else:
-                raise FatalSimerror\
-                ('initialBuffered param of Level negative: %s'\
+                raise FatalSimerror('initialBuffered param of Level negative: %s'\
                 %self.initialBuffered)
         elif self.initialBuffered is None:
             self.initialBuffered = 0
             self.nrBuffered = 0
         else:
-            raise FatalSimerror\
-                ('Level: wrong type of initialBuffered (parameter=%s)'\
+            raise FatalSimerror('Level: wrong type of initialBuffered (parameter=%s)'\
                 %self.initialBuffered)
         if self.monitored:
             self.bufferMon.observe(y = self.amount, t = self.sim.now())
@@ -681,9 +675,9 @@ class Level(Buffer):
         # test that process and Level belong to same Simulation instance
         if __debug__:
             if not (obj.sim == self.sim):
-                raise FatalSimerror,\
-                "put: Process %s, Level %s not in "\
-                "same Simulation instance"%(obj.name,self.name)
+                raise FatalSimerror(
+                        "put: Process %s, Level %s not in "\
+                        "same Simulation instance"%(obj.name,self.name))
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
             obj._putpriority[self] = arg[0][4]
             whatToPut = arg[0][3]
@@ -728,9 +722,9 @@ class Level(Buffer):
         # test that process and Store belong to same Simulation instance
         if __debug__:
             if not (obj.sim == self.sim):
-                raise FatalSimerror,\
-                "get: Process %s, Level %s not in "\
-                "same Simulation instance"%(obj.name,self.name)
+                raise FatalSimerror(
+                        "get: Process %s, Level %s not in "\
+                        "same Simulation instance"%(obj.name,self.name))
         obj.got = None
         if len(arg[0]) == 5:        # yield get, self, buff, whattoget, priority
             obj._getpriority[self] = arg[0][4]
@@ -742,11 +736,9 @@ class Level(Buffer):
             obj._getpriority[self] = Buffer.priorityDefault
             nrToGet = 1
         if type(nrToGet) != type(1.0) and type(nrToGet) != type(1):
-            raise FatalSimerror\
-                ('Level: get parameter not a number: %s'%nrToGet)
+            raise FatalSimerror('Level: get parameter not a number: %s'%nrToGet)
         if nrToGet < 0:
-            raise FatalSimerror\
-                ('Level: get parameter not positive number: %s'%nrToGet)
+            raise FatalSimerror('Level: get parameter not positive number: %s'%nrToGet)
         if self.amount < nrToGet:
             obj._nrToGet = nrToGet
             self.getQ.enterGet(obj)
@@ -827,7 +819,7 @@ class Store(Buffer):
 
         """
 
-        self._sort = new.instancemethod(sortFunc, self, self.__class__)
+        self._sort = sortFunc.__get__(self, self.__class__)
         self.theBuffer = self._sort(self.theBuffer)
 
     def _put(self, arg):
@@ -836,9 +828,9 @@ class Store(Buffer):
         # test that process and Store belong to same Simulation instance
         if __debug__:
             if not (obj.sim == self.sim):
-                raise FatalSimerror,\
-                "put: Process %s, Store %s not in "\
-                "same Simulation instance"%(obj.name,self.name)
+                raise FatalSimerror(
+                                "put: Process %s, Store %s not in "\
+                                "same Simulation instance"%(obj.name,self.name))
         whichSim=self.sim
         if len(arg[0]) == 5:        # yield put, self, buff, whattoput, priority
             obj._putpriority[self] = arg[0][4]
@@ -913,9 +905,9 @@ class Store(Buffer):
         # test that process and Store belong to same Simulation instance
         if __debug__:
             if not (obj.sim == self.sim):
-                raise FatalSimerror,\
-                "get: Process %s, Store %s not in "\
-                "same Simulation instance"%(obj.name,self.name)
+                raise FatalSimerror(
+                                "get: Process %s, Store %s not in "\
+                                "same Simulation instance"%(obj.name,self.name))
         whichSim=obj.sim
         obj.got = []                  # the list of items retrieved by 'get'
         if len(arg[0]) == 5:        # yield get, self, buff, whattoget, priority

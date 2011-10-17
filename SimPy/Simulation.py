@@ -1,30 +1,10 @@
-#!/usr / bin / env python
 # coding=utf-8
-# $Revision$ $Date: 2008-09-10 17:25:13 +0200 (Mi, 10 Sep 2008) 
-"""Simulation 2.1 Implements SimPy Processes, Resources, Buffers, and the backbone simulation
-scheduling by coroutine calls. Provides data collection through classes 
+"""
+Simulation implements SimPy Processes, Resources, Buffers, and the backbone simulation
+scheduling by coroutine calls. Provides data collection through classes
 Monitor and Tally.
-Based on generators (Python 2.3 and later; not 3.0)
+Based on generators
 
-LICENSE:
-Copyright (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010  Klaus G. Muller, Tony Vignaux
-mailto: kgmuller at xs4all.nl and Tony.Vignaux at vuw.ac.nz
-
-    This library is free software; you can redistribute it and / or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111 - 1307  USA
-END OF LICENSE
-   
 """
 
 import random
@@ -35,9 +15,10 @@ from heapq import heappush, heappop
 from SimPy.Lister import Lister
 from SimPy.Recording import Monitor, Tally
 from SimPy.Lib import Process, SimEvent, PriorityQ, Resource, Level, \
-                      Store, Simerror, FatalSimerror
+                      Store, Simerror, FatalSimerror, FIFO
 
 # Required for backward compatibility
+import SimPy
 import SimPy.Globals as Globals
 from SimPy.Globals import initialize, simulate, now, stopSimulation, \
         allEventNotices, allEventTimes, startCollection,\
@@ -45,13 +26,10 @@ from SimPy.Globals import initialize, simulate, now, stopSimulation, \
 
 
 __TESTING = False
-version = __version__ = '2.1 $Revision$ $Date$'
-if __TESTING: 
-    print 'SimPy.Simulation %s' %__version__,
-    if __debug__:
-        print '__debug__ on'
-    else:
-        print
+
+if __TESTING:
+    debug = '__debug__ on' if __debug__ else ''
+    print('SimPy.Simulation %s, %s' % (SimPy.__version__, debug))
 
 # yield keywords
 hold = 1
@@ -75,7 +53,7 @@ def holdfunc(a):
     a[0][1]._hold(a)
 
 def requestfunc(a):
-    """Handles 'yield request, self, res' and 
+    """Handles 'yield request, self, res' and
     'yield (request, self, res),(<code>,self, par)'.
     <code > can be 'hold' or 'waitevent'.
     """
@@ -107,7 +85,7 @@ def requestfunc(a):
                 if not proc in b[2].activeQ:
                     proc.eventsFired = self.eventsFired
                     proc.sim.reactivate(proc)
-               
+
         #activate it
         proc = a[0][0][1] # the process to be woken up
         actCode = a[0][1][0]
@@ -146,7 +124,7 @@ def waitevfunc(a):
     else: #it should be a list / tuple of events
         # call _waitOR for first event
         evtpar[0]._waitOR(a)
-            
+
 def queueevfunc(a):
     #if queueing for one event only (not a tuple or list)
     evtpar = a[0][2]
@@ -156,12 +134,12 @@ def queueevfunc(a):
     else: #it should be a list / tuple of events
         # call _queueOR for first event
         evtpar[0]._queueOR(a)
-    
+
 def waituntilfunc(par):
     par[0][1].sim._waitUntilFunc(par[0][1], par[0][2])
-    
+
 def getfunc(a):
-    """Handles 'yield get, self, buffer, what, priority' and 
+    """Handles 'yield get, self, buffer, what, priority' and
     'yield (get, self, buffer, what, priority),(<code>,self, par)'.
     <code > can be 'hold' or 'waitevent'.
     """
@@ -171,7 +149,7 @@ def getfunc(a):
         b = a[0][0]
         ## b[2] == res (the resource requested)
         ##process the first part of the compound yield statement
-        ##a[1] is the Process instance 
+        ##a[1] is the Process instance
         b[2]._get(arg = (b, a[1]))
         ##deal with add - on condition to command
         ##Trigger processes for reneging
@@ -194,7 +172,7 @@ def getfunc(a):
                 if proc in b[2].getQ:
                     a[1].eventsFired = self.eventsFired
                     a[1].sim.reactivate(proc)
-               
+
         #activate it
         proc = a[0][0][1] # the process to be woken up
         actCode = a[0][1][0]
@@ -228,7 +206,7 @@ def putfunc(a):
         b = a[0][0]
         ## b[2] == res (the resource requested)
         ##process the first part of the compound yield statement
-        ##a[1] is the Process instance 
+        ##a[1] is the Process instance
         b[2]._put(arg = (b, a[1]))
         ##deal with add - on condition to command
         ##Trigger processes for reneging
@@ -251,7 +229,7 @@ def putfunc(a):
                 if proc in b[2].putQ:
                     a[1].eventsFired = self.eventsFired
                     a[1].sim.reactivate(proc)
-               
+
         #activate it
         proc = a[0][0][1] # the process to be woken up
         actCode = a[0][1][0]
@@ -283,7 +261,7 @@ class Simulation(object):
             queueevent: queueevfunc, waituntil: waituntilfunc, get: getfunc,
             put: putfunc,
     }
-    _commandcodes = _dispatch.keys()
+    _commandcodes = list(_dispatch.keys())
     _commandwords = {
             hold: 'hold', request: 'request', release: 'release',
             passivate: 'passivate', waitevent: 'waitevent',
@@ -457,11 +435,11 @@ class Simulation(object):
                     m.observe(t = now(), y = ylast)
             for t in tallies:
                 t.reset()
-        else:                
+        else:
             s = Starter(sim = self)
             self.activate(s, s.collect(monitors = monitors, tallies = tallies),\
                       at = when, prior = True)
-    
+
 
     def _waitUntilFunc(self, proc, cond):
         """
@@ -503,7 +481,7 @@ class Simulation(object):
 
     def step(self):
         """
-        Executes the next uncancelled event in the eventqueue. 
+        Executes the next uncancelled event in the eventqueue.
         """
 
         # Fetch next process and advance its process execution method.
@@ -522,7 +500,7 @@ class Simulation(object):
 
         # Execute the event. This will advance the process execution method.
         try:
-            resultTuple = proc._nextpoint.next()
+            resultTuple = next(proc._nextpoint)
 
             # Process the command function which has been yielded by the
             # process.
@@ -580,20 +558,20 @@ class Simulation(object):
             while not self._stop and timestamps and timestamps[0][0] <= until:
                 step()
 
-            if not self._stop and timestamps: 
+            if not self._stop and timestamps:
                 # Timestamps left, simulation not stopped
                 self._t = until
                 return 'SimPy: Normal exit at time %s' % self._t
-            elif not timestamps: 
+            elif not timestamps:
                 # No more timestamps
                 return 'SimPy: No more events at time %s' % self._t
-            else: 
+            else:
                 # Stopped by call of stopSimulation
                 return 'SimPy: Run stopped at time %s' % self._t
-        except FatalSimerror, error:
-                print 'SimPy: ' + error.value
-                raise FatalSimerror, 'SimPy: ' + error.value
-        except Simerror, error:
+        except FatalSimerror as error:
+                print('SimPy: ' + error.value)
+                raise FatalSimerror('SimPy: ' + error.value)
+        except Simerror as error:
             return 'SimPy: ' + error.value
         finally:
             self._stop = True
@@ -603,7 +581,7 @@ Globals.sim = Simulation()
 
 peek = Globals.sim.peek
 
-step = Globals.sim.step 
+step = Globals.sim.step
 
 allMonitors = Globals.sim.allMonitors
 
@@ -611,7 +589,7 @@ allTallies = Globals.sim.allTallies
 # End backward compatibility
 
 if __name__ == '__main__':
-    print 'SimPy.Simulation %s' %__version__
+    print('SimPy.Simulation %s' % SimPy.__version__)
     ############# Test / demo functions #############
     def test_demo():
         class Aa(Process):
@@ -624,30 +602,30 @@ if __name__ == '__main__':
             def life(self, priority):
                 for i in range(1):
                     Aa.sequIn.append(self.name)
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
-                    print 'waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ]
-                    print 'activeQ: ',[(k.name, k._priority[rrr]) \
-                               for k in rrr.activeQ]
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
+                    print('waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ])
+                    print('activeQ: ',[(k.name, k._priority[rrr]) \
+                               for k in rrr.activeQ])
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                    'Inconsistent resource unit numbers'
-                    print self.sim.now(),self.name, 'requests 1 ', rrr.unitName
+                    print(self.sim.now(),self.name, 'requests 1 ', rrr.unitName)
                     yield request, self, rrr, priority
-                    print self.sim.now(),self.name, 'has 1 ', rrr.unitName
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
+                    print(self.sim.now(),self.name, 'has 1 ', rrr.unitName)
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                    'Inconsistent resource unit numbers'
                     yield hold, self, self.holdtime
-                    print self.sim.now(),self.name, 'gives up 1', rrr.unitName
+                    print(self.sim.now(),self.name, 'gives up 1', rrr.unitName)
                     yield release, self, rrr
                     Aa.sequOut.append(self.name)
-                    print self.sim.now(),self.name, 'has released 1 ', rrr.unitName
-                    print 'waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ]
-                    print self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
-                          len(rrr.activeQ)
+                    print(self.sim.now(),self.name, 'has released 1 ', rrr.unitName)
+                    print('waitQ: ',[(k.name, k._priority[rrr]) for k in rrr.waitQ])
+                    print(self.sim.now(),rrr.name, 'waitQ:', len(rrr.waitQ),'activeQ:',\
+                          len(rrr.activeQ))
                     assert rrr.n + len(rrr.activeQ) == rrr.capacity, \
                            'Inconsistent resource unit numbers'
 
@@ -658,14 +636,14 @@ if __name__ == '__main__':
             def observe(self, step, processes, res):
                 while self.sim.now() < 11:
                     for i in processes:
-                        print '++ %s process: %s: active:%s, passive:%s, terminated: %s, interrupted:%s, queuing:%s'\
+                        print('++ %s process: %s: active:%s, passive:%s, terminated: %s, interrupted:%s, queuing:%s'\
                               %(self.sim.now(),i.name, i.active(),i.passive(),\
-                                i.terminated(),i.interrupted(),i.queuing(res))
-                    print
+                                i.terminated(),i.interrupted(),i.queuing(res)))
+                    print()
                     yield hold, self, step
 
-        print'\n+++test_demo output'
-        print '****First case == priority queue, resource service not preemptable'
+        print('\n+++test_demo output')
+        print('****First case == priority queue, resource service not preemptable')
         s=Simulation()
         s.initialize()
         rrr = Resource(5, name = 'Parking', unitName = 'space(s)', qType = PriorityQ,
@@ -678,11 +656,11 @@ if __name__ == '__main__':
         o = Observer(sim=s)
         s.activate(o, o.observe(1, procs, rrr))
         a = s.simulate(until = 10000)
-        print a
-        print 'Input sequence: ', Aa.sequIn
-        print 'Output sequence: ', Aa.sequOut
+        print(a)
+        print('Input sequence: ', Aa.sequIn)
+        print('Output sequence: ', Aa.sequOut)
 
-        print '\n****Second case == priority queue, resource service preemptable'
+        print('\n****Second case == priority queue, resource service preemptable')
         s=Simulation()
         s.initialize()
         rrr = Resource(5, name = 'Parking', unitName = 'space(s)', qType = PriorityQ,
@@ -697,9 +675,9 @@ if __name__ == '__main__':
         Aa.sequIn = []
         Aa.sequOut = []
         a = s.simulate(until = 10000)
-        print a
-        print 'Input sequence: ', Aa.sequIn
-        print 'Output sequence: ', Aa.sequOut
+        print(a)
+        print('Input sequence: ', Aa.sequIn)
+        print('Output sequence: ', Aa.sequOut)
 
     def test_interrupt():
         class Bus(Process):
@@ -707,22 +685,22 @@ if __name__ == '__main__':
                 Process.__init__(self, **vars)
 
             def operate(self, repairduration = 0):
-                print self.sim.now(),'>> %s starts' % (self.name)
+                print(self.sim.now(),'>> %s starts' % (self.name))
                 tripleft = 1000
                 while tripleft > 0:
                     yield hold, self, tripleft
                     if self.interrupted():
-                        print 'interrupted by %s' %self.interruptCause.name
-                        print '%s: %s breaks down ' %(now(),self.name)
+                        print('interrupted by %s' %self.interruptCause.name)
+                        print('%s: %s breaks down ' %(now(),self.name))
                         tripleft = self.interruptLeft
                         self.interruptReset()
-                        print 'tripleft ', tripleft
+                        print('tripleft ', tripleft)
                         s.reactivate(br, delay = repairduration) # breakdowns only during operation
                         yield hold, self, repairduration
-                        print self.sim.now(),' repaired'
+                        print(self.sim.now(),' repaired')
                     else:
                         break # no breakdown, ergo bus arrived
-                print self.sim.now(),'<< %s done' % (self.name)
+                print(self.sim.now(),'<< %s done' % (self.name))
 
         class Breakdown(Process):
             def __init__(self, myBus,sim=None):
@@ -736,14 +714,14 @@ if __name__ == '__main__':
                     if self.bus.terminated(): break
                     self.interrupt(self.bus)
 
-        print'\n\n+++test_interrupt'
+        print('\n\n+++test_interrupt')
         s=Simulation()
         s.initialize()
         b = Bus(name='Bus 1',sim=s)
         s.activate(b, b.operate(repairduration = 20))
         br = Breakdown(b,sim=s)
         s.activate(br, br.breakBus(200))
-        print s.simulate(until = 4000)
+        print(s.simulate(until = 4000))
 
     def testSimEvents():
         class Waiter(Process):
@@ -752,10 +730,10 @@ if __name__ == '__main__':
             def waiting(self, theSignal):
                 while True:
                     yield waitevent, self, theSignal
-                    print '%s: process \'%s\' continued after waiting for %s' %\
-                          (self.sim.now(),self.name, theSignal.name)
+                    print('%s: process \'%s\' continued after waiting for %s' %\
+                          (self.sim.now(),self.name, theSignal.name))
                     yield queueevent, self, theSignal
-                    print '%s: process \'%s\' continued after queueing for %s' % (now(),self.name, theSignal.name)
+                    print('%s: process \'%s\' continued after queueing for %s' % (now(),self.name, theSignal.name))
 
         class ORWaiter(Process):
             def __init__(self,**vars):
@@ -763,10 +741,10 @@ if __name__ == '__main__':
             def waiting(self, signals):
                 while True:
                     yield waitevent, self, signals
-                    print self.sim.now(),'one of %s signals occurred' %\
-                          [x.name for x in signals]
-                    print '\t%s (fired / param)'%\
-                          [(x.name, x.signalparam) for x in self.eventsFired]
+                    print(self.sim.now(),'one of %s signals occurred' %\
+                          [x.name for x in signals])
+                    print('\t%s (fired / param)'%\
+                          [(x.name, x.signalparam) for x in self.eventsFired])
                     yield hold, self, 1
 
         class Caller(Process):
@@ -775,13 +753,13 @@ if __name__ == '__main__':
             def calling(self):
                 while True:
                     signal1.signal('wake up!')
-                    print '%s: signal 1 has occurred'%now()
+                    print('%s: signal 1 has occurred'%now())
                     yield hold, self, 10
                     signal2.signal('and again')
                     signal2.signal('sig 2 again')
-                    print '%s: signal1, signal2 have occurred'%now()
+                    print('%s: signal1, signal2 have occurred'%now())
                     yield hold, self, 10
-        print'\n+++testSimEvents output'
+        print('\n+++testSimEvents output')
         s=Simulation()
         s.initialize()
         signal1 = SimEvent('signal 1',sim=s)
@@ -798,7 +776,7 @@ if __name__ == '__main__':
         s.activate(w4, w4.waiting([signal1, signal2]),prior = True)
         c = Caller(name='Caller',sim=s)
         s.activate(c, c.calling())
-        print s.simulate(until = 100)
+        print(s.simulate(until = 100))
 
     def testwaituntil():
         """
@@ -823,14 +801,14 @@ if __name__ == '__main__':
                     yield waituntil, self, workerNeeds
                     for item in self.heNeeds:
                         yield request, self, item
-                    print '%s %s has %s and starts job' % (self.sim.now(),self.name,
-                        [x.name for x in self.heNeeds])
+                    print('%s %s has %s and starts job' % (self.sim.now(),self.name,
+                        [x.name for x in self.heNeeds]))
                     yield hold, self, random.uniform(10, 30)
                     for item in self.heNeeds:
                         yield release, self, item
                     yield hold, self, 2 #rest
 
-        print '\n+++ nwaituntil demo output'
+        print('\n+++ nwaituntil demo output')
         random.seed(12345)
         s=Simulation()
         s.initialize()
@@ -845,10 +823,10 @@ if __name__ == '__main__':
         treeguy = Worker('treeguy',[saw, ladder],sim=s)
         s.activate(treeguy, treeguy.work())
         for who in (painter, roofer, treeguy):
-            print '%s needs %s for his job' %\
-                  (who.name,[x.name for x in who.heNeeds])
-        print
-        print s.simulate(until = 9 * 60)
+            print('%s needs %s for his job' %\
+                  (who.name,[x.name for x in who.heNeeds]))
+        print()
+        print(s.simulate(until = 9 * 60))
 
     ## -------------------------------------------------------------
     ##                    TEST COMPOUND 'YIELD REQUEST' COMMANDS

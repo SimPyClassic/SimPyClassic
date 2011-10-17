@@ -14,17 +14,20 @@ class Thing(Process):
    def execute(self):
         DEBUG = 0
         self.y = 0.0
-        if DEBUG: print self.name, self.sim.now(),self.y
+        if DEBUG:
+            print(self.name, self.sim.now(),self.y)
         self.M.observe(self.y)
 
         yield hold, self, 10.0
         self.y = 10
-        if DEBUG: print self.name, self.sim.now(),self.y
+        if DEBUG:
+            print(self.name, self.sim.now(),self.y)
         self.M.observe(self.y)
 
         yield hold, self, 10.0
         self.y = 5
-        if DEBUG: print self.name, self.sim.now(),self.y
+        if DEBUG:
+            print(self.name, self.sim.now(),self.y)
         self.M.observe(self.y)
 
 
@@ -39,8 +42,8 @@ def test_observe():
 
     assert m == [[i, 2 * i] for i in range(10)],'series wrong'
     assert m.name == 'First', 'name wrong'
-    assert m.tseries() == list(range(10)),'tseries wrong:%s' % (m.tseries(),)
-    assert m.yseries() == [2 * i for i in range(10)],'yseries wrong:%s' % (m.yseries(),)
+    assert m.tseries() == tuple(range(10)),'tseries wrong:%s' % (m.tseries(),)
+    assert m.yseries() == tuple(2 * i for i in range(10)),'yseries wrong:%s' % (m.yseries(),)
     assert m.total() == 90, 'total wrong:%s'%m.total()
     assert m.mean() == 9.0, 'mean wrong:%s'%m.mean()
     assert m.var() == (4 * 285.-(90 * 90 / 10.0)) / 10.0, 'sample var wrong: %s' % (m.var(),)
@@ -54,8 +57,8 @@ def test_observe_no_time():
     t = Thing(m,sim=s)
     s.activate(t, t.execute(),0.0)
     s.simulate(until = 20.0)
-    assert m.yseries() == [0, 10, 5],'yseries wrong:%s' % (m.yseries(),)
-    assert m.tseries() == [0, 10, 20],'tseries wrong:%s' % (m.tseries(),)
+    assert m.yseries() == (0, 10, 5),'yseries wrong:%s' % (m.yseries(),)
+    assert m.tseries() == (0, 10, 20),'tseries wrong:%s' % (m.tseries(),)
     assert m.total() == 15, 'total wrong:%s'%m.total()
     assert m.timeAverage(10.0) == 5.0, 'time average is wrong: %s'%m.timeAverage(10.0)
 
@@ -185,5 +188,5 @@ def test_histogram():
     m = Monitor(name = 'First')
     for y in [-5, 0, 5, 15, 99, 105, 120]:m.observe(y)
     h = m.histogram(low = 0.0, high = 100.0, nbins = 10)
-    shouldBe = list(zip(*h)[1])
-    assert shouldBe == [1, 2,1, 0,0, 0,0, 0,0, 0,1, 2], 'm histogram is wrong: %s' % (shouldBe,)
+    shouldBe = list(zip(*h))[1]
+    assert shouldBe == (1, 2,1, 0,0, 0,0, 0,0, 0,1, 2), 'm histogram is wrong: %s' % (shouldBe,)

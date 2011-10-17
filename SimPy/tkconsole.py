@@ -1,4 +1,5 @@
-"""A Tkinter - based console for conversing with the Python interpreter,
+"""
+A Tkinter - based console for conversing with the Python interpreter,
 featuring more tolerant pasting of code from other interactive sessions,
 better handling of continuations than the standard Python interpreter,
 highlighting of the most recently - executed code block, the ability to
@@ -67,7 +68,7 @@ class Console(Frame):
         self.compfinish = ''
 
         # Redirection.
-            
+
         self.stdout = OutputPipe(lambda data, w = self.write: w(data, 'stdout'))
         self.stderr = OutputPipe(lambda data, w = self.write: w(data, 'stderr'))
 
@@ -168,7 +169,7 @@ class Console(Frame):
         cursor = self.text.index('insert')
         [line, pos] = map(string.atoi, string.split(cursor, '.'))
         return line, pos
-    
+
     def write(self, data, tag = None):
         """Show output from stdout or stderr in the console."""
         if self.intraceback and data[-2:] == '\n ': data = data[:-1]
@@ -188,7 +189,7 @@ class Console(Frame):
             elif self.historyindex > 0:
                 self.historyindex = self.historyindex - 1
             self.recall()
-            
+
         return 'break'
 
     def cb_forward(self, event):
@@ -370,7 +371,7 @@ class Console(Frame):
                 self.compmenus[-1].delete('end')
                 self.compmenus[-1].add_command(label = '...')
                 break
-        
+
         x = self.text.winfo_rootx() + bbox[0] - 4
         y = self.text.winfo_rooty() + bbox[1] + bbox[3]
         for menu in self.compmenus:
@@ -380,7 +381,7 @@ class Console(Frame):
             x = x + menu.winfo_reqwidth()
         self.text.focus()
         self.text.grab_set()
-                        
+
     def unpostmenus(self):
         """Unpost the completion menus."""
         for menu in self.compmenus:
@@ -659,7 +660,7 @@ class Console(Frame):
         if not source:
             self.continuation = 0
             return
-            
+
         status, code = self.compile(source)
 
         if status == 'more':
@@ -752,7 +753,7 @@ class Console(Frame):
             traceback.print_exception(
                 sys.last_type, sys.last_value, sys.last_traceback)
             self.intraceback = 0
-            
+
         self.stdout, self.stderr = sys.stdout, sys.stderr
         sys.stdout, sys.stderr = oldout, olderr
 
