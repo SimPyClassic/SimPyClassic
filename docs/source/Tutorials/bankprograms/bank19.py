@@ -61,18 +61,13 @@ def queueshort():
 maxTime = 200.0    # minutes
 counter = Resource(2,name="Clerk",qType=PriorityQ)            
 
-## Model  ----------------------------------
+## Experiment -----------------------------------
+# NOTE: Set a seed so that output is deterministic.
+seed(393939)
 
-def model(SEED=393939):                                       
-    seed(SEED)
-
-    initialize()
-    clerk1 = ClerkProcess('Clerk')                            
-    activate(clerk1, clerk1.serverProc())                     
-    source = Source('Source')                              
-    activate(source,source.generate(number=20,rate=0.1),at=0.0)  
-    simulate(until=maxTime)                                     
-
-## Experiment  ----------------------------------
-
-model()                                                        
+initialize()
+clerk1 = ClerkProcess('Clerk')                            
+activate(clerk1, clerk1.serverProc())                     
+source = Source('Source')                              
+activate(source,source.generate(number=20,rate=0.1),at=0.0)  
+simulate(until=maxTime)                                     

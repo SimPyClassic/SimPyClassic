@@ -709,6 +709,6 @@ Colours in SimPlot are defined by Tk. The Tk colour model is RGB. The simplest w
 is to use one of the hundreds of Tk-defined literals such as "black", "aquamarine", or even "BlanchedAlmond".
 See the `Tk colour page`_ for definitions.
 
-.. _`Tk colour page`: http://www.tcl.tk/man/tcl8.4/TkCmd/colors.htm
+.. _`Tk colour page`: ../../_static/Tkcolors.htm
 
 $Revision: 361 $ $Date: 2010-01-11 00:58:57 +1300 (Mon, 11 Jan 2010) $

@@ -34,11 +34,10 @@ maxNumber = 5
 maxTime = 400.0 # minutes                                      
 timeInBank = 12.0 # mean, minutes                      
 ARRint = 10.0   # mean, minutes                      
-theseed = 12345                                        
 
 ## Model/Experiment ------------------------------
 
-seed(theseed)                                        
+seed(0)
 k = Resource(capacity=2,name="Counter",unitName="Clerk")  
 
 initialize()

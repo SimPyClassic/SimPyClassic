@@ -41,6 +41,6 @@ maxTime = 100.0
 initialize()                                             
 klaus = Customer(name="Klaus")                           
 activate(klaus,klaus.visit(timeInBank,onphone))          
-call = Call(klaus)                                       
+call = Call()                                       
 activate(call, call.ring(klaus,timeOfCall))              
 simulate(until=maxTime)                                  
