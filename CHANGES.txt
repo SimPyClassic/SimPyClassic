@@ -2,6 +2,15 @@ Changelog for SimPy
 ==============================
 
 
+v2.3 – 2011-:
+------------------
+
+- [NEW] Support for Python 3.2. Support for Python <= 2.5 has been dropped.
+– [NEW] Tutorials/examples were integrated into the test suite.
+– [CHANGE] Even more code clean-up (e.g., removed prints throughout the code,
+  removed if-main-blocks, ...).
+
+
 v2.2 – 2011-09-27:
 ------------------
 
