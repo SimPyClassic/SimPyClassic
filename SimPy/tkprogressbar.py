@@ -1,5 +1,10 @@
 from Tkinter import *
 
+
+import warnings
+warnings.warn('This module be removed in SimPy 3.', DeprecationWarning)
+
+
 class ProgressBar:
     def __init__(self, master = None, orientation = 'horizontal',
                  min = 0, max = 100, width = 100, height = 18,
@@ -55,7 +60,7 @@ class ProgressBar:
               float(value) / self.max * self.width, self.height)
         else:
             self.canvas.coords(self.scale, 0,
-                               self.height - (float(value) / 
+                               self.height - (float(value) /
                                               self.max * self.height),
                                self.width, self.height)
         # Now update the colors
@@ -65,7 +70,7 @@ class ProgressBar:
         if self.doLabel:
             if value:
                 if value >= 0:
-                    pvalue = int((float(value) / float(self.max)) * 
+                    pvalue = int((float(value) / float(self.max)) *
                                    100.0)
                 else:
                     pvalue = 0

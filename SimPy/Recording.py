@@ -142,8 +142,10 @@ class Monitor(list):
 
     def mean(self):
         """ the simple average of the monitored variable"""
-        try: return 1.0 * self.total() / self.__len__()
-        except:  print('SimPy: No observations  for mean')
+        try:
+            return 1.0 * self.total() / self.__len__()
+        except ZeroDivisionError:
+            raise ZeroDivisionError('SimPy: No observations for mean')
 
     def var(self):
         """ the sample variance of the monitored variable """
@@ -152,18 +154,22 @@ class Monitor(list):
         ssq = 0.0
         for i in range(self.__len__()):
             ssq += self[i][1] ** 2 # replace by sum() eventually
-        try: return (ssq - float(tot * tot) / n) / n
-        except: print('SimPy: No observations for sample variance')
+        try:
+            return (ssq - float(tot * tot) / n) / n
+        except:
+            raise ZeroDivisionError(
+                    'SimPy: No observations for sample variance')
 
     def timeAverage(self, t = None):
-        """ the time - weighted average of the monitored variable.
+        """
+        The time-weighted average of the monitored variable.
 
-            If t is used it is assumed to be the current time,
-            otherwise t =  self.sim.now()
+        If t is used it is assumed to be the current time,
+        otherwise t =  self.sim.now()
+
         """
         N = self.__len__()
         if N  == 0:
-            print('SimPy: No observations for timeAverage')
             return None
 
         if t is None: t = self.sim.now()
@@ -178,7 +184,6 @@ class Monitor(list):
         sum += ylast * (t - tlast)
         T = t - self[0][0]
         if T == 0:
-             print('SimPy: No elapsed time for timeAverage')
              return None
         return sum / float(T)
 
@@ -190,7 +195,6 @@ class Monitor(list):
         """
         N = self.__len__()
         if N  == 0:
-            print('SimPy: No observations for timeVariance')
             return None
         if t is None: t = self.sim.now()
         sm = 0.0
@@ -208,7 +212,6 @@ class Monitor(list):
         ssq += ylast * ylast * (t - tlast)
         T = t - self[0][0]
         if T == 0:
-             print('SimPy: No elapsed time for timeVariance')
              return None
         mn = sm / float(T)
         return ssq / float(T) - mn * mn
@@ -345,7 +348,6 @@ class Tally:
         if (t > self.startTime):
             return 1.0 * integ / (t - self.startTime)
         else:
-            print('SimPy: No elapsed time for timeAverage')
             return None
 
     def var(self):
@@ -368,7 +370,6 @@ class Tally:
         if (t > self.startTime):
             return 1.0 * twinteg2 / (t - self.startTime) - twAve * twAve
         else:
-            print('SimPy: No elapsed time for timeVariance')
             return None
 
 

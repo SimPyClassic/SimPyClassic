@@ -12,7 +12,11 @@ except: # Python 2
     from tkMessageBox import *
 
 from Canvas import Line, CanvasText, Rectangle
-from . import tkconsole as tkcons
+from SimPy import tkconsole as tkcons
+from SimPy import __version__
+
+import warnings
+warnings.warn('This module be removed in SimPy 3.', DeprecationWarning)
 
 
 class SimGUI(object):
@@ -275,7 +279,6 @@ class Parameters:
 if __name__ == '__main__':
     print('SimGUI.py')
     from SimPy.Simulation import *
-    from SimPy.Monitor import *
     from random import Random
 
     class Source(Process):

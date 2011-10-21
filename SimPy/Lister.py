@@ -3,7 +3,6 @@
 Pretty-printer for SimPy class objects
 
 """
-
 class Lister(object):
 
     indent = 0

@@ -59,20 +59,3 @@ def stepping(glob):
                     asim.step()
             else:
                 print("%s not a valid command" % cmd)
-
-if __name__ == "__main__":
-    from SimPy.SimulationTrace import *
-
-    class Car(Process):
-        def drive(self, speed, howlong):
-            going = speed
-            yield hold,self,howlong
-            going = 0
-
-    initialize()
-    b = Car(name = "Beemer")
-    activate(b, b.drive(speed = 180, howlong = 45))
-    c = Car(name = "Caddy")
-    activate(c, c.drive(speed = 120, howlong = 120), at = 25)
-    stepping(Globals)
-

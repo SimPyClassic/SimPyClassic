@@ -5,6 +5,11 @@ except:  # Python 2
 
 from SimPy.SimulationStep import now,Globals
 
+
+import warnings
+warnings.warn('This module be removed in SimPy 3.', DeprecationWarning)
+
+
 # Creates and controls the GUI of the program
 class GUIController(object):
 

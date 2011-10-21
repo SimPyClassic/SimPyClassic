@@ -419,7 +419,6 @@ class PriorityQ(FIFO):
         """Handles getQ in Buffer"""
         if len(self):
             ix = self.resource
-            #print 'priority:', [x._priority[ix] for x in self]
             if self[-1]._getpriority[ix] >= obj._getpriority[ix]:
                 self.append(obj)
             else:
@@ -436,7 +435,6 @@ class PriorityQ(FIFO):
         """Handles putQ in Buffer"""
         if len(self):
             ix = self.resource
-            #print 'priority:', [x._priority[ix] for x in self]
             if self[-1]._putpriority[ix] >= obj._putpriority[ix]:
                 self.append(obj)
             else:

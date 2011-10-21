@@ -21,6 +21,9 @@ from math import pi
 
 from SimPy.Simulation import Monitor
 
+import warnings
+warnings.warn('This module be removed in SimPy 3.', DeprecationWarning)
+
 
 def minCoordinate(clist):
     if len(clist) < 2: return clist[0]

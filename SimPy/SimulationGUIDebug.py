@@ -7,6 +7,11 @@ except:
 
 import SimPy.SimulationStep, GUIDebug
 
+
+import warnings
+warnings.warn('This module be removed in SimPy 3.', DeprecationWarning)
+
+
 # global variables
 _breakpoints = []
 _until = 0

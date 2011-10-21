@@ -18,9 +18,14 @@ use, modify, or distribute the software for any purpose is hereby granted."""
 
 from Tkinter import *
 import sys, string, traceback, types, __builtin__
+from SimPy import __version__
+REVISION = __version__
+VERSION = __version__
 
-REVISION = '$Revision$'
-VERSION = string.split(REVISION)[1]
+
+import warnings
+warnings.warn('This module be removed in SimPy 3.', DeprecationWarning)
+
 
 class OutputPipe:
     """A substitute file object for redirecting output to a function."""
