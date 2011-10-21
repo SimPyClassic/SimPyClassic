@@ -74,7 +74,7 @@ def test_request():
     """Test of "yield request,self,res" """
     s = Simulation()
     s.initialize()
-    res = Resource( ) # wrong sim  
+    res = Resource( ) # wrong sim
     r = Requesttest(sim=s)
     s.activate(r,r.run(res = res))
     try:
@@ -88,7 +88,7 @@ def test_put_store():
     """Test of "yield put,self,store" """
     s = Simulation()
     s.initialize()
-    store = Store( ) # wrong sim  
+    store = Store( ) # wrong sim
     r = PutStoretest(sim=s)
     s.activate(r,r.run(store = store))
     try:

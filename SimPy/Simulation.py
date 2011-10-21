@@ -367,9 +367,8 @@ class Simulation(object):
         """Application function to activate passive process."""
         if __debug__:
             if not (obj.sim == self):
-                txt="activate: Process %s not in activating Simulation instance"\
-                    %obj.name
-                raise FatalSimerror(txt)
+                raise FatalSimerror('activate: Process %s not in activating '
+                        'Simulation instance' % obj.name)
             if not (type(process) == types.GeneratorType):
                 raise FatalSimerror('Activating function which'+
                     ' is not a generator (contains no \'yield\')')
@@ -561,8 +560,9 @@ class Simulation(object):
             else:
                 # Stopped by call of stopSimulation
                 return 'SimPy: Run stopped at time %s' % self._t
+        # Delete the excepts?
         except FatalSimerror as error:
-                raise FatalSimerror('SimPy: ' + error.value)
+            raise FatalSimerror('SimPy: ' + error.value)
         except Simerror as error:
             return 'SimPy: ' + error.value
         finally:
