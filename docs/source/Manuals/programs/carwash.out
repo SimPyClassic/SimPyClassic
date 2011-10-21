@@ -10,4 +10,4 @@
 25 car 5 done by Carwash 1
 30 car 6 done by Carwash 0
 30 car 7 done by Carwash 1
-waitingCars [10, 11, 12, 13, 14]
+waitingCars ['10', '11', '12', '13', '14']

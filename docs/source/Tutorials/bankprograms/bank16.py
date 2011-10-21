@@ -32,22 +32,21 @@ class Customer(Process):
 maxTime = 400.0   # minutes                                    
 counter = Resource(1,name="Clerk",monitored=True)            
 
-## Model -----------------------------------
-
-def model(SEED=393939):                                       
-    seed(SEED)
-
-    initialize()
-    source = Source()                                                         
-    activate(source,
-             source.generate(number=20,rate=0.1),at=0.0)    
-    simulate(until=maxTime)                                    
-
 ## Experiment -----------------------------------
+# NOTE: Set a seed so that output is deterministic.
+seed(393939)
 
-model()                                                        
- 
-plt = SimPlot()                                                  
-plt.plotStep(counter.waitMon,                                  
-        color="red",width=2)                                   
-plt.mainloop()                                                 
+initialize()
+source = Source()                                                         
+activate(source,
+         source.generate(number=20,rate=0.1),at=0.0)    
+simulate(until=maxTime)                                    
+
+
+import os
+
+if not 'MANUALTEST' in os.environ:
+    plt = SimPlot()                                                  
+    plt.plotStep(counter.waitMon,                                  
+            color="red",width=2)                                   
+    plt.mainloop()                                                 

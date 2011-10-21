@@ -5,7 +5,7 @@ from SimPy.Simulation import *
 class Carwash(Process):
     """Carwash is master"""
     def __init__(self,name):
-        Process.__init__(self,name)
+        Process.__init__(self,name=name)
 
     def lifecycle(self):
         while True:
@@ -17,7 +17,7 @@ class Carwash(Process):
 class Car(Process):
     """Car is slave"""
     def __init__(self,name):
-        Process.__init__(self,name)
+        Process.__init__(self, name=name)
         self.doneSignal=SimEvent()
     def lifecycle(self):
         yield put,self,waitingCars,[self]
@@ -30,7 +30,7 @@ class CarGenerator(Process):
         i=0
         while True:
             yield hold,self,2
-            c=Car(i)
+            c=Car('%d' % i)
             activate(c,c.lifecycle())
             i+=1
 
@@ -38,7 +38,7 @@ washtime=5
 initialize()
 # put four cars into the queue of waiting cars
 for j in range(1,5):
-    c=Car(name=-j)
+    c=Car(name='%d' % -j)
     activate(c,c.lifecycle())
 waitingCars=Store(capacity=40)
 for i in range(2):

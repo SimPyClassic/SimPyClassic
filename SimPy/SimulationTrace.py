@@ -172,18 +172,18 @@ class Trace(Lister):
         evt = par[0][2]
         if type(evt) == list or type(evt) == tuple:
             enames = [x.name for x in evt]
-            return 'waits for events <%s > '%enames
+            return 'waits for events <%s> '%enames
         else:
-            return 'waits for event <%s > '%evt.name
+            return 'waits for event <%s> '%evt.name
     twaitevent = classmethod(twaitevent)
 
     def tqueueevent(self, par):
         evt = par[0][2]
         if type(evt) == list or type(evt) == tuple:
             enames = [x.name for x in evt]
-            return 'queues for events <%s > '%enames
+            return 'queues for events <%s> '%enames
         else:
-            return 'queues for event <%s > '%evt.name
+            return 'queues for event <%s> '%evt.name
     tqueueevent = classmethod(tqueueevent)
 
     def tsignal(self, evt):
@@ -196,7 +196,7 @@ class Trace(Lister):
 
     def twaituntil(self, par):
         condition = par[0][2]
-        return 'for condition <%s > '%condition.__name__
+        return 'for condition <%s> '%condition.__name__
     twaituntil = classmethod(twaituntil)
 
     def tget(self, par):
@@ -249,19 +249,19 @@ class Trace(Lister):
             if not type(whole[0][0]) == tuple:
                 print(whole[0][1].sim.now(),\
                     Trace.commands[command],\
-                    ' < ' + whole[0][1].name + ' > ',\
+                    '<' + whole[0][1].name + '>',\
                     Trace.commandsproc[command](whole), file=self.outfile)
                 if self._comment:
                     print('----', self._comment, file=self.outfile)
             else:
                 print(whole[0][0][1].sim.now(),\
                          Trace.commands[command],\
-                         ' < ' + whole[0][0][1].name + ' > '+\
+                         '<' + whole[0][0][1].name + '>'+\
                          Trace.commandsproc[command](whole[0]), file=self.outfile)
                 print('|| RENEGE COMMAND:', file=self.outfile)
                 command1 = whole[0][1][0]
                 print('||\t', Trace.commands[command1],\
-                    ' < ' + whole[0][1][1].name + ' > ',\
+                    '<' + whole[0][1][1].name + '>',\
                       Trace.commandsproc[command1]((whole[0][1],)), file=self.outfile)
                 if self._comment:
                     print('----', self._comment, file=self.outfile)
@@ -270,7 +270,7 @@ class Trace(Lister):
 
     def recordInterrupt(self, who, victim):
         if self.ifTrace('interrupt' in self.toTrace):
-            print('%s interrupt by: <%s > of: <%s >'\
+            print('%s interrupt by: <%s> of: <%s>'\
                                    %(who.sim.now(),who.name, victim.name), file=self.outfile)
             if self._comment:
                 print('----', self._comment, file=self.outfile)
@@ -278,7 +278,7 @@ class Trace(Lister):
 
     def recordCancel(self, who, victim):
         if self.ifTrace('cancel' in self.toTrace):
-            print('%s cancel by: <%s > of: <%s > '\
+            print('%s cancel by: <%s> of: <%s> '\
             %(who.sim.now(),who.name, victim.name), file=self.outfile)
             if self._comment:
                 print('----', self._comment, file=self.outfile)
@@ -286,7 +286,7 @@ class Trace(Lister):
 
     def recordActivate(self, who, when, prior):
         if self.ifTrace('activate' in self.toTrace):
-            print('%s activate <%s > at time: %s prior: %s'\
+            print('%s activate <%s> at time: %s prior: %s'\
                      %(who.sim.now(),who.name,when, prior), file=self.outfile)
             if self._comment:
                 print('----', self._comment, file=self.outfile)
@@ -294,7 +294,7 @@ class Trace(Lister):
 
     def recordReactivate(self, who, when, prior):
         if self.ifTrace('reactivate' in self.toTrace):
-            print('%s reactivate <%s > time: %s prior: %s'\
+            print('%s reactivate <%s> time: %s prior: %s'\
                      %(who.sim.now(),who.name,when, prior), file=self.outfile)
             if self._comment:
                 print('----', self._comment, file=self.outfile)
@@ -302,7 +302,7 @@ class Trace(Lister):
 
     def recordSignal(self, evt):
         if self.ifTrace('signal' in self.toTrace):
-            print('%s event <%s > is signalled' \
+            print('%s event <%s> is signalled' \
                                    %(evt.sim.now(),evt.name), file=self.outfile)
             if self._comment:
                 print('----', self._comment, file=self.outfile)
@@ -310,7 +310,7 @@ class Trace(Lister):
 
     def tterminated(self, who):
         if self.ifTrace('terminated' in self.toTrace):
-            print('%s <%s > terminated'\
+            print('%s <%s> terminated'\
                      %(who.sim.now(),who.name), file=self.outfile)
             if self._comment:
                 print('----', self._comment, file=self.outfile)

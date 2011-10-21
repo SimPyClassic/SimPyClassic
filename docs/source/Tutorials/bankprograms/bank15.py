@@ -32,18 +32,17 @@ maxTime = 400.0    # minutes
 counter = Resource(1,name="Clerk",monitored=True)            
 
 ## Model  ----------------------------------
+# NOTE: Set a seed so that output is deterministic.
+seed(393939)
 
-def model(SEED=393939):
-    seed(SEED)
+initialize()
+source = Source()                                                         
+activate(source,
+         source.generate(number=5,rate=0.1),at=0.0)    
+simulate(until=maxTime)
 
-    initialize()
-    source = Source()                                                         
-    activate(source,
-             source.generate(number=5,rate=0.1),at=0.0)    
-    simulate(until=maxTime)
-
-    return (counter.waitMon.timeAverage(),counter.actMon.timeAverage()) 
+result = (counter.waitMon.timeAverage(),counter.actMon.timeAverage())
 
 ## Experiment  ----------------------------------
 
-print 'Average waiting = %6.4f\nAverage active  = %6.4f\n'%model() 
+print 'Average waiting = %6.4f\nAverage active  = %6.4f\n'%result

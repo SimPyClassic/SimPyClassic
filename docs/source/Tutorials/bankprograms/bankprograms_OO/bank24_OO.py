@@ -33,18 +33,6 @@ class Customer(Process):
             print "%8.4f %s: BALKING   "%(self.sim.now(),self.name) 
                                     
 
-## Model
-class BankModel(Simulation):
-    def run(self,aseed):
-        self.initialize()
-        seed(aseed)
-        Customer.numBalking = 0
-        self.k = Resource(capacity=numServers,
-             name="Counter",unitName="Clerk",sim=self) 
-        s = Source('Source',sim=self)
-        self.activate(s, s.generate(number=maxNumber,meanTBA=ARRint),at=0.0)             
-        self.simulate(until=maxTime)
-
 ## Experiment data -------------------------------       
 
 timeInBank = 12.0 # mean, minutes                        
@@ -55,13 +43,19 @@ maxInQueue = maxInSystem - numServers
 
 maxNumber = 8
 maxTime = 4000.0 # minutes                                      
-theseed = 12345      
         
 ## Experiment --------------------------------------
+seed(0)
 
-modl=BankModel()
-modl.run(aseed=theseed)
+sim = Simulation()
+sim.initialize()
+Customer.numBalking = 0
+sim.k = Resource(capacity=numServers,
+     name="Counter",unitName="Clerk",sim=sim) 
+s = Source('Source',sim=sim)
+sim.activate(s, s.generate(number=maxNumber,meanTBA=ARRint),at=0.0)             
+sim.simulate(until=maxTime)
 ## Results -----------------------------------------
 
 nb = float(Customer.numBalking)
-print "balking rate is %8.4f per minute"%(nb/modl.now())
+print "balking rate is %8.4f per minute"%(nb/sim.now())

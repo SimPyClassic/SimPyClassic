@@ -30,7 +30,8 @@ ARRint = 10.0   # mean arrival interval, minutes
 
 ## Model/Experiment ------------------------------
 
-seed(99999)                                    
+# NOTE: Set a seed so that output is deterministic.
+seed(0)
 initialize()
 s = Source(name='Source')                      
 activate(s,s.generate(number=maxNumber,

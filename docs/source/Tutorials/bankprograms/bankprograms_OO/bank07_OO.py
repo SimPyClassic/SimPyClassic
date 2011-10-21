@@ -30,24 +30,18 @@ class Customer(Process):
         
         print "%8.3f %s: Finished      "%(self.sim.now(),self.name)
 
-## Model -----------------------------------
-
-class BankModel(Simulation):
-   def run(self,aseed):
-       self.initialize()
-       seed(aseed)
-       self.k = Resource(name="Counter",unitName="Clerk",sim=self)     
-       s = Source('Source',sim=self)
-       self.activate(s,s.generate(number=maxNumber, meanTBA=ARRint),at=0.0)        
-       self.simulate(until=maxTime)
-       
 ## Experiment data -------------------------
 
 maxNumber = 5                                      
 maxTime = 400.0  # minutes                                
 ARRint = 10.0    # mean, minutes
-seedVal = 99999
-       
-## Experiment ------------------------------
 
-BankModel().run(aseed=seedVal)
+## Experiment ------------------------------
+seed(0)
+
+sim = Simulation()
+sim.initialize()
+sim.k = Resource(name="Counter",unitName="Clerk",sim=sim)     
+s = Source('Source',sim=sim)
+sim.activate(s,s.generate(number=maxNumber, meanTBA=ARRint),at=0.0)        
+sim.simulate(until=maxTime)

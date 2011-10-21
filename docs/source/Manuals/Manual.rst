@@ -3055,7 +3055,7 @@ Several example SimPy models are included with the SimPy code
 distribution in the file ``SimPyModels``.
 
 Klaus Muller and Tony Vignaux, *SimPy: Simulating Systems in Python*,
-O'Reilly ONLamp.com, 2003-Feb-27,  http://onlamp.com/pub/a/python/2003/02/27/simpy.html
+O'Reilly ONLamp.com, 2003-Feb-27,  http://www.onlamp.com/pub/a/python/2003/02/27/simpy.html
 
 Norman Matloff, *Introduction to the SimPy Discrete-Event Simulation
 Package*, U Cal: Davis, 2003,
@@ -3063,7 +3063,7 @@ http://heather.cs.ucdavis.edu/~matloff/simpy.html
 
 David Mertz, *Charming Python: SimPy simplifies complex models*, IBM
 Developer Works, Dec 2002,
-http://www.ibm.com/developerworks/linux/library/l-simpy/index.html
+http://www-106.ibm.com/developerworks/linux/library/l-simpy.html
 
 [Return to Top_ ]
 

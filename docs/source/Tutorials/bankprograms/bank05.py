@@ -19,7 +19,8 @@ maxTime = 100.0    # minutes
 timeInBank = 10.0
 ## Model/Experiment ------------------------------
 
-seed(99999)                                            
+# NOTE: Set a seed so that output is deterministic.
+seed(0)
 initialize()
 c = Customer(name = "Klaus")
 t = expovariate(1.0/5.0)                               

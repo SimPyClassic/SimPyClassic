@@ -33,11 +33,11 @@ maxTime = 1000.0 # minutes
 timeInBank = 12.0  # mean, minutes                          
 ARRint = 10.0    # mean, minutes                          
 Nc = 2           # number of counters
-theseed = 12345                                            
                                      
 ## Model/Experiment   ----------------------
 
-seed(theseed)
+# NOTE: Set a seed so that output is deterministic.
+seed(0)
 k = Resource(capacity=Nc,name="Clerk")                     
 wM = Monitor()                                             
 initialize()    
