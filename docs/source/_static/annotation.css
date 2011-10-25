@@ -1,0 +1,13 @@
+/* comment annotation */
+.c-Annotation {
+    background-color: yellow;
+    border: 1px solid orange;
+    border-radius: 0.4em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    margin-right: 0.1em; /* necessary because of shadows */
+    box-shadow:0.1em 0.1em 0.1em #888;
+    color: #000000;
+    font-family: monospace;
+    font-style: bold;
+}

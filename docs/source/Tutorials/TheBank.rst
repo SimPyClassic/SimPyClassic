@@ -85,54 +85,50 @@ minutes.
 Examine the following listing which is a complete runnable Python
 script, except for the line numbers.  We use comments to divide the
 script up into sections. This makes for clarity later when the
-programs get more complicated.  Line 1 is a normal Python
-documentation string; line 2 imports the SimPy simulation code.
+programs get more complicated. At line :an:`1` is a normal Python
+documentation string; :an:`2` imports the SimPy simulation code.
 
 .. index:: 
    pair: PEM; Process Execution Method
 
-The ``Customer`` class definition, lines 6-12, defines our
-customer class and has the required generator method (called
-``visit``) (line 9) having a ``yield`` statement (line
-11). Such a method is called a Process Execution Method (PEM) in
+The ``Customer`` class definition at :an:`3` defines our customer class and has
+the required generator method (called ``visit`` :an:`4`) having a ``yield``
+statement :an:`6`. Such a method is called a Process Execution Method (PEM) in
 SimPy.
 
-The customer's ``visit`` PEM, lines 9-12, models his
-activities.  When he arrives (it will turn out to be a 'he' in this
-model), he will print out the simulation time, ``now()``, and his name
-(line 10). The function ``now()`` can be used at any time in the
-simulation to find the current simulation time though it cannot be
-changed by the programmer. The customer's name will be set when the
-customer is created later in the script (line 22).
+The customer's ``visit`` PEM at :an:`4`, models his activities.  When he
+arrives (it will turn out to be a 'he' in this model), he will print out the
+simulation time, ``now()``, and his name at :an:`5`.  The function ``now()``
+can be used at any time in the simulation to find the current simulation time
+though it cannot be changed by the programmer. The customer's name will be set
+when the customer is created later in the script at :an:`10`.
 
-He then stays in the bank for a fixed simulation time ``timeInBank``
-(line 11).  This is achieved by the ``yield
-hold,self,timeInBank`` statement.  This is the first of the special
-simulation commands that ``SimPy`` offers.
+He then stays in the bank for a fixed simulation time ``timeInBank`` :an:`6`.
+This is achieved by the ``yield hold,self,timeInBank`` statement.  This is the
+first of the special simulation commands that ``SimPy`` offers.
 
 After a simulation time of ``timeInBank``, the program's execution
-returns to the line after the ``yield`` statement, line 12. The
+returns to the line after the ``yield`` statement at :an:`6`. The
 customer then prints out the current simulation time and his
-name. This completes the declaration of the ``Customer`` class.
+name at :an:`7`. This completes the declaration of the ``Customer`` class.
 
-Line 21 calls ``initialize()`` which sets up the simulation
-system ready to receive ``activate`` calls. In line 22, we create
+The call ``initialize()`` at :an:`9` sets up the simulation
+system ready to receive ``activate`` calls. At :an:``, we create
 a customer, ``c``, with name ``Klaus``. All SimPy Processes have a
-``name`` attribute. We ``activate`` ``Klaus`` in line 23
+``name`` attribute. We ``activate`` ``Klaus`` at :an:`10`
 specifying the object (``c``) to be activated, the call of the action
 routine (``c.visit(timeInBank = 10.0)``) and that it is to be activated
-at time  5 (``at = 5.0``). This will activate
+at time 5 (``at = 5.0``). This will activate
 ``Klaus`` exactly ``5`` minutes after the current time, in this case
 after the start of the simulation at ``0.0``. The call of an action
 routine such as ``c.visit`` can specify the values of arguments, here
 the ``timeInBank``.
 
-Finally the call of ``simulate(until=maxTime)`` in line 24 will
+Finally the call of ``simulate(until=maxTime)`` at :an:`12` will
 start the simulation. This will run until the simulation time is
 ``maxTime`` unless stopped beforehand either by the
 ``stopSimulation()`` command or by running out of events to execute
-(as will happen here). ``maxTime`` was set to ``100.0`` in line
-16.
+(as will happen here). ``maxTime`` was set to ``100.0`` at :an:`8`.
 
 
 ..
