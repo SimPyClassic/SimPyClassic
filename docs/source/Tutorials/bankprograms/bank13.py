@@ -53,13 +53,19 @@ maxTime = 400.0  # minutes
 counter = Resource(1,name="Clerk")
 
 ## Model  ----------------------------------
-# NOTE: Set a seed so that output is deterministic.
-seed(393939)
 
-initialize()
-doorman = Doorman()                                          
-activate(doorman,doorman.openthedoor())                    
-source = Source()                                                        
-activate(source,
-         source.generate(number=5,rate=0.1),at=0.0)
-simulate(until=maxTime)
+def model(SEED=393939):
+    seed(SEED)
+
+    initialize()
+    doorman = Doorman()                                          
+    activate(doorman,doorman.openthedoor())                    
+    source = Source()                                                        
+    activate(source,
+             source.generate(number=5,rate=0.1),at=0.0)
+    simulate(until=maxTime)
+
+
+## Experiment  ----------------------------------
+
+model()

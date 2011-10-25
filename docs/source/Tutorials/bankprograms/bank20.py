@@ -38,9 +38,7 @@ k = Resource(name="Counter",unitName="Karen",
              qType=PriorityQ)                               
 
 ## Model/Experiment ------------------------------
-# NOTE: Set a seed so that output is deterministic.
-seed(393939)
-
+seed(98989)
 initialize()
 s = Source('Source')
 activate(s,s.generate(number=5, interval=10.0,              

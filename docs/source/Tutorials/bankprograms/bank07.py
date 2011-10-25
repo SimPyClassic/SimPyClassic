@@ -38,9 +38,7 @@ ARRint = 10.0    # mean, minutes
 k = Resource(name="Counter",unitName="Clerk")     
 
 ## Model/Experiment ------------------------------
-
-# NOTE: Set a seed so that output is deterministic.
-seed(0)
+seed(99999)
 initialize()
 s = Source('Source')
 activate(s,s.generate(number=maxNumber,            

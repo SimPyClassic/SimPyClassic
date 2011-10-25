@@ -33,10 +33,11 @@ maxTime = 2000.0  # minutes
 timeInBank = 12.0   # mean, minutes
 ARRint = 10.0     # mean, minutes
 Nc = 2            # number of counters
+theSeed = 393939
 
 ## Model  ----------------------------------
 
-def model(runSeed):
+def model(runSeed=theSeed):                            
     seed(runSeed)
     k = Resource(capacity=Nc,name="Clerk")  
     wM = Monitor()                                   

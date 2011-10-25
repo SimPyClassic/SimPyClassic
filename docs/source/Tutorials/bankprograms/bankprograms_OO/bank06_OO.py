@@ -24,20 +24,22 @@ class Customer(Process):
 
 ## Model -----------------------------------
 
+class BankModel(Simulation):
+    def run(self,aseed):
+        self.initialize()
+        seed = aseed
+        s = Source(name='Source',sim=self)
+        self.activate(s,s.generate(number=maxNumber,
+                      meanTBA=ARRint),at=0.0)
+        self.simulate(until=maxTime)
+        
 ## Experiment data -------------------------
 
 maxNumber = 5
 maxTime = 400.0 # minutes                                   
 ARRint = 10.0   # mean arrival interval, minutes 
+seedVal = 99999 
 
 ## Experiment ------------------------------
 
-# NOTE: Set a seed so that output is deterministic.
-seed(0)
-
-sim = Simulation()
-sim.initialize()
-s = Source(name='Source',sim=sim)
-sim.activate(s,s.generate(number=maxNumber,
-              meanTBA=ARRint),at=0.0)
-sim.simulate(until=maxTime)
+BankModel().run(aseed=seedVal)

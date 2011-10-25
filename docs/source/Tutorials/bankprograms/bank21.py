@@ -36,11 +36,18 @@ class Customer(Process):
 maxTime = 400.0  # minutes                                 
 maxWaitTime = 12.0 # minutes. maximum time to wait              
 
+## Model  ----------------------------------
+
+def model():                                                    
+    global counter                                              
+    seed(98989)
+    counter = Resource(name="Karen")                            
+    initialize()
+    source = Source('Source')
+    activate(source,
+             source.generate(number=5, interval=10.0),at=0.0)   
+    simulate(until=maxTime)                                     
+
 ## Experiment  ----------------------------------
-seed(98989)
-counter = Resource(name="Karen")                            
-initialize()
-source = Source('Source')
-activate(source,
-         source.generate(number=5, interval=10.0),at=0.0)   
-simulate(until=maxTime)                                     
+
+model()

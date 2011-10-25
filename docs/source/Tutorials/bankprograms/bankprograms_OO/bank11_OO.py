@@ -26,6 +26,18 @@ class Customer(Process):
         tib = expovariate(1.0/timeInBank)
         yield hold,self,tib
         yield release,self,b                                           
+                                     
+## Model -----------------------------------
+
+class BankModel(Simulation):
+    def run(self,aseed):
+        self.initialize() 
+        seed(aseed)
+        self.k = Resource(capacity=Nc,name="Clerk",sim=self)                     
+        self.wM = Monitor(sim=self)                                         
+        s = Source('Source',sim=self)
+        self.activate(s,s.generate(number=maxNumber,interval=ARRint),at=0.0)
+        self.simulate(until=maxTime) 
 
 ## Experiment data -------------------------
 
@@ -34,19 +46,14 @@ maxTime = 1000.0 # minutes
 timeInBank = 12.0  # mean, minutes                          
 ARRint = 10.0    # mean, minutes                          
 Nc = 2           # number of counters
-
+seedVal = 12345         
+        
 ## Experiment   -----------------------------
-seed(0)
 
-sim = Simulation()
-sim.initialize()
-sim.k = Resource(capacity=Nc,name="Clerk",sim=sim)                     
-sim.wM = Monitor(sim=sim)                                         
-s = Source('Source',sim=sim)
-sim.activate(s,s.generate(number=maxNumber,interval=ARRint),at=0.0)
-sim.simulate(until=maxTime) 
+experi = BankModel()
+experi.run(aseed=seedVal)
 
 ## Result  ----------------------------------
 
-result = sim.wM.count(),sim.wM.mean()                             
+result = experi.wM.count(),experi.wM.mean()                             
 print "Average wait for %3d completions was %5.3f minutes."% result 
