@@ -50,11 +50,24 @@ def annotation_role(name, rawtext, text, lineno, inliner, options={},
 def visit_annotation_html(self, node):
     # Use pygments generated css classes to highlight annotations in HTML
     # ouput.
-    self.body.append('<span class="highlight c-Annotation">')
+    self.body.append('<span class="highlight"><span class="c-Annotation">')
 
 
 def depart_annotation_html(self, node):
-    self.body.append('</span>')
+    self.body.append('</span></span>')
+
+
+def visit_annotation_latex(self, node):
+    # Use pygments generated LaTeX commands to highlight annotations.
+
+    # Use a raisebox to lift annotation box a little bit, so that it appears
+    # vertically centered in line.
+    self.body.append(
+            '\\raisebox{0.2ex}[0pt][0pt]{\\tt\\tiny\\PYG{c+cAnnotation}{')
+
+
+def depart_annotation_latex(self, node):
+    self.body.append('}}')
 
 
 def setup(app):
@@ -63,9 +76,8 @@ def setup(app):
     lexers['python'].add_filter(annotation_filter())
 
     # Add node and role for annotations.
-    app.add_node(annotation, html=(visit_annotation_html,
-        depart_annotation_html))
+    app.add_node(annotation,
+            html=(visit_annotation_html, depart_annotation_html),
+            latex=(visit_annotation_latex, depart_annotation_latex),
+    )
     app.add_role('an', annotation_role)
-
-    # Add custom stylesheet for highlighting annotations.
-    app.add_stylesheet('annotation.css')

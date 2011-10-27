@@ -113,9 +113,9 @@ customer then prints out the current simulation time and his
 name at :an:`7`. This completes the declaration of the ``Customer`` class.
 
 The call ``initialize()`` at :an:`9` sets up the simulation
-system ready to receive ``activate`` calls. At :an:``, we create
+system ready to receive ``activate`` calls. At :an:`10`, we create
 a customer, ``c``, with name ``Klaus``. All SimPy Processes have a
-``name`` attribute. We ``activate`` ``Klaus`` at :an:`10`
+``name`` attribute. We ``activate`` ``Klaus`` at :an:`11`
 specifying the object (``c``) to be activated, the call of the action
 routine (``c.visit(timeInBank = 10.0)``) and that it is to be activated
 at time 5 (``at = 5.0``). This will activate
