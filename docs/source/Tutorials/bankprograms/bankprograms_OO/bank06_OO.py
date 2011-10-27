@@ -27,7 +27,7 @@ class Customer(Process):
 class BankModel(Simulation):
     def run(self,aseed):
         self.initialize()
-        seed = aseed
+        seed(aseed)
         s = Source(name='Source',sim=self)
         self.activate(s,s.generate(number=maxNumber,
                       meanTBA=ARRint),at=0.0)
