@@ -13,18 +13,24 @@ class Customer(Process):
         yield hold,self,timeInBank
         print self.sim.now(), self.name," I must leave"          
 
+## Model -----------------------------------
+
+class BankModel(Simulation):
+   def run(self,aseed):
+       self.initialize()
+       seed(aseed)
+       c = Customer(name="Klaus",sim=self)
+       t = expovariate(1.0/tMeanArrival)
+       self.activate(c,c.visit(timeInBank),at=t)               
+       self.simulate(until=maxTime)
+       
 ## Experiment data -------------------------
 
 maxTime = 100.0    # minutes 
 timeInBank = 10.0  # minutes
 tMeanArrival = 5.0 # minutes
+seedVal = 99999 
 
 ## Experiment ------------------------------
-seed(0)
 
-sim = Simulation()
-sim.initialize()
-c = Customer(name="Klaus",sim=sim)
-t = expovariate(1.0/tMeanArrival)
-sim.activate(c,c.visit(timeInBank),at=t)               
-sim.simulate(until=maxTime)
+BankModel().run(aseed=seedVal)

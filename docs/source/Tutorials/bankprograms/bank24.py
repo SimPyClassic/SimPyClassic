@@ -44,10 +44,11 @@ maxInQueue = maxInSystem - numServers
 
 maxNumber = 8
 maxTime = 4000.0 # minutes                                      
+theseed = 12345                                          
 
 ## Model/Experiment ------------------------------
-# NOTE: Set a seed so that output is deterministic.
-seed(0)                                            
+
+seed(theseed)                                            
 k = Resource(capacity=numServers,
              name="Counter",unitName="Clerk")            
 

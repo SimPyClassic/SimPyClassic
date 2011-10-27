@@ -34,11 +34,11 @@ maxNumber = 5
 maxTime = 400.0 # minutes                                     
 timeInBank=12.0 # mean, minutes                      
 ARRint = 10.0   # mean, minutes                      
+theseed= 12345                                       
 
 ## Model/Experiment ------------------------------
 
-# NOTE: Set a seed so that output is deterministic.
-seed(0)
+seed(theseed)                                        
 k = Resource(name="Counter",unitName="Clerk")       
 
 initialize()

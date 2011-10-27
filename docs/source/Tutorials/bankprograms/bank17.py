@@ -37,24 +37,25 @@ counter = Resource(1,name="Clerk")
 Mon = Monitor('Time in the Bank')                                
 N = 0
 
+## Model  ----------------------------------
+
+def model(SEED=393939):                                       
+    seed(SEED)
+
+    initialize()
+    source = Source()                                                         
+    activate(source,
+             source.generate(number=20,rate=0.1),at=0.0)    
+    simulate(until=maxTime)                                      
+
+
 ## Experiment  ----------------------------------
-# NOTE: Set a seed so that output is deterministic.
-seed(393939)
 
-initialize()
-source = Source()                                                         
-activate(source,
-         source.generate(number=20,rate=0.1),at=0.0)    
-simulate(until=maxTime)                                      
+model()                                                        
+Histo = Mon.histogram(low=0.0,high=200.0,nbins=20)             
 
-
-import os
-
-if not 'MANUALTEST' in os.env():
-    Histo = Mon.histogram(low=0.0,high=200.0,nbins=20)             
-
-    plt = SimPlot()                                                  
-    plt.plotHistogram(Histo,xlab='Time (min)',                       
-                      title="Time in the Bank",
-                      color="red",width=2)                         
-    plt.mainloop()                                                 
+plt = SimPlot()                                                  
+plt.plotHistogram(Histo,xlab='Time (min)',                       
+                  title="Time in the Bank",
+                  color="red",width=2)                         
+plt.mainloop()                                                 

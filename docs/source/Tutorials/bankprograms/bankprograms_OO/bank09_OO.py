@@ -28,6 +28,18 @@ class Customer(Process):
         yield release,self,b                         
         print "%8.4f %s: Finished      "%(self.sim.now(),self.name)                                      
 
+## Model -----------------------------------
+
+class BankModel(Simulation):
+    def run(self,aseed):
+        self.initialize()
+        seed(aseed)
+        self.k = Resource(capacity=Nc,name="Counter",unitName="Clerk",
+                     sim=self) 
+        s = Source('Source',sim=self)
+        self.activate(s, s.generate(number=maxNumber,meanTBA=ARRint),at=0.0)           
+        self.simulate(until=maxTime)
+
 ## Experiment data -------------------------         
 
 maxNumber = 5   # of customers
@@ -35,14 +47,7 @@ maxTime = 400.0 # minutes
 timeInBank = 12.0 # mean, minutes                      
 ARRint = 10.0   # mean, minutes  
 Nc = 2          # of clerks/counters                    
+seedVal = 12345 
 
 ## Experiment ------------------------------
-seed(0)
-
-sim = Simulation()
-sim.initialize()
-sim.k = Resource(capacity=Nc,name="Counter",unitName="Clerk",
-             sim=sim) 
-s = Source('Source',sim=sim)
-sim.activate(s, s.generate(number=maxNumber,meanTBA=ARRint),at=0.0)           
-sim.simulate(until=maxTime)
+BankModel().run(aseed=seedVal)

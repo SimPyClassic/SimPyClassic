@@ -60,13 +60,18 @@ class ClerkProcess(Process):
 maxTime = 200.0    # minutes                                   
 counter = Resource(1,name="Clerk",qType=PriorityQ)            
 
-## Experiment  ----------------------------------
-# NOTE: Set a seed so that output is deterministic.
-seed(393939)
+## Model  ----------------------------------
 
-initialize()
-clerk1 = ClerkProcess('Clerk')                            
-activate(clerk1, clerk1.serverProc())                     
-source = Source('Source')                                                         
-activate(source,source.generate(number=20,rate=0.1),at=0.0)
-simulate(until=maxTime)                                     
+def model(SEED=393939):                                       
+    seed(SEED)
+
+    initialize()
+    clerk1 = ClerkProcess('Clerk')                            
+    activate(clerk1, clerk1.serverProc())                     
+    source = Source('Source')                                                         
+    activate(source,source.generate(number=20,rate=0.1),at=0.0)
+    simulate(until=maxTime)                                     
+
+## Experiment  ----------------------------------
+
+model()
