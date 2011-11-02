@@ -24,8 +24,8 @@ September 2011: Release 2.2b1
 May 2010: Version 2.1.0
 =======================
 
-A major release of SimPy, with a new code base, a (small) number of additions to the API, and
-added documentation.
+A major release of SimPy, with a new code base, a (small) number of
+additions to the API, and added documentation.
 
 Additions
 ~~~~~~~~~~~

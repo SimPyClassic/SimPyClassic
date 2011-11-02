@@ -150,7 +150,6 @@ active.
 
 .. literalinclude:: bankprograms/bank01.out
    
-
 .. index:: random arrival, bank05
 
 A Customer arriving at random
@@ -160,28 +159,27 @@ Now we extend the model to allow our customer to arrive at a random
 simulated time though we will keep the time in the bank at 10.0, as
 before.
 
-The change occurs in line 3 of the program and in lines 22,
-25, and 26. In line 3 we import from the standard
+The change occurs in line :an:`1` of the program and in lines :an:`2`,
+:an:`3`, and :an:`4`. In line :an:`1` we import from the standard
 Python ``random`` module to give us ``expovariate`` to generate the
 random time of arrival. We also import the ``seed`` function to
 initialize the random number stream to allow control of the random
-numbers.  In line 22 we provide an initial seed of ``99999``. An
-exponential random variate, ``t``, is generated in line 25. Note
-that the Python Random module's ``expovariate`` function uses the rate
-(that is, ``1.0/mean``) as the argument. The generated random variate,
-``t``, is used in Line 26 as the ``at`` argument to the
-``activate`` call.
+numbers.  In line :an:`2` we provide an initial seed of ``99999``. An
+exponential random variate, ``t``, is generated in line :an:`3`. Note
+that the Python Random module's ``expovariate`` function uses the
+average rate (that is, ``1.0/mean``) as the argument. The generated
+random variate, ``t``, is used in line :an:`4` as the ``at`` argument
+to the ``activate`` call.
 
 
 .. literalinclude:: bankprograms/bank05.py
    
 
-The result is shown below. The customer now arrives at time
-10.5809. Changing the seed value would change that time.
+The result is shown below. The customer now arrives at about
+0.64195. Changing the seed value would change that time.
 
 .. literalinclude:: bankprograms/bank05.out
    
-
 The display looks pretty untidy. In the next example I will try and
 make it tidier.
 
