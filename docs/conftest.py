@@ -14,6 +14,7 @@ output of this process is compared to the contents of the ``*.out`` file.
 import os.path
 import subprocess
 import errno
+import random
 
 import pytest
 from py._code.code import TerminalRepr, ReprFileLocation
@@ -67,6 +68,14 @@ class ExampleItem(pytest.Item):
         self.outputfile = os.path.join(self.fspath.dirname, self.output)
 
     def runtest(self):
+        # Skip if random.expovariate with the old implementation is used.
+        with open(self.examplefile) as f:
+            src = f.read()
+        if 'expovariate' in src:
+            random.seed(0)
+            if int(random.expovariate(0.2)) == 0:
+                pytest.skip('Old exovariate implementation.')
+
         # Read expected output.
         with open(self.outputfile) as f:
             expected = f.read()
