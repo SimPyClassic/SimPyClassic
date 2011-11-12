@@ -26,8 +26,7 @@ capabilities with the community under the GNU LGPL.
 Installation
 ------------
 
-SimPy requires Python 2.3 or above. Python 3 is not yet supported, but we are
-working on it.
+SimPy requires Python 2.6 or above (including Python 3).
 
 You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_
 (or ``easy_install``)::
@@ -48,13 +47,18 @@ option to *pip* or *easy_install*, e.g.::
     $ pip install -U SimPy
 
 
+To run SimPy’s test suite on your installation, execute::
+
+    $ python -c "import SimPy; SimPy.test()"
+
+
 Getting started
 ---------------
 
-Run one or more of the programs under *docs/examples/* to see whether Python
-finds the SimPy module. If you get an error message like *ImportError: No
-module named SimPy*, check if the SimPy packages exists in your site-packages
-folder (like /Lib/site-packages).
+You can also run one or more of the programs under *docs/examples/* to see
+whether Python finds the SimPy module. If you get an error message like
+*ImportError: No module named SimPy*, check if the SimPy packages exists in
+your site-packages folder (like /Lib/site-packages).
 
 The tutorial and manuals are in the *docs/html* folder. Many users have
 commented that the Bank tutorials are valuable in getting users started on
