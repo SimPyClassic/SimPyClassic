@@ -22,3 +22,13 @@ stepping - a simple interactive debugger
 
 """
 __version__ = '2.3b1'
+
+
+def test():
+    import os.path
+    try:
+        import pytest
+    except ImportError:
+        print('You need pytest to run the tests. Try "pip install pytest".')
+    else:
+        pytest.main([os.path.dirname(__file__)])

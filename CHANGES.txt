@@ -6,6 +6,7 @@ v2.3 – 2011-:
 ------------------
 
 - [NEW] Support for Python 3.2. Support for Python <= 2.5 has been dropped.
+- [NEW] SimPy.test() method to run the tests on the installed version of SimPy.
 – [NEW] Tutorials/examples were integrated into the test suite.
 – [CHANGE] Even more code clean-up (e.g., removed prints throughout the code,
   removed if-main-blocks, ...).
