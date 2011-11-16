@@ -195,9 +195,9 @@ more ``Customers``.
 
 The program is almost as easy as the first example (`A Customer
 arriving at a fixed time`_). The main change is in lines
-22-27 where we create, name, and activate three
+:an:`4` to :an:`5` where we create, name, and activate three
 customers. We also increase the maximum simulation time to ``400``
-(line 16 and referred to in line 29). Observe that we need
+(line :an:`3` and referred to in line :an:`6`). Observe that we need
 only one definition of the ``Customer`` class and create several
 objects of that class. These will act quite independently in this
 model.
@@ -210,16 +210,22 @@ first even though his activation statement appears later in the
 script.
 
 As promised, the print statements have been changed to use Python
-string formatting (lines 10 and 12). The statements look
+string formatting (lines :an:`1` and :an:`2`). The statements look
 complicated but the output is much nicer.
 
+..  10 1
+    12 2
+    16 3
+    22 4
+    27 5
+    29 6
 
 .. literalinclude:: bankprograms/bank02.py
    
 
 The trace produced by the program is shown below.  Again the
 simulation finishes before the ``400.0`` specified in the ``simulate``
-call.
+call as it has run out of events.
 
 .. literalinclude:: bankprograms/bank02.out
    
