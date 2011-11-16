@@ -213,13 +213,6 @@ As promised, the print statements have been changed to use Python
 string formatting (lines :an:`1` and :an:`2`). The statements look
 complicated but the output is much nicer.
 
-..  10 1
-    12 2
-    16 3
-    22 4
-    27 5
-    29 6
-
 .. literalinclude:: bankprograms/bank02.py
    
 
@@ -229,7 +222,6 @@ call as it has run out of events.
 
 .. literalinclude:: bankprograms/bank02.out
    
-
 .. -------------------------------------------------------------
 
 .. index:: bank03
@@ -246,23 +238,31 @@ we do not use the random numbers in this model.
 
 .. index::  Source of entities
 
-The following listing shows the new program. Lines 6-13
+.. 6 1 :an:`1`   
+   9 2 :an:`2`
+   11 :an:`3` 
+   13 :an:`4`
+    21 :an:`5`
+   32 :an:`6`
+   33 :an:`7`
+
+The following listing shows the new program. Lines :an:`1` to :an:`4`
 define a ``Source`` class. Its PEM, here called ``generate``, is
-defined in lines 9-13.  This PEM has a couple of arguments:
+defined in lines :an:`2` to :an:`4`.  This PEM has a couple of arguments:
 the ``number`` of customers to be generated and the Time Between
 Arrivals, ``TBA``. It consists of a loop that creates a sequence
 of numbered ``Customers`` from ``0`` to ``(number-1)``, inclusive. We
-create a customer and give it a name in line 11. It is
+create a customer and give it a name in line :an:`3`. It is
 then activated at the current simulation time (the final argument of
 the ``activate`` statement is missing so that the default value of
 ``now()`` is used as the time). We also specify how long the customer
 is to stay in the bank. To keep it simple, all customers stay
 exactly ``12`` minutes.  After each new customer is activated, the
 ``Source`` holds for a fixed time (``yield hold,self,TBA``)
-before creating the next one (line 13).
+before creating the next one (line :an:`4`).
 
-A ``Source``, ``s``, is created in line 32 and activated at line
-33 where the number of customers to be generated is set to
+A ``Source``, ``s``, is created in line :an:`6` and activated at line
+:an:`7` where the number of customers to be generated is set to
 ``maxNumber = 5`` and the interval between customers to ``ARRint =
 10.0``. Once started at time ``0.0`` it creates customers at intervals
 and each customer then operates independently of the others:
@@ -388,16 +388,12 @@ the bank before starting service.
 
 .. literalinclude:: bankprograms/bank07.py
    
-
-
 Examining the trace we see that the first two customers get instant service but the others
 have to wait. We still only have five customers (line 35) so we
 cannot draw general conclusions.
 
 .. literalinclude:: bankprograms/bank07.out
    
-
-
 .. index:: 
    Resource, Random service time, bank08
    pair: M/M/1; queue
