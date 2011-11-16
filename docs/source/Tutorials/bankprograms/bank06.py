@@ -11,8 +11,8 @@ class Source(Process):
         for i in range(number):
             c = Customer(name = "Customer%02d"%(i,))
             activate(c,c.visit(timeInBank=12.0)) 
-            t = expovariate(1.0/meanTBA)      
-            yield hold,self,t                  
+            t = expovariate(1.0/meanTBA)                # (1)
+            yield hold,self,t                           # (2)
 
 class Customer(Process):
     """ Customer arrives, looks around and leaves """
@@ -30,7 +30,7 @@ ARRint = 10.0   # mean arrival interval, minutes
 
 ## Model/Experiment ------------------------------
 
-seed(99999)                                    
+seed(99999)                                             # (3)                         
 initialize()
 s = Source(name='Source')                      
 activate(s,s.generate(number=maxNumber,

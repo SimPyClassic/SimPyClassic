@@ -261,8 +261,8 @@ exactly ``12`` minutes.  After each new customer is activated, the
 ``Source`` holds for a fixed time (``yield hold,self,TBA``)
 before creating the next one (line :an:`4`).
 
-A ``Source``, ``s``, is created in line :an:`6` and activated at line
-:an:`7` where the number of customers to be generated is set to
+A ``Source``, ``s``, is created in line :an:`5` and activated at line
+:an:`6` where the number of customers to be generated is set to
 ``maxNumber = 5`` and the interval between customers to ``ARRint =
 10.0``. Once started at time ``0.0`` it creates customers at intervals
 and each customer then operates independently of the others:
@@ -289,43 +289,43 @@ is usually interpreted as meaning that the times between customer
 arrivals are distributed as exponential random variates. There is
 little change in our program, we use a ``Source`` object, as before.
 
-The exponential random variate is generated in line 14 with
+.. 
+   14 :an:`1` 
+   15 :an:`2` 
+   33 :an:`3` 
+
+The exponential random variate is generated in line :an:`1` with
 ``meanTBA`` as the mean Time Between Arrivals and used in line
-15. Note that this parameter is not exactly intuitive. As already
+:an:`2`. Note that this parameter is not exactly intuitive. As already
 mentioned, the Python ``expovariate`` method uses the *rate* of
 arrivals as the parameter not the average interval between them. The
 exponential delay between two arrivals gives pseudo-random
 arrivals. In this model the first customer arrives at time ``0.0``.
 
 The ``seed`` method is called to initialize the random number stream
-in the ``model`` routine (line 33).  It is possible to leave this
+in the ``model`` routine (line :an:`3`).  It is possible to leave this
 call out but if we wish to do serious comparisons of systems, we must
 have control over the random variates and therefore control over the
 seeds. Then we can run identical models with different seeds or
 different models with identical seeds.  We provide the seeds as
-control parameters of the run. Here a seed is assigned in line 33
+control parameters of the run. Here a seed is assigned in line :an:`3`
 but it is clear it could have been read in or manually entered on an
 input form.
 
 
 .. literalinclude:: bankprograms/bank06.py
    
-
-
 with the following output:
 
 .. literalinclude:: bankprograms/bank06.out
    
-
 .. ---------------------------------------------------------------
 
 .. index:: 
    pair: Resource; queue
 
-
 A Service counter
 ------------------
-
 
 So far, the model has been more like an art gallery, the customers
 entering, looking around, and leaving. Now they are going to require
@@ -347,26 +347,36 @@ serving the next in line.
 One Service counter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+..
+   14 :an:`1`
+   22 :an:`2`
+   25 :an:`3`
+   26 :an:`4`
+   28 :an:`5`
+   29 :an:`6`
+   35 :an:`7`
+   38 :an:`8`
+   45 :an:`9`
 
-The service counter is created as a ``Resource`` (``k``) in line
-38. This is provided as an argument to the ``Source`` (line
-45) which, in turn, provides it to each customer it creates and
-activates (line 14). 
+The service counter is created as a ``Resource`` (``k``) in
+line :an:`8`. This is provided as an argument to the ``Source`` (line :an:`9`)
+which, in turn, provides it to each customer it creates and activates
+(line :an:`1`).
 
 The actions involving the service counter, ``k``, in the customer's
 PEM are:
  
-- the ``yield request`` statement in line 25. If the server is
+- the ``yield request`` statement in line :an:`3`. If the server is
   free then the customer can start service immediately and the code
-  moves on to line  26. If the server is busy, the customer is
+  moves on to line  :an:`4`. If the server is busy, the customer is
   automatically queued by the  Resource. When it eventually comes
-  available the PEM moves on to line 26.  
+  available the PEM moves on to line :an:`4`.  
 
-- the ``yield hold`` statement in line 28 where the operation of
+- the ``yield hold`` statement in line  :an:`5` where the operation of
   the service counter is modelled. Here the service time is a fixed
   ``timeInBank``.  During this period the customer is being served.
 
-- the ``yield release`` statement in line 29. The current
+- the ``yield release`` statement in line  :an:`6`. The current
   customer completes service and the service counter becomes available
   for any remaining customers in the queue.
 
@@ -374,9 +384,9 @@ Observe that the service counter is used with the pattern (``yield
 request..``; ``yield hold..``; ``yield release..``).
 
 To show the effect of the service counter on the activities of the
-customers, I have added line 22 to record when the customer
-arrived and line 26 to record the time between arrival in the
-bank and starting service. Line 26 is *after* the ``yield
+customers, I have added line :an:`2` to record when the customer
+arrived and line :an:`4` to record the time between arrival in the
+bank and starting service. Line :an:`4` is *after* the ``yield
 request`` command and will be reached only when the request is
 satisfied. It is *before* the ``yield hold`` that corresponds to the
 start of service. The variable ``wait`` will record how long the
@@ -388,9 +398,9 @@ the bank before starting service.
 
 .. literalinclude:: bankprograms/bank07.py
    
-Examining the trace we see that the first two customers get instant service but the others
-have to wait. We still only have five customers (line 35) so we
-cannot draw general conclusions.
+Examining the trace we see that the first two customers get instant
+service but the others have to wait. We still only have five customers
+(line :an:`4`) so we cannot draw general conclusions.
 
 .. literalinclude:: bankprograms/bank07.out
    
@@ -404,28 +414,31 @@ A server with a random service time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is a simple change to the model in that we retain the single
-service counter but make the customer service time a random variable. As
-is traditional in the study of simple queues we first assume an exponential service
-time and set the mean to ``timeInBank``.
+service counter but make the customer service time a random
+variable. As is traditional in the study of simple queues we first
+assume an exponential service time and set the mean to ``timeInBank``.
+
+..  
+   26 :an:`1`
+   27 :an:`2`
+   33 :an:`3`
+   37 :an:`4`
 
 The service time random variable, ``tib``, is generated in line
-26 and used in line 27. The argument to be used in the call
+:an:`1` and used in line  :an:`2`. The argument to be used in the call
 of ``expovariate`` is not the mean of the distribution,
 ``timeInBank``, but is the rate ``1/timeInBank``.
 
 We have also collected together a number of constants by defining a
 number of appropriate variables and giving them values. These are in
-lines 31 to 42.
-
+lines  :an:`3` to  :an:`4`.
 
 .. literalinclude:: bankprograms/bank08.py
    
-
 And the output:
 
 .. literalinclude:: bankprograms/bank08.out
    
-
 This model with random arrivals and exponential service times is an
 example of an M/M/1 queue and could rather easily be solved
 analytically to calculate the steady-state mean waiting time and other

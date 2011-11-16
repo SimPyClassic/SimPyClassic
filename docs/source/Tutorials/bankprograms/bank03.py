@@ -18,7 +18,7 @@ class Customer(Process):
     def visit(self,timeInBank):       
         print "%7.4f %s: Here I am"%(now(),self.name)
         yield hold,self,timeInBank
-        print "%7.4f %s: I must leave"%(now(),self.name) # (5)
+        print "%7.4f %s: I must leave"%(now(),self.name)
 
 ## Experiment data -------------------------
 
@@ -29,7 +29,7 @@ ARRint = 10.0   # time between arrivals, minutes
 ## Model/Experiment ------------------------------
 
 initialize()
-s = Source()                                           # (6)                       
-activate(s,s.generate(number=maxNumber,                # (7)    
+s = Source()                                           # (5)                       
+activate(s,s.generate(number=maxNumber,                # (6)    
                       TBA=ARRint),at=0.0)             
 simulate(until=maxTime)

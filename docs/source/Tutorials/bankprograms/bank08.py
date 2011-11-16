@@ -23,18 +23,18 @@ class Customer(Process):
         yield request,self,b                          
         wait = now()-arrive
         print "%8.4f %s: Waited %6.3f"%(now(),self.name,wait)
-        tib = expovariate(1.0/timeInBank)            
-        yield hold,self,tib                          
+        tib = expovariate(1.0/timeInBank)              # (1)       
+        yield hold,self,tib                            # (2)                  
         yield release,self,b                         
         print "%8.4f %s: Finished      "%(now(),self.name)
 
 ## Experiment data -------------------------         
 
-maxNumber = 5
+maxNumber = 5                          # (3)
 maxTime = 400.0 # minutes                                     
 timeInBank=12.0 # mean, minutes                      
 ARRint = 10.0   # mean, minutes                      
-theseed= 12345                                       
+theseed= 12345                         # (4)                   
 
 ## Model/Experiment ------------------------------
 
