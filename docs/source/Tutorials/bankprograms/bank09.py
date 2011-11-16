@@ -34,12 +34,12 @@ maxNumber = 5
 maxTime = 400.0 # minutes                                      
 timeInBank = 12.0 # mean, minutes                      
 ARRint = 10.0   # mean, minutes                      
-theseed = 12345                                        
+theseed = 99999                                        
 
 ## Model/Experiment ------------------------------
 
 seed(theseed)                                        
-k = Resource(capacity=2,name="Counter",unitName="Clerk")  
+k = Resource(capacity=2,name="Counter",unitName="Clerk")    # (1)
 
 initialize()
 s = Source('Source')

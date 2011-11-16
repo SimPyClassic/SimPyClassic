@@ -458,8 +458,6 @@ complications - will they be allowed to switch lines (jockey)? We
 first consider a single queue with several counters and later consider
 separate isolated queues. We will not look at jockeying.
 
-
-
 .. ---------------------------------------------------------------
 
 .. index::  Resource, several counters, bank09
@@ -473,26 +471,24 @@ served at a group of counters, taking a random time for service, where
 we assume that waiting customers form a single first-in first-out
 queue.
 
+.. 
+  42   :an:`1`
+
 The *only* difference between this model and the single-server model
-is in line 42. We have provided two counters by increasing the
+is in line :an:`1`. We have provided two counters by increasing the
 capacity of the ``counter`` resource to 2. These *units* of the
 resource correspond to the two counters. Because both clerks cannot be
 called ``Karen``, we have used a general name of ``Clerk``.
 
-
 .. literalinclude:: bankprograms/bank09.py
    
-
-The waiting times in this model are much shorter than those for the
-single service counter. For example, the waiting time for
-``Customer02`` has been reduced from ``51.213`` to ``12.581``
-minutes. Again we have too few customers processed to draw general
+The waiting times in this model are very different from those for the
+single service counter. For example, ``Customer02`` no longer has to
+wait. But, again, we have observed too few customers to draw general
 conclusions.
 
 .. literalinclude:: bankprograms/bank09.out
    
-
-
 .. ---------------------------------------------------------------
 .. index:: 
    pair: Several queues; Resource
@@ -501,39 +497,45 @@ conclusions.
 Several Counters with individual queues
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each counter is now assumed to have its own queue.  The programming is
-more complicated because the customer has to decide which queue to
+.. 
+   17 :an:`1`
+   19 :an:`2`
+   28 :an:`3`
+   29 :an:`4`
+   30 :an:`5`
+   32 :an:`6`
+   56 :an:`7`
+
+
+Each counter now has its own queue.  The programming is more
+complicated because the customer has to decide which one to
 join. The obvious technique is to make each counter a separate
 resource and it is useful to make a list of resource objects (line
-56).
+:an:`7`).
 
 In practice, a customer will join the shortest queue.  So we define
-the Python function, ``NoInSystem(R)`` (lines 17-19) which
-returns the sum of the number waiting and the number being served for
-a particular counter, ``R``. This function is used in line 28 to
+a Python function, ``NoInSystem(R)`` (lines :an:`1` to :an:`2`) to
+return the sum of the number waiting and the number being served for
+a particular counter, ``R``. This function is used in line :an:`3` to
 list the numbers at each counter. It is then easy to find which
 counter the arriving customer should join. We have also modified the
-trace printout, line 29 to display the state of the system when
+trace printout, line :an:`4` to display the state of the system when
 the customer arrives. We choose the shortest queue in lines
-30-32 (the variable ``choice``).
+:an:`5` to :an:`6` (the variable ``choice``).
 
 The rest of the program is the same as before.
 
-
-
 .. literalinclude:: bankprograms/bank10.py
    
-
 The results show how the customers choose the counter with the
 smallest number. Unlucky ``Customer02`` who joins the wrong queue has
-to wait until ``Customer00`` finishes at time ``55.067``. There are,
-however, too few arrivals in these runs, limited as they are to five
-customers, to draw any general conclusions about the relative
-efficiencies of the two systems.
+to wait until ``Customer00`` finishes before his service can be
+started. There are, however, too few arrivals in these runs, limited
+as they are to five customers, to draw any general conclusions about
+the relative efficiencies of the two systems.
   
 .. literalinclude:: bankprograms/bank10.out
    
-
 .. ---------------------------------------------------------------
 
 .. index:: Monitors, Gathering statistics, statistics

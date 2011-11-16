@@ -19,11 +19,11 @@ class Customer(Process):
     """ Customer arrives, is served and  leaves """
         
     def visit(self,timeInBank,res):       
-        arrive = now()                                  # (2) arrival time 
+        arrive = now()                                # (2)  arrival time 
         print "%8.3f %s: Here I am     "%(now(),self.name)
 
         yield request,self,res                          # (3)         
-        wait = now()-arrive                             # (4) waiting time
+        wait = now()-arrive                           # (4)  waiting time
         print "%8.3f %s: Waited %6.3f"%(now(),self.name,wait)
         yield hold,self,timeInBank                      # (5)
         yield release,self,res                          # (6)

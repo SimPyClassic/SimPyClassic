@@ -34,7 +34,7 @@ maxNumber = 5                          # (3)
 maxTime = 400.0 # minutes                                     
 timeInBank=12.0 # mean, minutes                      
 ARRint = 10.0   # mean, minutes                      
-theseed= 12345                         # (4)                   
+theseed= 99999                         # (4)                   
 
 ## Model/Experiment ------------------------------
 

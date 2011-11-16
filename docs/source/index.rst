@@ -17,7 +17,6 @@ Contents:
    Interfacing
    Cheatsheets
    SimPy_Tools
-   examples
    Sourcecode_Documentation
 
 
