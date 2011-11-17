@@ -521,7 +521,7 @@ list the numbers at each counter. It is then easy to find which
 counter the arriving customer should join. We have also modified the
 trace printout, line :an:`4` to display the state of the system when
 the customer arrives. We choose the shortest queue in lines
-:an:`5` to :an:`6` (the variable ``choice``).
+:an:`5` to :an:`6` (using the variable ``choice``).
 
 The rest of the program is the same as before.
 
@@ -540,10 +540,8 @@ the relative efficiencies of the two systems.
 
 .. index:: Monitors, Gathering statistics, statistics
 
-
 Monitors and Gathering Statistics
 -------------------------------------
-
 
 The traces of output that have been displayed so far are valuable for
 checking that the simulation is operating correctly but would become
@@ -564,7 +562,6 @@ records the values of chosen variables as time series (but see the
 comments in `Final Remarks`_).
 
 
-
 .. -------------------------------------------------------------
 
 .. index:: 
@@ -583,26 +580,32 @@ read in as a program option - but that is a different story). This
 would aid in debugging and would not complicate the data analysis. We
 will run the simulations for many more arrivals.
 
+.. 
+   24  :an:`1`
+   42  :an:`2`
+   45  :an:`3`
+   51  :an:`4`  
 
-A Monitor, ``wM``, is created in line 42. It ``observes`` the
-waiting time mentioned in line 24.  We run
+
+A Monitor, ``wM``, is created in line :an:`2`. It ``observes`` and
+records the waiting time mentioned in line :an:`1`.  We run
 ``maxNumber=50`` customers (in the call of ``generate`` in line
-45) and have increased ``maxTime`` to ``1000`` minutes.
-
+:an:`3`) and have increased ``maxTime`` to ``1000`` minutes. Brief
+statistics are given by the Monitor methods ``count()`` and ``mean()``
+in line :an:`4`.
 
 .. literalinclude:: bankprograms/bank11.py
    
 
 The average waiting time for 50 customers in this 2-counter system is
 more reliable (i.e., less subject to random simulation effects) than
-the times we measured before but it is still not sufficiently reliable for
-real-world decisions. We should also replicate the runs using different
-random number seeds. The result of this run is:
+the times we measured before but it is still not sufficiently reliable
+for real-world decisions. We should also replicate the runs using
+different random number seeds. The result of this run (using Python
+2.7) is:
 
 .. literalinclude:: bankprograms/bank11.out
    
-
-
 .. -------------------------------------------------------------
 
 .. index:: 
@@ -619,27 +622,32 @@ independent of previous ones so the Monitor and Resources must be
 redefined for each run. We can no longer allow them to be global
 objects as we have before.
 
+.. 
+   13 :an:`1`
+   40 :an:`2`
+   43 :an:`3`
+   48 :an:`4`
+   50 :an:`5`
+   54 :an:`6`
+   57 :an:`7`
 
 We will define a function, ``model`` with a parameter ``runSeed`` so
 that the random number seed can be different for different runs (lines
-40-50). The contents of the function are the same as the
+:an:`2` to  :an:`5`). The contents of the function are the same as the
 ``Model/Experiment`` section in the previous program except for one
 vital change.
 
 This is required since the Monitor, ``wM``, is defined inside the
-``model`` function (line 43). A customer can no longer refer to
+``model`` function (line  :an:`3`). A customer can no longer refer to
 it. In the spirit of quality computer programming we will pass ``wM``
 as a function argument. Unfortunately we have to do this in two steps,
-first to the ``Source`` (line 48) and then from the ``Source`` to
-the ``Customer`` (line 13).
+first to the ``Source`` (line  :an:`4`) and then from the ``Source`` to
+the ``Customer`` (line  :an:`1`).
 
 ``model()`` is run for four different random-number seeds to get a set
-of replications (lines 54-57).
-
+of replications (lines  :an:`6` to  :an:`7`).
 
 .. literalinclude:: bankprograms/bank12.py
-   
-
 
 The results show some variation. Remember, though, that the system is still
 only operating for 50 customers so the system may not be in
