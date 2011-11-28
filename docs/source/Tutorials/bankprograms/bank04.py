@@ -7,15 +7,15 @@ from random import Random, expovariate
 class Customer(Process):
     """ Customer arrives in the bank, looks around for
     a random time and then leaves """
-    def __init__(self,name):
+    def __init__(self, name):
         Process.__init__(self)
         self.name = name
         
-    def visit(self,rv,timeInBank=0):       
-        print "%7.4f %s: Here I am"%(now(),self.name)
+    def visit(self, rv, timeInBank=0):       
+        print("%7.4f %s: Here I am"%(now(), self.name))
         t = rv.expovariate(1.0/timeInBank)
-        yield hold,self,t
-        print "%7.4f %s: I must leave"%(now(),self.name)
+        yield hold, self, t
+        print("%7.4f %s: I must leave"%(now(), self.name))
 
 ## Experiment data -------------------------
 
@@ -27,7 +27,7 @@ def model():
     rv = Random(1133)
     initialize()
     c = Customer(name="Klaus")
-    activate(c,c.visit(rv,timeInBank=10.0),at=5.0)
+    activate(c, c.visit(rv, timeInBank=10.0), at=5.0)
     simulate(until=maxTime)
 
 model()

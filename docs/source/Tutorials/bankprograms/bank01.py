@@ -6,10 +6,10 @@ from SimPy.Simulation import * # (2)
 class Customer(Process): # (3)
     """ Customer arrives, looks around and leaves """
 
-    def visit(self,timeInBank): # (4)
-        print now(),self.name," Here I am" # (5)
-        yield hold,self,timeInBank # (6)
-        print now(),self.name," I must leave" # (7)
+    def visit(self, timeInBank): # (4)
+        print("%2.1f %s  Here I am"%(now(), self.name)) # (5)
+        yield hold, self, timeInBank # (6)
+        print("%2.1f %s  I must leave"%(now(), self.name)) # (7)
 
 ## Experiment data ------------------------------
 
@@ -20,5 +20,5 @@ timeInBank = 10.0   # minutes
 
 initialize() # (9)
 c = Customer(name="Klaus") # (10)
-activate(c,c.visit(timeInBank),at=5.0) # (11)
+activate(c, c.visit(timeInBank), at=5.0) # (11)
 simulate(until=maxTime) # (12)
