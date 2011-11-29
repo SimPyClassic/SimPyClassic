@@ -7,25 +7,25 @@ from SimPy.Simulation  import Simulation,Process,hold
 class Customer(Process):                                 
     """ Customer arrives, looks around and leaves """
         
-    def visit(self,timeInBank,onphone):                  
-        print "%7.4f %s: Here I am"%(self.sim.now(),self.name)    
-        yield hold,self,timeInBank                       
+    def visit(self, timeInBank, onphone):                  
+        print("%7.4f %s: Here I am"%(self.sim.now(), self.name))
+        yield hold, self, timeInBank                       
         if self.interrupted():                           
             timeleft = self.interruptLeft                
             self.interruptReset()                        
-            print "%7.4f %s: Excuse me"%(self.sim.now(),self.name)
-            print "%7.4f %s: Hello! I'll call back"%(self.sim.now(),self.name)
-            yield hold,self,onphone                      
-            print "%7.4f %s: Sorry, where were we?"%(self.sim.now(),self.name)
-            yield hold,self,timeleft                     
-        print "%7.4f %s: I must leave"%(self.sim.now(),self.name) 
+            print("%7.4f %s: Excuse me"%(self.sim.now(), self.name))
+            print("%7.4f %s: Hello! I'll call back"%(self.sim.now(), self.name))
+            yield hold, self, onphone                      
+            print("%7.4f %s: Sorry, where were we?"%(self.sim.now(), self.name))
+            yield hold, self, timeleft                     
+        print("%7.4f %s: I must leave"%(self.sim.now(), self.name))
    
 class Call(Process):                                     
     """ Cellphone call arrives and interrupts """ 
         
-    def ring(self,klaus,timeOfCall):                     
-        yield hold,self,timeOfCall                       
-        print "%7.4f Ringgg!"%(self.sim.now())                    
+    def ring(self, klaus, timeOfCall):                     
+        yield hold, self, timeOfCall                       
+        print("%7.4f Ringgg!"%(self.sim.now()))
         self.interrupt(klaus)                            
 
 ## Model -----------------------------------
@@ -33,10 +33,10 @@ class Call(Process):
 class BankModel(Simulation):
     def run(self):
         self.initialize()                                             
-        klaus = Customer(name="Klaus",sim=self)                           
-        self.activate(klaus,klaus.visit(timeInBank,onphone))          
+        klaus = Customer(name="Klaus", sim=self)                           
+        self.activate(klaus, klaus.visit(timeInBank, onphone))          
         call = Call(sim=self)                                       
-        self.activate(call, call.ring(klaus,timeOfCall))              
+        self.activate(call, call.ring(klaus, timeOfCall))              
         self.simulate(until=maxTime)  
 
 ## Experiment data -------------------------

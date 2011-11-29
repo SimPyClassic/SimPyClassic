@@ -8,20 +8,20 @@ class Customer(Process):
     """ Customer arrives at a random time,
         looks around  and then leaves """
     
-    def visit(self,timeInBank):       
-        print self.sim.now(), self.name," Here I am"             
-        yield hold,self,timeInBank
-        print self.sim.now(), self.name," I must leave"          
+    def visit(self, timeInBank):       
+        print("%f %s Here I am"%(self.sim.now(), self.name))
+        yield hold, self, timeInBank
+        print("%f %s I must leave"%(self.sim.now(), self.name))
 
 ## Model -----------------------------------
 
 class BankModel(Simulation):
-   def run(self,aseed):
+   def run(self, aseed):
        self.initialize()
        seed(aseed)
-       c = Customer(name="Klaus",sim=self)
+       c = Customer(name="Klaus", sim=self)
        t = expovariate(1.0/tMeanArrival)
-       self.activate(c,c.visit(timeInBank),at=t)               
+       self.activate(c, c.visit(timeInBank), at=t)               
        self.simulate(until=maxTime)
        
 ## Experiment data -------------------------

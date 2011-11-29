@@ -2,7 +2,8 @@
 from SimPy.Simulation import *
 from random import Random, expovariate
 
-## Model components ------------------------          
+## Model components ------------------------
+
 
 class Customer(Process):
     """ Customer arrives in the bank, looks around for
@@ -10,18 +11,19 @@ class Customer(Process):
     def __init__(self, name):
         Process.__init__(self)
         self.name = name
-        
-    def visit(self, rv, timeInBank=0):       
-        print("%7.4f %s: Here I am"%(now(), self.name))
-        t = rv.expovariate(1.0/timeInBank)
+
+    def visit(self, rv, timeInBank=0):
+        print("%7.4f %s: Here I am" % (now(), self.name))
+        t = rv.expovariate(1.0 / timeInBank)
         yield hold, self, t
-        print("%7.4f %s: I must leave"%(now(), self.name))
+        print("%7.4f %s: I must leave" % (now(), self.name))
 
 ## Experiment data -------------------------
 
-maxTime = 100.0    # minutes                           
+maxTime = 100.0    # minutes
 
 ## Model/Experiment ------------------------------
+
 
 def model():
     rv = Random(1133)

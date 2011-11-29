@@ -7,42 +7,42 @@ from random import expovariate, seed
 class Source(Process):
     """ Source generates customers randomly """
 
-    def generate(self,number,meanTBA):          
+    def generate(self, number, meanTBA):          
         for i in range(number):
-            c = Customer(name = "Customer%02d"%(i,),sim=self.sim)
-            self.sim.activate(c,c.visit())              
+            c = Customer(name = "Customer%02d"%(i), sim=self.sim)
+            self.sim.activate(c, c.visit())              
             t = expovariate(1.0/meanTBA)                 
-            yield hold,self,t
+            yield hold, self, t
 
 class Customer(Process):
-    """ Customer arrives, is served and leaves """
+    """ Customer arrives,  is served and leaves """
 
     def visit(self):                                   
         arrive = self.sim.now()
-        print "%8.4f %s: Here I am "%(self.sim.now(),self.name)
+        print("%8.4f %s: Here I am "%(self.sim.now(), self.name))
         if len(self.sim.k.waitQ) < maxInQueue:     # the test     
-            yield request,self,self.sim.k                         
+            yield request, self, self.sim.k                         
             wait = self.sim.now()-arrive
-            print "%8.4f %s: Wait %6.3f"%(self.sim.now(),self.name,wait)
+            print("%8.4f %s: Wait %6.3f"%(self.sim.now(), self.name, wait))
             tib = expovariate(1.0/timeInBank)            
-            yield hold,self,tib                          
-            yield release,self,self.sim.k
-            print "%8.4f %s: Finished  "%(self.sim.now(),self.name)
+            yield hold, self, tib                          
+            yield release, self, self.sim.k
+            print("%8.4f %s: Finished  "%(self.sim.now(), self.name))
         else:
             Customer.numBalking += 1                      
-            print "%8.4f %s: BALKING   "%(self.sim.now(),self.name) 
+            print("%8.4f %s: BALKING   "%(self.sim.now(), self.name))
                                     
 
 ## Model
 class BankModel(Simulation):
-    def run(self,aseed):
+    def run(self, aseed):
         self.initialize()
         seed(aseed)
         Customer.numBalking = 0
         self.k = Resource(capacity=numServers,
-             name="Counter",unitName="Clerk",sim=self) 
-        s = Source('Source',sim=self)
-        self.activate(s, s.generate(number=maxNumber,meanTBA=ARRint),at=0.0)             
+             name="Counter", unitName="Clerk", sim=self) 
+        s = Source('Source', sim=self)
+        self.activate(s, s.generate(number=maxNumber, meanTBA=ARRint), at=0.0)             
         self.simulate(until=maxTime)
 
 ## Experiment data -------------------------------       
@@ -64,4 +64,4 @@ modl.run(aseed=theseed)
 ## Results -----------------------------------------
 
 nb = float(Customer.numBalking)
-print "balking rate is %8.4f per minute"%(nb/modl.now())
+print("balking rate is %8.4f per minute"%(nb/modl.now()))
