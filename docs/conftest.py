@@ -1,5 +1,4 @@
 # coding=utf-8
-
 """
 This module scans all ``*.rst`` files below ``docs/`` for example code. Example
 code is discoved by checking for lines containing the ``.. literalinclude:: ``
@@ -9,15 +8,15 @@ An example consists of two consecutive literalinclude directives. The first
 must include a ``*.py`` file and the second a ``*.out`` file. The ``*.py`` file
 consists of the example code which is executed in a separate process. The
 output of this process is compared to the contents of the ``*.out`` file.
-"""
 
+"""
 import os.path
 import subprocess
 import errno
 import random
 
 import pytest
-from py._code.code import TerminalRepr, ReprFileLocation
+from py._code.code import TerminalRepr
 from _pytest.assertion.util import _diff_text
 
 
@@ -28,9 +27,11 @@ blacklist = ['SimRTManual.rst']
 def pytest_collect_file(path, parent):
     """Checks if the file is a rst file and creates an :class:`ExampleFile`
     instance."""
-    if path.ext != '.rst': return
+    if path.ext != '.rst':
+        return
     for item in blacklist:
-        if str(path).endswith(item): return
+        if str(path).endswith(item):
+            return
     return ExampleFile(path, parent)
 
 
@@ -42,17 +43,20 @@ class ExampleFile(pytest.File):
         literalincludes = []
         with self.fspath.open() as data:
             for lineno, line in enumerate(data):
-                if 'literalinclude' not in line: continue
+                if 'literalinclude' not in line:
+                    continue
                 filename = line.split('::')[-1].strip()
                 filepath = os.path.join(self.fspath.dirname, filename)
-                literalincludes.append((lineno, filename))
+                literalincludes.append((lineno, filepath))
 
         # Check for directly following output specification.
         for idx in range(len(literalincludes) - 1):
             example_lineno, example = literalincludes[idx]
-            output_lineno, output = literalincludes[idx+1]
-            if not example.endswith('.py'): continue
-            if not output.endswith('.out'): continue
+            output_lineno, output = literalincludes[idx + 1]
+            if not example.endswith('.py'):
+                continue
+            if not output.endswith('.out'):
+                continue
             yield ExampleItem(output_lineno, example, output, self)
 
 
@@ -82,6 +86,9 @@ class ExampleItem(pytest.Item):
         # Execute the example.
         output = subprocess.check_output(['python', self.examplefile],
                 stderr=subprocess.STDOUT)
+        if isinstance(output, bytes):  # The case on Python 3
+            output = output.decode('utf8')
+
         if output != expected:
             # Hijack the ValueError exception to identify mismatching output.
             raise ValueError(expected, output)
@@ -90,6 +97,7 @@ class ExampleItem(pytest.Item):
         if exc_info.errisinstance((ValueError,)):
             # Output is mismatching. Create a nice diff as failure description.
             expected, output = exc_info.value.args
+
             message = _diff_text(expected, output)
             return ReprFailExample(self.fspath.basename, self.lineno,
                     self.outputfile, message)
