@@ -137,7 +137,7 @@ class Trace(Lister):
 
     def thold(self, par):
         try:
-            return 'delay: %s'%par[0][2]
+            return 'delay: %s' % par[0][2]
         except:
             return 'delay: 0'
     thold = classmethod(thold)
@@ -145,19 +145,19 @@ class Trace(Lister):
     def trequest(self, par):
         res = par[0][2]
         if len(par[0]) == 4:
-            priority = ' priority: ' + str(par[0][3])
+            priority = 'priority: ' + str(par[0][3])
         else:
-            priority = ' priority: default'
+            priority = 'priority: default'
         wQ = [x.name for x in res.waitQ]
         aQ = [x.name for x in res.activeQ]
-        return '<%s> %s \n. . .waitQ: %s \n. . .activeQ: %s' % (res.name, priority, wQ, aQ)
+        return '<%s> %s\n. . .waitQ: %s\n. . .activeQ: %s' % (res.name, priority, wQ, aQ)
     trequest = classmethod(trequest)
 
     def trelease(self, par):
         res = par[0][2]
         wQ = [x.name for x in res.waitQ]
         aQ = [x.name for x in res.activeQ]
-        return '<%s> \n. . .waitQ: %s \n. . .activeQ: %s' % (res.name, wQ, aQ)
+        return '<%s>\n. . .waitQ: %s\n. . .activeQ: %s' % (res.name, wQ, aQ)
     trelease = classmethod(trelease)
 
     def tpassivate(self, par):

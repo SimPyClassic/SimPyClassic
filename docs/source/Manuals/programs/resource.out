@@ -10,5 +10,5 @@ c3 done at t = 200
 c4 done at t = 200
 c5 done at t = 300
 c6 done at t = 300
-Request order:  ['c1', 'c2', 'c3', 'c4', 'c5', 'c6']
-Service order:  ['c1', 'c2', 'c3', 'c4', 'c5', 'c6']
+Request order: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6']
+Service order: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6']

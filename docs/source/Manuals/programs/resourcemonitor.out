@@ -8,13 +8,13 @@ c3 done at t = 300
 c4 done at t = 400
 
 (TimeAverage no. waiting: 1.5
-(Number) Average no. waiting: 1.28571428571
-(Number) Var of no. waiting: 1.0612244898
-(Number) SD of no. waiting: 1.03015750728
+(Number) Average no. waiting: 1.2857
+(Number) Var of no. waiting: 1.0612
+(Number) SD of no. waiting: 1.0302
 (TimeAverage no. in service: 1.0
-(Number) Average no. in service: 0.444444444444
-(Number) Var of no. in service: 0.246913580247
-(Number) SD of no. in service: 0.496903995
+(Number) Average no. in service: 0.4444
+(Number) Var of no. in service: 0.2469
+(Number) SD of no. in service: 0.4969
 ========================================
 Time history for the "server" waitQ:
 [time, waitQ]
