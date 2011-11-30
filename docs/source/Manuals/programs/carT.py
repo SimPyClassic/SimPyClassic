@@ -1,4 +1,5 @@
-from SimPy.Simulation import Process, activate, initialize, hold, now, simulate
+from SimPy.SimulationTrace import (Process, activate, initialize, hold, now,
+        simulate)
 
 
 class Car(Process):
