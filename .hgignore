@@ -7,4 +7,5 @@ docs/build/*
 docs/html/*
 dist/*
 MANIFEST
+.tox/
 *.egg-info/*
