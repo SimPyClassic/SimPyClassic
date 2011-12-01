@@ -52,8 +52,10 @@ class ClerkProcess(Process):
 
             yield waituntil, self, queueshort
 
+
 def queuelong():
     return len(counter.waitQ) > 2
+
 
 def queueshort():
     return len(counter.waitQ) == 0
