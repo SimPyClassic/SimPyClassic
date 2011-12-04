@@ -1,0 +1,20 @@
+  0.0000 Customer00: Here I am 
+  0.0000 Customer00: Wait  0.000
+  8.7558 Customer01: Here I am 
+ 10.6770 Customer02: Here I am 
+ 10.6770 Customer02: BALKING   
+ 22.7622 Customer03: Here I am 
+ 22.7622 Customer03: BALKING   
+ 32.7477 Customer04: Here I am 
+ 32.7477 Customer04: BALKING   
+ 49.1642 Customer05: Here I am 
+ 49.1642 Customer05: BALKING   
+ 54.8556 Customer06: Here I am 
+ 54.8556 Customer06: BALKING   
+ 55.0607 Customer00: Finished  
+ 55.0607 Customer01: Wait 46.305
+ 73.0765 Customer07: Here I am 
+ 80.0846 Customer01: Finished  
+ 80.0846 Customer07: Wait  7.008
+ 86.9980 Customer07: Finished  
+balking rate is   0.0575 per minute

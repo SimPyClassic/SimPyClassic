@@ -1,0 +1,18 @@
+  0.0000 Customer00: Arrived     
+  0.0000 Customer00: Got counter 
+  6.8329 Customer00: Finished    
+ 22.2064 Customer01: Arrived     
+ 22.2064 Customer01: Got counter 
+ 30.1802 Customer01: Finished    
+ 32.3277 Customer02: Arrived     
+ 32.3277 Customer02: Got counter 
+ 34.5627 Customer03: Arrived     
+ 42.3374 Customer02: Finished    
+ 42.3374 Customer03: Got counter 
+ 46.4642 Customer03: Finished    
+ 61.7697 Customer04: Arrived     
+ 61.7697 Customer04: Got counter 
+ 94.1098 Customer04: Finished    
+Average waiting = 0.0826
+Average active  = 0.6512
+

@@ -1,0 +1,18 @@
+   0.000 Customer00: Queue is 0 on arrival
+   0.000 Customer00: Waited  0.000
+   2.166 Customer01: Queue is 0 on arrival
+   5.121 Customer02: Queue is 1 on arrival
+  12.000 Customer00: Completed
+  12.000 Customer01: Waited  9.834
+  13.347 Customer03: Queue is 1 on arrival
+  23.000 Guido     : Queue is 2 on arrival
+  24.000 Customer01: Completed
+  24.000 Guido     : Waited  1.000
+  36.000 Guido     : Completed
+  36.000 Customer02: Waited 30.879
+  38.156 Customer04: Queue is 1 on arrival
+  48.000 Customer02: Completed
+  48.000 Customer03: Waited 34.653
+  60.000 Customer03: Completed
+  60.000 Customer04: Waited 21.844
+  72.000 Customer04: Completed

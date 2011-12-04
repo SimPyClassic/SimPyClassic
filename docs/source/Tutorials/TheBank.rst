@@ -59,11 +59,12 @@ available without line numbers and ready to go, in the
 ``bankprograms`` directory. Please copy them, run them and improve
 them - and in the tradition of open-source software suggest your
 modifications to the SimPy users list. Object-orented versions of all
-the models are included in the same directory.
+the models are included in the bankprobrams_OO sub directory.
 
 A simulation should always be developed to answer a specific question;
 in these models we investigate how changing the number of bank servers
 or tellers might affect the waiting time for customers.
+
 
 .. index:: bank 01
 
@@ -176,12 +177,14 @@ to the ``activate`` call.
    
 
 The result is shown below. The customer now arrives at about
-0.64195. Changing the seed value would change that time.
+0.64195, (or 10.58092 if you are not using Python 3). Changing the seed 
+value would change that time.
 
 .. literalinclude:: bankprograms/bank05.out
    
 The display looks pretty untidy. In the next example I will try and
-make it tidier.
+make it tidier. Also if you are not using Python 3 you out will differ. 
+The output for Python 2 is given in Appendix A.
 
 
 .. index:: bank02

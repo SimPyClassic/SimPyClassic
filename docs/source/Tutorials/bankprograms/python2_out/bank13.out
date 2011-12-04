@@ -1,0 +1,25 @@
+ 0.0000 Customer00: Here I am but the door is shut.
+22.2064 Customer01: Here I am but the door is shut.
+27.9005 Customer02: Here I am but the door is shut.
+30.0000 You may enter
+30.0000 Customer02: The door is open!
+30.0000 Customer02: Waited  2.099
+30.0000 Customer01: The door is open!
+30.0000 Customer01: Waited  7.794
+30.0000 Customer00: The door is open!
+30.0000 Customer00: Waited 30.000
+37.9738 Customer02: Finished    
+38.0219 Customer03: Here I am but the door is shut.
+40.6558 Customer01: Finished    
+46.3632 Customer04: Here I am but the door is shut.
+60.0000 You may enter
+60.0000 Customer04: The door is open!
+60.0000 Customer04: Waited 13.637
+60.0000 Customer03: The door is open!
+60.0000 Customer03: Waited 21.978
+73.3042 Customer00: Finished    
+74.4369 Customer04: Finished    
+90.0000 You may enter
+106.7770 Customer03: Finished    
+120.0000 You may enter
+150.0000 You may enter
