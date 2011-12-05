@@ -16,7 +16,7 @@ class Customer(Process):
             print("%7.4f %s: Excuse me" % (now(), self.name))
             print("%7.4f %s: Hello! I'll call back" % (now(), self.name))
             yield hold, self, onphone
-            print("%7.4f %s: Sorry,  where were we?" % (now(), self.name))
+            print("%7.4f %s: Sorry, where were we?" % (now(), self.name))
             yield hold, self, timeleft
         print("%7.4f %s: I must leave" % (now(), self.name))
 

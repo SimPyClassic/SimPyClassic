@@ -21,7 +21,7 @@ class Customer(Process):
 
     def visit(self, timeInBank=0, res=None):
         arrive = self.sim.now()       # arrival time
-        print("%8.3f %s: Here I am     " % (self.sim.now(), self.name))
+        print("%8.3f %s: Here I am" % (self.sim.now(), self.name))
 
         yield request, self, res
         wait = self.sim.now() - arrive  # waiting time
@@ -29,7 +29,7 @@ class Customer(Process):
         yield hold, self, timeInBank
         yield release, self, res
 
-        print("%8.3f %s: Finished      " % (self.sim.now(), self.name))
+        print("%8.3f %s: Finished" % (self.sim.now(), self.name))
 
 ## Model -----------------------------------
 

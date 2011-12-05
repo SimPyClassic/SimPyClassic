@@ -30,7 +30,7 @@ class Customer(Process):
         yield hold, self, timeInBank                  # (5)
         yield release, self, res                      # (6)
 
-        print("%8.3f %s: Finished      " % (now(), self.name))
+        print("%8.3f %s: Finished" % (now(), self.name))
 
 ## Experiment data -------------------------
 
