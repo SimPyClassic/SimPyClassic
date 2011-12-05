@@ -202,9 +202,9 @@ class Trace(Lister):
     def tget(self, par):
         buff = par[0][2]
         if len(par[0]) == 5:
-            priority = ' priority: ' + str(par[0][4])
+            priority = 'priority: ' + str(par[0][4])
         else:
-            priority = ' priority: default'
+            priority = 'priority: default'
         if len(par[0]) == 3:
             nrToGet = 1
         else:
@@ -223,9 +223,9 @@ class Trace(Lister):
     def tput(self, par):
         buff = par[0][2]
         if len(par[0]) == 5:
-            priority = ' priority: ' + str(par[0][4])
+            priority = 'priority: ' + str(par[0][4])
         else:
-            priority = ' priority: default'
+            priority = 'priority: default'
         if len(par[0]) == 3:
             nrToPut = 1
         else:
