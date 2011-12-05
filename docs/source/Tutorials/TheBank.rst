@@ -183,7 +183,9 @@ value would change that time.
 .. literalinclude:: bankprograms/bank05.out
    
 The display looks pretty untidy. In the next example I will try and
-make it tidier. Also if you are not using Python 3 you out will differ. 
+make it tidier. 
+
+If you are not using Python 3, you output may differ. 
 The output for Python 2 is given in Appendix A.
 
 
@@ -401,7 +403,7 @@ the bank before starting service.
 
 .. literalinclude:: bankprograms/bank07.py
    
-Examining the trace we see that the first two customers get instant
+Examining the trace we see that the first, and last, customers get instant
 service but the others have to wait. We still only have five customers
 (line :an:`4`) so we cannot draw general conclusions.
 
@@ -486,7 +488,7 @@ called ``Karen``, we have used a general name of ``Clerk``.
 .. literalinclude:: bankprograms/bank09.py
    
 The waiting times in this model are very different from those for the
-single service counter. For example, ``Customer02`` no longer has to
+single service counter. For example, none of the customers had to
 wait. But, again, we have observed too few customers to draw general
 conclusions.
 
@@ -531,8 +533,8 @@ The rest of the program is the same as before.
 .. literalinclude:: bankprograms/bank10.py
    
 The results show how the customers choose the counter with the
-smallest number. Unlucky ``Customer02`` who joins the wrong queue has
-to wait until ``Customer00`` finishes before his service can be
+smallest number. Unlucky ``Customer03`` who joins the wrong queue has
+to wait until ``Customer01`` finishes before his service can be
 started. There are, however, too few arrivals in these runs, limited
 as they are to five customers, to draw any general conclusions about
 the relative efficiencies of the two systems.
@@ -604,10 +606,11 @@ The average waiting time for 50 customers in this 2-counter system is
 more reliable (i.e., less subject to random simulation effects) than
 the times we measured before but it is still not sufficiently reliable
 for real-world decisions. We should also replicate the runs using
-different random number seeds. The result of this run (using Python
-2.7) is:
+different random number seeds. The result of this run (using Python 3.2) is:
 
 .. literalinclude:: bankprograms/bank11.out
+
+Result for Python 2.x is given in Appendix A.
    
 .. -------------------------------------------------------------
 
@@ -714,6 +717,59 @@ References
 - Python website: http://www.Python.org
 
 - SimPy website: http://sourceforge.net/projects/simpy
+
+
+Appendix A
+-------------------------------------
+
+With Python 3 the definition of expovariate changed. In some cases
+this was back ported to some distributions of Python 2.7.
+Because of this the output for the bank programs varies. This section
+just contains the older output.
+
+**A Customer arriving at a fixed time**
+
+.. literalinclude:: bankprograms/python2_out/bank01.out
+
+**A Customer arriving at random**
+
+.. literalinclude:: bankprograms/python2_out/bank05.out
+
+**More Customers**
+
+.. literalinclude:: bankprograms/python2_out/bank02.out
+
+**Many Customers**
+
+.. literalinclude:: bankprograms/python2_out/bank03.out
+
+**Many Random Customers**
+
+.. literalinclude:: bankprograms/python2_out/bank06.out
+
+**One Service Counter**
+
+.. literalinclude:: bankprograms/python2_out/bank07.out
+
+**A server with a random service time**
+
+.. literalinclude:: bankprograms/python2_out/bank08.out
+
+**Several Counters but a Single Queue**
+
+.. literalinclude:: bankprograms/python2_out/bank09.out
+
+**Several Counters with individual queues**
+
+.. literalinclude:: bankprograms/python2_out/bank10.out
+
+**The Bank with a Monitor**
+
+.. literalinclude:: bankprograms/python2_out/bank11.out
+
+**Multiple runs**
+
+.. literalinclude:: bankprograms/python2_out/bank12.out
 
 
 ..

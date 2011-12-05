@@ -51,7 +51,7 @@ maxTime = 400.0    # minutes
 timeInBank = 12.0  # mean, minutes
 ARRint = 10.0   # mean, minutes
 Nc = 2          # number of counters
-theseed = 12345
+theseed = 787878
 
 ## Model/Experiment ------------------------------
 

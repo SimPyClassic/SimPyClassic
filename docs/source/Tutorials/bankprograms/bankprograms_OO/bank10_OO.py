@@ -62,7 +62,7 @@ maxTime = 400.0    # minutes
 timeInBank = 12.0  # mean, minutes
 ARRint = 10.0      # mean, minutes
 Nc = 2             # number of counters
-seedVal = 12345
+seedVal = 787878
 
 ## Experiment ------------------------------
 
