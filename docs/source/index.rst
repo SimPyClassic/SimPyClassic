@@ -5,7 +5,7 @@ Documentation for SimPy
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    SimPy_Overview
    Acknowledgments
