@@ -11,9 +11,8 @@
           - Tony Vignaux <Vignaux@users.sourceforge.net>
 :SimPy release: |release|
 :Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.3+ (not 3.0)
-:Revision: $Revision: 297 $
-:Date: $Date: 2009-03-31 02:24:46 +1300 (Tue, 31 Mar 2009) $
+:Python-Version: 2.6+
+:Date: December 2011
 
 .. contents:: Contents
    :depth: 3
@@ -141,4 +140,3 @@ Return value:
 	None
 
 
-$Revision: 297 $ $Date: 2009-03-31 02:24:46 +1300 (Tue, 31 Mar 2009) $

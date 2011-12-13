@@ -1,12 +1,11 @@
 =============================================================
-SimPy's Advanced Object Oriented API
+SimPy's Object Oriented API
 =============================================================
 
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
 :SimPy release: |release|
-:Python version: 2.3 and later (not 3.0)
-:Revision: $Revision: 430 $
-:Date: $Date: 2010-04-01 03:31:23 +1300 (Thu, 01 Apr 2010) $
+:Python version: 2.6 and later
+:Date: |today|
 
 .. contents:: Contents
    :depth: 2
@@ -17,11 +16,9 @@ SimPy's Advanced Object Oriented API
 Introduction
 =============
 
-This document describes the advanced object oriented (OO) programming
+This document describes the object oriented (OO) programming
 interface introduced with SimPy 2.0. This
 is an add-on to the existing API, an alternative API. There is full backward compatibility:
-Programs running under SimPy 1.9.1 and earlier releases work unchanged under
-version 2.0 and later versions.
 
 Motivation
 -------------
@@ -86,7 +83,7 @@ A class ``Simulation`` has been added to module ``SimPy.Simulation``.
 Backward compatibility
 -----------------------------
 
-Since SimPy 2.0, the package offers both the old/existing API and an advanced
+Since SimPy 2.0, the package offers both the existing procedural API and an 
 object-oriented API
 where simulation capabilities are provided by instantiating ``Simulation``.
 ``SimulationTrace``, ``SimulationStep`` or  ``SimulationRT`` are subclasses of
@@ -343,7 +340,7 @@ from ``Simulation``::
 
 The ``self.initialize()`` is not really necessary, as the ``Simulation`` instance is
 initialized at generation time. If method ``run`` for a model (here ``myMo`` ) is
-executed more than once, e.g. for running a simulation repatedly, ``self.initialize()``
+executed more than once, e.g. for running a simulation repeatedly, ``self.initialize()``
 resets the model to an empty event list and simulation time 0.
 
 Methods of class Simulation
@@ -602,7 +599,7 @@ is made by providing that reference as a parameter to the constructor of the cla
    **All class instances instances must refer to the same SimulationXX instance,
    i.e., their .sim attributes must have the same value. That value must be the
    reference to the SimulationXX instance.** Any deviation from this will
-   lead to strange misfunctioning of a SimPy script.
+   lead to strange mis-functioning of a SimPy script.
 
 The constructor calls (signatures) for the classes in question thus change as follows:
 

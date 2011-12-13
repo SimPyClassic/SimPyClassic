@@ -10,13 +10,9 @@ Contents:
    SimPy_Overview
    Getting_Started
    Manual
-   SimPy_Libraries
    SimPy_Tutorials
-   OnLineSimPyCourse
    Interfacing
-   Cheatsheets
    SimPy_Tools
-   Sourcecode_Documentation
    Acknowledgments
 
 

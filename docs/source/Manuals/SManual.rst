@@ -6,18 +6,17 @@
    :linenothreshold: 5
 
 ======================================================
-SimPy For First Time Users
+Introduction to SimPy
 ======================================================
 
 :Authors: G A Vignaux and Klaus Muller
 :Date:  |today|
 :SimPy release: |release|
-:Python-Version: 2.3 and later (not 3.0)
+:Python-Version: 2.6 and later
 
 .. THIS WAS PUT UNDER SUBVERSION 2008/08/07
 
 .. REPLACEMENTS ===================================================
-.. |svnversion| replace:: $Revision: 470 $
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
 .. |init| replace:: ``__init__``
@@ -955,7 +954,6 @@ SimPy Information
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
 :SimPy version: |release|
-:SVN:   |svnversion|
 :Date: |today|
 
 

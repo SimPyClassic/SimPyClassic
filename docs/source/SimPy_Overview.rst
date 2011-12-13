@@ -16,8 +16,7 @@ module.
 
 SimPy is based on ideas from Simula and Simscript but uses standard Python. It
 provides efficient implementation of co-routines using Python's generators
-capability. It requires Python 2.3 or later, **but does not work yet with
-Python 3.0**.
+capability. It requires Python 2.6 or later including Python 3.x.
 
 SimPy has been under development since 2002.
 

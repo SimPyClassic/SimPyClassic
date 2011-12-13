@@ -8,9 +8,8 @@
 :Authors: Klaus Muller <Muller@users.sourceforge.net>
 :SimPy release: |release|
 :Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 361 $
-:Date: $Date: 2010-01-11 00:58:57 +1300 (Mon, 11 Jan 2010) $
+:Python-Version: 2.6 and later
+:Date: December 2011
 
 
 .. contents:: Contents
@@ -711,4 +710,3 @@ See the `Tk colour page`_ for definitions.
 
 .. _`Tk colour page`: ../../_static/Tkcolors.htm
 
-$Revision: 361 $ $Date: 2010-01-11 00:58:57 +1300 (Mon, 11 Jan 2010) $

@@ -8,10 +8,8 @@ Simulation with Tracing
 :Authors: - Klaus Muller <Muller@users.sourceforge.net>
 :SimPy release: |release|
 :Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.3 and later (not 3.0)
-:Revision: $Revision: 347 $
-:Date: $Date: 2009-07-17 21:26:16 +1200 (Fri, 17 Jul 2009) $ 
-
+:Python-Version: 2.6 and later
+:Date: December 2011
 
 .. contents:: Contents
    :depth: 2

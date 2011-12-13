@@ -11,4 +11,5 @@ Manual
    Manuals/Tracing
    Manuals/SimRTManual
    Manuals/SimStepManual
+   Cheatsheets
    Manuals/Examples

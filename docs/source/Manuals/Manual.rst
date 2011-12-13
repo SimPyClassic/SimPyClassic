@@ -5,9 +5,9 @@
 .. highlight:: python
    :linenothreshold: 5
 
-=======================================
-Simulation with SimPy - In Depth Manual
-=======================================
+=====================
+Simulation with SimPy
+=====================
 
 
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
@@ -15,7 +15,7 @@ Simulation with SimPy - In Depth Manual
           - Bob Helmbold
 :SimPy release: |release|
 :SimPy Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.3 and later (not 3.0)
+:Python-Version: 2.6 and later
 :Date: |today|
 
 
