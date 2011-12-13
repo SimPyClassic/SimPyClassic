@@ -1,5 +1,5 @@
 ===========
-Using SimPy
+Manual
 ===========
 
 .. toctree::

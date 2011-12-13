@@ -5,12 +5,11 @@ Documentation for SimPy
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    SimPy_Overview
-   Acknowledgments
    Getting_Started
-   Using_SimPy
+   Manual
    SimPy_Libraries
    SimPy_Tutorials
    OnLineSimPyCourse
@@ -18,6 +17,8 @@ Contents:
    Cheatsheets
    SimPy_Tools
    Sourcecode_Documentation
+   Acknowledgments
+
 
 
 Indices and tables
