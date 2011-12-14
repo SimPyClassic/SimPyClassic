@@ -458,6 +458,8 @@ class Resource(Lister):
         """
         monitorType={Monitor(default) | Tally}
         """
+        if capacity < 0:
+            raise ValueError('capacity should be >= 0, but is: %s' % capacity)
 
         if sim is None: sim = Globals.sim # Use global simulation if sim is Non
         self.sim = sim
@@ -587,6 +589,8 @@ class Buffer(Lister):
         self.sim = sim
         if capacity == 'unbounded':
             capacity = sys.maxsize
+        elif capacity < 0:
+            raise ValueError('capacity should be >= 0, but is: %s' % capacity)
         self.capacity = capacity
         self.name = name
         self.putQType = putQType
