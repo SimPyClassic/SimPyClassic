@@ -4,6 +4,8 @@ Tutorial: An Object Oriented Approach to Using SimPy
 
 :Authors: K G Muller
 :Date:  2010 April
+:SimPy release: |release|
+:Python-Version: 2.6 and later
 
 .. highlight:: python
    :linenothreshold: 5 

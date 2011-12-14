@@ -8,13 +8,6 @@ The Bank Tutorial part 2: More  examples of SimPy Simulation
 =============================================================
 
 .. ---------------------------------------------------
-..        2004 October gav  079.131.13
-..        $Author: vignaux $
-..        $Revision: 321 $
-..        $Date: 2009-05-23 17:11:08 +1200 (Sat, 23 May 2009) $
-.. ---------------------------------------------------
- 
-.. ---------------------------------------------------
 ..  TO DO
     add example of using SimpyTrace
     Reneging due to an event
@@ -24,7 +17,9 @@ The Bank Tutorial part 2: More  examples of SimPy Simulation
 .. ---------------------------------------------------
 
 :Author: G A Vignaux  
-:Date:  2007 October
+:Date:  2011 December
+:SimPy release: |release|
+:Python-Version: 2.6 and later
 
 
 .. highlight:: python
@@ -90,7 +85,7 @@ demonstration purposes, others produce graphical output to the
 screen. Let me encourage you to run them and modify them for yourself
 
 SimPy itself can be obtained from: http://simpy.sourceforge.net/.  It
-is compatible with Python version 2.3 onwards.  The examples in this
+is compatible with Python version 2.6 onwards.  The examples in this
 documentation run with SimPy version 1.5 and later.
 
 This tutorial should be read with the SimPy Manual or Cheatsheet at
@@ -566,7 +561,6 @@ References
 
 - The Bank:
 
-:Version: $Revision: 321 $
 
 ..
   ------------------------------------------------------

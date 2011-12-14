@@ -10,3 +10,4 @@ SimPy Tutorials
    Tutorials/OO_Approach
    Tutorials/TheBankOO
    Tutorials/TheBank2OO
+   OnLineSimPyCourse

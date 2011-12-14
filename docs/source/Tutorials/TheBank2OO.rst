@@ -4,18 +4,13 @@
       :align: left
 
 ===============================================================================
-The Bank Tutorial (Advanced OO API) Part 2: More  examples of SimPy Simulation
+The Bank Tutorial (OO API) Part 2: More  examples of SimPy Simulation
 ===============================================================================
 
 :Authors: G A Vignaux, K G Muller
 :Date:  2010 April
-
-.. ---------------------------------------------------
-..        2004 October gav  079.131.13
-..        $Author: vignaux $
-..        $Revision: 321 $
-..        $Date: 2009-05-23 07:11:08 +0200 (Sa, 23 Mai 2009) $
-.. ---------------------------------------------------
+:SimPy release: |release|
+:Python-Version: 2.6 and later
 
 .. ---------------------------------------------------
 ..  TO DO
@@ -63,14 +58,14 @@ The Bank Tutorial (Advanced OO API) Part 2: More  examples of SimPy Simulation
 
    \newpage
 
-Advanced OO API Bank Tutorial version
----------------------------------------------
+OO API Bank Tutorial version
+----------------------------
 
 This manual is a rework of the *Bank Tutorial Part 2*.
 Its goal is to show how the simple tutorial models can
 be written in the advanced OO API.
 
-.. note:: To contrast the advanced OO API with the traditional
+.. note:: To contrast the OO API with the procedural
    SimPy API, the reader should read both "Bank Tutorial Part 2"
    documents side by side.
 

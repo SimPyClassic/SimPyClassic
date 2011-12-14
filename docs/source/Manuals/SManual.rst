@@ -6,18 +6,17 @@
    :linenothreshold: 5
 
 ======================================================
-SimPy For First Time Users
+Introduction to SimPy
 ======================================================
 
 :Authors: G A Vignaux and Klaus Muller
 :Date:  |today|
 :SimPy release: |release|
-:Python-Version: 2.3 and later (not 3.0)
+:Python-Version: 2.6 and later
 
 .. THIS WAS PUT UNDER SUBVERSION 2008/08/07
 
 .. REPLACEMENTS ===================================================
-.. |svnversion| replace:: $Revision: 470 $
 .. |yrequest| replace:: ``yield request,self,``
 .. |rrequest| replace:: ``yield (request,self,``\ *r [,P]*\ ``),``
 .. |init| replace:: ``__init__``
@@ -103,6 +102,9 @@ Stores). Each type models a congestion point where entities queue
 while waiting to acquire or, in some cases, to deposit a
 resource.SimPy automatically handles the queueing.
 
+.. index:: Resources
+
+
 - Resources_ have one or more identical resource units, each of which
   can be held by entities. Extending the example above, the gas
   station might be modelled as a Resource with its pumps as resource
@@ -110,6 +112,8 @@ resource.SimPy automatically handles the queueing.
   automatically queues it until a pump becomes available (perhaps
   immediately). The car holds the pump until it finishes refuelling
   and then releases it for use by the next car.
+
+.. index:: Levels; definition
 
 - ``Levels`` (not treated here) model the supply and consumption of a
   homogeneous undifferentiated "material". The Level holds an amount
@@ -119,6 +123,7 @@ resource.SimPy automatically handles the queueing.
   tankers and emptied by cars refuelling. In contrast to the operation
   of a Resource, a car need not return the gas to the gas station.
 
+.. index:: Stores; definition
 
 - ``Stores`` (not treated here) model the production and consumption of
   distinguishable items. A Store holds a list of items. Entities can
@@ -240,6 +245,8 @@ a simulation. See the SimPy Manual for more information.
 
 .. ==================================================================
 
+.. index:: Processes
+
 
 Processes
 -------------------
@@ -256,6 +263,8 @@ station store. The ``Car`` class specifies the logic of these actions
 in its Process Execution Method (PEM). The simulation creates a number
 of cars as it runs and their evolutions are directed by their ``Car``
 class's PEM.
+
+.. index:: Process; defining
 
 
 Defining a process
@@ -333,6 +342,7 @@ particular, an ``__init__``, may be defined.
   dispensed with. An example of an ``__init__( )`` method is shown in
   the `Example Program`_.
 
+.. index:: process; object creation
 
 
 Creating a process object
@@ -362,6 +372,9 @@ has no events scheduled for it. It must be *activated* to start its
 Process Execution Method. To do this you can use either the
 ``activate`` function or the ``start`` method of the Process.
 
+.. index:: 
+   single: process object; activation
+
 
 activate
 +++++++++
@@ -387,6 +400,8 @@ Activating an entity by using the SimPy ``activate`` function:
        cust = Customer()
        activate(cust, cust.lifetime(), at=10.0)
 
+.. index:: 
+   single: process object; start
 
 start
 +++++++++
@@ -436,6 +451,9 @@ object's operations. This might represent a service time for the
 entity. (Waiting is handled automatically by the resource facilities
 and is not modelled by ``yield hold``)
 
+.. index:: Yield; Hold
+.. index:: Hold; Yield
+
 yield hold
 ++++++++++++
 
@@ -454,9 +472,16 @@ interrupted by other entities.
 More about Processes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. index:: Yield; Passivate
+.. index:: Sleep
+.. index:: Passivate; Yield
+
 
 An entity (Process object) can be "put to sleep" or passivated using
-``yield passivate,self`` (and it can be reactivated by another entity
+
+     ``yield passivate,self`` 
+
+(and it can be reactivated by another entity
 using ``reactivate``), or permanently removed from the future event
 queue by the command ``self.cancel()``. Active entities can be
 ``interrupt``\ed by other entities. Examine the full SimPy Manual for
@@ -534,6 +559,8 @@ normally can be ignored/)
 
 .. ==================================================================
 
+.. index:: ! Resources
+
 
 Resources
 -------------------
@@ -557,6 +584,9 @@ received one of the Resource's units, and another list (the
 ``activeQ``) of entities that are currently using a unit.  SimPy
 creates and updates these queues itself -- the user can read their
 values, but should not change them.
+
+.. index:: Resources; defining object
+
 
 Defining a Resource object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -618,13 +648,17 @@ A process can request and later release a unit of the Resource object,
 ``r``, by using the following yield commands in a Process Execution
 Method:
 
+.. index:: Resource; request
+.. index:: Yield; request a resource
+.. index:: Yield; Request
+
 yield request
 +++++++++++++++
 
 
 - |yrequest|\ *r*
 
-  requests a unit of Resource *r*
+Requests a unit of Resource *r*
 
 If a Resource unit is free when the request is made, the requesting
 entity takes it and moves on to the next statement in its PEM. It is
@@ -648,12 +682,17 @@ Entities can use a priority system for queueing. They can also preempt
 too long). This is achieved by an extension to the ``yield request``
 command. See the main SimPy Manual.
 
+
+.. index:: Yield; release a resource
+.. index:: Yield; Release
+.. index:: Resource; release
+
 yield release
 +++++++++++++++
 
   ``yield release,self,r``
 
-  releases the  unit of ``r``.
+Releases the  unit of ``r``.
 
 
 The entity is removed from ``r.activeQ`` and continues with its next
@@ -669,6 +708,8 @@ gasstation::
 
 
 ------------
+
+.. index:: Resource; example
 
 Resource Example
 ~~~~~~~~~~~~~~~~~
@@ -696,6 +737,8 @@ get the result shown in Appendix `The Resource Example with Tracing`_.
 
 
 .. ==========================================================================
+
+.. index:: ! Random Number Generation
 
 Random Number Generation
 -------------------------
@@ -742,6 +785,10 @@ mean::
 
 .. ============================================================================
 
+.. index:: Monitors
+.. index:: Recording Simulation Results
+
+
 Monitors and Recording Simulation Results
 ---------------------------------------------
 
@@ -765,6 +812,7 @@ observe the lengths of each of their queues.
 The simpler version, the Tally, is not covered in this document. See
 the SimPy Manual for more details.
 
+.. index:: Monitors; defining
 
 Defining Monitors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -789,6 +837,9 @@ might use a Monitor::
   waittimes = Monitor(name='Waiting times')
 
 
+.. index:: Monitors; observe
+.. index:: Observing data
+
 
 Observing data
 ~~~~~~~~~~~~~~~~~
@@ -807,14 +858,16 @@ record the waiting times of the cars as shown in the following
 fragment of the PEM of a ``Car``::
 
   startwaiting = now()             # start wait
-  yield request,self,gasstation
-  waitingtime = now()-startwaiting # time spent waiting
+  yield request, self, gasstation
+  waitingtime = now() - startwaiting # time spent waiting
 
   waittimes.observe(waitingtime)
 
 The first three lines measure the waiting time (from the time of the
 request to the time the ``pump`` is obtained). The last records the
 waiting time in the ``waittimes`` Monitor.
+
+.. index:: Monitors; reset
 
 The data recording can be ``reset`` to start at any time in the
 simulation:
@@ -827,6 +880,7 @@ simulation:
 
 
 
+.. index:: Monitors; data summaries
 
 
 Data summaries
@@ -839,14 +893,30 @@ any time during or after the simulation run:
 * ``m[i]`` holds the ``i``\-th observation as a two-item list, *[ti,
   yi]*
 
+.. index:: Monitors; yseries
+.. index:: Yseries; Monitors
+
 * ``m.yseries( )`` is a list of the recorded data values, *yi*
 
+.. index:: Monitors; tseries
+.. index:: Tseries; Monitors
+
 * ``m.tseries( )`` is a list of the recorded times, *ti*
+
+
+.. index:: Monitors; count
+.. index:: Count; Monitors
 
 * ``m.count( )``, the current number of observations. (This is the
   same as ``len(r)``).
 
+.. index:: Monitors; total
+.. index:: Total; Monitors
+
 * ``m.total( )``, the sum of the ``y`` values
+
+.. index:: Monitors; mean
+.. index:: Mean; Monitors
 
 * ``m.mean( )``, the simple numerical average of the observed *y*
   values, *ignoring the times at which they were made*.  This is
@@ -859,12 +929,18 @@ any time during or after the simulation run:
 
      ``m.mean`` is the simple average of the *y* values observed.
 
+.. index:: Monitors; var
+.. index:: Var; Monitors
+
 * ``m.var( )`` the *sample* variance of the observations, ignoring the
   times at which they were made. If an unbiased estimate of the
   *population* variance is desired, the sample variance should be
   multiplied by *n/(n-1)*, where *n = m.count( )*.  In either case the
   standard deviation is, of course, the square-root of the variance
 
+
+.. index:: Monitors; timeAverage
+.. index:: timeAverage ; Monitors
 
 * ``m.timeAverage(``\ *[t]*\ ``)`` the time-weighted average of ``y``,
   calculated from time 0 (or the last time ``m.reset(``\ *[t]*\ ``)``
@@ -899,15 +975,21 @@ any time during or after the simulation run:
          values such as a service time or a waiting time. ``m.mean()``
          is used for that.
 
+.. index:: Monitors; timeVarience
+
 * ``m.timeVariance([t])`` the time-weighted variance of the ``y``
   values calculated from time 0 (or the last time ``m.reset([t])`` was
   called) to time *t* (or to the current simulation time, ``now()``,
   if *t* is missing).
 
 
+.. index:: Monitors; current state
+
 * ``m.__str__( )`` is a string that briefly describes the current state
   of the monitor. This can be used in a print statement.
 
+.. index:: Resource Queue; Monitoring
+.. index:: Monitoring; Resource queues
 
 Monitoring Resource Queues
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -955,7 +1037,6 @@ SimPy Information
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.3 and later (not 3.0)
 :SimPy version: |release|
-:SVN:   |svnversion|
 :Date: |today|
 
 

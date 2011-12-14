@@ -1,5 +1,5 @@
 ===========
-Using SimPy
+Manual
 ===========
 
 .. toctree::
@@ -11,4 +11,5 @@ Using SimPy
    Manuals/Tracing
    Manuals/SimRTManual
    Manuals/SimStepManual
+   Cheatsheets
    Manuals/Examples
