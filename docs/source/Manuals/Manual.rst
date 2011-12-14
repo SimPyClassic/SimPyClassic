@@ -70,7 +70,7 @@ During the simulation, Process objects may be delayed for fixed or
 random times, queued at resource facilities, and may be interrupted by
 or interact in other ways with other processes and components. For
 example, Automobiles in a model of a gas station may have to queue
-while waiting for a pump to become available . One obtaining a pump it
+while waiting for a pump to become available . Once obtaining a pump it
 takes some time to fill before releasing the pump.
 
 
@@ -121,6 +121,8 @@ In addition to the number of free units or quantities, resource
 facilities all hold queues of waiting process objects which are
 operated automatically by SimPy. They also operate a reneging
 mechanism so that a process object can abandon the wait.
+
+.. index:: Monitor,Tally
 
 Monitors_ and Tallys_ are used to compile statistics as a function of
 time on variables such as waiting times and queue lengths. These
@@ -213,6 +215,7 @@ function is called to display the results::
 
   Report()  #  report results when the simulation finishes
 
+.. index:: Object Oriented interface
 
 The object-oriented interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,6 +275,7 @@ capabilities, plus additional facilities:
 
 .. ==================================================================
 
+.. index:: Process
 
 Processes
 -------------------
@@ -289,6 +293,7 @@ actions of each message in its Process Execution Method (PEM).
 Individual message objects are created as the simulation runs, and
 their evolutions are directed by the ``Message`` class's PEM.
 
+.. index:: Process;definition
 
 Defining a process
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -299,6 +304,7 @@ be:
 
    ``class Message(Process):``
 
+.. index:: Process Execution Method;PEM
 
 At least one Process Execution Method (PEM) must be defined in each
 Process class [#]_.  A PEM may have arguments in addition to the required
@@ -320,6 +326,7 @@ methods and, in particular, an ``__init__`` method, may be defined.
   state.  A PEM may have any name of your choice. For example it may
   be called ``execute( )`` or ``run( )``.
 
+  .. index:: yield
 
   "The ``yield`` statements are simulation commands which affect an
   ongoing life-cycle of Process objects. These statements control the
@@ -366,6 +373,7 @@ methods and, in particular, an ``__init__`` method, may be defined.
   example below.
 
 
+.. index:: entity;create
 
 Creating a process object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -426,6 +434,8 @@ Elapsing time in a Process
 A PEM_ uses the ``yield hold`` command to temporarily delay a process
 object's operations.
 
+.. index:: yield;hold
+
 yield hold
 ++++++++++++
 
@@ -469,6 +479,7 @@ use either the ``activate`` function or the ``start`` method of the
 Process. (see the Glossary_ for an explanation of the modified Backus-Naur Form (BNF)
 notation used).
 
+.. index:: activate
 
 activate
 +++++++++
@@ -511,6 +522,7 @@ activate
      object before the current simulation time terminate the
      simulation with an error report.
 
+.. index:: start
 
 start
 +++++++++
@@ -564,6 +576,8 @@ method. There are a number of ways of using it:
 You can use the ``passivate``, ``reactivate``, or ``cancel`` commands to
 control Process objects.
 
+.. index:: yield;passivate
+
 passivate
 ++++++++++++++
 
@@ -571,6 +585,8 @@ passivate
 
      suspends the process object itself. It becomes "passive". To get
      it going again another process must ``reactivate`` it.
+
+.. index:: yield;reactivate
 
 reactivate
 ++++++++++++
@@ -581,6 +597,8 @@ reactivate
      "active". The optional parameters work as for ``activate``. A
      process object cannot reactivate itself.  To temporarily suspend
      itself it must use ``yield hold,self,t`` instead.
+
+.. index:: yield;cancel
 
 cancel
 +++++++++++
@@ -607,6 +625,7 @@ executed).
 
 .. an example to illustrate yield hold, perhaps.
 
+.. index:: example;firework
 
 .. _`Example 3`:
 
@@ -634,6 +653,8 @@ ragged::
    30.0  Boom!!
 
 ------------
+
+.. index:: source;example
 
 A source fragment
 +++++++++++++++++++++
@@ -708,6 +729,8 @@ If interrupted, the *victim* returns from its ``yield hold`` statement
 prematurely. It must then check to see if it has been interrupted by
 calling:
 
+.. index:: interrupted
+
 interrupted
 +++++++++++++
 
@@ -717,6 +740,9 @@ interrupted
     then either continue in the current activity or switch to an
     alternative, making sure it tidies up the current state, such as
     releasing any resources it owns.
+
+.. index:: interruptCause
+   pair: interrupted;cause
 
 interruptCause
 ++++++++++++++++
