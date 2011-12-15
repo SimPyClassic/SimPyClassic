@@ -1343,8 +1343,7 @@ where
     ``waitQ`` and ``activeQ``, otherwise not.
 
   - ``monitorType`` is either ``Monitor`` or ``Tally`` and indicates the
-    type of Recorder_ to be used (see `Recording
-    Resource queue lengths`_ for an example and additional
+    type of Recorder_ to be used (see `Recording Resource queue lengths`_ for an example and additional
     discussion).
 
 Each Resource object, ``r``,  has the following additional attributes:
@@ -1932,6 +1931,8 @@ hours, so you take it up and complete it at hour 28. This queue
 discipline does not conform to the exiting convention, for under that
 convention at 24 hours you would continue work on Task-A,
 complete it at hour 30, and then start on Task-C.
+
+.. index:: Resource; monitor queue lengths
 
 Recording Resource queue lengths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2750,6 +2751,8 @@ two distributions. Both distributions have the same mean::
 
 .. ============================================================================
 
+.. index:: Monitor,Tally
+
 Recording Simulation Results
 -----------------------------
 
@@ -2790,6 +2793,8 @@ furnish data for a histogram. However, they do not preserve a
 time-series usable in more advanced statistical analysis. When a Tally
 is defined it is automatically added  to the global list ``allTallies``.
 
+.. index:: Tally;define
+
 To define a new Tally object:
 
 * ``m=Tally(name='a_Tally', ylab='y', tlab='t')``
@@ -2809,6 +2814,8 @@ slower and uses more memory than ``Tally``. In long simulations its
 memory demands may be a disadvantage. When a Monitor is defined it is
 automatically added to the global list ``allMonitors``.
 
+.. index:: Monitor; define
+
 To define a new Monitor object:
 
 * ``m=Monitor(name='a_Monitor', ylab='y', tlab='t')``
@@ -2823,6 +2830,9 @@ To define a new Monitor object:
 
 .. _histogram: Histograms_
 
+
+.. index:: Monitor; observe
+   pair: Tally; observe
 
 Observing data
 ~~~~~~~~~~~~~~~~~
@@ -2853,6 +2863,10 @@ simulation:
   or to the current simulation time, ``now( )``, if *t*
   is missing.
 
+.. index:: Monitor; statistics
+   pair: Tally; statistics
+
+
 Data summaries
 ~~~~~~~~~~~~~~~~~
 
@@ -2863,6 +2877,9 @@ Monitors or Tallys at any time during or after the simulation run:
   Monitor this is the same as ``len(r)``).
 
 * ``r.total( )``, the sum of the ``y`` values
+
+.. index:: Monitor; mean
+   pair: Tally; mean
 
 * ``r.mean( )``, the simple average of the observed ``y`` values,
   ignoring the times at which they were made.  This is ``r.total( )/N``
@@ -2885,6 +2902,9 @@ Monitors or Tallys at any time during or after the simulation run:
   standard deviation is, of course, the square-root of the variance
   (If there are no observations, the message: "SimPy: No observations
   for sample variance" is printed).
+
+.. index:: Monitor; timeAverage
+   pair: Tally; timeAverage
 
 * ``r.timeAverage([t])`` the time-weighted average of ``y``,
   calculated from time 0 (or the last time ``r.reset([t])`` was
@@ -2927,6 +2947,7 @@ and has a few extra methods:
 * ``m.tseries( )`` is a list of the recorded times, *ti*
 
 
+.. index:: Histograms
 
 Histograms
 ~~~~~~~~~~~~~~~~~
