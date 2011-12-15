@@ -86,6 +86,8 @@ Stores_). Each type models a congestion point where process objects
 may have to queue while waiting to acquire or, in some cases to
 deposit, a resource.
 
+.. index:: Resources
+
 Resources_ have several *resource units*, each of which may be used by
 process objects. Extending the example above, the gas station might be
 modeled as a resource with its pumps as resource units. On receiving
@@ -93,6 +95,8 @@ a request for a pump from a car, the gas station resource
 automatically queues waiting cars until one becomes available. The
 pump resource unit is held by the car until it is released for
 possible use by another car.
+
+.. index:: Levels; definition
 
 Levels_ model the supply and consumption of a homogeneous
 undifferentiated "material." The Level at any time holds an amount of
@@ -107,6 +111,8 @@ for Resource units.
    finished using it, a Level resource need not be  released ever though it may
    be put back if that is wanted in the model. On the other hand it
    might never be released at all. It might be replenished by another entity.
+
+.. index:: Stores; definition
 
 Stores_ model the production and consumption of individual items. A
 store hold a list of items.  Process objects can insert or remove
@@ -293,7 +299,7 @@ actions of each message in its Process Execution Method (PEM).
 Individual message objects are created as the simulation runs, and
 their evolutions are directed by the ``Message`` class's PEM.
 
-.. index:: Process;definition
+.. index:: Process; defining
 
 Defining a process
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -373,7 +379,8 @@ methods and, in particular, an ``__init__`` method, may be defined.
   example below.
 
 
-.. index:: entity;create
+.. index:: entity;creation
+   pair: process; object creation
 
 Creating a process object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -480,6 +487,7 @@ Process. (see the Glossary_ for an explanation of the modified Backus-Naur Form 
 notation used).
 
 .. index:: activate
+   single: process object; activation
 
 activate
 +++++++++
@@ -522,7 +530,8 @@ activate
      object before the current simulation time terminate the
      simulation with an error report.
 
-.. index:: start
+.. index::
+   single: process object; start
 
 start
 +++++++++
@@ -577,6 +586,7 @@ You can use the ``passivate``, ``reactivate``, or ``cancel`` commands to
 control Process objects.
 
 .. index:: yield;passivate
+   single: sleep
 
 passivate
 ++++++++++++++
@@ -1267,6 +1277,7 @@ cost).
 
 .. ==================================================================
 
+.. index:: ! Resources
 
 Resources
 -------------------
@@ -1289,6 +1300,8 @@ Resource's units (called the ``waitQ``), and another list of processes
 that are currently using a unit (the ``activeQ``).  SimPy creates and
 updates these queues itself -- the user can access them, but should
 not change them.
+
+.. index:: Resources; defining object
 
 Defining a Resource object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1363,6 +1376,9 @@ A process can request and later release a unit of the Resource object,
 ``r``, by using the following yield commands in a Process Execution
 Method:
 
+.. index:: Resource; request
+   single: yield; request
+
 yield request
 +++++++++++++++
 
@@ -1377,6 +1393,9 @@ yield request
   either ``FIFO`` or ``PriorityQ`` priority types, these values are
   *ignored* when ``qType==FIFO``.
 
+.. index:: Resource; release
+   single: yield; release
+
 yield release
 +++++++++++++++
 
@@ -1385,9 +1404,10 @@ yield release
   releases the  unit of *r*.
 
 
+.. index:: Resource; queues
+   pair: Resource; waitQ
+   pair: Resource; queue order
 
-
-.. ==================================================================
 
 Queue Order
 ~~~~~~~~~~~~
@@ -1456,7 +1476,11 @@ wait. When ``c1`` and ``c2`` finish with their resources, clients
 ``c3`` and ``c4`` can each take a unit, and so forth.
 
 
-
+.. index:: 
+   triple: Resource; request; priority
+   pair: Resource; qType
+   pair: Resource; PriorityQ
+ 
 Priority requests for a Resource unit
 ++++++++++++++++++++++++++++++++++++++++
 
@@ -1470,7 +1494,6 @@ used, we simply change the preceding example's specification of the
 ``server`` Resource object to::
 
    server=Resource(capacity=2, qType=PriorityQ)
-
 
 where, by not specifying it, we allow ``preemptable`` to take its
 default value, ``False``.
@@ -1524,6 +1547,8 @@ in ``FIFO`` order. In that case, using a ``FIFO`` instead of a
 ``PriorityQ`` discipline provides some saving in execution time which
 may be important in simulations where the ``waitQ`` may be long.
 
+..index:: Resource;priority;preemptive
+  pair:  Resource;preemptable
 
 
 Preemptive requests for a Resource unit
@@ -1555,6 +1580,8 @@ following procedure regarding the Resource's ``activeQ`` and
    taken into account when the process gets into the ``activeQ`` again.
    Thus, its *total hold time* is always the same, regardless of how
    many times it has been preempted.
+
+.. index:: Resource;  preemptive request pattern
 
 Warning: SimPy only supports preemption of processes which are
 implemented in the following pattern::
@@ -1718,8 +1745,8 @@ throughout this example:
 
 ------------
 
-.. ---------------------------------------------------------------------
 
+.. index:: Resource; reneging
 
 Reneging -- leaving a queue before acquiring a resource
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1733,6 +1760,8 @@ called *reneging*, and the reneging person or thing is said to
 
 SimPy provides an extended (i.e., compound) ``yield request`` statement
 to handle reneging.
+
+.. index:: yield; request with reneging 
 
 Reneging yield request
 ++++++++++++++++++++++++
@@ -1763,6 +1792,9 @@ A call to the ``self.acquired(resource)`` method is mandatory after a
 compound ``yield request`` statement.  It not only indicates whether or
 not the process has acquired the resource, it also removes the
 reneging process from the resource's ``waitQ``.
+
+.. index:: yield; request with reneging after a time limit
+
 
 Reneging after a time limit
 +++++++++++++++++++++++++++
@@ -1803,6 +1835,8 @@ request (reneges) and leaves the ``waitQ``.
        print 'I'm not waiting any longer. I am going home now.'
 
 ------------
+
+.. index:: yield; request with reneging after an event
 
 
 Reneging when an event has happened
