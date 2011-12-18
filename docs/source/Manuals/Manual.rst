@@ -899,6 +899,9 @@ approach.
 This section describes how SimPy provides event_ Signalling and `wait
 until`_ capabilities.
 
+.. index:: SimEvent; creating
+   pair: SimEvent; signalling
+
 .. _Event:
 .. .. _SimEvent:
 
@@ -942,6 +945,8 @@ Python type. Any process can retrieve it from the event's
 
    ``message = sE.signalparam``
 
+.. index:: SimEvents; waiting
+   pair: Simevents;queueing
 
 Waiting or Queueing for SimEvents
 ''''''''''''''''''''''''''''''''''
@@ -959,6 +964,8 @@ succession move up one step.)
 .. [#FIFO] "First-in-First-Out" or FCFS, "First-Come-First-Served"
 
 You program a process to ``wait`` for SimEvents by including in its PEM:
+
+.. index yield;waitevent
 
 yield waitevent
 ++++++++++++++++
@@ -992,6 +999,8 @@ yield waitevent
    waiting for it to occur.
 
 You program a process to "queue" for events by including in its PEM:
+
+.. index:: yield; queueevent
 
 yield queueevent
 +++++++++++++++++++
@@ -2291,6 +2300,7 @@ This test removes the reneging process from the ``getQ``.
 
 .. =================================================================
 
+.. index:: ! Store
 
 Stores
 -----------
@@ -2310,6 +2320,8 @@ items held in a Store may be of any Python type, they may in
 particular be process objects, and this can be exploited to facilitate
 modeling Master/Slave relationships. *putting* and *getting* may also
 be subjected to reneging.
+
+.. index:: Store; definition
 
 Defining a Store
 ~~~~~~~~~~~~~~~~~~~
@@ -2373,6 +2385,8 @@ The Store object *sObj* also has the following additional attributes:
  - ``sObj.bufferMon``  is a Recorder_ observing ``sObj.nrBuffered``.
 
 
+.. index:: yield;put
+
 Putting objects into a Store
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2403,6 +2417,7 @@ arranged to sort them into a particular order (see `Storing objects in
 an order`_ below).
 
 
+.. index:: yield; get
 
 Getting objects from  a Store
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2528,6 +2543,8 @@ This program produces the following outputs
 
 [Return to Top_ ]
 
+.. index:: yield; put with reneging 
+
 
 Reneging
 ~~~~~~~~~~~~~~
@@ -2596,6 +2613,9 @@ it also cleanly removes a reneging process from the ``getQ``.
 
 [Return to Top_ ]
 
+.. index:: yield; put in order
+   pair: yield; get in order
+
 Storing objects in an order
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2639,7 +2659,8 @@ Note that such function only changes the sorting order of the Store instance,
 NOT of the Store class.
 
 
-
+.. index:: 
+   triple: Store; example; master/slave
 
 Master/Slave modeling with a Store
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3319,10 +3340,6 @@ Glossary
     :width: 125
     :height: 37
     :alt:  SourceForge Logo
-
-
-
-
 
 ..
   Local Variables:
