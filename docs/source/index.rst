@@ -23,7 +23,7 @@ Contents:
    :maxdepth: 1
 
    Getting_Started
-   Manual
+   Manuals
    SimPy_Tutorials
    Interfacing
    SimPy_Tools

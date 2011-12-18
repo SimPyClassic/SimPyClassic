@@ -6,7 +6,7 @@
    :linenothreshold: 5
 
 =====================
-Simulation with SimPy
+SimPy Manual
 =====================
 
 
