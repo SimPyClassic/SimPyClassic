@@ -1301,7 +1301,7 @@ that are currently using a unit (the ``activeQ``).  SimPy creates and
 updates these queues itself -- the user can access them, but should
 not change them.
 
-.. index:: Resources; defining object
+.. index:: Resource; defining object
 
 Defining a Resource object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3043,6 +3043,8 @@ furnish histogram data in different ways.
   histogram need not be set up until it is needed and this can be done
   after the data has been gathered.
 
+.. index:: 
+   triple: Histogram;Tally; establish
 
 Setting up a Histogram for a Tally object
 ++++++++++++++++++++++++++++++++++++++++++++
