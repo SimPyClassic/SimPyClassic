@@ -126,7 +126,7 @@ facilities all hold queues of waiting process objects which are
 operated automatically by SimPy. They also operate a reneging
 mechanism so that a process object can abandon the wait.
 
-.. index:: Monitor,Tally
+.. index:: Monitor,Tally ; definition
 
 Monitors_ and Tallys_ are used to compile statistics as a function of
 time on variables such as waiting times and queue lengths. These
@@ -330,7 +330,7 @@ methods and, in particular, an ``__init__`` method, may be defined.
   state.  A PEM may have any name of your choice. For example it may
   be called ``execute( )`` or ``run( )``.
 
-  .. index:: yield
+  .. index:: yield ; definition
 
   "The ``yield`` statements are simulation commands which affect an
   ongoing life-cycle of Process objects. These statements control the
@@ -405,6 +405,8 @@ For example to create a new ``Message`` object with a name
    Any Python environment is suitable -- an interactive Python session,
    IDLE, IPython, Scite . . . 
 
+.. index:: example;message
+
 .. _`Example 1`:
 
   **Example 1**: This is is a complete, runnable, SimPy script. We
@@ -440,6 +442,7 @@ A PEM_ uses the ``yield hold`` command to temporarily delay a process
 object's operations.
 
 .. index:: yield;hold
+.. index:: hold; yield
 
 yield hold
 ++++++++++++
@@ -461,6 +464,8 @@ yield hold
       different process object).
 
 ------
+
+.. index:: example;shopping
 
 .. _`Example 2`:
 
@@ -595,6 +600,7 @@ passivate
      it going again another process must ``reactivate`` it.
 
 .. index:: yield;reactivate
+.. index:: reactivate
 
 reactivate
 ++++++++++++
@@ -607,6 +613,7 @@ reactivate
      itself it must use ``yield hold,self,t`` instead.
 
 .. index:: yield;cancel
+.. index:: cancel
 
 cancel
 +++++++++++
@@ -678,6 +685,8 @@ between activations.
 
 ------------
 
+.. index:: example;source
+
 .. _`Example 4`:
 
 **Example 4: A source**.  Here a source creates and activates a series of
@@ -697,7 +706,7 @@ any arguments::
              c = Customer()         # create a new customer object, and
                  # activate it (using default parameters)
              activate(c,c.run())
-             print now(), ' customer'
+             print('%s %s) % (now(), 'customer')
              yield hold,self,10.0
 
    initialize()
@@ -708,6 +717,7 @@ any arguments::
 
 ------------
 
+.. index:: asynchronous; interrupt
 
 Asynchronous interruptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -715,6 +725,8 @@ Asynchronous interruptions
 An active process object can be interrupted by another but cannot
 interrupt itself.
 
+.. index:: interrupt
+ 
 interrupt
 +++++++++
 
@@ -752,6 +764,8 @@ interrupted
 .. index:: interruptCause
    pair: interrupted;cause
 
+.. index:: interruptedCause
+ 
 interruptCause
 ++++++++++++++++
 
@@ -760,6 +774,8 @@ interruptCause
     when the *victim* has been interrupted, ``self.interruptCause`` is a
     reference to the *interrupter* object.
 
+.. index:: interruptLeft
+ 
 interruptLeft
 +++++++++++++
 
@@ -768,6 +784,9 @@ interruptLeft
     gives the time remaining in the interrupted ``yield hold``. The
     interruption is reset (that is, "turned off") at the *victim's*
     next call to a ``yield hold``.
+
+
+..index:: interruptReset
 
 interruptReset
 ++++++++++++++++
@@ -787,6 +806,8 @@ such details as whether or not it is interrupting itself, when, and
 why.)
 
 -----------
+
+.. index:: example;bus
 
 .. _`Example 5`:
 
@@ -903,6 +924,8 @@ until`_ capabilities.
 .. _Event:
 .. .. _SimEvent:
 
+.. index:: Signalling
+
 Creating and Signalling SimEvents
 +++++++++++++++++++++++++++++++++++
 
@@ -963,7 +986,8 @@ succession move up one step.)
 
 You program a process to ``wait`` for SimEvents by including in its PEM:
 
-.. index yield;waitevent
+.. index:: 
+   pair: yield; waitenvent
 
 yield waitevent
 ++++++++++++++++
@@ -998,7 +1022,8 @@ yield waitevent
 
 You program a process to "queue" for events by including in its PEM:
 
-.. index:: yield; queueevent
+.. index:: 
+   pair: yield; queueevent
 
 yield queueevent
 +++++++++++++++++++
@@ -1017,6 +1042,9 @@ yield queueevent
    is reset to ``False`` as in the "waiting" case.
 
 
+.. index:: queued processes; find
+.. index:: waiting processes; find
+.. index:: fired processes; list
 
 Finding Which Processes Are Waiting/Queueing for an Event, and Which Events Fired
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -1051,6 +1079,8 @@ a statement like this::
 
 
 ------------
+
+.. index:: example;showing waiting, queued and fired processes
 
 .. _`example 6`:
 
@@ -1151,6 +1181,8 @@ at time 20, when ``event4`` fired again.
 
 ------------
 
+.. index:: wait; waituntil
+
 .. _`wait until`:
 
 "waituntil" synchronization -- waiting for any condition
@@ -1173,6 +1205,9 @@ testing process only so long as at least one process is executing a
 ``waituntil`` statement. When this is not the case, the run time overhead
 is minimal (about 1 percent extra run time).
 
+.. index:: yield; waituntil
+.. index:: waituntil; yield
+
 yield waituntil
 ++++++++++++++++
 
@@ -1186,6 +1221,8 @@ returns a Boolean value indicating whether the simulation state or
 condition to be waited for has occurred.
 
 ------------
+
+.. index:: example;Romulans
 
 .. _Romulans:
 .. _`example 7`:
@@ -1383,7 +1420,7 @@ A process can request and later release a unit of the Resource object,
 Method:
 
 .. index:: Resource; request
-   single: yield; request
+   pair: yield; request
 
 yield request
 +++++++++++++++
@@ -1401,6 +1438,7 @@ yield request
 
 .. index:: Resource; release
    single: yield; release
+   single: release; yield
 
 yield release
 +++++++++++++++
@@ -1554,10 +1592,8 @@ in ``FIFO`` order. In that case, using a ``FIFO`` instead of a
 ``PriorityQ`` discipline provides some saving in execution time which
 may be important in simulations where the ``waitQ`` may be long.
 
-
-
-..index:: Resource;priority;preemptive
-  pair:  Resource;preemptable
+.. index:: Resource;priority
+   pair:  Resource;preemptable
 
 Preemptive requests for a Resource unit
 ++++++++++++++++++++++++++++++++++++++++
