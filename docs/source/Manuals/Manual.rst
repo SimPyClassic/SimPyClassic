@@ -9,7 +9,6 @@
 SimPy Manual
 =====================
 
-
 :Authors: - Tony Vignaux <Vignaux@users.sourceforge.net>
           - Klaus Muller <Muller@users.sourceforge.net>
           - Bob Helmbold
@@ -17,7 +16,6 @@ SimPy Manual
 :SimPy Web-site: http://simpy.sourceforge.net/
 :Python-Version: 2.6 and later
 :Date: |today|
-
 
 
 .. REPLACEMENTS ==============================================
@@ -1426,6 +1424,7 @@ If a requesting process must wait it is placed into the resource's
 uses in the ``request`` call.
 
 
+.. index:: Resource;non-priority queueing
 
 Non-priority queueing
 ++++++++++++++++++++++++
@@ -1484,7 +1483,7 @@ wait. When ``c1`` and ``c2`` finish with their resources, clients
 ``c3`` and ``c4`` can each take a unit, and so forth.
 
 
-.. index:: 
+.. index:: Resource; priority queueing
    triple: Resource; request; priority
    pair: Resource; qType
    pair: Resource; PriorityQ
@@ -1555,9 +1554,10 @@ in ``FIFO`` order. In that case, using a ``FIFO`` instead of a
 ``PriorityQ`` discipline provides some saving in execution time which
 may be important in simulations where the ``waitQ`` may be long.
 
+
+
 ..index:: Resource;priority;preemptive
   pair:  Resource;preemptable
-
 
 Preemptive requests for a Resource unit
 ++++++++++++++++++++++++++++++++++++++++
@@ -1602,7 +1602,6 @@ implemented in the following pattern::
 
 Modeling the preemption of a process in any other pattern may lead to
 errors or exceptions.
-
 
 
 We emphasize that a process making a ``preemptive`` request to a
@@ -1801,8 +1800,9 @@ compound ``yield request`` statement.  It not only indicates whether or
 not the process has acquired the resource, it also removes the
 reneging process from the resource's ``waitQ``.
 
-.. index:: yield; request with reneging after a time limit
 
+
+.. index:: yield; request with reneging after a time limit
 
 Reneging after a time limit
 +++++++++++++++++++++++++++
@@ -1844,8 +1844,9 @@ request (reneges) and leaves the ``waitQ``.
 
 ------------
 
-.. index:: yield; request with reneging after an event
 
+
+.. index:: yield; request with reneging after an event
 
 Reneging when an event has happened
 +++++++++++++++++++++++++++++++++++
@@ -1941,6 +1942,7 @@ discipline does not conform to the exiting convention, for under that
 convention at 24 hours you would continue work on Task-A,
 complete it at hour 30, and then start on Task-C.
 
+
 .. index:: Resource; monitor queue lengths
 
 Recording Resource queue lengths
@@ -1978,11 +1980,9 @@ methods, see the section on `Recording Simulation Results`_.
 some summary statistics for each queue, and then their complete time
 series:
 
+
 .. include:: programs/resourcemonitor.py
    :literal:
-
-
-
 
 The output from this program is::
 
@@ -2048,14 +2048,14 @@ computation.
 
 ------------
 
-*Number statistics* such as the Average, Variance, and SD are computed
-differently. At time zero the number of processes in the ``waitQ``
-starts at 1, then rises to 2, and then to 3. At time 100 it drops back
-to two processes, and so forth. The average and standard deviation of
-the six values [1, 2, 3, 2, 1, 0] is 1.5 and 0.9574...,
-respectively. Number statistics for the ``activeQ`` are computed using
-the eight values [1, 0, 1, 0, 1, 0, 1, 0] and are as shown in the
-output.
+*Number statistics* such as the Average, Variance, and Standard
+Deviation are computed differently. At time zero the number of
+processes in the ``waitQ`` starts at 1, then rises to 2, and then
+to 3. At time 100 it drops back to two processes, and so forth. The
+average and standard deviation of the six values [1, 2, 3, 2, 1, 0] is
+1.5 and 0.9574..., respectively. Number statistics for the ``activeQ``
+are computed using the eight values [1, 0, 1, 0, 1, 0, 1, 0] and are
+as shown in the output.
 
 When the ``monitorType`` is changed to ``Tally``, all the output up to
 and including the lines::
@@ -2071,12 +2071,10 @@ series.
 
 [Return to Top_ ]
 
-
-
 .. ==========================================================================
 
 
-
+.. index:: ! Level
 
 Levels
 -----------
@@ -2097,6 +2095,8 @@ tanks. Tankers increase, and refueled cars decrease, the amount of gas
 in the station's storage tanks. Both getting amounts and putting
 amounts may be subjected to reneging_ like requesting amounts from a
 Resource.
+
+.. index:: Level; definition
 
 Defining a Level
 ~~~~~~~~~~~~~~~~~~
@@ -2152,6 +2152,8 @@ additional attributes:
  - ``lev.bufferMon`` is a Recorder_ observing ``lev.amount``.
 
 
+.. index:: Level; get
+
 Getting amounts from a Level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2176,10 +2178,10 @@ when there is enough to satisfy the request.
 ``self.got`` holds the amount actually received by the requester.
 
 
+..index:: Level; put
 
 Putting amounts into  a Level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 .. |yput| replace:: ``yield put,self,``\ *lev,give[,P]*
 
@@ -2202,6 +2204,8 @@ those described for the ``waitQ`` under Resources_, except that they are
 not preemptable.  Thus, priority values are ignored when the queue
 type is FIFO. Otherwise higher priority values have higher priority,
 etc.
+
+.. index:: example; Level
 
 ------------
 
@@ -2237,6 +2241,9 @@ Here is the last ten day's output from one run of this program::
 ------------
 
 [Return to Top_ ]
+
+.. index:: Level; reneging
+   pair: Level; abandoning
 
 Reneging
 ~~~~~~~~~~~~~~
@@ -2446,6 +2453,8 @@ there are two processes in the Store's ``getQ``, with the first requesting
 two items and the second one, the second process gets the requested item
 only after the first process has been given its two items.
 
+.. index:: yield;get with filter
+
 Using the get filter function
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2461,6 +2470,9 @@ The user provides a filter function that has a single list argument and
 returns a list. The argument represents the buffer of the Store. The
 function must search through the objects in the buffer and return a
 sub-list of those that satisfy the requirement.
+
+.. index:: 
+   triple: example; Store; yield get with filter
 
 ------------
 
@@ -2627,6 +2639,9 @@ change the list order. Subsequently, the SimPy system will
 automatically call that function after any addition (``put``) to the
 queue.
 
+.. index:: 
+   triple: Store; example; parcel
+
 ------------
 
 **Example** ::
@@ -2681,6 +2696,9 @@ end of the cooperation. This Master/Slave pattern results in the slave process'
 life-cycle having a hole between the slave process arrival and its departure
 after having been served.
 
+.. index:: 
+   triple: example;Store;car wash
+
 ------------
 
 **Example** Cars arrive randomly at a car wash and add themselves to
@@ -2726,6 +2744,8 @@ and the ``Carwash`` as Slaves.
 [Return to Top_ ]
 
 .. ==========================================================================
+
+.. index:: Random numbers
 
 Random Number Generation
 -------------------------
@@ -2884,9 +2904,11 @@ simulation:
   or to the current simulation time, ``now( )``, if *t*
   is missing.
 
+
+
+
 .. index:: Monitor; statistics
    pair: Tally; statistics
-
 
 Data summaries
 ~~~~~~~~~~~~~~~~~
@@ -2956,6 +2978,7 @@ Monitors or Tallys at any time during or after the simulation run:
 * ``r.__str__( )`` is a string that briefly describes the current state
   of the monitor. This can be used in a print statement.
 
+.. index:: Monitor; special methods
 
 Special methods for Monitor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2968,7 +2991,7 @@ and has a few extra methods:
 * ``m.tseries( )`` is a list of the recorded times, *ti*
 
 
-.. index:: Histograms
+.. index:: ! Histograms
 
 Histograms
 ~~~~~~~~~~~~~~~~~
@@ -3014,6 +3037,8 @@ A Histogram, *h*, can be printed out in text form using
   - ``fmt`` is a python string format for the bin range values.
 
 .. THIS MUST BE CLARIFIED. hOW IS IT USED WITH MONITOR?
+
+.. index:: Tally; printing a histogram
 
 ------------
 
@@ -3082,6 +3107,10 @@ Then, after ``observing`` the data:
 * ``h=r.getHistogram( )`` returns a completed histogram using the
   histogram parameters as set up.
 
+
+.. index:: 
+   triple: example; Histogram;Tally
+
 ---------
 
 **Example** In the following example we establish a ``Tally`` recorder
@@ -3103,6 +3132,9 @@ histogram with 30 bins (plus the under- and over-count bins)::
 
 ---------
 
+.. index:: 
+   triple: Histogram;Monitor; establish
+
 Setting up a Histogram for a Monitor object
 ++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -3115,6 +3147,11 @@ This  call is  equivalent to the following pair:
 
 * ``r.setHistogram(name = '',low=0.0,high=100.0,nbins=10)``
 * ``h = r.getHistogram( )``, which returns the completed histogram.
+
+
+
+.. index:: 
+   triple: example; Histogram;Monitor
 
 ---------
 
@@ -3202,11 +3239,15 @@ SimPy 2.2b1 differs from version 2.1 in the following ways:
 - The documentation has had some minor changes
 
 
+.. index:: Error Messages
 
 A1. SimPy Error Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: messages.txt
+
+
+.. index:: SimPy Process States
 
 A2. SimPy Process States
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3295,14 +3336,12 @@ to demonstrate a model's execution in real time.
 
 [Return to Top_ ]
 
+.. index:: Glossary
+
 .. _glossary:
-
-
-
 
 Glossary
 -----------
-
 
 .. include:: glossary.txt
 
