@@ -102,7 +102,7 @@ Stores). Each type models a congestion point where entities queue
 while waiting to acquire or, in some cases, to deposit a
 resource.SimPy automatically handles the queueing.
 
-.. index:: Resources
+.. index:: resources
 
 
 - Resources_ have one or more identical resource units, each of which
@@ -113,7 +113,7 @@ resource.SimPy automatically handles the queueing.
   immediately). The car holds the pump until it finishes refuelling
   and then releases it for use by the next car.
 
-.. index:: Levels; definition
+.. index:: levels; definition
 
 - ``Levels`` (not treated here) model the supply and consumption of a
   homogeneous undifferentiated "material". The Level holds an amount
@@ -123,7 +123,7 @@ resource.SimPy automatically handles the queueing.
   tankers and emptied by cars refuelling. In contrast to the operation
   of a Resource, a car need not return the gas to the gas station.
 
-.. index:: Stores; definition
+.. index:: stores; definition
 
 - ``Stores`` (not treated here) model the production and consumption of
   distinguishable items. A Store holds a list of items. Entities can
@@ -245,7 +245,7 @@ a simulation. See the SimPy Manual for more information.
 
 .. ==================================================================
 
-.. index:: Processes
+.. index:: processes
 
 
 Processes
@@ -264,7 +264,7 @@ in its Process Execution Method (PEM). The simulation creates a number
 of cars as it runs and their evolutions are directed by their ``Car``
 class's PEM.
 
-.. index:: Process; defining
+.. index:: process; defining
 
 
 Defining a process
@@ -342,7 +342,7 @@ particular, an ``__init__``, may be defined.
   dispensed with. An example of an ``__init__( )`` method is shown in
   the `Example Program`_.
 
-.. index:: process; object creation
+.. index:: process; creation
 
 
 Creating a process object
@@ -361,6 +361,7 @@ For example to create a new ``Car`` object with a name ``Car23``:
 
 
 
+.. index:: process; starting
 
 .. =================================================================
 
@@ -401,7 +402,7 @@ Activating an entity by using the SimPy ``activate`` function:
        activate(cust, cust.lifetime(), at=10.0)
 
 .. index:: 
-   single: process object; start
+   pair: process; start
 
 start
 +++++++++
@@ -451,8 +452,8 @@ object's operations. This might represent a service time for the
 entity. (Waiting is handled automatically by the resource facilities
 and is not modelled by ``yield hold``)
 
-.. index:: Yield; Hold
-.. index:: Hold; Yield
+.. index:: 
+   pair: yield; hold
 
 yield hold
 ++++++++++++
@@ -472,9 +473,10 @@ interrupted by other entities.
 More about Processes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. index:: Yield; Passivate
-.. index:: Sleep
-.. index:: Passivate; Yield
+.. index:: 
+   pair: yield; passivate
+   single: sleep a process
+   single: process; sleep
 
 
 An entity (Process object) can be "put to sleep" or passivated using
@@ -492,6 +494,7 @@ details.
 A SimPy Program
 ~~~~~~~~~~~~~~~~
 
+.. index:: example;car
 
 .. _`Example Program`:
 
@@ -511,36 +514,11 @@ event scheduler starts operating by finding the first event to
 execute. When both cars have finished (at time ``6.0+100.0=106.0``)
 there will be no more events so the simulation will stop::
 
-
-    from SimPy.Simulation import *
-
-    class Car(Process):
-      def __init__(self,name,cc):
-         Process.__init__(self,name=name)
-         self.cc = cc
-
-      def go(self):
-         print now( ), self.name, "Starting"
-         yield hold,self,100.0
-         print now( ), self.name, "Arrived"
-
-    initialize( )
-    c1  = Car("Car1",2000)       # a new car
-    activate(c1,c1.go( ),at=6.0) # activate at time 6.0
-    c2  = Car("Car2",1600)       # another new car
-    activate(c2,c2.go( ))        # activate at time 0
-    simulate(until=200)
-    print 'Current time is ',now( ) # will print 106.0
-
 ..  .. literalinclude:: programs/car.py
 
 Running this program gives the following output::
 
-    0 Car2 Starting
-    6.0 Car1 Starting
-    100.0 Car2 Arrived
-    106.0 Car1 Arrived
-    Current time is  106.0
+..  .. literalinclude:: programs/car.out
 
 If, instead one chose to import ``SimPy.SimulateTrace`` at the start
 of the program one would obtain the following output. (The meaning of
@@ -559,7 +537,7 @@ normally can be ignored/)
 
 .. ==================================================================
 
-.. index:: ! Resources
+.. index:: !resources
 
 
 Resources
@@ -585,7 +563,7 @@ received one of the Resource's units, and another list (the
 creates and updates these queues itself -- the user can read their
 values, but should not change them.
 
-.. index:: Resources; defining object
+.. index:: resource; define
 
 
 Defining a Resource object
@@ -599,14 +577,22 @@ A Resource object, ``r``,  is established by the following statement::
 
 where
 
+..index:: resource; capacity
+
 - ``capacity`` (positive integer) specifies the total
   number of identical units in Resource object ``r``.
+
+..index:: resource; name
 
 - ``name`` (string) the name for this Resource object (e.g.,
   ``'gasStation'``).
 
+..index:: resource; unitName
+
 - ``unitName`` (string) the name for a unit of the resource (e.g.,
   ``'pump'``).
+
+..index:: resource; monitored
 
 - ``monitored`` (``False`` or ``True``) If set to ``True``, then
   information is gathered on the sizes of ``r``'s ``waitQ`` and
@@ -617,24 +603,35 @@ For example, in the model of a 2-pump gas-station we might define::
 
    gasstation = Resource(capacity=2,name='gasStation',unitName='pump')
 
+..index:: resource; attributes
 
 Each Resource object, ``r``,  has the following additional attributes:
 
+..index:: resource; n
+
 - ``r.n``,  the number of units that are currently free.
+
+..index:: resource; waitQ
 
 - ``r.waitQ``, a queue (list) of processes that have requested but
   not yet received a unit of ``r``, so ``len(r.waitQ)`` is the
   number of process objects currently waiting.
 
+..index:: resource; activeQ
+
 - ``r.activeQ``, a queue (list) of process objects currently using
   one of the Resource's units, so ``len(r.activeQ)`` is the number of
   units that are currently in use.
+
+..index:: resource; waitMon
 
 - ``r.waitMon``, the record (made by a ``Monitor`` whenever
   ``monitored==True``) of the activity in ``r.waitQ``. So, for
   example, ``r.waitMon.timeaverage()`` is the average number of
   processes in ``r.waitQ``.  See `Data Summaries`_
   for an example.
+
+..index:: resource; actMon
 
 - ``r.actMon``, the record (made by a ``Monitor`` whenever
   ``monitored==True``) of the activity in ``r.activeQ``.
@@ -648,9 +645,9 @@ A process can request and later release a unit of the Resource object,
 ``r``, by using the following yield commands in a Process Execution
 Method:
 
-.. index:: Resource; request
-.. index:: Yield; request a resource
-.. index:: Yield; Request
+.. index:: 
+   single: yield; request a resource
+   pair: yield; request
 
 yield request
 +++++++++++++++
@@ -683,9 +680,8 @@ too long). This is achieved by an extension to the ``yield request``
 command. See the main SimPy Manual.
 
 
-.. index:: Yield; release a resource
-.. index:: Yield; Release
-.. index:: Resource; release
+.. index:: yield; release a resource
+   pair: yield; release
 
 yield release
 +++++++++++++++
@@ -709,7 +705,9 @@ gasstation::
 
 ------------
 
-.. index:: Resource; example
+.. index:: resource; example
+.. index:: example;resource
+.. index:: example;cars
 
 Resource Example
 ~~~~~~~~~~~~~~~~~
@@ -738,7 +736,7 @@ get the result shown in Appendix `The Resource Example with Tracing`_.
 
 .. ==========================================================================
 
-.. index:: ! Random Number Generation
+.. index:: !random number generation
 
 Random Number Generation
 -------------------------
@@ -812,7 +810,7 @@ observe the lengths of each of their queues.
 The simpler version, the Tally, is not covered in this document. See
 the SimPy Manual for more details.
 
-.. index:: Monitors; defining
+.. index:: monitors; defining
 
 Defining Monitors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -837,8 +835,8 @@ might use a Monitor::
   waittimes = Monitor(name='Waiting times')
 
 
-.. index:: Monitors; observe
-.. index:: Observing data
+.. index:: monitors; observe
+.. index:: observing data
 
 
 Observing data
@@ -867,7 +865,8 @@ The first three lines measure the waiting time (from the time of the
 request to the time the ``pump`` is obtained). The last records the
 waiting time in the ``waittimes`` Monitor.
 
-.. index:: Monitors; reset
+.. index:: 
+   pair: monitors; reset
 
 The data recording can be ``reset`` to start at any time in the
 simulation:
@@ -880,7 +879,7 @@ simulation:
 
 
 
-.. index:: Monitors; data summaries
+.. index:: monitors; data summaries
 
 
 Data summaries
@@ -893,30 +892,30 @@ any time during or after the simulation run:
 * ``m[i]`` holds the ``i``\-th observation as a two-item list, *[ti,
   yi]*
 
-.. index:: Monitors; yseries
-.. index:: Yseries; Monitors
+.. index:: 
+   pair: monitors; yseries
 
 * ``m.yseries( )`` is a list of the recorded data values, *yi*
 
-.. index:: Monitors; tseries
-.. index:: Tseries; Monitors
+.. index:: 
+   pair: monitors; tseries
 
 * ``m.tseries( )`` is a list of the recorded times, *ti*
 
 
-.. index:: Monitors; count
-.. index:: Count; Monitors
+.. index:: 
+   pair: monitors; count
 
 * ``m.count( )``, the current number of observations. (This is the
   same as ``len(r)``).
 
-.. index:: Monitors; total
-.. index:: Total; Monitors
+.. index::
+   pair: monitors; total
 
 * ``m.total( )``, the sum of the ``y`` values
 
-.. index:: Monitors; mean
-.. index:: Mean; Monitors
+.. index:: 
+   pair: monitors; mean
 
 * ``m.mean( )``, the simple numerical average of the observed *y*
   values, *ignoring the times at which they were made*.  This is
@@ -929,8 +928,8 @@ any time during or after the simulation run:
 
      ``m.mean`` is the simple average of the *y* values observed.
 
-.. index:: Monitors; var
-.. index:: Var; Monitors
+.. index:: 
+   pair: monitors; var
 
 * ``m.var( )`` the *sample* variance of the observations, ignoring the
   times at which they were made. If an unbiased estimate of the
@@ -939,8 +938,8 @@ any time during or after the simulation run:
   standard deviation is, of course, the square-root of the variance
 
 
-.. index:: Monitors; timeAverage
-.. index:: timeAverage ; Monitors
+.. index:: 
+   pair monitors; timeAverage
 
 * ``m.timeAverage(``\ *[t]*\ ``)`` the time-weighted average of ``y``,
   calculated from time 0 (or the last time ``m.reset(``\ *[t]*\ ``)``
@@ -975,7 +974,8 @@ any time during or after the simulation run:
          values such as a service time or a waiting time. ``m.mean()``
          is used for that.
 
-.. index:: Monitors; timeVarience
+.. index:: 
+   pair: monitors; timeVarience
 
 * ``m.timeVariance([t])`` the time-weighted variance of the ``y``
   values calculated from time 0 (or the last time ``m.reset([t])`` was
@@ -983,13 +983,14 @@ any time during or after the simulation run:
   if *t* is missing).
 
 
-.. index:: Monitors; current state
+.. index:: 
+   pair: monitors; current state
 
 * ``m.__str__( )`` is a string that briefly describes the current state
   of the monitor. This can be used in a print statement.
 
-.. index:: Resource Queue; Monitoring
-.. index:: Monitoring; Resource queues
+.. index:: resource queue; monitoring
+.. index:: monitoring; resource queues
 
 Monitoring Resource Queues
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1008,6 +1009,10 @@ for advanced post-simulation statistical analyses and to display
 summary statistics.
 
 
+..index::
+  pair: monitors; histogram
+  pair: monitor; allMonitors
+  pair: monitor; startCollection
 
 More on Monitors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1035,10 +1040,12 @@ SimPy Information
 ~~~~~~~~~~~~~~~~~
 
 :SimPy Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.3 and later (not 3.0)
+:Python-Version: 2.6 and later
 :SimPy version: |release|
 :Date: |today|
 
+..index:: example; resource with tracing
+..index:: SimulationTrace
 
 The Resource Example with Tracing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1085,11 +1092,6 @@ the ``gasstation``.)
 .. _`Python random module`: http://www.python.org/doc/current/lib/module-random.html
 .. _Python: http://www.Python.org
 
-.. ----------------------------------------------------------------------------
-.. CVS: was $Revision: 470 $ $Date: 2010-04-26 18:52:03 +1200 (Mon, 26 Apr 2010) $
-.. the Mercurial (hg) version.
-.. SVN |svnversion|
-.. ----------------------------------------------------------------------------
 
 
 

@@ -588,7 +588,8 @@ method. There are a number of ways of using it:
 You can use the ``passivate``, ``reactivate``, or ``cancel`` commands to
 control Process objects.
 
-.. index:: yield;passivate
+.. index:: 
+   pair: yield;passivate
    single: sleep
 
 passivate
