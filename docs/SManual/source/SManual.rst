@@ -298,9 +298,9 @@ particular, an ``__init__``, may be defined.
   statement) it announces that this car has "Arrived"::
 
       def go(self):
-          print now(), self.name, 'Starting'
-          yield hold,self,100.0
-          print now(), self.name, 'Arrived'
+          print("%s %s %s" % (now(), self.name, 'Starting'))
+          yield hold, self, 100.0
+          print("%s %s %s" % (now(), self.name, 'Arrived'))
 
   A process object's PEM starts execution when the object is
   activated, provided the ``simulate(until=``\ *endtime*\ ``)``
@@ -497,11 +497,13 @@ event scheduler starts operating by finding the first event to
 execute. When both cars have finished (at time ``6.0+100.0=106.0``)
 there will be no more events so the simulation will stop::
 
-..  .. literalinclude:: programs/car.py
+.. include:: programs/car.py
+   :literal:
 
 Running this program gives the following output::
 
-..  .. literalinclude:: programs/car.out
+.. include:: programs/car.out
+   :literal:
 
 If, instead one chose to import ``SimPy.SimulateTrace`` at the start
 of the program one would obtain the following output. (The meaning of
@@ -513,10 +515,7 @@ normally can be ignored/)
 .. include:: programs/carT.out
    :literal:
 
-
 -------
-
-
 
 .. ==================================================================
 
