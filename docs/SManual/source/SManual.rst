@@ -495,12 +495,12 @@ listing. ``p2`` actually starts first in the simulation. Nothing
 happens until the ``simulate(until=200)`` statement at which point the
 event scheduler starts operating by finding the first event to
 execute. When both cars have finished (at time ``6.0+100.0=106.0``)
-there will be no more events so the simulation will stop::
+there will be no more events so the simulation will stop:
 
 .. include:: programs/car.py
    :literal:
 
-Running this program gives the following output::
+Running this program gives the following output:
 
 .. include:: programs/car.out
    :literal:
