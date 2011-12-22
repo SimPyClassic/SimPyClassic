@@ -6,6 +6,7 @@ The following examples are included in the SimPy source distribution.
 Car
 ---
 
+.. index:: example; car
 .. literalinclude:: programs/car.py
 
 Output:
@@ -15,7 +16,7 @@ Output:
 
 CarT
 ----
-
+.. index:: example; carT
 .. literalinclude:: programs/carT.py
 
 Output:
@@ -26,6 +27,7 @@ Output:
 Cars
 ----
 
+.. index:: example; cars
 .. literalinclude:: programs/cars.py
 
 Output:
@@ -36,6 +38,7 @@ Output:
 CarsT
 -----
 
+.. index:: example; carsT
 .. literalinclude:: programs/carsT.py
 
 Output:
@@ -46,6 +49,7 @@ Output:
 Carwash
 -------
 
+.. index:: example; carwash
 .. literalinclude:: programs/carwash.py
 
 Output:
@@ -56,6 +60,7 @@ Output:
 Breakdown
 ---------
 
+.. index:: example; breakdown
 .. literalinclude:: programs/breakdown.py
 
 Output:
@@ -66,6 +71,7 @@ Output:
 Firework
 --------
 
+.. index:: example; firework
 .. literalinclude:: programs/firework.py
 
 Output:
@@ -76,6 +82,7 @@ Output:
 Levelinventory
 --------------
 
+.. index:: example; levelinventory
 .. literalinclude:: programs/levelinventory.py
 
 Output:
@@ -86,6 +93,7 @@ Output:
 Message
 -------
 
+.. index:: example; message
 .. literalinclude:: programs/message.py
 
 Output:
@@ -96,6 +104,7 @@ Output:
 Resource
 --------
 
+.. index:: example; resource
 .. literalinclude:: programs/resource.py
 
 Output:
@@ -106,6 +115,7 @@ Output:
 Resource monitor
 ----------------
 
+.. index:: example; resourcemonitor
 .. literalinclude:: programs/resourcemonitor.py
 
 Output:
@@ -116,6 +126,7 @@ Output:
 Shopping
 --------
 
+.. index:: example; shopping
 .. literalinclude:: programs/shopping.py
 
 Output:
@@ -126,6 +137,7 @@ Output:
 Storewidget
 -----------
 
+.. index:: example; storewidget
 .. literalinclude:: programs/storewidget.py
 
 Output:

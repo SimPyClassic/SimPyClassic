@@ -88,7 +88,7 @@ deposit, a resource.
 
 Resources_ have several *resource units*, each of which may be used by
 process objects. Extending the example above, the gas station might be
-modeled as a resource with its pumps as resource units. On receiving
+modelled as a resource with its pumps as resource units. On receiving
 a request for a pump from a car, the gas station resource
 automatically queues waiting cars until one becomes available. The
 pump resource unit is held by the car until it is released for
@@ -119,7 +119,7 @@ process objects) require specific lists of personnel and equipment
 that may be treated as the items in a Store facility such as a
 clinic or hospital. The items held in a Store can be of any Python
 type. In particular they can be process objects, and this may be
-exploited to facilitate modeling Master/Slave relationships.
+exploited to facilitate modelling Master/Slave relationships.
 
 In addition to the number of free units or quantities, resource
 facilities all hold queues of waiting process objects which are
@@ -425,13 +425,10 @@ For example to create a new ``Message`` object with a name
   .. include:: programs/message.py
      :literal:
 
-  Running this program gives the following output::
+  Running this program gives the following output:
 
-      0 1 Starting
-      6.0 2 Starting
-      100.0 1 Arrived
-      106.0 2 Arrived
-      Current time is  106.0
+  .. include:: programs/message.out
+     :literal:
 
 ------------
 
@@ -653,20 +650,11 @@ in a few extra ``yield hold`` commands for added suspense.
 
 
 Here is the output. No formatting was attempted so it looks a bit
-ragged::
+ragged:
 
-   0.0  firework launched
-   11.0  tick
-   12.0  tick
-   13.0  tick
-   14.0  tick
-   15.0  tick
-   16.0  tick
-   17.0  tick
-   18.0  tick
-   19.0  tick
-   20.0  tick
-   30.0  Boom!!
+.. include:: programs/firework.out
+   :literal:
+
 
 ------------
 
@@ -681,7 +669,7 @@ A source fragment
 One useful program pattern is the *source*. This is a process object
 with a Process Execution Method (PEM) that sequentially generates and activates
 other process objects -- it is a source of other process
-objects. Random arrivals can be modeled using random intervals
+objects. Random arrivals can be modelled using random intervals
 between activations.
 
 ------------
@@ -706,14 +694,14 @@ any arguments::
           while now() < finish:
              c = Customer()         # create a new customer object, and
                  # activate it (using default parameters)
-             activate(c,c.run())
+             activate(c, c.run())
              print('%s %s) % (now(), 'customer')
-             yield hold,self,10.0
+             yield hold, self, 10.0
 
    initialize()
    g = Source()                     # create the Source object, g,
                                     # and activate it
-   activate(g,g.execute(finish=33.0),at=0.0)
+   activate(g, g.execute(finish=33.0), at=0.0)
    simulate(until=100)
 
 ------------
@@ -809,78 +797,27 @@ why.)
 -----------
 
 .. index:: example;bus
+.. index:: example;breakdown
 
 .. _`Example 5`:
 
 **Example 5**. A simulation with interrupts.  A bus is subject to
-breakdowns that are modeled as interrupts caused by a ``Breakdown``
+breakdowns that are modelled as interrupts caused by a ``Breakdown``
 process.  Notice that the ``yield hold,self,tripleft`` statement may
 be interrupted, so if the ``self.interrupted()`` test returns ``True``
 a reaction to it is required. Here, in addition to delaying the bus
 for repairs, the reaction includes scheduling the next breakdown. In
 this example the ``Bus`` Process class does not require an
-``__init__()`` method::
+``__init__()`` method:
 
-    from SimPy.Simulation import *
+.. include:: programs/breakdown.py
+   :literal:
 
-    class Bus(Process):
+The output from this example:
 
-      def operate(self,repairduration,triplength):    # PEM
-         tripleft = triplength
-            # "tripleft" is the driving time to finish trip
-            # if there are no further breakdowns
-         while tripleft > 0:
-            yield hold,self,tripleft      # try to finish the trip
-                # if a breakdown intervenes
-            if self.interrupted():
-                  print self.interruptCause.name, 'at %s' %now()
-                  tripleft=self.interruptLeft
-                    # update driving time to finish
-                    # the trip if no more breakdowns
-                  self.interruptReset()        # end self-interrupted state
-                    # update next breakdown time
-                  reactivate(br,delay=repairduration)
-                    # impose delay for repairs on self
-                  yield hold,self,repairduration
-                  print 'Bus repaired at %s' %now()
-            else:   # no breakdowns intervened, so bus finished trip
-                  break
-         print 'Bus has arrived at %s' %now()
+.. include:: programs/breakdown.out
+   :literal:
 
-    class Breakdown(Process):
-       def __init__(self,myBus):
-           Process.__init__(self,name='Breakdown '+myBus.name)
-           self.bus=myBus
-
-       def breakBus(self,interval):      # Process Execution Method
-           while True:
-              yield hold,self,interval   # driving time between breakdowns
-              if self.bus.terminated(): break
-                # signal "self.bus" to break itself down
-              self.interrupt(self.bus)
-
-    initialize()
-    b=Bus('Bus')                   # create a Bus object "b" called "Bus"
-    activate(b,b.operate(repairduration=20,triplength=1000))
-        # create a Breakdown object "br" for bus "b", and
-    br=Breakdown(b)
-        # activate it with driving time between
-        # breakdowns equal to 300
-    activate(br,br.breakBus(300))
-
-    simulate(until=4000)
-    print 'SimPy: No more events at time %s' %now()
-
-The output from this example::
-
-    Breakdown Bus at 300
-    Bus repaired at 320
-    Breakdown Bus at 620
-    Bus repaired at 640
-    Breakdown Bus at 940
-    Bus repaired at 960
-    Bus has arrived at 1060
-    SimPy: No more events at time 1260
 
 The bus finishes at 1060 but the simulation finished at 1260. Why? The
 ``breakdown``\ s PEM consists of a loop, one breakdown following
@@ -954,7 +891,7 @@ provide your own, as shown here. Its ``occurred`` attribute,
 ``sE.occurred``, is a Boolean that defaults to ``False``. It indicates
 whether the event ``sE`` has occurred.
 
-You program a SimEvent to "occur" or "fire" by "signaling" it like this:
+You program a SimEvent to "occur" or "fire" by "signalling" it like this:
 
    ``sE.signal(``\ *<payload parameter>*\ ``)``
 
@@ -1082,92 +1019,24 @@ a statement like this::
 ------------
 
 .. index:: example;showing waiting, queued and fired processes
+.. index:: example; wait_or_queue
 
 .. _`example 6`:
 
 **Example 6**. This complete SimPy script illustrates these
 constructs. (It also illustrates that a Process class may have more
 than one PEM. Here the ``Wait_Or_Queue`` class has two PEMs --
-``waitup`` and ``queueup``.)::
+``waitup`` and ``queueup``.):
 
-   from SimPy.Simulation import *
+.. include:: programs/wait_or_queue.py
+   :literal:
 
-   class Wait_Or_Queue(Process):
-       def waitup(self,myEvent):      # PEM illustrating "waitevent"
-            # wait for "myEvent" to occur
-           yield waitevent, self, myEvent
-           print 'At %s, some SimEvent(s) occurred that \
-                activated object %s.' %(now(), self.name)
-           print '   The activating event(s) were %s' \
-               %([x.name for x in self.eventsFired])
 
-       def queueup(self, myEvent):    # PEM illustrating "queueevent"
-            # queue up for "myEvent" to occur
-           yield queueevent, self, myEvent
-           print 'At %s, some SimEvent(s) occurred that \
-               activated object %s.' %(now(), self.name)
-           print '   The activating event(s) were %s' \
-               %([x.name for x in self.eventsFired])
+This program outputs:
 
-   class Signaller(Process):
-            # here we just schedule some events to fire
-       def sendSignals(self):
-           yield hold, self, 2
-           event1.signal()        # fire "event1" at time 2
-           yield hold, self, 8
-           event2.signal()        # fire "event2" at time 10
-           yield hold, self, 5
-           event1.signal()        # fire all four events at time 15
-           event2.signal()
-           event3.signal()
-           event4.signal()
-           yield hold, self, 5
-           event4.signal()        # event4 recurs at time 20
+.. include:: programs/wait_or_queue.out
+   :literal:
 
-   initialize()
-
-            # Now create each SimEvent and give it a name
-   event1 = SimEvent('Event-1')
-   event2 = SimEvent('Event-2')
-   event3 = SimEvent('Event-3')
-   event4 = SimEvent('Event-4')
-   Event_list = [event3,event4]   # define an event list
-
-   s = Signaller()
-            # Activate Signaller "s" *after* events created
-   activate (s,s.sendSignals())
-
-   w0 = Wait_Or_Queue('W-0')
-            # create object named "W-0", and set it to
-            # "waitup" for SimEvent "event1" to occur
-   activate (w0, w0.waitup(event1))
-   w1 = Wait_Or_Queue('W-1')
-   activate (w1, w1.waitup(event2))
-   w2 = Wait_Or_Queue('W-2')
-   activate(w2, w2.waitup(Event_list))
-   q1 = Wait_Or_Queue('Q-1')
-            # create object named "Q-1", and put it to be first
-            # in the queue for Event_list to occur
-   activate(q1, q1.queueup(Event_list))
-   q2 = Wait_Or_Queue('Q-2')
-            # create object named "Q-2", and append it to
-            # the queue for Event_list to occur
-   activate(q2, q2.queueup(Event_list))
-
-   simulate(until=50)
-
-This program outputs::
-
-   At 2, some SimEvent(s) occurred that activated object W-0.
-      The activating event(s) were ['Event-1']
-   At 10, some SimEvent(s) occurred that activated object W-1.
-      The activating event(s) were ['Event-2']
-   At 15, some SimEvent(s) occurred that activated object W-2.
-      The activating event(s) were ['Event-3']
-   At 15, some SimEvent(s) occurred that activated object Q-1.
-      The activating event(s) were ['Event-3', 'Event-4']
-   At 20, some SimEvent(s) occurred that activated object Q-2.
-      The activating event(s) were ['Event-4']
 
 Each output line, ``The activating event(s) were ...``, lists the
 contents of the named object's ``eventsFired`` attribute. One of those
@@ -1333,8 +1202,8 @@ objects may have to queue up to obtain resources. This section
 describes the Resource type of resource facility.
 
 An example of queueing for a Resource might be a manufacturing plant
-in which a ``Task`` (modeled as a *process object*) needs work done
-by a ``Machine`` (modeled as a Resource object). If all of the
+in which a ``Task`` (modelled as a *process object*) needs work done
+by a ``Machine`` (modelled as a Resource object). If all of the
 ``Machines`` are currently being used, the ``Task`` must wait until
 one becomes free. A SimPy Resource can have a number of identical
 ``units``, such as a number of identical ``machine`` units. A
@@ -1637,7 +1506,7 @@ implemented in the following pattern::
   <some code>
   yield release (one or more release statements)
 
-Modeling the preemption of a process in any other pattern may lead to
+Modelling the preemption of a process in any other pattern may lead to
 errors or exceptions.
 
 
@@ -1798,7 +1667,7 @@ Reneging -- leaving a queue before acquiring a resource
 In most real world situations, people and other items do not wait
 forever for a requested resource facility to become
 available. Instead, they leave its queue when their patience is
-exhausted or when some other condition occurs. This behavior is
+exhausted or when some other condition occurs. This behaviour is
 called *reneging*, and the reneging person or thing is said to
 *renege*.
 
@@ -2128,7 +1997,7 @@ scalar (real or integer). Process objects may increase or decrease the
 currently-available amount of material in a Level facility.
 
 For example, a gasoline station stores gas (petrol) in large
-tanks. Tankers increase, and refueled cars decrease, the amount of gas
+tanks. Tankers increase, and refuelled cars decrease, the amount of gas
 in the station's storage tanks. Both getting amounts and putting
 amounts may be subjected to reneging_ like requesting amounts from a
 Resource.
@@ -2248,7 +2117,7 @@ etc.
 
 **Example**. Suppose that a random demand on an inventory is made each
 day.  Each requested amount is distributed normally with a mean of 1.2
-units and a standard deviation of 0.2 units.  The inventory (modeled
+units and a standard deviation of 0.2 units.  The inventory (modelled
 as an object of the Level class) is refilled by 10 units at fixed
 intervals of 10 days. There are no back-orders, but a accumulated sum
 of the total stock-out quantities is to be maintained.  A trace is to
@@ -2362,7 +2231,7 @@ personnel and equipment that may be treated as the items available in
 a Store type of resource facility such as a clinic or hospital. As the
 items held in a Store may be of any Python type, they may in
 particular be process objects, and this can be exploited to facilitate
-modeling Master/Slave relationships. *putting* and *getting* may also
+modelling Master/Slave relationships. *putting* and *getting* may also
 be subjected to reneging.
 
 .. index:: Store; definition
@@ -2714,7 +2583,7 @@ NOT of the Store class.
 .. index:: 
    triple: Store; example; master/slave
 
-Master/Slave modeling with a Store
+Master/Slave modelling with a Store
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The items in a ``Store`` can be of any Python type. In particular, they

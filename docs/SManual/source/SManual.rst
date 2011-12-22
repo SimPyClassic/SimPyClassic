@@ -559,22 +559,22 @@ A Resource object, ``r``,  is established by the following statement::
 
 where
 
-..index:: resource; capacity
+.. index:: resource; capacity
 
 - ``capacity`` (positive integer) specifies the total
   number of identical units in Resource object ``r``.
 
-..index:: resource; name
+.. index:: resource; name
 
 - ``name`` (string) the name for this Resource object (e.g.,
   ``'gasStation'``).
 
-..index:: resource; unitName
+.. index:: resource; unitName
 
 - ``unitName`` (string) the name for a unit of the resource (e.g.,
   ``'pump'``).
 
-..index:: resource; monitored
+.. index:: resource; monitored
 
 - ``monitored`` (``False`` or ``True``) If set to ``True``, then
   information is gathered on the sizes of ``r``'s ``waitQ`` and
@@ -585,27 +585,27 @@ For example, in the model of a 2-pump gas-station we might define::
 
    gasstation = Resource(capacity=2,name='gasStation',unitName='pump')
 
-..index:: resource; attributes
+.. index:: resource; attributes
 
 Each Resource object, ``r``,  has the following additional attributes:
 
-..index:: resource; n
+.. index:: resource; n
 
 - ``r.n``,  the number of units that are currently free.
 
-..index:: resource; waitQ
+.. index:: resource; waitQ
 
 - ``r.waitQ``, a queue (list) of processes that have requested but
   not yet received a unit of ``r``, so ``len(r.waitQ)`` is the
   number of process objects currently waiting.
 
-..index:: resource; activeQ
+.. index:: resource; activeQ
 
 - ``r.activeQ``, a queue (list) of process objects currently using
   one of the Resource's units, so ``len(r.activeQ)`` is the number of
   units that are currently in use.
 
-..index:: resource; waitMon
+.. index:: resource; waitMon
 
 - ``r.waitMon``, the record (made by a ``Monitor`` whenever
   ``monitored==True``) of the activity in ``r.waitQ``. So, for
@@ -613,7 +613,7 @@ Each Resource object, ``r``,  has the following additional attributes:
   processes in ``r.waitQ``.  See `Data Summaries`_
   for an example.
 
-..index:: resource; actMon
+.. index:: resource; actMon
 
 - ``r.actMon``, the record (made by a ``Monitor`` whenever
   ``monitored==True``) of the activity in ``r.activeQ``.
@@ -991,7 +991,7 @@ for advanced post-simulation statistical analyses and to display
 summary statistics.
 
 
-..index::
+.. index::
   pair: monitors; histogram
   pair: monitor; allMonitors
   pair: monitor; startCollection
@@ -1018,16 +1018,8 @@ flexibility. See the SimPy Manual for more information on these options.)
 Appendices
 ---------------
 
-SimPy Information
-~~~~~~~~~~~~~~~~~
-
-:SimPy Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.6 and later
-:SimPy version: |release|
-:Date: |today|
-
-..index:: example; resource with tracing
-..index:: SimulationTrace
+.. index:: example; resource with tracing
+.. index:: SimulationTrace
 
 The Resource Example with Tracing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
