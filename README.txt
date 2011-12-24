@@ -28,24 +28,14 @@ Installation
 
 SimPy requires Python 2.6 or above (including Python 3).
 
-You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_
-(or ``easy_install``)::
+You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_::
 
-    $ pip install SimPy
-    $ # or:
-    $ easy_install SimPy
+    $ pip install -U SimPy
 
 You can also download and install SimPy manually::
 
     $ cd where/you/put/simpy/
     $ python setup.py install
-
-
-If you want to upgrade an existing installation of SimPy, just add the ``-U``
-option to *pip* or *easy_install*, e.g.::
-
-    $ pip install -U SimPy
-
 
 To run SimPy’s test suite on your installation, execute::
 
