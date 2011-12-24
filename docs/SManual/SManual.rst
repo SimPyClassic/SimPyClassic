@@ -373,7 +373,7 @@ has no events scheduled for it. It must be *activated* to start its
 Process Execution Method. To do this you can use either the
 ``activate`` function or the ``start`` method of the Process.
 
-.. index:: 
+.. index::
    single: process object; activation
 
 
@@ -401,7 +401,7 @@ Activating an entity by using the SimPy ``activate`` function:
        cust = Customer()
        activate(cust, cust.lifetime(), at=10.0)
 
-.. index:: 
+.. index::
    pair: process; start
 
 start
@@ -452,7 +452,7 @@ object's operations. This might represent a service time for the
 entity. (Waiting is handled automatically by the resource facilities
 and is not modelled by ``yield hold``)
 
-.. index:: 
+.. index::
    pair: yield; hold
 
 yield hold
@@ -473,7 +473,7 @@ interrupted by other entities.
 More about Processes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. index:: 
+.. index::
    pair: yield; passivate
    single: sleep a process
    single: process; sleep
@@ -481,7 +481,7 @@ More about Processes
 
 An entity (Process object) can be "put to sleep" or passivated using
 
-     ``yield passivate,self`` 
+     ``yield passivate,self``
 
 (and it can be reactivated by another entity
 using ``reactivate``), or permanently removed from the future event
@@ -514,11 +514,11 @@ event scheduler starts operating by finding the first event to
 execute. When both cars have finished (at time ``6.0+100.0=106.0``)
 there will be no more events so the simulation will stop::
 
-..  .. literalinclude:: programs/car.py
+..  .. literalinclude:: source/programs/car.py
 
 Running this program gives the following output::
 
-..  .. literalinclude:: programs/car.out
+..  .. literalinclude:: source/programs/car.out
 
 If, instead one chose to import ``SimPy.SimulateTrace`` at the start
 of the program one would obtain the following output. (The meaning of
@@ -527,7 +527,7 @@ the full SimPy Manual. ``prior`` is an advanced technique for fine control
 of PEM priorities but seldom affects simulated operations and so
 normally can be ignored/)
 
-.. include:: programs/carT.out
+.. include:: source/programs/carT.out
    :literal:
 
 
@@ -645,7 +645,7 @@ A process can request and later release a unit of the Resource object,
 ``r``, by using the following yield commands in a Process Execution
 Method:
 
-.. index:: 
+.. index::
    single: yield; request a resource
    pair: yield; request
 
@@ -717,14 +717,14 @@ two resource units (``capacity=2``). Four cars arrive at the times
 specified in the program (not in the order they are listed). They all
 request a ``pump`` and use it for 100 time units:
 
-.. literalinclude:: programs/cars.py
+.. literalinclude:: source/programs/cars.py
    :language: python
    :linenos:
 
 
 This program results in the following output:
 
-.. literalinclude:: programs/cars.out
+.. literalinclude:: source/programs/cars.out
 
 
 And, if we use ``SimPy.SimulationTrace`` to get an automatic trace we
@@ -865,7 +865,7 @@ The first three lines measure the waiting time (from the time of the
 request to the time the ``pump`` is obtained). The last records the
 waiting time in the ``waittimes`` Monitor.
 
-.. index:: 
+.. index::
    pair: monitors; reset
 
 The data recording can be ``reset`` to start at any time in the
@@ -892,18 +892,18 @@ any time during or after the simulation run:
 * ``m[i]`` holds the ``i``\-th observation as a two-item list, *[ti,
   yi]*
 
-.. index:: 
+.. index::
    pair: monitors; yseries
 
 * ``m.yseries( )`` is a list of the recorded data values, *yi*
 
-.. index:: 
+.. index::
    pair: monitors; tseries
 
 * ``m.tseries( )`` is a list of the recorded times, *ti*
 
 
-.. index:: 
+.. index::
    pair: monitors; count
 
 * ``m.count( )``, the current number of observations. (This is the
@@ -914,7 +914,7 @@ any time during or after the simulation run:
 
 * ``m.total( )``, the sum of the ``y`` values
 
-.. index:: 
+.. index::
    pair: monitors; mean
 
 * ``m.mean( )``, the simple numerical average of the observed *y*
@@ -928,7 +928,7 @@ any time during or after the simulation run:
 
      ``m.mean`` is the simple average of the *y* values observed.
 
-.. index:: 
+.. index::
    pair: monitors; var
 
 * ``m.var( )`` the *sample* variance of the observations, ignoring the
@@ -938,7 +938,7 @@ any time during or after the simulation run:
   standard deviation is, of course, the square-root of the variance
 
 
-.. index:: 
+.. index::
    pair monitors; timeAverage
 
 * ``m.timeAverage(``\ *[t]*\ ``)`` the time-weighted average of ``y``,
@@ -974,7 +974,7 @@ any time during or after the simulation run:
          values such as a service time or a waiting time. ``m.mean()``
          is used for that.
 
-.. index:: 
+.. index::
    pair: monitors; timeVarience
 
 * ``m.timeVariance([t])`` the time-weighted variance of the ``y``
@@ -983,7 +983,7 @@ any time during or after the simulation run:
   if *t* is missing).
 
 
-.. index:: 
+.. index::
    pair: monitors; current state
 
 * ``m.__str__( )`` is a string that briefly describes the current state
@@ -1061,7 +1061,7 @@ for every event executed. (The ``request`` at time ``3.0``, for
 example, lists the contents of the ``waitQ`` and the ``activeQ`` for
 the ``gasstation``.)
 
-.. literalinclude:: programs/carsT.out
+.. literalinclude:: source/programs/carsT.out
    :linenos:
 
 ..

@@ -83,9 +83,14 @@ class ExampleItem(pytest.Item):
         # Read expected output.
         with open(self.outputfile) as f:
             expected = f.read()
+
         # Execute the example.
+        if not hasattr(subprocess, 'check_output'):  # The case on Python 2.6
+            pytest.skip('subprocess has no check_output() method.')
+
         output = subprocess.check_output(['python', self.examplefile],
                 stderr=subprocess.STDOUT)
+
         if isinstance(output, bytes):  # The case on Python 3
             output = output.decode('utf8')
 
