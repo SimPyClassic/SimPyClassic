@@ -63,6 +63,8 @@ Introduction to SimPy
       8.1  SimPy Contacts
       8.2  The Resource Example with Tracing
 
+
+
 Introduction
 ---------------
 
@@ -356,7 +358,7 @@ has no events scheduled for it. It must be *activated* to start its
 Process Execution Method. To do this you can use either the
 ``activate`` function or the ``start`` method of the Process.
 
-.. index:: 
+.. index::
    single: process object; activation
 
 
@@ -495,15 +497,13 @@ listing. ``p2`` actually starts first in the simulation. Nothing
 happens until the ``simulate(until=200)`` statement at which point the
 event scheduler starts operating by finding the first event to
 execute. When both cars have finished (at time ``6.0+100.0=106.0``)
-there will be no more events so the simulation will stop:
+there will be no more events so the simulation will stop::
 
-.. include:: programs/car.py
-   :literal:
+..  .. literalinclude:: programs/car.py
 
-Running this program gives the following output:
+Running this program gives the following output::
 
-.. include:: programs/car.out
-   :literal:
+..  .. literalinclude:: programs/car.out
 
 If, instead one chose to import ``SimPy.SimulateTrace`` at the start
 of the program one would obtain the following output. (The meaning of

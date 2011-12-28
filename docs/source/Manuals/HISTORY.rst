@@ -14,6 +14,17 @@ The package has been hosted on Sourceforge.net since 15 September 2002.
 Sourceforge.net's service has always been outstanding. It is essential to
 the SimPy project! Thanks, all you people at SourceForge!
 
+December 2011: Release 2.3
+=============================
+
+- Support for Python 3.x has been added
+- Examples and tutorials modified to run on Python 2.6 and up
+  including Python 3.
+- Examples can now be executed via py.test so we can make sure they do run.
+- The documentation has had some reorganisation. The index has had
+  work done on it. The Simple manual has been pulled out and is setup
+  as a separate manual.
+
 September 2011: Release 2.2b1
 =============================
 
