@@ -25,7 +25,6 @@ class Customer(Process):
 ## Model -----------------------------------
 class BankModel(Simulation):
     def run(self):
-        self.initialize()
         s = Source(sim=self)
         self.activate(s, s.generate(number=maxNumber,
                       TBA=ARRint), at=0.0)

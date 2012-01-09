@@ -15,7 +15,6 @@ class Customer(Process):
 ## Model ----------------------------------------
 class BankModel(Simulation):
     def run(self):
-        self.initialize()
         c = Customer(name="Klaus", sim=self)
         self.activate(c, c.visit(timeInBank), at=tArrival)
         self.simulate(until=maxTime)

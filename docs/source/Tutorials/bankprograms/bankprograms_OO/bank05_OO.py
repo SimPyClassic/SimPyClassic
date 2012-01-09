@@ -17,7 +17,6 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
-        self.initialize()
         seed(aseed)
         c = Customer(name="Klaus", sim=self)
         t = expovariate(1.0 / tMeanArrival)

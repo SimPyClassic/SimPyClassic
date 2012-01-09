@@ -51,7 +51,6 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
-        self.initialize()
         seed(aseed)
         self.dooropen = SimEvent("Door Open", sim=self)
         self.counter = Resource(1, name="Clerk", sim=self)

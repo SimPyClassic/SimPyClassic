@@ -67,7 +67,6 @@ else:
 
 class BankModel(library):
     def run(self):
-        self.initialize()
         self.counter = Resource(2, name="Clerk", qType=PriorityQ, sim=self)
         clerk1 = ClerkProcess('Clerk', sim=self)
         self.activate(clerk1, clerk1.serverProc())

@@ -33,7 +33,6 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
-        self.initialize()
         seed(aseed)
         self.k = Resource(capacity=Nc, name="Counter", unitName="Clerk",
                      sim=self)
