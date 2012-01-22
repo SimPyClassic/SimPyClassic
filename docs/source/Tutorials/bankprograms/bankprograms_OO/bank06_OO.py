@@ -26,7 +26,7 @@ class Customer(Process):
 ## Model -----------------------------------
 class BankModel(Simulation):
     def run(self, aseed):
-        self.initialize()
+        """ PEM """
         seed(aseed)
         s = Source(name='Source', sim=self)
         self.activate(s, s.generate(number=maxNumber,

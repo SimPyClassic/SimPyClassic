@@ -54,7 +54,7 @@ class BankModel(Simulation):
         return self.door == 'Open'
 
     def run(self, aseed):
-        self.initialize()
+        """ PEM """
         seed(aseed)
         self.counter = Resource(capacity=1, name="Clerk", sim=self)
         self.door = 'Shut'

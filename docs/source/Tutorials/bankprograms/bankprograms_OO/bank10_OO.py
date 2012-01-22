@@ -47,7 +47,7 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
-        self.initialize()
+        """ PEM """
         seed(aseed)
         self.kk = [Resource(name="Clerk0", sim=self),
               Resource(name="Clerk1", sim=self)]

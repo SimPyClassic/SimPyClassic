@@ -32,7 +32,7 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
-        self.initialize()
+        """ PEM """
         seed(aseed)
         self.counter = Resource(1, name="Clerk", monitored=True, sim=self)
         source = Source(sim=self)

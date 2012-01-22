@@ -32,7 +32,7 @@ class Call(Process):
 
 class BankModel(Simulation):
     def run(self):
-        self.initialize()
+        """ PEM """
         klaus = Customer(name="Klaus", sim=self)
         self.activate(klaus, klaus.visit(timeInBank, onphone))
         call = Call(sim=self)

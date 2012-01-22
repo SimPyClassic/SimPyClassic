@@ -22,11 +22,11 @@ maxTime = 100.0    # minutes
 ## Model -----------------------------------
 class BankModel(Simulation):
     def __init__(self, seed):
-        #Simulation.__init__(self)
+        Simulation.__init__(self)
         self.rv = Random(seed)
 
     def run(self):
-        self.initialize()
+        """ PEM """
         c = Customer(name="Klaus", sim=self)
         self.activate(c, c.visit(timeInBank=10.0), at=5.0)
         self.simulate(until=maxTime)

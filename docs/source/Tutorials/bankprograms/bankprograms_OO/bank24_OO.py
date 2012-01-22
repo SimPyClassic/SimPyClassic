@@ -37,7 +37,7 @@ class Customer(Process):
 ## Model
 class BankModel(Simulation):
     def run(self, aseed):
-        self.initialize()
+        """ PEM """
         seed(aseed)
         Customer.numBalking = 0
         self.k = Resource(capacity=numServers,
