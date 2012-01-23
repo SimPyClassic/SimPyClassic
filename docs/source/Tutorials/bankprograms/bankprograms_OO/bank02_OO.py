@@ -15,7 +15,7 @@ class Customer(Process):
 ## Model -----------------------------------
 class BankModel(Simulation):
     def run(self):
-       
+        """ PEM """
         c1 = Customer(name="Klaus", sim=self)
         self.activate(c1, c1.visit(timeInBank=10.0), at=5.0)
         c2 = Customer(name="Tony", sim=self)
