@@ -15,6 +15,7 @@ class Customer(Process):
 ## Model ----------------------------------------
 class BankModel(Simulation):
     def run(self):
+        """ PEM """
         c = Customer(name="Klaus", sim=self)
         self.activate(c, c.visit(timeInBank), at=tArrival)
         self.simulate(until=maxTime)
@@ -27,4 +28,5 @@ tArrival = 5.0      # minutes
 
 ## Experiment -----------------------------------
 
-BankModel().run()
+mymodel = BankModel()
+mymodel.run()

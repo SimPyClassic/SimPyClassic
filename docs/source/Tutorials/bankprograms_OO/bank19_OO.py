@@ -67,6 +67,7 @@ else:
 
 class BankModel(library):
     def run(self):
+        """ PEM """
         self.counter = Resource(2, name="Clerk", qType=PriorityQ, sim=self)
         clerk1 = ClerkProcess('Clerk', sim=self)
         self.activate(clerk1, clerk1.serverProc())
@@ -76,4 +77,5 @@ class BankModel(library):
 
 #~ ## Experiment  ----------------------------------
 seed(393939)
-BankModel().run()
+mymodel = BankModel()
+mymodel.run()

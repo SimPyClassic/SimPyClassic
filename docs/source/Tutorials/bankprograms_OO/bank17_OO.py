@@ -34,6 +34,7 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
+        """ PEM """
         seed(aseed)
         self.counter = Resource(1, name="Clerk", sim=self)
         self.Mon = Monitor('Time in the Bank', sim=self)

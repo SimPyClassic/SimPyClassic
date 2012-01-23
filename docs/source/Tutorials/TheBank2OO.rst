@@ -163,7 +163,7 @@ In line 23 we print out the number of customers waiting when each
 customer arrives.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank20_OO.py
+.. literalinclude:: bankprograms_OO/bank20_OO.py
 
 The resulting output is as follows. The number of customers in the
 queue just as each arrives is displayed in the trace. That count does
@@ -195,7 +195,7 @@ intervene). It requires only a change to one line of the program,
 adding the argument, ``preemptable=True`` to the ``Resource``
 statement in line 40.
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank23_OO.py
+.. literalinclude:: bankprograms_OO/bank23_OO.py
 
 
 Though ``Guido`` arrives at the same time, ``23.000``, he no longer
@@ -249,7 +249,7 @@ balk, incrementing a class variable ``Customer.numBalking`` at line
 32 to get the total number balking during the run.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank24_OO.py
+.. literalinclude:: bankprograms_OO/bank24_OO.py
 
 
 The resulting output for a run of this program showing balking
@@ -286,7 +286,7 @@ renege? This involves a *mandatory* test of ``self.acquired(``\
 *resource*\
 ``)``. In our example, this test is in line 26.
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank21_OO.py
+.. literalinclude:: bankprograms_OO/bank21_OO.py
 
 
 
@@ -346,7 +346,7 @@ conversation, with, now we assume, a thoroughly irritated bank manager
 v(line 20).
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank22_OO.py
+.. literalinclude:: bankprograms_OO/bank22_OO.py
 
 
 .. literalinclude:: bankprograms/bank22.out
@@ -385,7 +385,7 @@ for the door) proceed. A customer arriving when the door is open will
 not be delayed.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank14_OO.py
+.. literalinclude:: bankprograms_OO/bank14_OO.py
 
 
 An output run for this programs shows how the first three customers
@@ -421,7 +421,7 @@ the ``dooropen.signal()`` the customer and any others waiting may
 proceed.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank13_OO.py
+.. literalinclude:: bankprograms_OO/bank13_OO.py
 
 
 An output run for this programs shows how the first three customers
@@ -490,7 +490,7 @@ simple plotting of results from simulations.  Here we use the SimPlot
 ``plotHistogram`` method. The plotting routines appear in lines
 60-64. The ``plotHistogram`` call is in line 61.
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank17_OO.py
+.. literalinclude:: bankprograms_OO/bank17_OO.py
 
 
 
@@ -519,7 +519,7 @@ After completion of the ``run`` method, we calculate the
 ``timeAverage`` of both ``waitMon`` and ``actMon`` (lines 53-54).
 These can then be printed at the end of the program (line 55).
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank15_OO.py
+.. literalinclude:: bankprograms_OO/bank15_OO.py
 
 
 
@@ -550,7 +550,7 @@ program the graph is plotted; the user has to terminate the plotting
 ``mainloop`` on the screen.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank16_OO.py
+.. literalinclude:: bankprograms_OO/bank16_OO.py
 
 
 
@@ -582,7 +582,6 @@ References
 
 - The Bank:
 
-:Version: $Revision: 321 $
 
 ..
   ------------------------------------------------------

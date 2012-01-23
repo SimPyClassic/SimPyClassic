@@ -17,6 +17,7 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
+        """ PEM """
         seed(aseed)
         c = Customer(name="Klaus", sim=self)
         t = expovariate(1.0 / tMeanArrival)
@@ -32,4 +33,5 @@ seedVal = 99999
 
 ## Experiment ------------------------------
 
-BankModel().run(aseed=seedVal)
+mymodel = BankModel()
+mymodel.run(aseed=seedVal)

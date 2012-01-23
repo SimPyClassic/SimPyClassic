@@ -35,6 +35,7 @@ class Customer(Process):
 
 class BankModel(Simulation):
     def run(self, aseed):
+        """ PEM """
         seed(aseed)
         self.k = Resource(name="Counter", unitName="Clerk", sim=self)
         s = Source('Source', sim=self)
@@ -50,4 +51,5 @@ seedVal = 99999
 
 ## Experiment ------------------------------
 
-BankModel().run(aseed=seedVal)
+mymodel = BankModel()
+mymodel.run(aseed=seedVal)

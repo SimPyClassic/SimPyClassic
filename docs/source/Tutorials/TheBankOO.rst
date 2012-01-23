@@ -232,7 +232,7 @@ model, and ``.run()`` executes it. This is just a short form of::
     initialize any instance variables needed.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank01_OO.py
+.. literalinclude:: bankprograms_OO/bank01_OO.py
    
 
 The short trace printed out by the ``print`` statements shows the
@@ -285,7 +285,7 @@ called with parameter assignment ``aseed=seedVal``.
     ``activate`` call.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank05_OO.py
+.. literalinclude:: bankprograms_OO/bank05_OO.py
    
 
 The result is shown below. The customer now arrives at time
@@ -350,7 +350,7 @@ complicated but the output is much nicer.
  complicated but the output is much nicer.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank02_OO.py
+.. literalinclude:: bankprograms_OO/bank02_OO.py
    
 
 The trace produced by the program is shown below.  Again the
@@ -432,7 +432,7 @@ In line 40, a ``BankModel`` object is created and its ``run`` method executed:
     and each customer then operates independently of the others:
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank03_OO.py
+.. literalinclude:: bankprograms_OO/bank03_OO.py
    
 
 The output is:
@@ -500,7 +500,7 @@ the seed value as parameter.
     input form.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank06_OO.py
+.. literalinclude:: bankprograms_OO/bank06_OO.py
    
 
 
@@ -623,7 +623,7 @@ the bank before starting service.
     the bank before starting service.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank07_OO.py
+.. literalinclude:: bankprograms_OO/bank07_OO.py
    
 
 
@@ -674,7 +674,7 @@ lines 44 to 48.
     lines 31 to 42.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank08_OO.py
+.. literalinclude:: bankprograms_OO/bank08_OO.py
    
 
 And the output:
@@ -732,7 +732,7 @@ unit.
     called ``Karen``, we have used a general name of ``Clerk``.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank09_OO.py
+.. literalinclude:: bankprograms_OO/bank09_OO.py
    
 
 The waiting times in this model are much shorter than those for the
@@ -792,7 +792,7 @@ The rest of the program is the same as before.
 
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank10_OO.py
+.. literalinclude:: bankprograms_OO/bank10_OO.py
    
 
 The results show how the customers choose the counter with the
@@ -871,7 +871,7 @@ of the ``BankModel`` to which the customer belongs,
     45) and have increased ``maxTime`` to ``1000`` minutes.
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank11_OO.py
+.. literalinclude:: bankprograms_OO/bank11_OO.py
    
 In previous programs, we have generated the ``BankModel``
 anonymously. Here, we do it differently: we assign the ``BankModel``
@@ -937,7 +937,7 @@ iterations are independent of each other.
     of replications (lines 54-57).
 
 
-.. literalinclude:: bankprograms/bankprograms_OO/bank12_OO.py
+.. literalinclude:: bankprograms_OO/bank12_OO.py
    
 
 

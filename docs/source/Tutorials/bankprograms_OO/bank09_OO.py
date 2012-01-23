@@ -1,18 +1,17 @@
-""" bank11: The bank with a Monitor"""
-from SimPy.Simulation import Simulation, Process, Resource, Monitor, hold,\
-                               request, release
+""" bank09_OO: Several Counters but a Single Queue """
+from SimPy.Simulation import Simulation, Process, Resource, hold, request, release
 from random import expovariate, seed
 
 ## Model components ------------------------
 
 class Source(Process):
-    """ Source generates customers randomly"""
+    """ Source generates customers randomly """
 
-    def generate(self, number, interval):
+    def generate(self, number, meanTBA):
         for i in range(number):
             c = Customer(name="Customer%02d" % (i), sim=self.sim)
             self.sim.activate(c, c.visit(b=self.sim.k))
-            t = expovariate(1.0 / interval)
+            t = expovariate(1.0 / meanTBA)
             yield hold, self, t
 
 
@@ -21,39 +20,36 @@ class Customer(Process):
 
     def visit(self, b):
         arrive = self.sim.now()
+        print("%8.4f %s: Here I am     " % (self.sim.now(), self.name))
         yield request, self, b
         wait = self.sim.now() - arrive
-        self.sim.wM.observe(wait)
+        print("%8.4f %s: Waited %6.3f" % (self.sim.now(), self.name, wait))
         tib = expovariate(1.0 / timeInBank)
         yield hold, self, tib
         yield release, self, b
+        print("%8.4f %s: Finished      " % (self.sim.now(), self.name))
 
 ## Model -----------------------------------
 
 class BankModel(Simulation):
     def run(self, aseed):
+        """ PEM """
         seed(aseed)
-        self.k = Resource(capacity=Nc, name="Clerk", sim=self)
-        self.wM = Monitor(sim=self)
+        self.k = Resource(capacity=Nc, name="Counter", unitName="Clerk",
+                     sim=self)
         s = Source('Source', sim=self)
-        self.activate(s, s.generate(number=maxNumber, interval=ARRint), at=0.0)
+        self.activate(s, s.generate(number=maxNumber, meanTBA=ARRint), at=0.0)
         self.simulate(until=maxTime)
 
 ## Experiment data -------------------------
 
-maxNumber = 50
-maxTime = 1000.0   # minutes
+maxNumber = 5      # of customers
+maxTime = 400.0    # minutes
 timeInBank = 12.0  # mean, minutes
 ARRint = 10.0      # mean, minutes
-Nc = 2             # number of counters
+Nc = 2             # of clerks/counters
 seedVal = 99999
 
-## Experiment   -----------------------------
-
-experi = BankModel()
-experi.run(aseed=seedVal)
-
-## Result  ----------------------------------
-
-result = experi.wM.count(), experi.wM.mean()
-print("Average wait for %3d completions was %5.3f minutes." % result)
+## Experiment ------------------------------
+mymodel = BankModel()
+mymodel.run(aseed=seedVal)

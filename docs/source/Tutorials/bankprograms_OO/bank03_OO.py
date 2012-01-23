@@ -25,6 +25,7 @@ class Customer(Process):
 ## Model -----------------------------------
 class BankModel(Simulation):
     def run(self):
+        """ PEM """
         s = Source(sim=self)
         self.activate(s, s.generate(number=maxNumber,
                       TBA=ARRint), at=0.0)
@@ -38,4 +39,5 @@ ARRint = 10.0    # time between arrivals, minutes
 
 ## Experiment ------------------------------
 
-BankModel().run()
+mymodel = BankModel()
+mymodel.run()
