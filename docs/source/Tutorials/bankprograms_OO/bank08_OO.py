@@ -51,4 +51,6 @@ seedVal = 99999
 
 ## Experiment ------------------------------
 
-BankModel().run(aseed=seedVal)
+mymodel = BankModel()
+mymodel.run(aseed=seedVal)
+

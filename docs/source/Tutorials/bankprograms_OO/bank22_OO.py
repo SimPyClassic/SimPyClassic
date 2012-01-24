@@ -47,4 +47,6 @@ onphone = 3.0
 maxTime = 100.0
 
 ## Experiment  -----------------------------
-BankModel().run()
+mymodel = BankModel()
+mymodel.run()
+

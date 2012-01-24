@@ -60,9 +60,9 @@ theseed = 12345
 
 ## Experiment --------------------------------------
 
-modl = BankModel()
-modl.run(aseed=theseed)
+mymodel = BankModel()
+mymodel.run(aseed=theseed)
 ## Results -----------------------------------------
 
 nb = float(Customer.numBalking)
-print("balking rate is %8.4f per minute" % (nb / modl.now()))
+print("balking rate is %8.4f per minute" % (nb / mymodel.now()))

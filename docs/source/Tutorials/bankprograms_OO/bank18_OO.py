@@ -80,4 +80,6 @@ class BankModel(library):
 
 ## Experiment  ----------------------------------
 seed(393939)
-BankModel().run()
+mymodel = BankModel()
+mymodel.run()
+

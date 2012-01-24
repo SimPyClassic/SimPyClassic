@@ -47,12 +47,12 @@ seedVal = 393939
 
 ## Experiment -----------------------------------
 
-modl = BankModel()
-modl.run(aseed=seedVal)
+mymodel = BankModel()
+mymodel.run(aseed=seedVal)
 
 ## Output ---------------------------------------
 
 plt = SimPlot()
-plt.plotStep(modl.counter.waitMon,
+plt.plotStep(mymodel.counter.waitMon,
         color="red", width=2)
 plt.mainloop()

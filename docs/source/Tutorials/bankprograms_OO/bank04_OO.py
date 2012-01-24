@@ -31,4 +31,6 @@ class BankModel(Simulation):
         self.activate(c, c.visit(timeInBank=10.0), at=5.0)
         self.simulate(until=maxTime)
 ## Experiment ------------------------------
-BankModel(seed=1133).run()
+mymodel = BankModel(seed=1133)
+mymodel.run()
+

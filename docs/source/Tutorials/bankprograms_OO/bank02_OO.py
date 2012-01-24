@@ -30,4 +30,6 @@ maxTime = 400.0  # minutes
 
 ## Experiment ------------------------------
 
-BankModel().run()
+mymodel = BankModel()
+mymodel.run()
+

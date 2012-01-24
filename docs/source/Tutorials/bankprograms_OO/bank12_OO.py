@@ -52,8 +52,8 @@ seedVals = [393939, 31555999, 777999555, 319999771]
 
 ## Experiment/Result  ----------------------------------
 
-modl = BankModel()
+mymodel = BankModel()
 for Sd in seedVals:
-    modl.run(aseed=Sd)
-    moni = modl.wM
+    mymodel.run(aseed=Sd)
+    moni = mymodel.wM
     print("Average wait for %3d completions was %6.2f minutes." % (moni.count(), moni.mean()))
