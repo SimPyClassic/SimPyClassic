@@ -29,6 +29,7 @@ def test():
     try:
         import pytest
     except ImportError:
-        print('You need pytest to run the tests. Try "pip install pytest".')
+        print('You need pytest and mock to run the tests. '
+              'Try "pip install pytest mock".')
     else:
         pytest.main([os.path.dirname(__file__)])
