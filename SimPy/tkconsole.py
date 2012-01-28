@@ -134,7 +134,7 @@ class Console(Frame):
 
     def __setitem__(self, key, value):
         if not self.options.has_key(key):
-            raise KeyError, 'no such configuration option \'%s\'' % key
+            raise KeyError('no such configuration option \'%s\'' % key)
         self.options[key] = value
         if key == 'stdoutcolour':
             self.text.tag_configure('stdout', foreground = value)
@@ -703,33 +703,33 @@ class Console(Frame):
 
         try:
             code = compile(source, ' < console > ', 'single')
-        except SyntaxError, err:
+        except SyntaxError as err:
             pass
         else:
             return 'okay', code
 
         try:
             code1 = compile(source + '\n', ' < console > ', 'single')
-        except SyntaxError, err1:
+        except SyntaxError as err1:
             pass
         else:
             return 'more', code1
 
         try:
             code2 = compile(source + '\n\n', ' < console > ', 'single')
-        except SyntaxError, err2:
+        except SyntaxError as err2:
             pass
 
         try:
             code3 = compile(source + '\n', ' < console > ', 'exec')
-        except SyntaxError, err3:
+        except SyntaxError as err3:
             pass
         else:
             return 'okay', code3
 
         try:
             code4 = compile(source + '\n\n', ' < console > ', 'exec')
-        except SyntaxError, err4:
+        except SyntaxError as err4:
             pass
 
         if err3[1][2] != err4[1][2]:
@@ -748,7 +748,7 @@ class Console(Frame):
         sys.stdout, sys.stderr = self.stdout, self.stderr
 
         try:
-            exec code in self.dict
+            exec(code, self.dict)
         except:
             self.error = 1
             sys.last_type = sys.exc_type
