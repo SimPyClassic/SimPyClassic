@@ -2,6 +2,14 @@ Changelog for SimPy
 ==============================
 
 
+v2.3.1 – 2012-01-28:
+--------------------
+
+- [NEW] More improvements on the documentation.
+- [FIX] Syntax error in tkconsole.py when installing on Py3.2.
+- [FIX] Added *mock* to the dep. list in SimPy.test().
+
+
 v2.3 – 2011-12-24:
 ------------------
 
