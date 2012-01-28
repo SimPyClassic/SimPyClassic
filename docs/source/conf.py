@@ -57,7 +57,7 @@ authors = [
     'Stefan Scherfke',
 ]
 project = u'SimPy'
-copyright = '2002-2011, ' + ', '.join(authors)
+copyright = '2002-2012, ' + ', '.join(authors)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
