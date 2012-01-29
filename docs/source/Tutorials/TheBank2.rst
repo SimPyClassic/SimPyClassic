@@ -173,7 +173,7 @@ any customer in service when he arrives. That customer will resume
 when ``Guido`` finishes (unless higher priority customers
 intervene). It requires only a change to one line of the program,
 adding the argument, ``preemptable=True`` to the ``Resource``
-statement in line 38.
+statement at label 1.
 
 .. literalinclude:: bankprograms/bank23.py
    

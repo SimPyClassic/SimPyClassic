@@ -23,20 +23,23 @@ class Customer(Process):
     def visit(self, timeInBank=0, res=None, P=0):
         arrive = now()       # arrival time
         Nwaiting = len(res.waitQ)
-        print("%8.3f %s: Queue is %d on arrival" % (now(), self.name, Nwaiting))
+        print("%8.3f %s: Queue is %d on arrival" %
+              (now(), self.name, Nwaiting))
 
         yield request, self, res, P
         wait = now() - arrive  # waiting time
-        print("%8.3f %s: Waited %6.3f" % (now(), self.name, wait))
+        print("%8.3f %s: Waited %6.3f" %
+              (now(), self.name, wait))
         yield hold, self, timeInBank
         yield release, self, res
 
-        print("%8.3f %s: Completed" % (now(), self.name))
+        print("%8.3f %s: Completed" %
+              (now(), self.name))
 
 ## Experiment data -------------------------
 
 maxTime = 400.0  # minutes
-k = Resource(name="Counter", unitName="Karen",
+k = Resource(name="Counter", unitName="Karen",         #1
              qType=PriorityQ, preemptable=True)
 
 ## Model/Experiment ------------------------------
