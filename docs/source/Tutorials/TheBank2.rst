@@ -116,30 +116,31 @@ Priority Customers without preemption
 .. index:: priority
 
 In the first example, we modify the program with random arrivals, one
-counter, and a fixed service time (like ``bank07.py`` in The Bank
-tutorial) to process a high priority customer. Warning: the ``seed()``
-value has been changed to ``98989`` to make the story more exciting.
+counter, and a fixed service time with the addition of a high priority
+customer. Warning: The ``seed()`` value has been changed to ``98989``
+to make the story more exciting. To make things even more confusing,
+your results may be different from those here because the ``random``
+module gives different results for Python 2.x and 3.x.,
 
-The modifications are to the definition of the ``counter`` where we
-change the ``qType`` and to the ``yield request`` command in the
-``visit`` PEM of the customer. We also need to provide each customer
-with a priority. Since the default is ``priority=0`` this is easy for
-most of them.
+The main modifications are to the definition of the ``counter`` where
+we change the ``qType`` and to the ``yield request`` command in the
+``visit`` PEM of the customer. We must provide each customer with a
+priority. Since the default is ``priority=0`` this is easy for most of
+them.
 
 To observe the priority in action, while all other customers have the
-default priority of 0, in lines 46 to 48 we create and
+default priority of 0, at labels 5 and 6 we create and
 activate one special customer, ``Guido``, with priority 100 who
-arrives at time ``23.0`` (line 48). This is to ensure that he arrives
-after ``Customer03``.
+arrives at time ``23.0``.
 
-The ``visit`` customer method has a new parameter, ``P=0`` (line
-21) which allows us to set the customer priority.
+The ``visit`` customer method has a new parameter, ``P`` (at label
+1), which allows us to set the customer priority.
 
-In lines 38 to 38 ``counter`` is defined with ``qType=PriorityQ`` so
-that we can request it with priority (line 26) using the
+At label 4, ``counter`` is defined with ``qType=PriorityQ`` so
+that we can request it with priority (at 3) using the
 statement ``yield request,self,counter,P``
 
-In line 24 we print out the number of customers waiting when each
+At label 2, we now print out the number of customers waiting when each
 customer arrives.
 
 
@@ -153,12 +154,11 @@ not include any customer in service.
 
 .. index:: random arrival, bank20
 
-Reading carefully one can see that when ``Guido`` arrives
-``Customer00`` has been served and left at ``12.000``), ``Customer01``
-is in service and two (customers 02 and 03) are queueing. ``Guido``
-has priority over those waiting and is served before them at
-``33.162``. When ``Guido`` leaves at ``45.162``, ``Customer02`` starts
-service.
+..  Reading carefully one can see that when ``Guido`` arrives
+    ``Customer00`` has been served and left at ``12.000``), ``Customer01``
+    is in service. ``Guido`` has priority over any waiting and is served
+    before them at ``28.359``. When ``Guido`` leaves at ``40.359``,
+    ``Customer02`` starts service having waited ``10.368`` minutes.
 
 
 Priority Customers with preemption
