@@ -22,69 +22,68 @@ from SimPy.SimPlot import *
 import random
 ## Model components
 class Bakery:
-    def __init__(self,nrOvens,toMonitor):
-        self.stock=Level(name="baguette stock",monitored=toMonitor)
+    def __init__(self, nrOvens, toMonitor):
+        self.stock = Level(name="baguette stock", monitored=toMonitor)
         for i in range(nrOvens):
-            ov=Oven()
-            activate(ov,ov.bake(capacity=batchsize,bakery=self))
+            ov = Oven()
+            activate(ov, ov.bake(capacity=batchsize, bakery=self))
 class Oven(Process):
-    def bake(self,capacity,bakery):
+    def bake(self, capacity, bakery):
         while now()+tBakeMax<tEndBake:
-            yield hold,self,r.uniform(tBakeMin,tBakeMax)
-            yield put,self,bakery.stock,capacity
+            yield hold, self, r.uniform(tBakeMin, tBakeMax)
+            yield put, self, bakery.stock, capacity
 class Customer(Process):
-    def buyBaguette(self,cusType,bakery):
+    def buyBaguette(self, cusType, bakery):
         tIn=now()
-        yield get,self,bakery.stock,r.choice(buy[cusType])
+        yield get, self, bakery.stock, r.choice(buy[cusType])
         waits[cusType].append(now()-tIn)
 class CustomerGenerator(Process):
-    def generate(self,cusType,bakery):
+    def generate(self, cusType, bakery):
         while True:
-            yield hold,self,r.expovariate(1.0/tArrivals[cusType])
+            yield hold, self, r.expovariate(1.0/tArrivals[cusType])
             if now()<(tShopOpen+tBeforeOpen):
-                c=Customer(cusType)
-                activate(c,c.buyBaguette(cusType,bakery=bakery))
+                c = Customer(cusType)
+                activate(c, c.buyBaguette(cusType, bakery=bakery))
 ## Model
 def model():
-    toMonitor=False
+    toMonitor = False
     initialize()
-    if day==(nrDays-1): toMoni=True
-    else: toMoni=False
-    b=Bakery(nrOvens=nrOvens,toMonitor=toMoni)
-    for cType in ["retail","restaurant"]:
-        cg=CustomerGenerator()
-        activate(cg,cg.generate(cusType=cType,bakery=b),delay=tBeforeOpen)
+    if day==(nrDays-1): toMoni = True
+    else: toMoni = False
+    b = Bakery(nrOvens=nrOvens, toMonitor=toMoni)
+    for cType in ["retail", "restaurant"]:
+        cg = CustomerGenerator()
+        activate(cg, cg.generate(cusType=cType, bakery=b), delay=tBeforeOpen)
     simulate(until=tBeforeOpen+tShopOpen)
     return b
 ## Experiment data
-nrOvens=3
-batchsize=40                                                #nr baguettes
-tBakeMin=25/60.; tBakeMax=30/60.                            #hours
-tArrivals={"retail":1.0/40,"restaurant":1.0/4}              #hours
-buy={"retail":[1,2,3],"restaurant":[20,40,60]}              #nr baguettes
-tShopOpen=8; tBeforeOpen=1; tEndBake=tBeforeOpen+tShopOpen  #hours
-nrDays=100
-r=random.Random(12371)
-PLOTTING=True
+nrOvens = 3
+batchsize = 40                                                #nr baguettes
+tBakeMin = 25/60.; tBakeMax = 30/60.                            #hours
+tArrivals = {"retail":1.0/40, "restaurant":1.0/4}              #hours
+buy = {"retail":[1, 2, 3], "restaurant":[20, 40, 60]}              #nr baguettes
+tShopOpen = 8; tBeforeOpen = 1; tEndBake = tBeforeOpen+tShopOpen  #hours
+nrDays = 100
+r = random.Random(12371)
+PLOTTING = True
 ## Experiment
-waits={}
+waits = {}
 waits["retail"]=[]; waits["restaurant"]=[]
 for day in range(nrDays):
-    bakery=model()
+    bakery = model()
 ## Analysis/output
-print 'bakery'
-for cType in ["retail","restaurant"]:
-    print "Average wait for %s customers: %4.2f hours"\
-    %(cType,(1.0*sum(waits[cType]))/len(waits[cType]))
-    print "Longest wait for %s customers: %4.1f hours"%(cType,max(waits[cType]))
-    nrLong=len([1 for x in waits[cType] if x>0.25])
-    nrCust=len(waits[cType])
-    print "Percentage of %s customers having to wait for more than 0.25 hours: %s"\
-           %(cType,100*nrLong/nrCust)    
+print ("bakery")
+for cType in ["retail", "restaurant"]:
+    print ("Average wait for %s customers: %4.2f hours" % (cType, (1.0*sum(waits[cType]))/len(waits[cType])))
+    print ("Longest wait for %s customers: %4.1f hours" % (cType, max(waits[cType])))
+    nrLong = len([1 for x in waits[cType] if x>0.25])
+    nrCust = len(waits[cType])
+    print ("Percentage of %s customers having to wait for more than 0.25 hours: %s"
+           %(cType, 100*nrLong/nrCust))
 
 
 if PLOTTING:
-    plt=SimPlot()
+    plt = SimPlot()
     plt.plotStep(bakery.stock.bufferMon,
-             title="Number of baguettes in stock during arbitrary day",color="blue")
+             title="Number of baguettes in stock during arbitrary day", color="blue")
     plt.mainloop()
