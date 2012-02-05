@@ -4,24 +4,20 @@ Installation
 
 This file describes the installation of SimPy |release|.
 
-#. Check that you have Python 2.3 or above. Python 3 is not yet supported, but
-   we are working on it. If necessary, download Python from http://python.org
-   and install it.
+#. Check that you have Python 2.6 or above.
 
 #. You can install SimPy easily via `PIP <http://pypi.python.org/pypi/pip>`_
-   (or ``easy_install``)::
+   ::
 
     $ pip install SimPy
-    $ # or:
-    $ easy_install SimPy
 
-   If SimPy is already installed, use the *-U* option for pip/easy_install to
+   If SimPy is already installed, use the *-U* option for pip to
    upgrade::
 
     $ pip install -U SimPy
 
    Remember, on Linux/MacOS/Unix you may need *root* privileges to install
-   SimPy. This also applies to the installing SimPy manually as described
+   SimPy. This also applies to the installing SimPy manually, as described
    below.
 
 #. To manually install a SimPy tarball, or to execute the examples, download
@@ -31,12 +27,10 @@ This file describes the installation of SimPy |release|.
    code and documentation.
 
    Open a terminal, *cd* to the SimPy folder and execute *setup.py* or
-   *easy_install .* or *pip install .*::
+   *pip install .*::
 
     $ cd where/you/put/simpy/SimPy-x.y
     $ python setup.py install
-    $ # or
-    $ easy_install .
     $ # or
     $ pip install .
 

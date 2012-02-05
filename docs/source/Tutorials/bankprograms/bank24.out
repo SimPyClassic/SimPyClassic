@@ -1,25 +1,22 @@
   0.0000 Customer00: Here I am 
   0.0000 Customer00: Wait  0.000
-  0.1227 Customer00: Finished  
-  5.3892 Customer01: Here I am 
-  5.3892 Customer01: Wait  0.000
-  9.6460 Customer01: Finished  
- 22.8307 Customer02: Here I am 
- 22.8307 Customer02: Wait  0.000
- 25.4137 Customer02: Finished  
- 27.4258 Customer03: Here I am 
- 27.4258 Customer03: Wait  0.000
- 29.5422 Customer03: Finished  
- 35.7731 Customer04: Here I am 
- 35.7731 Customer04: Wait  0.000
- 37.1001 Customer05: Here I am 
- 42.5805 Customer04: Finished  
- 42.5805 Customer05: Wait  5.480
- 44.8795 Customer05: Finished  
- 45.3572 Customer06: Here I am 
- 45.3572 Customer06: Wait  0.000
- 50.6175 Customer06: Finished  
- 53.4141 Customer07: Here I am 
- 53.4141 Customer07: Wait  0.000
- 54.5629 Customer07: Finished  
-balking rate is   0.0000 per minute
+  4.3077 Customer01: Here I am 
+  5.6957 Customer02: Here I am 
+  5.6957 Customer02: BALKING   
+  6.9774 Customer03: Here I am 
+  6.9774 Customer03: BALKING   
+  8.2476 Customer00: Finished  
+  8.2476 Customer01: Wait  3.940
+ 21.1312 Customer04: Here I am 
+ 22.4840 Customer01: Finished  
+ 22.4840 Customer04: Wait  1.353
+ 23.0923 Customer05: Here I am 
+ 23.1537 Customer06: Here I am 
+ 23.1537 Customer06: BALKING   
+ 36.0653 Customer04: Finished  
+ 36.0653 Customer05: Wait 12.973
+ 38.4851 Customer07: Here I am 
+ 53.1056 Customer05: Finished  
+ 53.1056 Customer07: Wait 14.620
+ 60.3558 Customer07: Finished  
+balking rate is   0.0497 per minute

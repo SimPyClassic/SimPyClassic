@@ -46,7 +46,7 @@ maxInQueue = maxInSystem - numServers
 
 maxNumber = 8
 maxTime = 4000.0  # minutes
-theseed = 12345
+theseed = 212121
 
 ## Model/Experiment ------------------------------
 

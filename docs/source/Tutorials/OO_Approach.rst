@@ -10,6 +10,8 @@ Tutorial: An Object Oriented Approach to Using SimPy
 .. highlight:: python
    :linenothreshold: 5 
    
+This tutorial is not complete!
+
 Introduction
 ------------
 

@@ -59,7 +59,7 @@ counter = Resource(1, name="Clerk")
 ## Model  ----------------------------------
 
 
-def model(SEED=393939):
+def model(SEED=232323):
     seed(SEED)
 
     initialize()
