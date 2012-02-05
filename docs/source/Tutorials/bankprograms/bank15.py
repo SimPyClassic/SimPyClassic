@@ -3,8 +3,6 @@ from SimPy.Simulation import *
 from random import expovariate, seed
 
 ## Model components ------------------------
-
-
 class Source(Process):
     """ Source generates customers randomly"""
     def generate(self, number, rate):
@@ -12,7 +10,6 @@ class Source(Process):
             c = Customer(name="Customer%02d" % (i))
             activate(c, c.visit(timeInBank=12.0))
             yield hold, self, expovariate(rate)
-
 
 class Customer(Process):
     """ Customer arrives, is served and leaves """
@@ -29,13 +26,10 @@ class Customer(Process):
         print("%8.4f %s: Finished    " % (now(), self.name))
 
 ## Experiment data -------------------------
-
 maxTime = 400.0    # minutes
-counter = Resource(1, name="Clerk", monitored=True)
+counter = Resource(1, name="Clerk", monitored=True)                 #1
 
 ## Model  ----------------------------------
-
-
 def model(SEED=393939):
     seed(SEED)
 
@@ -45,8 +39,8 @@ def model(SEED=393939):
              source.generate(number=5, rate=0.1), at=0.0)
     simulate(until=maxTime)
 
-    return (counter.waitMon.timeAverage(), counter.actMon.timeAverage())
+    return (counter.waitMon.timeAverage(), counter.actMon.timeAverage()) #2
 
 ## Experiment  ----------------------------------
 
-print('Average waiting = %6.4f\nAverage active  = %6.4f\n' % model())
+print('Average waiting = %6.4f\nAverage active  = %6.4f\n' % model())  #3

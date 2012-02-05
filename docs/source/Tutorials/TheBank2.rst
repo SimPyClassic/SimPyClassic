@@ -485,7 +485,7 @@ Monitors.
 
 Here is an example using a Monitored Resource. We intend to observe
 the average number waiting and active in the ``counter``
-resource. ``counter`` is defined at line 32 and we have set
+resource. ``counter`` is defined at 1 and we have set
 ``monitored=True``. This establishes two Monitors: ``waitMon``, to
 record changes in the numbers waiting and ``actMon`` to record changes
 in the numbers active in the ``counter``. We need make no further
@@ -494,8 +494,8 @@ automatic.  No ``observe`` calls are necessary.
 
 At the end of the run in the ``model`` function, we calculate the
 ``timeAverage`` of both ``waitMon`` and ``actMon`` and return them
-from the ``model`` call (line 45). These can then be printed at
-the end of the program (line 49).
+from the ``model`` call (at 2). These can then be printed at
+the end of the program (at 3).
 
 .. literalinclude:: bankprograms/bank15.py
    
