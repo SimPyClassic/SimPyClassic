@@ -17,7 +17,7 @@ The Bank Tutorial part 2: More  examples of SimPy Simulation
 .. ---------------------------------------------------
 
 :Author: G A Vignaux  
-:Date:  2011 December
+:Date:  2012 February
 :SimPy release: |release|
 :Python-Version: 2.6 and later
 
@@ -155,10 +155,11 @@ not include any customer in service.
 .. index:: random arrival, bank20
 
 ..  Reading carefully one can see that when ``Guido`` arrives
-    ``Customer00`` has been served and left at ``12.000``), ``Customer01``
-    is in service. ``Guido`` has priority over any waiting and is served
-    before them at ``28.359``. When ``Guido`` leaves at ``40.359``,
-    ``Customer02`` starts service having waited ``10.368`` minutes.
+    ``Customer00`` has been served and left at ``12.000``, ``Customer01``
+    is in service and Customer02 is waiting in the queue. ``Guido``
+    has priority over any waiting customers and is served
+    before the at ``24.083``. When ``Guido`` leaves at ``36.083``,
+    ``Customer02`` starts service having waited ``15.873`` minutes.
 
 
 Priority Customers with preemption
@@ -181,9 +182,9 @@ statement at label 1.
 Though ``Guido`` arrives at the same time, ``23.000``, he no longer
 has to wait and immediately goes into service, displacing the
 incumbent, ``Customer01``. That customer had already completed
-``23.000-12.000 = 11.000`` minutes of his service. When ``Guido``
-finishes at ``35.000``, ``Customer01`` resumes service and takes
-``36.000-35.000 = 1.000`` minutes to finish. His total service time
+``23.000-12.083 = 10.917`` minutes of his service. When ``Guido``
+finishes at ``36.083``, ``Customer01`` resumes service and takes
+``36.083-35.000 = 1.083`` minutes to finish. His total service time
 is the  same as before (``12.000`` minutes).
 
 .. literalinclude:: bankprograms/bank23.out
@@ -239,10 +240,10 @@ occurring is given below:
    
 
 When ``Customer02`` arrives, numbers 00 is already in service and 01
-is waiting. There is no room so 02 balks. By the vagaries of
-exponential random numbers, 00 takes a very long time to serve (55.0607
-minutes) so the first one to find room is number 07 at 73.0765.
+is waiting. There is no room so 02 balks. In fact another customer,
+``Customer03`` arrives and balks before number 00 is finished.
 
+The balking pattern for python 2.x is different.
 
 Reneging (or abandoning) Customers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -273,10 +274,12 @@ renege? This involves a *mandatory* test of ``self.acquired(``\
 .. literalinclude:: bankprograms/bank21.out
    
 
-``Customer01`` arrives after 00 but has only 12 minutes
-patience. After that time in the queue (at time 14.166) he abandons
-the queue to leave 02 to take his place. 03 also abandons. 04 finds an
-empty system and takes the server without having to wait.
+``Customer02`` arrives at 16.016 but has only 12 minutes
+patience. After that time in the queue (at time 28.016) he abandons
+the queue to leave 03 to take his place. 04 also abandons.
+
+The reneging pattern for python 2.x is different due to a different
+expovariate implementation.
 
 .. ==================================================================
 
@@ -323,7 +326,7 @@ interrupted by the call, remembers how much conversation he has left
 (line 14), resets the interrupt (line 15) and then deals
 with the call. When he finishes (line 19) he can resume the
 conversation, with, now we assume, a thoroughly irritated bank manager
-v(line 20).
+(line 20).
 
 
 .. literalinclude:: bankprograms/bank22.py
@@ -355,7 +358,7 @@ The ``Doorman`` class is defined starting at line 11 and the single
 doorman waits for an average 10 minutes (label 16) and then
 opens the door. 
 
-The ``Customer`` class is defined at 29 and a new customer prints out
+The ``Customer`` class is defined at line 29 and a new customer prints out
 ``Here I am`` on arrival. If the door is still closed, he adds ``but
 the door is shut`` and settles down to wait (line 40), using the
 ``yield waituntil`` command. When the door is opened by the doorman the
@@ -366,9 +369,8 @@ not be delayed.
 
 .. literalinclude:: bankprograms/bank14.py
    
-
-An output run for this programs shows how the first three customers
-have to wait until the door is opened.
+The output from a run for this programs shows how the first customer
+has to wait until the door is opened.
 
 .. literalinclude:: bankprograms/bank14.out
    
@@ -385,16 +387,16 @@ closed behind them.
 
 This model uses the ``yield waitevent`` command which requires a
 ``SimEvent`` to be defined (line 7).  The ``Doorman`` class is defined
-at line 8 and the ``doorman`` is created and activated at at labels
-61 and 62. The doorman waits for a fixed time (label
-13) and then tells the customers that the door is open. This is
-achieved on line 14 by signalling the ``dooropen`` event.
+at line 10 and the ``doorman`` is created and activated at at labels
+66 and 67. The doorman waits for a fixed time (label
+15) and then tells the customers that the door is open. This is
+achieved on line 16 by signalling the ``dooropen`` event.
 
-The ``Customer`` class is defined at 25 and in its PEM, when a
+The ``Customer`` class is defined at 29 and in its PEM, when a
 customer arrives, he prints out ``Here I am``. If the door is still
 closed, he adds `"but the door is shut`` and settles down to wait for
 the door to be opened using the ``yield waitevent`` command (line
-35). When the door is opened by the doorman (that is, he sends
+39). When the door is opened by the doorman (that is, he sends
 the ``dooropen.signal()`` the customer and any others waiting may
 proceed.
 

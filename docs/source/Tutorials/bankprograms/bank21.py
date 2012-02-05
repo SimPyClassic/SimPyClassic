@@ -43,7 +43,7 @@ maxWaitTime = 12.0  # minutes. maximum time to wait
 
 def model():
     global counter
-    seed(98989)
+    seed(989898)
     counter = Resource(name="Karen")
     initialize()
     source = Source('Source')

@@ -42,7 +42,7 @@ Before attempting to use SimPy you should be familiar with the Python_
 language. In particular you should be able to use *classes*. Python is
 free and available for most machine types. You can find out more about
 it at the `Python web site`_.  SimPy is compatible with Python version
-2.3 and later.
+2.6 and later.
 
 .. _Python: http://www.Python.org
 .. _`Python web site`: http://www.Python.org
@@ -185,8 +185,8 @@ value would change that time.
 The display looks pretty untidy. In the next example I will try and
 make it tidier. 
 
-If you are not using Python 3, you output may differ. 
-The output for Python 2 is given in Appendix A.
+If you are not using Python 3, your output may differ. 
+The output for Python 2, for all examples, is given in Appendix A.
 
 
 .. index:: bank02
