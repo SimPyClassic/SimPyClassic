@@ -41,7 +41,7 @@ theseed = 99999
 ## Model/Experiment ------------------------------
 
 seed(theseed)
-k = Resource(capacity=2, name="Counter", unitName="Clerk")   # (1)
+k = Resource(capacity=2, name="Counter", unitName="Clerk")   #1
 
 initialize()
 s = Source('Source')

@@ -25,7 +25,7 @@ class Customer(Process):
 
         yield (request, self, counter), (hold, self, maxWaitTime)
         wait = now() - arrive  # waiting time
-        if self.acquired(counter):
+        if self.acquired(counter):                                  #1
             print("%8.3f %s: Waited %6.3f" % (now(), self.name, wait))
             yield hold, self, timeInBank
             yield release, self, counter

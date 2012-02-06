@@ -3,8 +3,6 @@ from SimPy.Simulation import *
 from random import expovariate, seed
 
 ## Model components ------------------------
-
-
 class Source(Process):
     """ Source generates customers randomly """
 
@@ -15,7 +13,6 @@ class Source(Process):
             t = expovariate(1.0 / meanTBA)
             yield hold, self, t
 
-
 class Customer(Process):
     """ Customer arrives, is served and leaves """
 
@@ -24,7 +21,7 @@ class Customer(Process):
     def visit(self, b):
         arrive = now()
         print("%8.4f %s: Here I am " % (now(), self.name))
-        if len(b.waitQ) < maxInQueue:     # the test
+        if len(b.waitQ) < maxInQueue:                            #1
             yield request, self, b
             wait = now() - arrive
             print("%8.4f %s: Wait %6.3f" % (now(), self.name, wait))

@@ -129,18 +129,18 @@ priority. Since the default is ``priority=0`` this is easy for most of
 them.
 
 To observe the priority in action, while all other customers have the
-default priority of 0, at labels 5 and 6 we create and
+default priority of 0, at labels #5 and #6 we create and
 activate one special customer, ``Guido``, with priority 100 who
 arrives at time ``23.0``.
 
 The ``visit`` customer method has a new parameter, ``P`` (at label
-1), which allows us to set the customer priority.
+#3), which allows us to set the customer priority.
 
-At label 4, ``counter`` is defined with ``qType=PriorityQ`` so
-that we can request it with priority (at 3) using the
+At label #4, ``counter`` is defined with ``qType=PriorityQ`` so
+that we can request it with priority (at #3) using the
 statement ``yield request,self,counter,P``
 
-At label 2, we now print out the number of customers waiting when each
+At label #2, we now print out the number of customers waiting when each
 customer arrives.
 
 
@@ -174,11 +174,10 @@ any customer in service when he arrives. That customer will resume
 when ``Guido`` finishes (unless higher priority customers
 intervene). It requires only a change to one line of the program,
 adding the argument, ``preemptable=True`` to the ``Resource``
-statement at label 1.
+statement at label #1.
 
 .. literalinclude:: bankprograms/bank23.py
    
-
 Though ``Guido`` arrives at the same time, ``23.000``, he no longer
 has to wait and immediately goes into service, displacing the
 incumbent, ``Customer01``. That customer had already completed
@@ -189,8 +188,6 @@ is the  same as before (``12.000`` minutes).
 
 .. literalinclude:: bankprograms/bank23.out
    
-
-
 .. raw:: latex
 
    \newpage
@@ -225,9 +222,9 @@ system the customer must first check to see if there is room. We will
 need the number of customers in the system or waiting. We could keep a
 count, incrementing when a customer joins the queue or, since we have
 a Resource, use the length of the Resource's ``waitQ``. Choosing the
-latter we test (on line 25). If there is not enough room, we
-balk, incrementing a Class variable ``Customer.numBalking`` at line
-34 to get the total number balking during the run.
+latter we test (at label #1). If there is not enough room, we balk,
+incrementing a Class variable ``Customer.numBalking`` at line 34 to
+get the total number balking during the run.
 
 
 .. literalinclude:: bankprograms/bank24.py
@@ -238,7 +235,6 @@ occurring is given below:
 
 .. literalinclude:: bankprograms/bank24.out
    
-
 When ``Customer02`` arrives, numbers 00 is already in service and 01
 is waiting. There is no room so 02 balks. In fact another customer,
 ``Customer03`` arrives and balks before number 00 is finished.
@@ -265,7 +261,7 @@ There is a complication, though. The requesting PEM must discover what
 actually happened. Did the process get the resource or did it
 renege? This involves a *mandatory* test of ``self.acquired(``\ 
 *resource*\
-``)``. In our example, this test is in line 26.
+``)``. In our example, this test is at label #1.
 
 .. literalinclude:: bankprograms/bank21.py
    
@@ -311,23 +307,32 @@ conversation.
 
 In this example, ``call`` is an object of the ``Call`` Process class
 whose only purpose is to make the cellphone ring after a delay,
-``timeOfCall``, an argument to its ``ring`` PEM (line 26).
+``timeOfCall``, an argument to its ``ring`` PEM (label #7).
 
-``klaus``, a ``Customer``, is interrupted by the call (line 29).
-He is in the middle of a ``yield hold`` (line 12). When he exits
+.. 
+   12  1
+   13 2
+   14 3
+   19 4
+   20 5
+   21 6
+   26 7
+   29 8
+
+
+``klaus``, a ``Customer``, is interrupted by the call (Label #8).
+He is in the middle of a ``yield hold`` (label #1). When he exits
 from that command it is as if he went into a trance when talking to
-the bank manager. He suddenly wakes up and must check (line 13)
+the bank manager. He suddenly wakes up and must check (label #2)
 to see whether has finished his conversation (if there was no call) or
 has been interrupted.
 
 If ``self.interrupted()`` is ``False`` he was not interrupted and
-leaves the bank (line 21) normally. If it is ``True``, he was
+leaves the bank (label #6) normally. If it is ``True``, he was
 interrupted by the call, remembers how much conversation he has left
-(line 14), resets the interrupt (line 15) and then deals
-with the call. When he finishes (line 19) he can resume the
-conversation, with, now we assume, a thoroughly irritated bank manager
-(line 20).
-
+(Label #3), resets the interrupt and then deals with the call. When he
+finishes (label #4) he can resume the conversation, with, now we
+assume, a thoroughly irritated bank manager (label #5).
 
 .. literalinclude:: bankprograms/bank22.py
    
@@ -350,22 +355,31 @@ the door is opened by a doorman. They wait for the door to be opened
 and then rush in and queue to be served.
 
 This model uses the ``waituntil`` yield command. In the program listing
-the door is initially closed (line 7) and a function to test if
-it is open is defined at line 8.
+the door is initially closed (label #1) and a function to test if
+it is open is defined at label #2.
 
-The ``Doorman`` class is defined starting at line 11 and the single
-``doorman`` is created and activated at at lines 65 and 66. The
-doorman waits for an average 10 minutes (label 16) and then
+.. 
+   07  1
+   08  2
+   11  3
+   16  4
+   29  5
+   40  6
+   65  7
+   66  8
+
+The ``Doorman`` class is defined starting at label #3 and the single
+``doorman`` is created and activated at at labels #7 and #8. The
+doorman waits for an average 10 minutes (label #4) and then
 opens the door. 
 
-The ``Customer`` class is defined at line 29 and a new customer prints out
+The ``Customer`` class is defined at label #5 and a new customer prints out
 ``Here I am`` on arrival. If the door is still closed, he adds ``but
-the door is shut`` and settles down to wait (line 40), using the
+the door is shut`` and settles down to wait (label #6), using the
 ``yield waituntil`` command. When the door is opened by the doorman the
 ``dooropen`` state is changed and the customer (and all others waiting
 for the door) proceed. A customer arriving when the door is open will
 not be delayed.
-
 
 .. literalinclude:: bankprograms/bank14.py
    
@@ -374,7 +388,6 @@ has to wait until the door is opened.
 
 .. literalinclude:: bankprograms/bank14.out
    
-
 Wait for the doorman to give a signal: ``waitevent`` 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -385,20 +398,30 @@ is a very secure bank). The customers wait for the door to be opened
 and all those waiting enter and proceed to the counter. The door is
 closed behind them.
 
-This model uses the ``yield waitevent`` command which requires a
-``SimEvent`` to be defined (line 7).  The ``Doorman`` class is defined
-at line 10 and the ``doorman`` is created and activated at at labels
-66 and 67. The doorman waits for a fixed time (label
-15) and then tells the customers that the door is open. This is
-achieved on line 16 by signalling the ``dooropen`` event.
+..
+   07 1
+   10 2
+   15 3
+   16 4
+   29 5
+   39 6
+   66 7
+   67 8
+    
 
-The ``Customer`` class is defined at 29 and in its PEM, when a
+This model uses the ``yield waitevent`` command which requires a
+``SimEvent`` to be defined (label #1).  The ``Doorman`` class is
+defined at label #2 and the ``doorman`` is created and activated at
+labels #7 and #8. The doorman waits for a fixed time (label #3) and
+then tells the customers that the door is open. This is achieved on
+label #4 by signalling the ``dooropen`` event.
+
+The ``Customer`` class is defined at label #5 and in its PEM, when a
 customer arrives, he prints out ``Here I am``. If the door is still
 closed, he adds `"but the door is shut`` and settles down to wait for
-the door to be opened using the ``yield waitevent`` command (line
-39). When the door is opened by the doorman (that is, he sends
-the ``dooropen.signal()`` the customer and any others waiting may
-proceed.
+the door to be opened using the ``yield waitevent`` command (label
+#6). When the door is opened by the doorman (that is, he sends the
+``dooropen.signal()`` the customer and any others waiting may proceed.
 
 
 .. literalinclude:: bankprograms/bank13.py

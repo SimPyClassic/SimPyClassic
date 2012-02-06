@@ -4,16 +4,16 @@ from random import *
 
 ## Model components ------------------------
 
-dooropen = SimEvent("Door Open")
+dooropen = SimEvent("Door Open")                         #1
 
 
-class Doorman(Process):
+class Doorman(Process):                                  #2
     """ Doorman opens the door"""
     def openthedoor(self):
         """ He will opens the door at fixed intervals"""
         for i in range(5):
-            yield hold, self, 30.0
-            dooropen.signal()
+            yield hold, self, 30.0                       #3
+            dooropen.signal()                            #4
             print("%7.4f You may enter" % (now()))
 
 
@@ -26,7 +26,7 @@ class Source(Process):
             yield hold, self, expovariate(rate)
 
 
-class Customer(Process):
+class Customer(Process):                            #5
     """ Customer arrives, is served and leaves """
     def visit(self, timeInBank=10):
         arrive = now()
@@ -63,8 +63,8 @@ def model(SEED=232323):
     seed(SEED)
 
     initialize()
-    doorman = Doorman()
-    activate(doorman, doorman.openthedoor())
+    doorman = Doorman()                           #7
+    activate(doorman, doorman.openthedoor())      #8
     source = Source()
     activate(source,
              source.generate(number=5, rate=0.1), at=0.0)

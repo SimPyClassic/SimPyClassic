@@ -86,37 +86,37 @@ minutes.
 Examine the following listing which is a complete runnable Python
 script, except for the line numbers.  We use comments to divide the
 script up into sections. This makes for clarity later when the
-programs get more complicated. At line :an:`1` is a normal Python
-documentation string; :an:`2` imports the SimPy simulation code.
+programs get more complicated. At line #1 is a normal Python
+documentation string; #2 imports the SimPy simulation code.
 
 .. index:: 
    pair: PEM; Process Execution Method
 
-The ``Customer`` class definition at :an:`3` defines our customer class and has
-the required generator method (called ``visit`` :an:`4`) having a ``yield``
-statement :an:`6`. Such a method is called a Process Execution Method (PEM) in
+The ``Customer`` class definition at #3 defines our customer class and has
+the required generator method (called ``visit`` #4) having a ``yield``
+statement #6. Such a method is called a Process Execution Method (PEM) in
 SimPy.
 
-The customer's ``visit`` PEM at :an:`4`, models his activities.  When he
+The customer's ``visit`` PEM at #4, models his activities.  When he
 arrives (it will turn out to be a 'he' in this model), he will print out the
-simulation time, ``now()``, and his name at :an:`5`.  The function ``now()``
+simulation time, ``now()``, and his name at #5.  The function ``now()``
 can be used at any time in the simulation to find the current simulation time
 though it cannot be changed by the programmer. The customer's name will be set
-when the customer is created later in the script at :an:`10`.
+when the customer is created later in the script at #10.
 
-He then stays in the bank for a fixed simulation time ``timeInBank`` :an:`6`.
+He then stays in the bank for a fixed simulation time ``timeInBank`` #6.
 This is achieved by the ``yield hold,self,timeInBank`` statement.  This is the
 first of the special simulation commands that ``SimPy`` offers.
 
 After a simulation time of ``timeInBank``, the program's execution
-returns to the line after the ``yield`` statement at :an:`6`. The
+returns to the line after the ``yield`` statement at #6. The
 customer then prints out the current simulation time and his
-name at :an:`7`. This completes the declaration of the ``Customer`` class.
+name at #7. This completes the declaration of the ``Customer`` class.
 
-The call ``initialize()`` at :an:`9` sets up the simulation
-system ready to receive ``activate`` calls. At :an:`10`, we create
+The call ``initialize()`` at #9 sets up the simulation
+system ready to receive ``activate`` calls. At #10, we create
 a customer, ``c``, with name ``Klaus``. All SimPy Processes have a
-``name`` attribute. We ``activate`` ``Klaus`` at :an:`11`
+``name`` attribute. We ``activate`` ``Klaus`` at #11
 specifying the object (``c``) to be activated, the call of the action
 routine (``c.visit(timeInBank = 10.0)``) and that it is to be activated
 at time 5 (``at = 5.0``). This will activate
@@ -125,11 +125,11 @@ after the start of the simulation at ``0.0``. The call of an action
 routine such as ``c.visit`` can specify the values of arguments, here
 the ``timeInBank``.
 
-Finally the call of ``simulate(until=maxTime)`` at :an:`12` will
+Finally the call of ``simulate(until=maxTime)`` at #12 will
 start the simulation. This will run until the simulation time is
 ``maxTime`` unless stopped beforehand either by the
 ``stopSimulation()`` command or by running out of events to execute
-(as will happen here). ``maxTime`` was set to ``100.0`` at :an:`8`.
+(as will happen here). ``maxTime`` was set to ``100.0`` at #8.
 
 
 ..
@@ -160,17 +160,16 @@ Now we extend the model to allow our customer to arrive at a random
 simulated time though we will keep the time in the bank at 10.0, as
 before.
 
-The change occurs in line :an:`1` of the program and in lines :an:`2`,
-:an:`3`, and :an:`4`. In line :an:`1` we import from the standard
-Python ``random`` module to give us ``expovariate`` to generate the
-random time of arrival. We also import the ``seed`` function to
-initialize the random number stream to allow control of the random
-numbers.  In line :an:`2` we provide an initial seed of ``99999``. An
-exponential random variate, ``t``, is generated in line :an:`3`. Note
-that the Python Random module's ``expovariate`` function uses the
-average rate (that is, ``1.0/mean``) as the argument. The generated
-random variate, ``t``, is used in line :an:`4` as the ``at`` argument
-to the ``activate`` call.
+The change occurs in line #1 of the program and in lines #2, #3, and
+#4. In line #1 we import from the standard Python ``random`` module to
+give us ``expovariate`` to generate the random time of arrival. We
+also import the ``seed`` function to initialize the random number
+stream to allow control of the random numbers.  In line #2 we provide
+an initial seed of ``99999``. An exponential random variate, ``t``, is
+generated in line #3. Note that the Python Random module's
+``expovariate`` function uses the average rate (that is, ``1.0/mean``)
+as the argument. The generated random variate, ``t``, is used in line
+#4 as the ``at`` argument to the ``activate`` call.
 
 
 .. literalinclude:: bankprograms/bank05.py
@@ -200,9 +199,9 @@ more ``Customers``.
 
 The program is almost as easy as the first example (`A Customer
 arriving at a fixed time`_). The main change is in lines
-:an:`4` to :an:`5` where we create, name, and activate three
+#4 to #5 where we create, name, and activate three
 customers. We also increase the maximum simulation time to ``400``
-(line :an:`3` and referred to in line :an:`6`). Observe that we need
+(line #3 and referred to in line #6). Observe that we need
 only one definition of the ``Customer`` class and create several
 objects of that class. These will act quite independently in this
 model.
@@ -215,7 +214,7 @@ first even though his activation statement appears later in the
 script.
 
 As promised, the print statements have been changed to use Python
-string formatting (lines :an:`1` and :an:`2`). The statements look
+string formatting (lines #1 and #2). The statements look
 complicated but the output is much nicer.
 
 .. literalinclude:: bankprograms/bank02.py
@@ -243,31 +242,23 @@ we do not use the random numbers in this model.
 
 .. index::  Source of entities
 
-.. 6 1 :an:`1`   
-   9 2 :an:`2`
-   11 :an:`3` 
-   13 :an:`4`
-    21 :an:`5`
-   32 :an:`6`
-   33 :an:`7`
-
-The following listing shows the new program. Lines :an:`1` to :an:`4`
+The following listing shows the new program. Lines #1 to #4
 define a ``Source`` class. Its PEM, here called ``generate``, is
-defined in lines :an:`2` to :an:`4`.  This PEM has a couple of arguments:
+defined in lines #2 to #4.  This PEM has a couple of arguments:
 the ``number`` of customers to be generated and the Time Between
 Arrivals, ``TBA``. It consists of a loop that creates a sequence
 of numbered ``Customers`` from ``0`` to ``(number-1)``, inclusive. We
-create a customer and give it a name in line :an:`3`. It is
+create a customer and give it a name in line #3. It is
 then activated at the current simulation time (the final argument of
 the ``activate`` statement is missing so that the default value of
 ``now()`` is used as the time). We also specify how long the customer
 is to stay in the bank. To keep it simple, all customers stay
 exactly ``12`` minutes.  After each new customer is activated, the
 ``Source`` holds for a fixed time (``yield hold,self,TBA``)
-before creating the next one (line :an:`4`).
+before creating the next one (line #4).
 
-A ``Source``, ``s``, is created in line :an:`5` and activated at line
-:an:`6` where the number of customers to be generated is set to
+A ``Source``, ``s``, is created in line #5 and activated at line
+#6 where the number of customers to be generated is set to
 ``maxNumber = 5`` and the interval between customers to ``ARRint =
 10.0``. Once started at time ``0.0`` it creates customers at intervals
 and each customer then operates independently of the others:
@@ -294,26 +285,21 @@ is usually interpreted as meaning that the times between customer
 arrivals are distributed as exponential random variates. There is
 little change in our program, we use a ``Source`` object, as before.
 
-.. 
-   14 :an:`1` 
-   15 :an:`2` 
-   33 :an:`3` 
-
-The exponential random variate is generated in line :an:`1` with
+The exponential random variate is generated in line #1 with
 ``meanTBA`` as the mean Time Between Arrivals and used in line
-:an:`2`. Note that this parameter is not exactly intuitive. As already
+#2. Note that this parameter is not exactly intuitive. As already
 mentioned, the Python ``expovariate`` method uses the *rate* of
 arrivals as the parameter not the average interval between them. The
 exponential delay between two arrivals gives pseudo-random
 arrivals. In this model the first customer arrives at time ``0.0``.
 
 The ``seed`` method is called to initialize the random number stream
-in the ``model`` routine (line :an:`3`).  It is possible to leave this
+in the ``model`` routine (line #3).  It is possible to leave this
 call out but if we wish to do serious comparisons of systems, we must
 have control over the random variates and therefore control over the
 seeds. Then we can run identical models with different seeds or
 different models with identical seeds.  We provide the seeds as
-control parameters of the run. Here a seed is assigned in line :an:`3`
+control parameters of the run. Here a seed is assigned in line #3
 but it is clear it could have been read in or manually entered on an
 input form.
 
@@ -352,36 +338,25 @@ serving the next in line.
 One Service counter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-..
-   14 :an:`1`
-   22 :an:`2`
-   25 :an:`3`
-   26 :an:`4`
-   28 :an:`5`
-   29 :an:`6`
-   35 :an:`7`
-   38 :an:`8`
-   45 :an:`9`
-
 The service counter is created as a ``Resource`` (``k``) in
-line :an:`8`. This is provided as an argument to the ``Source`` (line :an:`9`)
+line #8. This is provided as an argument to the ``Source`` (line #9)
 which, in turn, provides it to each customer it creates and activates
-(line :an:`1`).
+(line #1).
 
 The actions involving the service counter, ``k``, in the customer's
 PEM are:
  
-- the ``yield request`` statement in line :an:`3`. If the server is
+- the ``yield request`` statement in line #3. If the server is
   free then the customer can start service immediately and the code
-  moves on to line  :an:`4`. If the server is busy, the customer is
+  moves on to line  #4. If the server is busy, the customer is
   automatically queued by the  Resource. When it eventually comes
-  available the PEM moves on to line :an:`4`.  
+  available the PEM moves on to line #4.  
 
-- the ``yield hold`` statement in line  :an:`5` where the operation of
+- the ``yield hold`` statement in line  #5 where the operation of
   the service counter is modelled. Here the service time is a fixed
   ``timeInBank``.  During this period the customer is being served.
 
-- the ``yield release`` statement in line  :an:`6`. The current
+- the ``yield release`` statement in line  #6. The current
   customer completes service and the service counter becomes available
   for any remaining customers in the queue.
 
@@ -389,9 +364,9 @@ Observe that the service counter is used with the pattern (``yield
 request..``; ``yield hold..``; ``yield release..``).
 
 To show the effect of the service counter on the activities of the
-customers, I have added line :an:`2` to record when the customer
-arrived and line :an:`4` to record the time between arrival in the
-bank and starting service. Line :an:`4` is *after* the ``yield
+customers, I have added line #2 to record when the customer
+arrived and line #4 to record the time between arrival in the
+bank and starting service. Line #4 is *after* the ``yield
 request`` command and will be reached only when the request is
 satisfied. It is *before* the ``yield hold`` that corresponds to the
 start of service. The variable ``wait`` will record how long the
@@ -405,7 +380,7 @@ the bank before starting service.
    
 Examining the trace we see that the first, and last, customers get instant
 service but the others have to wait. We still only have five customers
-(line :an:`4`) so we cannot draw general conclusions.
+(line #4) so we cannot draw general conclusions.
 
 .. literalinclude:: bankprograms/bank07.out
    
@@ -423,20 +398,14 @@ service counter but make the customer service time a random
 variable. As is traditional in the study of simple queues we first
 assume an exponential service time and set the mean to ``timeInBank``.
 
-..  
-   26 :an:`1`
-   27 :an:`2`
-   33 :an:`3`
-   37 :an:`4`
-
 The service time random variable, ``tib``, is generated in line
-:an:`1` and used in line  :an:`2`. The argument to be used in the call
+#1 and used in line  #2. The argument to be used in the call
 of ``expovariate`` is not the mean of the distribution,
 ``timeInBank``, but is the rate ``1/timeInBank``.
 
 We have also collected together a number of constants by defining a
 number of appropriate variables and giving them values. These are in
-lines  :an:`3` to  :an:`4`.
+lines  #3 to  #4.
 
 .. literalinclude:: bankprograms/bank08.py
    
@@ -476,11 +445,8 @@ served at a group of counters, taking a random time for service, where
 we assume that waiting customers form a single first-in first-out
 queue.
 
-.. 
-  42   :an:`1`
-
 The *only* difference between this model and the single-server model
-is in line :an:`1`. We have provided two counters by increasing the
+is in line #1. We have provided two counters by increasing the
 capacity of the ``counter`` resource to 2. These *units* of the
 resource correspond to the two counters. Because both clerks cannot be
 called ``Karen``, we have used a general name of ``Clerk``.
@@ -502,31 +468,22 @@ conclusions.
 Several Counters with individual queues
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. 
-   17 :an:`1`
-   19 :an:`2`
-   28 :an:`3`
-   29 :an:`4`
-   30 :an:`5`
-   32 :an:`6`
-   56 :an:`7`
-
 
 Each counter now has its own queue.  The programming is more
 complicated because the customer has to decide which one to
 join. The obvious technique is to make each counter a separate
 resource and it is useful to make a list of resource objects (line
-:an:`7`).
+#7).
 
 In practice, a customer will join the shortest queue.  So we define
-a Python function, ``NoInSystem(R)`` (lines :an:`1` to :an:`2`) to
+a Python function, ``NoInSystem(R)`` (lines #1 to #2) to
 return the sum of the number waiting and the number being served for
-a particular counter, ``R``. This function is used in line :an:`3` to
+a particular counter, ``R``. This function is used in line #3 to
 list the numbers at each counter. It is then easy to find which
 counter the arriving customer should join. We have also modified the
-trace printout, line :an:`4` to display the state of the system when
+trace printout, line #4 to display the state of the system when
 the customer arrives. We choose the shortest queue in lines
-:an:`5` to :an:`6` (using the variable ``choice``).
+#5 to #6 (using the variable ``choice``).
 
 The rest of the program is the same as before.
 
@@ -585,19 +542,12 @@ read in as a program option - but that is a different story). This
 would aid in debugging and would not complicate the data analysis. We
 will run the simulations for many more arrivals.
 
-.. 
-   24  :an:`1`
-   42  :an:`2`
-   45  :an:`3`
-   51  :an:`4`  
-
-
-A Monitor, ``wM``, is created in line :an:`2`. It ``observes`` and
-records the waiting time mentioned in line :an:`1`.  We run
+A Monitor, ``wM``, is created in line #2. It ``observes`` and
+records the waiting time mentioned in line #1.  We run
 ``maxNumber=50`` customers (in the call of ``generate`` in line
-:an:`3`) and have increased ``maxTime`` to ``1000`` minutes. Brief
+#3) and have increased ``maxTime`` to ``1000`` minutes. Brief
 statistics are given by the Monitor methods ``count()`` and ``mean()``
-in line :an:`4`.
+in line #4.
 
 .. literalinclude:: bankprograms/bank11.py
    
@@ -628,30 +578,21 @@ independent of previous ones so the Monitor and Resources must be
 redefined for each run. We can no longer allow them to be global
 objects as we have before.
 
-.. 
-   13 :an:`1`
-   40 :an:`2`
-   43 :an:`3`
-   48 :an:`4`
-   50 :an:`5`
-   54 :an:`6`
-   57 :an:`7`
-
 We will define a function, ``model`` with a parameter ``runSeed`` so
 that the random number seed can be different for different runs (lines
-:an:`2` to  :an:`5`). The contents of the function are the same as the
+#2 to  #5). The contents of the function are the same as the
 ``Model/Experiment`` section in the previous program except for one
 vital change.
 
 This is required since the Monitor, ``wM``, is defined inside the
-``model`` function (line  :an:`3`). A customer can no longer refer to
+``model`` function (line  #3). A customer can no longer refer to
 it. In the spirit of quality computer programming we will pass ``wM``
 as a function argument. Unfortunately we have to do this in two steps,
-first to the ``Source`` (line  :an:`4`) and then from the ``Source`` to
-the ``Customer`` (line  :an:`1`).
+first to the ``Source`` (line  #4) and then from the ``Source`` to
+the ``Customer`` (line  #1).
 
 ``model()`` is run for four different random-number seeds to get a set
-of replications (lines  :an:`6` to  :an:`7`).
+of replications (lines  #6 to  #7).
 
 .. literalinclude:: bankprograms/bank12.py
 

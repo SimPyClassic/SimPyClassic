@@ -9,23 +9,23 @@ class Customer(Process):
 
     def visit(self, timeInBank, onphone):
         print("%7.4f %s: Here I am" % (now(), self.name))
-        yield hold, self, timeInBank
-        if self.interrupted():
-            timeleft = self.interruptLeft
+        yield hold, self, timeInBank                            #1
+        if self.interrupted():                                  #2
+            timeleft = self.interruptLeft                       #3
             self.interruptReset()
             print("%7.4f %s: Excuse me" % (now(), self.name))
             print("%7.4f %s: Hello! I'll call back" % (now(), self.name))
             yield hold, self, onphone
-            print("%7.4f %s: Sorry, where were we?" % (now(), self.name))
-            yield hold, self, timeleft
-        print("%7.4f %s: I must leave" % (now(), self.name))
+            print("%7.4f %s: Sorry, where were we?" % (now(), self.name)) #4
+            yield hold, self, timeleft                          #5
+        print("%7.4f %s: I must leave" % (now(), self.name))    #6
 
 
 class Call(Process):
     """ Cellphone call arrives and interrupts """
 
-    def ring(self, klaus, timeOfCall):
-        yield hold, self, timeOfCall
+    def ring(self, klaus, timeOfCall):               #7
+        yield hold, self, timeOfCall                 #8
         print("%7.4f Ringgg!" % (now()))
         self.interrupt(klaus)
 

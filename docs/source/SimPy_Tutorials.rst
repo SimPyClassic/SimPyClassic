@@ -21,7 +21,6 @@ simulation object is independent of others.
 
    Tutorials/TheBank
    Tutorials/TheBank2
-   Tutorials/OO_Approach
    Tutorials/TheBankOO
    Tutorials/TheBank2OO
    OnLineSimPyCourse
