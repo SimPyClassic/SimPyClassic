@@ -482,21 +482,18 @@ Plotting a Histogram of Monitor results
 
 A Monitor can construct a histogram from its data using the
 ``histogram`` method. In this model we monitor the time in the system
-for the customers. This is calculated for each customer in line
-29, using the arrival time saved in line 19. We create the
-Monitor, ``Mon``, at line 37 and the times are ``observed`` at line
-30.
+for the customers. This is calculated for each customer at label #2,
+using the arrival time saved at label #1. We create the Monitor,
+``Mon``, at label #4 and the times are ``observed`` at label #3.
 
 The histogram is constructed from the Monitor, after the simulation
-has finished, at line 55. The SimPy SimPlot package allows
+has finished, at label #5. The SimPy SimPlot package allows
 simple plotting of results from simulations.  Here we use the SimPlot
-``plotHistogram`` method. The plotting routines appear in lines
-57-61. The ``plotHistogram`` call is in line 58.
+``plotHistogram`` method. The plotting routines appear between labels
+#6 and #7. The ``plotHistogram`` call is in label #7.
 
 .. literalinclude:: bankprograms/bank17.py
    
-
-
 
 Monitoring a Resource
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -510,7 +507,7 @@ Monitors.
 
 Here is an example using a Monitored Resource. We intend to observe
 the average number waiting and active in the ``counter``
-resource. ``counter`` is defined at 1 and we have set
+resource. ``counter`` is defined at #1 and we have set
 ``monitored=True``. This establishes two Monitors: ``waitMon``, to
 record changes in the numbers waiting and ``actMon`` to record changes
 in the numbers active in the ``counter``. We need make no further
@@ -519,16 +516,28 @@ automatic.  No ``observe`` calls are necessary.
 
 At the end of the run in the ``model`` function, we calculate the
 ``timeAverage`` of both ``waitMon`` and ``actMon`` and return them
-from the ``model`` call (at 2). These can then be printed at
-the end of the program (at 3).
+from the ``model`` call (at #2). These can then be printed at
+the end of the program (at #3).
 
 .. literalinclude:: bankprograms/bank15.py
    
 
-
-
 Plotting from  Resource Monitors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+..
+  03 1
+  20 2
+  37 3
+  43  4
+  44 5
+  50 6
+  51 7
+  52 8
+  53 9
+
+
+
 
 Like all Monitors, ``waitMon`` and ``actMon`` in a monitored Resource
 contain information that enables us to graph the output. Alternative
@@ -537,16 +546,15 @@ package just to graph the number of customers waiting for the
 counter. The program is a simple modification of the one that uses a
 monitored Resource.
 
-The SimPlot package is imported at line 3. No major changes are
-made to the main part of the program except that I commented out the
-print statements. The changes occur in the ``model`` routine from lines
-37 to 44. The simulation now generates and processes 20
-customers (line 43).  ``model`` does not return a value but the
-Monitors of the ``counter`` Resource still exist when the simulation has
-terminated.
+The SimPlot package is imported at #3. No major changes are made to
+the main part of the program except that I commented out the print
+statements. The changes occur in the ``model`` routine from #3 to
+#5.The simulation now generates and processes 20 customers (#4).
+``model`` does not return a value but the Monitors of the ``counter``
+Resource still exist when the simulation has terminated.
 
-The additional plotting actions take place in lines 50 to
-53. Line 51-52 construct a step plot and graphs the
+The additional plotting actions take place from #6 to #9. Lines #7 and
+#8 construct a step plot and graphs the
 number in the waiting queue as a function of time. ``waitMon`` is
 primarily a list of *[time,value]* pairs which the ``plotStep`` method
 of the SimPlot object, ``plt`` uses without change. On running the

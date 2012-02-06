@@ -32,7 +32,6 @@ counter = Resource(1, name="Clerk", monitored=True)                 #1
 ## Model  ----------------------------------
 def model(SEED=393939):
     seed(SEED)
-
     initialize()
     source = Source()
     activate(source,
@@ -43,4 +42,5 @@ def model(SEED=393939):
 
 ## Experiment  ----------------------------------
 
-print('Average waiting = %6.4f\nAverage active  = %6.4f\n' % model())  #3
+print('Average waiting = %6.4f\nAverage active  = %6.4f\n' % model())    #3
+

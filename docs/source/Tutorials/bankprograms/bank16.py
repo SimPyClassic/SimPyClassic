@@ -1,10 +1,9 @@
 """bank16: Plotting from  Resource Monitors"""
 from SimPy.Simulation import *
-from SimPy.SimPlot import *
+from SimPy.SimPlot import *                          #1
 from random import expovariate, seed
 
 ## Model components ------------------------
-
 
 class Source(Process):
     """ Source generates customers randomly"""
@@ -13,7 +12,6 @@ class Source(Process):
             c = Customer(name="Customer%02d" % (i))
             activate(c, c.visit(timeInBank=12.0))
             yield hold, self, expovariate(rate)
-
 
 class Customer(Process):
     """ Customer arrives, is served and leaves """
@@ -37,20 +35,20 @@ counter = Resource(1, name="Clerk", monitored=True)
 ## Model -----------------------------------
 
 
-def model(SEED=393939):
+def model(SEED=393939):                                 #3
     seed(SEED)
-
     initialize()
     source = Source()
-    activate(source,
+    activate(source,                                    #4
              source.generate(number=20, rate=0.1), at=0.0)
-    simulate(until=maxTime)
+    simulate(until=maxTime)                             #5
 
 ## Experiment -----------------------------------
 
 model()
 
-plt = SimPlot()
-plt.plotStep(counter.waitMon,
-        color="red", width=2)
-plt.mainloop()
+plt = SimPlot()                                         #6
+plt.plotStep(counter.waitMon,                           #7
+        color="red", width=2)                           #8
+plt.mainloop()                                          #9
+
