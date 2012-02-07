@@ -3,7 +3,6 @@ from SimPy.Simulation import *                  #2
 
 ## Model components -----------------------------
 
-
 class Customer(Process):  #3
     """ Customer arrives, looks around and leaves """
 

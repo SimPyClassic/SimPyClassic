@@ -49,8 +49,8 @@ it at the `Python web site`_.  SimPy is compatible with Python version
 
 
 
-A  single Customer
--------------------
+A Customer arriving at a fixed time
+-----------------------------------
 
 In this tutorial we model a simple bank with customers arriving at
 random. We develop the model step-by-step, starting out simply, and
@@ -69,9 +69,6 @@ or tellers might affect the waiting time for customers.
 .. index:: bank 01
 
 
-A Customer arriving at a fixed time
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
 
 We first model a single customer who arrives at the bank for a visit,
 looks around at the decor for a time and then leaves.  There is no
@@ -154,22 +151,22 @@ active.
 .. index:: random arrival, bank05
 
 A Customer arriving at random
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 Now we extend the model to allow our customer to arrive at a random
 simulated time though we will keep the time in the bank at 10.0, as
 before.
 
-The change occurs in line #1 of the program and in lines #2, #3, and
-#4. In line #1 we import from the standard Python ``random`` module to
-give us ``expovariate`` to generate the random time of arrival. We
-also import the ``seed`` function to initialize the random number
-stream to allow control of the random numbers.  In line #2 we provide
-an initial seed of ``99999``. An exponential random variate, ``t``, is
-generated in line #3. Note that the Python Random module's
-``expovariate`` function uses the average rate (that is, ``1.0/mean``)
-as the argument. The generated random variate, ``t``, is used in line
-#4 as the ``at`` argument to the ``activate`` call.
+The change occurs at #1, #2, #3, and #4 in the program. At #1 we
+import from the standard Python ``random`` module to give us
+``expovariate`` to generate the random time of arrival. We also import
+the ``seed`` function to initialize the random number stream to allow
+control of the random numbers.  At #2 we provide an initial seed of
+``99999``. An exponential random variate, ``t``, is generated
+at #3. Note that the Python Random module's ``expovariate`` function
+uses the average rate (that is, ``1.0/mean``) as the argument. The
+generated random variate, ``t``, is used at #4 as the ``at`` argument
+to the ``activate`` call.
 
 
 .. literalinclude:: bankprograms/bank05.py
@@ -198,10 +195,10 @@ several customers we return to the simple deterministic model and add
 more ``Customers``.
 
 The program is almost as easy as the first example (`A Customer
-arriving at a fixed time`_). The main change is in lines
+arriving at a fixed time`_). The main change is between
 #4 to #5 where we create, name, and activate three
 customers. We also increase the maximum simulation time to ``400``
-(line #3 and referred to in line #6). Observe that we need
+(at #3 and referred to at #6). Observe that we need
 only one definition of the ``Customer`` class and create several
 objects of that class. These will act quite independently in this
 model.
@@ -214,7 +211,7 @@ first even though his activation statement appears later in the
 script.
 
 As promised, the print statements have been changed to use Python
-string formatting (lines #1 and #2). The statements look
+string formatting (at #1 and #2). The statements look
 complicated but the output is much nicer.
 
 .. literalinclude:: bankprograms/bank02.py
@@ -231,7 +228,7 @@ call as it has run out of events.
 .. index:: bank03
 
 Many Customers
-~~~~~~~~~~~~~~~~~~~
+----------------------
 
 
 Another change will allow us to have more customers. As it is
@@ -242,22 +239,22 @@ we do not use the random numbers in this model.
 
 .. index::  Source of entities
 
-The following listing shows the new program. Lines #1 to #4
-define a ``Source`` class. Its PEM, here called ``generate``, is
-defined in lines #2 to #4.  This PEM has a couple of arguments:
+The following listing shows the new program. At #1 to #4  a ``Source``
+class is defined. Its PEM, here called ``generate``, is
+defined between #2 to #4.  This PEM has a couple of arguments:
 the ``number`` of customers to be generated and the Time Between
 Arrivals, ``TBA``. It consists of a loop that creates a sequence
 of numbered ``Customers`` from ``0`` to ``(number-1)``, inclusive. We
-create a customer and give it a name in line #3. It is
+create a customer and give it a name at #3. It is
 then activated at the current simulation time (the final argument of
 the ``activate`` statement is missing so that the default value of
 ``now()`` is used as the time). We also specify how long the customer
 is to stay in the bank. To keep it simple, all customers stay
 exactly ``12`` minutes.  After each new customer is activated, the
 ``Source`` holds for a fixed time (``yield hold,self,TBA``)
-before creating the next one (line #4).
+before creating the next one (at #4).
 
-A ``Source``, ``s``, is created in line #5 and activated at line
+A ``Source``, ``s``, is created at #5 and activated at
 #6 where the number of customers to be generated is set to
 ``maxNumber = 5`` and the interval between customers to ``ARRint =
 10.0``. Once started at time ``0.0`` it creates customers at intervals
@@ -275,7 +272,7 @@ The output is:
 .. -------------------------------------------------------------
 
 Many Random Customers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. index:: bank06
 
@@ -285,8 +282,8 @@ is usually interpreted as meaning that the times between customer
 arrivals are distributed as exponential random variates. There is
 little change in our program, we use a ``Source`` object, as before.
 
-The exponential random variate is generated in line #1 with
-``meanTBA`` as the mean Time Between Arrivals and used in line
+The exponential random variate is generated at #1 with
+``meanTBA`` as the mean Time Between Arrivals and used at
 #2. Note that this parameter is not exactly intuitive. As already
 mentioned, the Python ``expovariate`` method uses the *rate* of
 arrivals as the parameter not the average interval between them. The
@@ -294,12 +291,12 @@ exponential delay between two arrivals gives pseudo-random
 arrivals. In this model the first customer arrives at time ``0.0``.
 
 The ``seed`` method is called to initialize the random number stream
-in the ``model`` routine (line #3).  It is possible to leave this
+in the ``model`` routine (at #3).  It is possible to leave this
 call out but if we wish to do serious comparisons of systems, we must
 have control over the random variates and therefore control over the
 seeds. Then we can run identical models with different seeds or
 different models with identical seeds.  We provide the seeds as
-control parameters of the run. Here a seed is assigned in line #3
+control parameters of the run. Here a seed is assigned at #3
 but it is clear it could have been read in or manually entered on an
 input form.
 
@@ -315,8 +312,17 @@ with the following output:
 .. index:: 
    pair: Resource; queue
 
-A Service counter
-------------------
+=============================================================
+ Service counters
+=============================================================
+
+.. ---------------------------------------------------------------
+
+.. index:: bank07, Service counter
+
+
+A service counter
+-----------------
 
 So far, the model has been more like an art gallery, the customers
 entering, looking around, and leaving. Now they are going to require
@@ -330,18 +336,10 @@ object) until it is their turn to be served. As each customer
 completes service and ``releases`` the unit, the clerk can start
 serving the next in line.
 
-
-.. ---------------------------------------------------------------
-
-.. index:: bank07, Service counter
-
-One Service counter
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 The service counter is created as a ``Resource`` (``k``) in
-line #8. This is provided as an argument to the ``Source`` (line #9)
+at #8. This is provided as an argument to the ``Source`` (at #9)
 which, in turn, provides it to each customer it creates and activates
-(line #1).
+(at #1).
 
 The actions involving the service counter, ``k``, in the customer's
 PEM are:
@@ -391,7 +389,7 @@ service but the others have to wait. We still only have five customers
 .. ---------------------------------------------------------------
 
 A server with a random service time
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 This is a simple change to the model in that we retain the single
 service counter but make the customer service time a random
@@ -466,7 +464,7 @@ conclusions.
    single: bank10
 
 Several Counters with individual queues
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 
 Each counter now has its own queue.  The programming is more
