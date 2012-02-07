@@ -36,8 +36,6 @@ The examples run with SimPy version 1.5 and later.  This tutorial is
 best read with the SimPy Manual or Cheatsheet at your side for
 reference. 
 
-
-
 Before attempting to use SimPy you should be familiar with the Python_
 language. In particular you should be able to use *classes*. Python is
 free and available for most machine types. You can find out more about
@@ -64,11 +62,6 @@ the models are included in the bankprobrams_OO sub directory.
 A simulation should always be developed to answer a specific question;
 in these models we investigate how changing the number of bank servers
 or tellers might affect the waiting time for customers.
-
-
-.. index:: bank 01
-
-
 
 We first model a single customer who arrives at the bank for a visit,
 looks around at the decor for a time and then leaves.  There is no
@@ -101,7 +94,8 @@ can be used at any time in the simulation to find the current simulation time
 though it cannot be changed by the programmer. The customer's name will be set
 when the customer is created later in the script at #10.
 
-He then stays in the bank for a fixed simulation time ``timeInBank`` #6.
+He then stays in the bank for a fixed simulation time ``timeInBank``
+at  #6.
 This is achieved by the ``yield hold,self,timeInBank`` statement.  This is the
 first of the special simulation commands that ``SimPy`` offers.
 
@@ -147,6 +141,88 @@ the customer has no more actions and no other objects or customers are
 active.
 
 .. literalinclude:: bankprograms/bank01.out
+
+
+.. rewritten section for inclusion in the main documenta
+
+.. index:: bank01_OO, object-oriented style
+ 
+The Bank in object-oriented style
+-----------------------------------
+ 
+Now look at the same model developed in  object-oriented style. As before
+``Klaus`` arrives at the bank for a visit, looks around at the decor
+for a time and then leaves.  There is no queueing. The arrival time
+and the time he spends in the bank are fixed.
+  
+The key point is that we create a ``Simulation`` object and run
+that. In the program at label #1 we import a new class, ``Simulation``
+together with the familiar ``Process`` class, and the ``hold``
+verb. Here we are using the recommended explicit form of import rather
+than the deprecated ``import *``.
+
+Just as before, we define a ``Customer`` class, derived from the SimPy
+``Process`` class, which has the required generator method (PEM), here
+called ``visit``.
+
+The customer's ``visit`` PEM models his activities.  When he arrives
+at the bank Klaus will print out both the current simulation time,
+``self.sim.now()``, and his name, ``self.name``. The prefix
+``self.sim`` is a reference to the simulation object where this
+customer exists, thus ``self.sim.now()`` refers to the clock for that
+simulation object.  Every ``Process`` instance is linked to the
+simulation in which it is created by assigning to its ``sim``
+parameter when it is created (at #4).
+
+Now comes the major difference from the Classical SimPy program
+structure. We define a class ``BankModel`` from the ``Simulation``
+class at #3.  Now any instance of ``BankModel``  is an
+independent simulation with its own event list and its own time
+axis. A ``BankModel``  instance can activate processes and start the
+execution of a simulation on its time axis.
+
+In the ``BankModel``  class, we define a ``run`` method which, when
+executes the ``BankModel`` instance, i.e. performs a simulation
+experiment. When it starts it initializes the simulation with it event
+list and sets the time to 0.
+
+#4 creates a ``Customer`` object and the parameter assignment ``sim =
+self`` ties the customer instance to this and only this
+simulation. The customer does not exist outside this simulation.  The
+call of ``simulate(until=maxTime)``  at #5 starts the
+simulation. It will run until the simulation time is ``maxTime`` 
+unless stopped beforehand either by the ``stopSimulation()`` command
+or by running out of events to execute (as will happen
+here). ``maxTime`` is set to ``100.0`` at #6.
+
+.. note::
+
+    If model classes like the ``BankModel`` are to be given any other
+    attributes, they must have an ``__init__`` method in which these
+    attributes are assigned. Such an ``__init__`` method must first call
+    ``Simulation.__init__(self)`` to also initialize the
+    ``Simulation`` class from which the model inherits.
+
+A new, independent simulation object, ``mymodel``, is created at
+label #7. Its ``run`` method is executed at label #8.
+
+.. index:: 
+   pair: PEM; Process Execution Method
+
+
+.. literalinclude:: bankprograms_OO/bank01_OO.py
+   
+
+The short trace printed out by the ``print`` statements shows the
+result. The program finishes at simulation time ``15.0`` because there are
+no further events to be executed. At the end of the ``visit`` routine,
+the customer has no more actions and no other objects or customers are
+active.
+
+.. literalinclude:: bankprograms_OO/bank01_OO.out
+   
+
+
    
 .. index:: random arrival, bank05
 
@@ -311,17 +387,11 @@ with the following output:
 .. index:: 
    pair: Resource; queue
 
-=============================================================
- Service counters
-=============================================================
-
-.. ---------------------------------------------------------------
-
 .. index:: bank07, Service counter
 
 
 A service counter
------------------
+-------------------
 
 So far, the model has been more like an art gallery, the customers
 entering, looking around, and leaving. Now they are going to require
@@ -464,7 +534,6 @@ conclusions.
 
 Several Counters with individual queues
 -------------------------------------------
-
 
 Each counter now has its own queue.  The programming is more
 complicated because the customer has to decide which one to
