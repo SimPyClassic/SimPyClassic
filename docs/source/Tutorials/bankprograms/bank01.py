@@ -18,7 +18,7 @@ timeInBank = 10.0   # minutes
 
 ## Model/Experiment ------------------------------
 
-initialize()                #9
-c = Customer(name="Klaus")  #10
+initialize()                              #9
+c = Customer(name="Klaus")                #10
 activate(c, c.visit(timeInBank), at=5.0)  #11
-simulate(until=maxTime)  #12
+simulate(until=maxTime)                   #12

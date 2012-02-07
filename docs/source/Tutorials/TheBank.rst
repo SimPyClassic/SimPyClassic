@@ -168,7 +168,6 @@ uses the average rate (that is, ``1.0/mean``) as the argument. The
 generated random variate, ``t``, is used at #4 as the ``at`` argument
 to the ``activate`` call.
 
-
 .. literalinclude:: bankprograms/bank05.py
    
 
@@ -464,7 +463,7 @@ conclusions.
    single: bank10
 
 Several Counters with individual queues
------------------------------------
+-------------------------------------------
 
 
 Each counter now has its own queue.  The programming is more
