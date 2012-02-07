@@ -74,15 +74,11 @@ or tellers might affect the waiting time for customers.
 A Customer arriving at a fixed time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
-
 We first model a single customer who arrives at the bank for a visit,
 looks around at the decor for a time and then leaves.  There is no
 queueing. First we will assume his arrival time and the time he spends
 in the bank are fixed.
   
-
-
-
 Examine the following listing which is a complete runnable Python
 script, except for the line numbers.  We use comments to divide the
 script up into sections. This makes for clarity later when the
@@ -127,6 +123,25 @@ customer any attributes.  Bear in mind that such an ``__init__``
 method must first call ``Process.__init__(self)`` and can then
 initialize any instance variables needed.
 
+..
+  01 1
+  02 2
+  05 3
+  06 4
+  09 5
+  10 6
+  11 7
+  12 8
+  17 9
+  18 10
+  19 11
+  20
+  21
+  24
+  25
+  32
+
+
 Lines 6 to 21 define a class ``BankModel``, composing a model of a bank from  
 the ``Simulation`` class, a ``Customer`` class and the global experiment data.
 The definition ``class BankModel(Simulation)`` gives an instance of a 
@@ -136,26 +151,26 @@ The definition ``class BankModel(Simulation)`` gives an instance of a
 and thus its own time axis. Also, it allows a ``BankModel`` instance to 
 activate processes and to start the execution of a simulation on its time axis.
 
-Lines 17 to 21 define a ``run`` method; when called, it results in
-the execution of a ``BankModel`` instance, i.e. the performance of
-a simulation experiment. Line 18 initializes this
-simulation, i.e. it creates a new event list. L.19 creates a ``Customer``
-object. The parameter assignment ``sim = self`` ties the customer 
-instance to this and only this simulation. The customer does not exist
-outside this simulation. L.20 activates the customer's ``visit`` process (PEM). 
-Finally the call of ``simulate(until=maxTime)`` in line 24
-starts the simulation. It will run until the simulation time is
-``maxTime`` unless stopped beforehand either by the
-``stopSimulation()`` command or by running out of events to execute
-(as will happen here). ``maxTime`` was set to ``100.0`` in line
-25.
+Lines 17 to 21 define a ``run`` method; when called, it results in the
+execution of a ``BankModel`` instance, i.e. the performance of a
+simulation experiment. Line 18 initializes this simulation, i.e. it
+creates a new event list. L.19 creates a ``Customer`` object. The
+parameter assignment ``sim = self`` ties the customer instance to this
+and only this simulation. The customer does not exist outside this
+simulation. L.20 activates the customer's ``visit`` process (PEM).
+Finally the call of ``simulate(until=maxTime)`` in line 24 starts the
+simulation. It will run until the simulation time is ``maxTime``
+unless stopped beforehand either by the ``stopSimulation()`` command
+or by running out of events to execute (as will happen
+here). ``maxTime`` was set to ``100.0`` in line 25.
 
 .. note::
 
-    If model classes like the``BankModel`` are to be given any other attributes, they
-    must have an ``__init__`` method in which these attributes are assigned
-    with the syntax ``self.attrib1 = . . .``. Such an ``__init__``
-    method must first call ``Simulation.__init__(self)`` to also initialize the
+    If model classes like the``BankModel`` are to be given any other
+    attributes, they must have an ``__init__`` method in which these
+    attributes are assigned with the syntax ``self.attrib1 =
+    . . .``. Such an ``__init__`` method must first call
+    ``Simulation.__init__(self)`` to also initialize the
     ``Simulation`` class from which the model inherits.
 
 The simulation model is executed by line 32. ``BankModel()`` constructs the
@@ -164,72 +179,8 @@ model, and ``.run()`` executes it. This is just a short form of::
     bM = BankModel()
     bM.run()
 
-..
-    We define a ``Customer`` class derived from the SimPy ``Process``
-    class. We create a ``Customer`` object, ``c`` who arrives at the bank
-    at simulation time ``5.0`` and leaves after a fixed time of ``10.0``
-    minutes.
-
-    Examine the following listing which is a complete runnable Python
-    script, except for the line numbers.  We use comments to divide the
-    script up into sections. This makes for clarity later when the
-    programs get more complicated.  Line 1 is a normal Python
-    documentation string; line 2 imports the SimPy simulation code.
-
 .. index:: 
    pair: PEM; Process Execution Method
-
-..
-    The ``Customer`` class definition, lines 6-12, defines our
-    customer class and has the required generator method (called
-    ``visit``) (line 9) having a ``yield`` statement (line
-    11)). Such a method is called a Process Execution Method (PEM) in
-    SimPy.
-
-    The customer's ``visit`` PEM, lines 9-12, models his
-    activities.  When he arrives (it will turn out to be a 'he' in this
-    model), he will print out the simulation time, ``now()``, and his name
-    (line 10). The function ``now()`` can be used at any time in the
-    simulation to find the current simulation time though it cannot be
-    changed by the programmer. The customer's name will be set when the
-    customer is created later in the script (line 22).
-
-    He then stays in the bank for a fixed simulation time ``timeInBank``
-    (line 11).  This is achieved by the ``yield
-    hold,self,timeInBank`` statement.  This is the first of the special
-    simulation commands that ``SimPy`` offers.
-
-    After a simulation time of ``timeInBank``, the program's execution
-    returns to the line after the ``yield`` statement, line 12. The
-    customer then prints out the current simulation time and his
-    name. This completes the declaration of the ``Customer`` class.
-
-    Line 21 calls ``initialize()`` which sets up the simulation
-    system ready to receive ``activate`` calls. In line 22, we create
-    a customer, ``c``, with name ``Klaus``. All SimPy Processes have a
-    ``name`` attribute. We ``activate`` ``Klaus`` in line 23
-    specifying the object (``c``) to be activated, the call of the action
-    routine (``c.visit(timeInBank = 10.0)``) and that it is to be activated
-    at time  5 (``at = 5.0``). This will activate
-    ``Klaus`` exactly ``5`` minutes after the current time, in this case
-    after the start of the simulation at ``0.0``. The call of an action
-    routine such as ``c.visit`` can specify the values of arguments, here
-    the ``timeInBank``.
-
-    Finally the call of ``simulate(until=maxTime)`` in line 24 will
-    start the simulation. This will run until the simulation time is
-    ``maxTime`` unless stopped beforehand either by the
-    ``stopSimulation()`` command or by running out of events to execute
-    (as will happen here). ``maxTime`` was set to ``100.0`` in line
-    16.
-
-
-..
-    Though we do not do it here, it is also possible to define an
-    ``__init__()`` method for a ``Process`` if you need to give the
-    customer any attributes.  Bear in mind that such an ``__init__``
-    method must first call ``Process.__init__(self)`` and can then
-    initialize any instance variables needed.
 
 
 .. literalinclude:: bankprograms_OO/bank01_OO.py
