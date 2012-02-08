@@ -1,6 +1,6 @@
-=============================================================
-The Bank: Examples of SimPy Simulation
-=============================================================
+====================================
+The Bank
+====================================
 
 .. highlight:: python
    :linenothreshold: 5  
@@ -40,7 +40,7 @@ Before attempting to use SimPy you should be familiar with the Python_
 language. In particular you should be able to use *classes*. Python is
 free and available for most machine types. You can find out more about
 it at the `Python web site`_.  SimPy is compatible with Python version
-2.6 and later.
+2.6 and later including Python 3.
 
 .. _Python: http://www.Python.org
 .. _`Python web site`: http://www.Python.org
@@ -76,7 +76,7 @@ minutes.
 Examine the following listing which is a complete runnable Python
 script, except for the line numbers.  We use comments to divide the
 script up into sections. This makes for clarity later when the
-programs get more complicated. At line #1 is a normal Python
+programs get more complicated. At #1 is a normal Python
 documentation string; #2 imports the SimPy simulation code.
 
 .. index:: 
@@ -384,8 +384,19 @@ with the following output:
    
 .. ---------------------------------------------------------------
 
+
+.. raw:: latex
+
+   \newpage
+
+
+==================================
+Service Counters
+==================================
 .. index:: 
    pair: Resource; queue
+
+We introduce a service counter at the Bank using a SimPy Resource.
 
 .. index:: bank07, Service counter
 
@@ -413,27 +424,26 @@ which, in turn, provides it to each customer it creates and activates
 The actions involving the service counter, ``k``, in the customer's
 PEM are:
  
-- the ``yield request`` statement in line #3. If the server is
+- the ``yield request`` statement at #3. If the server is
   free then the customer can start service immediately and the code
-  moves on to line  #4. If the server is busy, the customer is
+  moves on to #4. If the server is busy, the customer is
   automatically queued by the  Resource. When it eventually comes
-  available the PEM moves on to line #4.  
+  available the PEM moves on to #4.  
 
-- the ``yield hold`` statement in line  #5 where the operation of
+- the ``yield hold`` statement at #5 where the operation of
   the service counter is modelled. Here the service time is a fixed
   ``timeInBank``.  During this period the customer is being served.
 
-- the ``yield release`` statement in line  #6. The current
+- the ``yield release`` statement at #6. The current
   customer completes service and the service counter becomes available
   for any remaining customers in the queue.
 
-Observe that the service counter is used with the pattern (``yield
-request..``; ``yield hold..``; ``yield release..``).
+Observe that the service counter is used with the pattern (``yield request..``; ``yield hold..``; ``yield release..``).
 
 To show the effect of the service counter on the activities of the
-customers, I have added line #2 to record when the customer
-arrived and line #4 to record the time between arrival in the
-bank and starting service. Line #4 is *after* the ``yield
+customers, I have added #2 to record when the customer
+arrived and #4 to record the time between arrival in the
+bank and starting service. #4 is *after* the ``yield
 request`` command and will be reached only when the request is
 satisfied. It is *before* the ``yield hold`` that corresponds to the
 start of service. The variable ``wait`` will record how long the
@@ -447,7 +457,7 @@ the bank before starting service.
    
 Examining the trace we see that the first, and last, customers get instant
 service but the others have to wait. We still only have five customers
-(line #4) so we cannot draw general conclusions.
+(#7) so we cannot draw general conclusions.
 
 .. literalinclude:: bankprograms/bank07.out
    
@@ -465,14 +475,14 @@ service counter but make the customer service time a random
 variable. As is traditional in the study of simple queues we first
 assume an exponential service time and set the mean to ``timeInBank``.
 
-The service time random variable, ``tib``, is generated in line
-#1 and used in line  #2. The argument to be used in the call
+The service time random variable, ``tib``, is generated at
+#1 and used at #2. The argument to be used in the call
 of ``expovariate`` is not the mean of the distribution,
 ``timeInBank``, but is the rate ``1/timeInBank``.
 
 We have also collected together a number of constants by defining a
 number of appropriate variables and giving them values. These are in
-lines  #3 to  #4.
+lines between marks #3 and #4.
 
 .. literalinclude:: bankprograms/bank08.py
    
@@ -503,9 +513,6 @@ separate isolated queues. We will not look at jockeying.
 
 .. index::  Resource, several counters, bank09
 
-Several Counters but a Single Queue
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
 
 Here we model a bank whose customers arrive randomly and are to be
 served at a group of counters, taking a random time for service, where
@@ -513,7 +520,7 @@ we assume that waiting customers form a single first-in first-out
 queue.
 
 The *only* difference between this model and the single-server model
-is in line #1. We have provided two counters by increasing the
+is at #1. We have provided two counters by increasing the
 capacity of the ``counter`` resource to 2. These *units* of the
 resource correspond to the two counters. Because both clerks cannot be
 called ``Karen``, we have used a general name of ``Clerk``.
@@ -538,17 +545,16 @@ Several Counters with individual queues
 Each counter now has its own queue.  The programming is more
 complicated because the customer has to decide which one to
 join. The obvious technique is to make each counter a separate
-resource and it is useful to make a list of resource objects (line
-#7).
+resource and it is useful to make a list of resource objects (#7).
 
 In practice, a customer will join the shortest queue.  So we define
-a Python function, ``NoInSystem(R)`` (lines #1 to #2) to
+a Python function, ``NoInSystem(R)`` (#1 to #2) to
 return the sum of the number waiting and the number being served for
-a particular counter, ``R``. This function is used in line #3 to
+a particular counter, ``R``. This function is used at #3 to
 list the numbers at each counter. It is then easy to find which
 counter the arriving customer should join. We have also modified the
-trace printout, line #4 to display the state of the system when
-the customer arrives. We choose the shortest queue in lines
+trace printout, #4 to display the state of the system when
+the customer arrives. We choose the shortest queue at
 #5 to #6 (using the variable ``choice``).
 
 The rest of the program is the same as before.
@@ -566,10 +572,213 @@ the relative efficiencies of the two systems.
    
 .. ---------------------------------------------------------------
 
+.. raw:: latex
+
+   \newpage
+
+==================================
+Customer's Priority
+==================================
+
+.. index:: priority
+
+In Many situations there is a system of priority service. Those
+customers with hight priority are served first, those with low
+priority must wait. In some cases, preemptive priority will even allow
+a high-priority customer to interrupt the service of one with a lower
+priority.
+
+Priority Customers
+-------------------
+
+SimPy implements priority requests with an extra numerical priority
+argument in the ``yield request`` command, higher values meaning
+higher priority. For this to operate, the requested Resource must have
+been defined with ``qType=PriorityQ``.
+
+In the first example, we modify the program with random arrivals, one
+counter, and a fixed service time with the addition of a high priority
+customer. Warning: The ``seed()`` value has been changed to ``787878``
+to make the story more exciting. To make things even more confusing,
+your results may be different from those here because the ``random``
+module gives different results for Python 2.x and 3.x.,
+
+The main modifications are to the definition of the ``counter`` where
+we change the ``qType`` and to the ``yield request`` command in the
+``visit`` PEM of the customer. We must provide each customer with a
+priority. Since the default is ``priority=0`` this is easy for most of
+them.
+
+To observe the priority in action, while all other customers have the
+default priority of 0, at labels #5 and #6 we create and
+activate one special customer, ``Guido``, with priority 100 who
+arrives at time ``23.0``.
+
+The ``visit`` customer method has a new parameter, ``P`` (at label
+#3), which allows us to set the customer priority.
+
+At #4, ``counter`` is defined with ``qType=PriorityQ`` so
+that we can request it with priority (at #3) using the
+statement ``yield request,self,counter,P``
+
+At label #2, we now print out the number of customers waiting when each
+customer arrives.
+
+
+.. literalinclude:: bankprograms/bank20.py
+
+The resulting output is as follows. The number of customers in the
+queue just as each arrives is displayed in the trace. That count does
+not include any customer in service. 
+
+.. literalinclude:: bankprograms/bank20.out
+
+.. index:: random arrival, bank20
+
+Reading carefully one can see that when ``Guido`` arrives
+``Customer00`` has been served and left at ``12.000``, ``Customer01``
+is in service and Customer02 is waiting in the queue. ``Guido``
+has priority over any waiting customers and is served
+before the at ``24.083``. When ``Guido`` leaves at ``36.083``,
+``Customer02`` starts service having waited ``15.873`` minutes.
+
+
+A Priority Customer with preemption
+-----------------------------------
+
+.. index:: 
+   single: priority: preemption
+   single: bank23
+
+Now we allow ``Guido`` to have preemptive priority. He will displace
+any customer in service when he arrives. That customer will resume
+when ``Guido`` finishes (unless higher priority customers
+intervene). It requires only a change to one line of the program,
+adding the argument, ``preemptable=True`` to the ``Resource``
+statement at label #1.
+
+.. literalinclude:: bankprograms/bank23.py
+   
+Though ``Guido`` arrives at the same time, ``23.000``, he no longer
+has to wait and immediately goes into service, displacing the
+incumbent, ``Customer01``. That customer had already completed
+``23.000-12.083 = 10.917`` minutes of his service. When ``Guido``
+finishes at ``36.083``, ``Customer01`` resumes service and takes
+``36.083-35.000 = 1.083`` minutes to finish. His total service time
+is the  same as before (``12.000`` minutes).
+
+.. literalinclude:: bankprograms/bank23.out
+   
+.. raw:: latex
+
+   \newpage
+
+.. index:: balking, reneging, abandoning (reneging)
+
+==================================
+Balking and Reneging Customers
+==================================
+
+Balking occurs when a customer refuses to join a queue if it is too
+long. Reneging (or, better, abandonment) occurs if an impatient
+customer gives up while still waiting and before being served.
+
+Balking Customers
+-----------------
+
+.. index:: 
+   single: balking
+   single: bank24
+
+Another term for a system with balking customers is one where "blocked
+customers" are "cleared", termed by engineers a BCC system. This is
+very convenient analytically in queueing theory and formulae developed
+using this assumption are used extensively for planning communication
+systems. The easiest case is when no queueing is allowed.
+
+As an example let us investigate a BCC system with a single server but
+the waiting space is limited. We will estimate the rate of balking
+when the maximum number in the queue is set to 1. On arrival into the
+system the customer must first check to see if there is room. We will
+need the number of customers in the system or waiting. We could keep a
+count, incrementing when a customer joins the queue or, since we have
+a Resource, use the length of the Resource's ``waitQ``. Choosing the
+latter we test (at label #1). If there is not enough room, we balk,
+incrementing a Class variable ``Customer.numBalking`` at line 34 to
+get the total number balking during the run.
+
+
+.. literalinclude:: bankprograms/bank24.py
+   
+
+The resulting output for a run of this program showing balking
+occurring is given below:
+
+.. literalinclude:: bankprograms/bank24.out
+   
+When ``Customer02`` arrives, numbers 00 is already in service and 01
+is waiting. There is no room so 02 balks. In fact another customer,
+``Customer03`` arrives and balks before number 00 is finished.
+
+The balking pattern for python 2.x is different.
+
+.. index:: 
+   single: reneging
+   single: abandoning
+   single: bank21
+
+Reneging or abandoning
+----------------------
+
+Often in practice an impatient customer will leave the queue before
+being served. SimPy can model this *reneging* behaviour using a
+*compound yield statement*. In such a statement there are two
+yield clauses. An example is::
+
+    yield (request,self,counter),(hold,self,maxWaitTime)
+
+The first tuple of this statement is the usual ``yield request``,
+asking for a unit of ``counter`` Resource. The process will either get
+the unit immediately or be queued by the Resource. The second tuple is
+a reneging clause which has the same syntax as a ``yield hold``. The
+requesting process will renege if the wait exceeds ``maxWaitTime``.
+
+There is a complication, though. The requesting PEM must discover what
+actually happened. Did the process get the resource or did it
+renege? This involves a *mandatory* test of ``self.acquired(``\ 
+*resource*\
+``)``. In our example, this test is at label #1.
+
+.. literalinclude:: bankprograms/bank21.py
+   
+
+
+.. literalinclude:: bankprograms/bank21.out
+   
+
+``Customer02`` arrives at 16.016 but has only 12 minutes
+patience. After that time in the queue (at time 28.016) he abandons
+the queue to leave 03 to take his place. 04 also abandons.
+
+The reneging pattern for python 2.x is different due to a different
+expovariate implementation.
+
+
 .. index:: Monitors, Gathering statistics, statistics
 
-Monitors and Gathering Statistics
+==================================
+Gathering Satistics
+==================================
+
+SimPy Monitors which allow statistics to be gathered and simple
+summaries calculated.
+
+The Bank with a Monitor
 -------------------------------------
+
+.. index:: 
+  pair: Monitored; queue
+  single: bank11
 
 The traces of output that have been displayed so far are valuable for
 checking that the simulation is operating correctly but would become
@@ -589,16 +798,6 @@ averages: the ``Monitor`` and ``Tally`` classes. The ``Monitor``
 records the values of chosen variables as time series (but see the
 comments in `Final Remarks`_).
 
-
-.. -------------------------------------------------------------
-
-.. index:: 
-   pair: Monitored; queue
-   single: bank11
-
-The Bank with a Monitor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 We now demonstrate a ``Monitor`` that records the average waiting
 times for our customers. We return to the system with random arrivals,
 random service times and a single queue and remove the old trace
@@ -608,12 +807,12 @@ read in as a program option - but that is a different story). This
 would aid in debugging and would not complicate the data analysis. We
 will run the simulations for many more arrivals.
 
-A Monitor, ``wM``, is created in line #2. It ``observes`` and
-records the waiting time mentioned in line #1.  We run
+A Monitor, ``wM``, is created at #2. It ``observes`` and
+records the waiting time mentioned at #1.  We run
 ``maxNumber=50`` customers (in the call of ``generate`` in line
 #3) and have increased ``maxTime`` to ``1000`` minutes. Brief
 statistics are given by the Monitor methods ``count()`` and ``mean()``
-in line #4.
+at #4.
 
 .. literalinclude:: bankprograms/bank11.py
    
@@ -627,8 +826,32 @@ different random number seeds. The result of this run (using Python 3.2) is:
 .. literalinclude:: bankprograms/bank11.out
 
 Result for Python 2.x is given in Appendix A.
-   
-.. -------------------------------------------------------------
+
+Monitoring a Resource
+---------------------
+
+Now consider observing the number of customers waiting or executing in
+a Resource. Because of the need to ``observe`` the value after the
+change but at the same simulation instant, it is impossible to use the
+length of the Resource's ``waitQ`` directly with a Monitor defined
+outside the Resource. Instead Resources can be set up with built-in
+Monitors.
+
+Here is an example using a Monitored Resource. We intend to observe
+the average number waiting and active in the ``counter``
+resource. ``counter`` is defined at #1 and we have set
+``monitored=True``. This establishes two Monitors: ``waitMon``, to
+record changes in the numbers waiting and ``actMon`` to record changes
+in the numbers active in the ``counter``. We need make no further
+change to the operation of the program as monitoring is then
+automatic.  No ``observe`` calls are necessary.
+
+At the end of the run in the ``model`` function, we calculate the
+``timeAverage`` of both ``waitMon`` and ``actMon`` and return them
+from the ``model`` call (at #2). These can then be printed at
+the end of the program (at #3).
+
+.. literalinclude:: bankprograms/bank15.py
 
 .. index:: 
    single: Multiple runs, replications, bank12
@@ -636,7 +859,7 @@ Result for Python 2.x is given in Appendix A.
    pair: model; function  
 
 Multiple runs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------
 
 To get a number of independent measurements we must replicate the runs
 using different random number seeds. Each replication must be
@@ -675,12 +898,16 @@ steady-state.
    Advanced synchronization/scheduling commands
 
  
+==================================
 Final Remarks
--------------------------------------
- 
+==================================
+
 This introduction is too long and the examples are getting
 longer. There is much more to say about simulation with *SimPy* but no
 space. I finish with a list of topics for further study:
+
+Topics not yet mentioned
+------------------------
  
 * **GUI input**. Graphical input of simulation parameters could be an
   advantage in some cases. *SimPy* allows this and programs using
@@ -726,8 +953,11 @@ References
 - SimPy website: http://sourceforge.net/projects/simpy
 
 
+==================================
 Appendix A
--------------------------------------
+==================================
+
+Update with new examples I moved here in the reorganisation
 
 With Python 3 the definition of expovariate changed. In some cases
 this was back ported to some distributions of Python 2.7.
