@@ -12,24 +12,22 @@ The Bank
 Introduction
 -------------------------------------
 
-`SimPy`_ is used to develop a simple simulation of a bank with a
-number of tellers.  This Python package provides *Processes* to model
-active components such as messages, customers, trucks, and planes. It
-has three classes to model facilities where congestion might occur:
-*Resources* for ordinary queues, *Levels* for the supply of quantities
-of material, and *Stores* for collections of individual items. Only
-examples of *Resources* are described here. It also provides
-*Monitors* and *Tallys* to record data like queue lengths and delay
-times and to calculate simple averages.  It uses the standard Python
-random package to generate random numbers.
+In this tutorial, `SimPy`_ is used to develop a simple simulation of a
+bank with a number of tellers.  This Python package provides
+*Processes* to model active components such as messages, customers,
+trucks, and planes. It has three classes to model facilities where
+congestion might occur: *Resources* for ordinary queues, *Levels* for
+the supply of quantities of material, and *Stores* for collections of
+individual items. Only examples of *Resources* are described here. It
+also provides *Monitors* and *Tallys* to record data like queue
+lengths and delay times and to calculate simple averages.  It uses the
+standard Python random package to generate random numbers.
 
 Starting with SimPy 2.0 an object-oriented programmer's interface was
-added to the package. It is quite compatible with the current
-procedural approach which is used in the models described here.
-
+added to the package. It is compatible with the current procedural
+approach which is used in most of the models described here.
 
 .. _`SimPy`: http://simpy.sourceforge.net/
-
 
 SimPy can be obtained from: http://sourceforge.net/projects/simpy.
 The examples run with SimPy version 1.5 and later.  This tutorial is
@@ -74,10 +72,10 @@ at simulation time ``5.0`` and leaves after a fixed time of ``10.0``
 minutes.
 
 Examine the following listing which is a complete runnable Python
-script, except for the line numbers.  We use comments to divide the
-script up into sections. This makes for clarity later when the
-programs get more complicated. At #1 is a normal Python
-documentation string; #2 imports the SimPy simulation code.
+script.  We use comments to divide the script up into sections. This
+makes for clarity later when the programs get more complicated. At #1
+is a normal Python documentation string; #2 imports the SimPy
+simulation code.
 
 .. index:: 
    pair: PEM; Process Execution Method
@@ -704,21 +702,20 @@ need the number of customers in the system or waiting. We could keep a
 count, incrementing when a customer joins the queue or, since we have
 a Resource, use the length of the Resource's ``waitQ``. Choosing the
 latter we test (at label #1). If there is not enough room, we balk,
-incrementing a Class variable ``Customer.numBalking`` at line 34 to
+incrementing a Class variable ``Customer.numBalking`` at #2 to
 get the total number balking during the run.
-
 
 .. literalinclude:: bankprograms/bank24.py
    
-
 The resulting output for a run of this program showing balking
 occurring is given below:
 
 .. literalinclude:: bankprograms/bank24.out
    
-When ``Customer02`` arrives, numbers 00 is already in service and 01
-is waiting. There is no room so 02 balks. In fact another customer,
-``Customer03`` arrives and balks before number 00 is finished.
+When ``Customer02`` arrives, ``Customer00`` is already in service and
+``Customer01`` is waiting. There is no room so ``Customer02``
+balks. In fact another customer, ``Customer03`` arrives and balks
+before ``Customer00`` is finished.
 
 The balking pattern for python 2.x is different.
 
@@ -767,10 +764,10 @@ expovariate implementation.
 .. index:: Monitors, Gathering statistics, statistics
 
 ==================================
-Gathering Satistics
+Gathering Statistics
 ==================================
 
-SimPy Monitors which allow statistics to be gathered and simple
+SimPy Monitors allow statistics to be gathered and simple
 summaries calculated.
 
 The Bank with a Monitor
@@ -939,9 +936,9 @@ Topics not yet mentioned
 Acknowledgements
 -------------------------------------
 
-I thank Klaus Muller, Bob Helmbold, Mukhlis Matti and other developers
-and users of SimPy for improving this document by sending their
-comments. I would be grateful for further suggestions or
+I thank Klaus Muller, Bob Helmbold, Mukhlis Matti, Karen Turner and
+other developers and users of SimPy for improving this document by
+sending their comments. I would be grateful for further suggestions or
 corrections. Please send them to: *vignaux* at
 *users.sourceforge.net*.
  

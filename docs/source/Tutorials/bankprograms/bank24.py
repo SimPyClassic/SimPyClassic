@@ -20,18 +20,22 @@ class Customer(Process):
 
     def visit(self, b):
         arrive = now()
-        print("%8.4f %s: Here I am " % (now(), self.name))
-        if len(b.waitQ) < maxInQueue:                            #1
+        print("%8.4f %s: Here I am " %
+              (now(), self.name))
+        if len(b.waitQ) < maxInQueue:                    #1
             yield request, self, b
             wait = now() - arrive
-            print("%8.4f %s: Wait %6.3f" % (now(), self.name, wait))
+            print("%8.4f %s: Wait %6.3f" %
+                  (now(), self.name, wait))
             tib = expovariate(1.0 / timeInBank)
             yield hold, self, tib
             yield release, self, b
-            print("%8.4f %s: Finished  " % (now(), self.name))
+            print("%8.4f %s: Finished  " %
+                  (now(), self.name))
         else:
-            Customer.numBalking += 1
-            print("%8.4f %s: BALKING   " % (now(), self.name))
+            Customer.numBalking += 1                       #2
+            print("%8.4f %s: BALKING   " %
+                  (now(), self.name))
 
 ## Experiment data -------------------------------
 
@@ -53,8 +57,9 @@ k = Resource(capacity=numServers,
 
 initialize()
 s = Source('Source')
-activate(s, s.generate(number=maxNumber, meanTBA=ARRint,
-                         resource=k), at=0.0)
+activate(s, s.generate(number=maxNumber,
+                       meanTBA=ARRint,
+                       resource=k), at=0.0)
 simulate(until=maxTime)
 
 ## Results -----------------------------------------
