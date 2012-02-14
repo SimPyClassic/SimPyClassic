@@ -68,7 +68,7 @@ A simulation should always be developed to answer a specific question;
 in these models we investigate how changing the number of bank servers
 or tellers might affect the waiting time for customers.
 
-.. index:: bank01
+.. index:: bank01_OO
 
 
 A Customer arriving at a fixed time
@@ -195,7 +195,7 @@ active.
 .. literalinclude:: bankprograms/bank01.out
    
 
-.. index:: random arrival, bank05
+.. index:: random arrival, bank05_OO
 
 A Customer arriving at random
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,7 +249,7 @@ The display looks pretty untidy. In the next example I will try and
 make it tidier.
 
 
-.. index:: bank02
+.. index:: bank02_OO
 
 More Customers
 -------------------------------------
@@ -313,7 +313,7 @@ call.
 
 .. -------------------------------------------------------------
 
-.. index:: bank03
+.. index:: bank03_OO
 
 Many Customers
 ~~~~~~~~~~~~~~~~~~~
@@ -396,7 +396,7 @@ The output is:
 Many Random Customers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. index:: bank06
+.. index:: bank06_OO
 
 
 We now extend this model to allow arrivals at random. In simulation this
@@ -487,7 +487,7 @@ process where it had been blocked.
 
 .. ---------------------------------------------------------------
 
-.. index:: bank07, Service counter
+.. index:: bank07_OO, Service counter
 
 One Service counter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -587,7 +587,7 @@ cannot draw general conclusions.
 
 
 .. index:: 
-   Resource, Random service time, bank08
+   Resource, Random service time, bank08_OO
    pair: M/M/1; queue
 
 .. ---------------------------------------------------------------
@@ -656,7 +656,7 @@ separate isolated queues. We will not look at jockeying.
 
 .. ---------------------------------------------------------------
 
-.. index::  Resource, several counters, bank09
+.. index::  Resource, several counters, bank09_OO
 
 Several Counters but a Single Queue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -699,7 +699,7 @@ conclusions.
 .. ---------------------------------------------------------------
 .. index:: 
    pair: Several queues; Resource
-   single: bank10
+   single: bank10_OO
 
 Several Counters with individual queues
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -789,7 +789,7 @@ records the values of chosen variables as time series.
 
 .. index:: 
    pair: Monitored; queue
-   single: bank11
+   single: bank11_OO
 
 The Bank with a Monitor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -841,7 +841,7 @@ random number seeds. The result of this run is:
 .. -------------------------------------------------------------
 
 .. index:: 
-   single: Multiple runs, replications, bank12
+   single: Multiple runs, replications, bank12_OO
    single: Random Number Seed
    pair: model; function  
 

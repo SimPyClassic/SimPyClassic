@@ -171,7 +171,7 @@ not include any customer in service.
 
 .. literalinclude:: bankprograms/bank20.out
 
-.. index:: random arrival, bank20
+.. index:: random arrival, bank20_OO
 
 Reading carefully one can see that when ``Guido`` arrives
 ``Customer00`` has been served and left at ``12.000``), ``Customer01``
@@ -186,7 +186,7 @@ Priority Customers with preemption
 
 .. index::
    single: priority: preemption
-   single: bank23
+   single: bank23_OO
 
 Now we allow ``Guido`` to have preemptive priority. He will displace
 any customer in service when he arrives. That customer will resume
@@ -229,7 +229,7 @@ Balking Customers
 
 .. index::
    single: balking
-   single: bank24
+   single: bank24_OO
 
 Another term for a system with balking customers is one where "blocked
 customers" are "cleared", termed by engineers a BCC system. This is

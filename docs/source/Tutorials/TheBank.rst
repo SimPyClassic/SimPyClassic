@@ -45,7 +45,7 @@ it at the `Python web site`_.  SimPy is compatible with Python version
 
 
 
-A Customer arriving at a fixed time
+A customer arriving at a fixed time
 -----------------------------------
 
 In this tutorial we model a simple bank with customers arriving at
@@ -54,8 +54,8 @@ producing a running program at each stage. The programs we develop are
 available without line numbers and ready to go, in the
 ``bankprograms`` directory. Please copy them, run them and improve
 them - and in the tradition of open-source software suggest your
-modifications to the SimPy users list. Object-orented versions of all
-the models are included in the bankprobrams_OO sub directory.
+modifications to the SimPy users list. Object-Oriented versions of all
+the models are included in the bankprograms_OO sub directory.
 
 A simulation should always be developed to answer a specific question;
 in these models we investigate how changing the number of bank servers
@@ -141,7 +141,7 @@ active.
 .. literalinclude:: bankprograms/bank01.out
 
 
-.. rewritten section for inclusion in the main documenta
+.. rewritten section for inclusion in the main document
 
 .. index:: bank01_OO, object-oriented style
  
@@ -154,7 +154,7 @@ for a time and then leaves.  There is no queueing. The arrival time
 and the time he spends in the bank are fixed.
   
 The key point is that we create a ``Simulation`` object and run
-that. In the program at label #1 we import a new class, ``Simulation``
+that. In the program at #1 we import a new class, ``Simulation``
 together with the familiar ``Process`` class, and the ``hold``
 verb. Here we are using the recommended explicit form of import rather
 than the deprecated ``import *``.
@@ -201,8 +201,8 @@ here). ``maxTime`` is set to ``100.0`` at #6.
     ``Simulation.__init__(self)`` to also initialize the
     ``Simulation`` class from which the model inherits.
 
-A new, independent simulation object, ``mymodel``, is created at
-label #7. Its ``run`` method is executed at label #8.
+A new, independent simulation object, ``mymodel``, is created
+at #7. Its ``run`` method is executed at #8. 
 
 .. index:: 
    pair: PEM; Process Execution Method
@@ -220,11 +220,13 @@ active.
 .. literalinclude:: bankprograms_OO/bank01_OO.out
    
 
+All of The Bank programs have been written in both the procedural and
+object orientated styles.
 
    
 .. index:: random arrival, bank05
 
-A Customer arriving at random
+A customer arriving at random
 -----------------------------------
 
 Now we extend the model to allow our customer to arrive at a random
@@ -260,7 +262,7 @@ The output for Python 2, for all examples, is given in Appendix A.
 
 .. index:: bank02
 
-More Customers
+More customers
 -------------------------------------
 
 Our simulation does little so far.  To consider a simulation with
@@ -300,7 +302,7 @@ call as it has run out of events.
 
 .. index:: bank03
 
-Many Customers
+Many customers
 ----------------------
 
 
@@ -344,7 +346,7 @@ The output is:
 
 .. -------------------------------------------------------------
 
-Many Random Customers
+Many random customers
 -----------------------------------
 
 .. index:: bank06
@@ -496,7 +498,7 @@ behavior.)
 
 .. ---------------------------------------------------------------
 
-Several Service Counters
+Several service counters
 -------------------------------------
 
 
@@ -537,7 +539,7 @@ conclusions.
    pair: Several queues; Resource
    single: bank10
 
-Several Counters with individual queues
+Several counters with individual queues
 -------------------------------------------
 
 Each counter now has its own queue.  The programming is more
@@ -581,12 +583,12 @@ Customer's Priority
 .. index:: priority
 
 In Many situations there is a system of priority service. Those
-customers with hight priority are served first, those with low
+customers with high priority are served first, those with low
 priority must wait. In some cases, preemptive priority will even allow
 a high-priority customer to interrupt the service of one with a lower
 priority.
 
-Priority Customers
+Priority customers
 -------------------
 
 SimPy implements priority requests with an extra numerical priority
@@ -608,18 +610,18 @@ priority. Since the default is ``priority=0`` this is easy for most of
 them.
 
 To observe the priority in action, while all other customers have the
-default priority of 0, at labels #5 and #6 we create and
+default priority of 0, at between #5 and #6 we create and
 activate one special customer, ``Guido``, with priority 100 who
 arrives at time ``23.0``.
 
-The ``visit`` customer method has a new parameter, ``P`` (at label
+The ``visit`` customer method has a new parameter, ``P`` (at
 #3), which allows us to set the customer priority.
 
 At #4, ``counter`` is defined with ``qType=PriorityQ`` so
 that we can request it with priority (at #3) using the
 statement ``yield request,self,counter,P``
 
-At label #2, we now print out the number of customers waiting when each
+At #2, we now print out the number of customers waiting when each
 customer arrives.
 
 
@@ -641,7 +643,7 @@ before the at ``24.083``. When ``Guido`` leaves at ``36.083``,
 ``Customer02`` starts service having waited ``15.873`` minutes.
 
 
-A Priority Customer with preemption
+A priority customer with preemption
 -----------------------------------
 
 .. index:: 
@@ -653,7 +655,7 @@ any customer in service when he arrives. That customer will resume
 when ``Guido`` finishes (unless higher priority customers
 intervene). It requires only a change to one line of the program,
 adding the argument, ``preemptable=True`` to the ``Resource``
-statement at label #1.
+statement at #1.
 
 .. literalinclude:: bankprograms/bank23.py
    
@@ -681,7 +683,7 @@ Balking occurs when a customer refuses to join a queue if it is too
 long. Reneging (or, better, abandonment) occurs if an impatient
 customer gives up while still waiting and before being served.
 
-Balking Customers
+Balking customers
 -----------------
 
 .. index:: 
@@ -701,7 +703,7 @@ system the customer must first check to see if there is room. We will
 need the number of customers in the system or waiting. We could keep a
 count, incrementing when a customer joins the queue or, since we have
 a Resource, use the length of the Resource's ``waitQ``. Choosing the
-latter we test (at label #1). If there is not enough room, we balk,
+latter we test (at #1). If there is not enough room, we balk,
 incrementing a Class variable ``Customer.numBalking`` at #2 to
 get the total number balking during the run.
 
@@ -744,7 +746,7 @@ There is a complication, though. The requesting PEM must discover what
 actually happened. Did the process get the resource or did it
 renege? This involves a *mandatory* test of ``self.acquired(``\ 
 *resource*\
-``)``. In our example, this test is at label #1.
+``)``. In our example, this test is at #1.
 
 .. literalinclude:: bankprograms/bank21.py
    
@@ -770,7 +772,7 @@ Gathering Statistics
 SimPy Monitors allow statistics to be gathered and simple
 summaries calculated.
 
-The Bank with a Monitor
+The bank with a monitor
 -------------------------------------
 
 .. index:: 
@@ -795,6 +797,9 @@ averages: the ``Monitor`` and ``Tally`` classes. The ``Monitor``
 records the values of chosen variables as time series (but see the
 comments in `Final Remarks`_).
 
+.. index:: 
+   single: recording average waiting times
+
 We now demonstrate a ``Monitor`` that records the average waiting
 times for our customers. We return to the system with random arrivals,
 random service times and a single queue and remove the old trace
@@ -806,7 +811,7 @@ will run the simulations for many more arrivals.
 
 A Monitor, ``wM``, is created at #2. It ``observes`` and
 records the waiting time mentioned at #1.  We run
-``maxNumber=50`` customers (in the call of ``generate`` in line
+``maxNumber=50`` customers (in the call of ``generate`` at
 #3) and have increased ``maxTime`` to ``1000`` minutes. Brief
 statistics are given by the Monitor methods ``count()`` and ``mean()``
 at #4.
@@ -824,7 +829,10 @@ different random number seeds. The result of this run (using Python 3.2) is:
 
 Result for Python 2.x is given in Appendix A.
 
-Monitoring a Resource
+.. index::
+   single: resource monitoring, bank15
+
+Monitoring a resource
 ---------------------
 
 Now consider observing the number of customers waiting or executing in
@@ -865,20 +873,20 @@ redefined for each run. We can no longer allow them to be global
 objects as we have before.
 
 We will define a function, ``model`` with a parameter ``runSeed`` so
-that the random number seed can be different for different runs (lines
-#2 to  #5). The contents of the function are the same as the
-``Model/Experiment`` section in the previous program except for one
+that the random number seed can be different for different runs (between
+between #2 and #5). The contents of the function are the same as the
+``Model/Experiment`` in bank11: `The bank with a monitor`_, except for one
 vital change.
 
 This is required since the Monitor, ``wM``, is defined inside the
-``model`` function (line  #3). A customer can no longer refer to
+``model`` function (#3). A customer can no longer refer to
 it. In the spirit of quality computer programming we will pass ``wM``
 as a function argument. Unfortunately we have to do this in two steps,
-first to the ``Source`` (line  #4) and then from the ``Source`` to
-the ``Customer`` (line  #1).
+first to the ``Source`` (#4) and then from the ``Source`` to
+the ``Customer`` (#1).
 
 ``model()`` is run for four different random-number seeds to get a set
-of replications (lines  #6 to  #7).
+of replications (between #6 and #7).
 
 .. literalinclude:: bankprograms/bank12.py
 
@@ -954,12 +962,10 @@ References
 Appendix A
 ==================================
 
-Update with new examples I moved here in the reorganisation
-
 With Python 3 the definition of expovariate changed. In some cases
 this was back ported to some distributions of Python 2.7.
 Because of this the output for the bank programs varies. This section
-just contains the older output.
+contains the older output produced by the original definition of expovariate.
 
 **A Customer arriving at a fixed time**
 
@@ -981,7 +987,7 @@ just contains the older output.
 
 .. literalinclude:: bankprograms/python2_out/bank06.out
 
-**One Service Counter**
+**A Service Counter**
 
 .. literalinclude:: bankprograms/python2_out/bank07.out
 
@@ -997,9 +1003,29 @@ just contains the older output.
 
 .. literalinclude:: bankprograms/python2_out/bank10.out
 
+**Priority Customers**
+
+.. literalinclude:: bankprograms/python2_out/bank20.out
+
+**A priority Customer with Preemption**
+
+.. literalinclude:: bankprograms/python2_out/bank23.out
+
+**Balking Customers**
+
+.. literalinclude:: bankprograms/python2_out/bank24.out
+
+**Reneging or Abandoning**
+
+.. literalinclude:: bankprograms/python2_out/bank21.out
+
 **The Bank with a Monitor**
 
 .. literalinclude:: bankprograms/python2_out/bank11.out
+
+**Monitoring a Resource**
+
+.. literalinclude:: bankprograms/python2_out/bank15.out
 
 **Multiple runs**
 
