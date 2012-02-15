@@ -3,7 +3,7 @@ The Bank
 ====================================
 
 .. highlight:: python
-   :linenothreshold: 5  
+   :linenothreshold: 5
 
 .. index::
    Monitors, Tallys, Processes,Resources, Levels, Stores
@@ -32,7 +32,7 @@ approach which is used in most of the models described here.
 SimPy can be obtained from: http://sourceforge.net/projects/simpy.
 The examples run with SimPy version 1.5 and later.  This tutorial is
 best read with the SimPy Manual or Cheatsheet at your side for
-reference. 
+reference.
 
 Before attempting to use SimPy you should be familiar with the Python_
 language. In particular you should be able to use *classes*. Python is
@@ -77,7 +77,7 @@ makes for clarity later when the programs get more complicated. At #1
 is a normal Python documentation string; #2 imports the SimPy
 simulation code.
 
-.. index:: 
+.. index::
    pair: PEM; Process Execution Method
 
 The ``Customer`` class definition at #3 defines our customer class and has
@@ -130,7 +130,7 @@ start the simulation. This will run until the simulation time is
 
 
 .. literalinclude:: bankprograms/bank01.py
-   
+
 
 The short trace printed out by the ``print`` statements shows the
 result. The program finishes at simulation time ``15.0`` because there are
@@ -144,15 +144,15 @@ active.
 .. rewritten section for inclusion in the main document
 
 .. index:: bank01_OO, object-oriented style
- 
+
 The Bank in object-oriented style
 -----------------------------------
- 
+
 Now look at the same model developed in  object-oriented style. As before
 ``Klaus`` arrives at the bank for a visit, looks around at the decor
 for a time and then leaves.  There is no queueing. The arrival time
 and the time he spends in the bank are fixed.
-  
+
 The key point is that we create a ``Simulation`` object and run
 that. In the program at #1 we import a new class, ``Simulation``
 together with the familiar ``Process`` class, and the ``hold``
@@ -188,7 +188,7 @@ list and sets the time to 0.
 self`` ties the customer instance to this and only this
 simulation. The customer does not exist outside this simulation.  The
 call of ``simulate(until=maxTime)``  at #5 starts the
-simulation. It will run until the simulation time is ``maxTime`` 
+simulation. It will run until the simulation time is ``maxTime``
 unless stopped beforehand either by the ``stopSimulation()`` command
 or by running out of events to execute (as will happen
 here). ``maxTime`` is set to ``100.0`` at #6.
@@ -202,14 +202,14 @@ here). ``maxTime`` is set to ``100.0`` at #6.
     ``Simulation`` class from which the model inherits.
 
 A new, independent simulation object, ``mymodel``, is created
-at #7. Its ``run`` method is executed at #8. 
+at #7. Its ``run`` method is executed at #8.
 
-.. index:: 
+.. index::
    pair: PEM; Process Execution Method
 
 
 .. literalinclude:: bankprograms_OO/bank01_OO.py
-   
+
 
 The short trace printed out by the ``print`` statements shows the
 result. The program finishes at simulation time ``15.0`` because there are
@@ -218,12 +218,12 @@ the customer has no more actions and no other objects or customers are
 active.
 
 .. literalinclude:: bankprograms_OO/bank01_OO.out
-   
+
 
 All of The Bank programs have been written in both the procedural and
 object orientated styles.
 
-   
+
 .. index:: random arrival, bank05
 
 A customer arriving at random
@@ -245,18 +245,18 @@ generated random variate, ``t``, is used at #4 as the ``at`` argument
 to the ``activate`` call.
 
 .. literalinclude:: bankprograms/bank05.py
-   
+
 
 The result is shown below. The customer now arrives at about
-0.64195, (or 10.58092 if you are not using Python 3). Changing the seed 
+0.64195, (or 10.58092 if you are not using Python 3). Changing the seed
 value would change that time.
 
 .. literalinclude:: bankprograms/bank05.out
-   
-The display looks pretty untidy. In the next example I will try and
-make it tidier. 
 
-If you are not using Python 3, your output may differ. 
+The display looks pretty untidy. In the next example I will try and
+make it tidier.
+
+If you are not using Python 3, your output may differ.
 The output for Python 2, for all examples, is given in Appendix A.
 
 
@@ -290,14 +290,14 @@ string formatting (at #1 and #2). The statements look
 complicated but the output is much nicer.
 
 .. literalinclude:: bankprograms/bank02.py
-   
+
 
 The trace produced by the program is shown below.  Again the
 simulation finishes before the ``400.0`` specified in the ``simulate``
 call as it has run out of events.
 
 .. literalinclude:: bankprograms/bank02.out
-   
+
 .. -------------------------------------------------------------
 
 .. index:: bank03
@@ -337,12 +337,12 @@ and each customer then operates independently of the others:
 
 
 .. literalinclude:: bankprograms/bank03.py
-   
+
 
 The output is:
 
 .. literalinclude:: bankprograms/bank03.out
-   
+
 
 .. -------------------------------------------------------------
 
@@ -377,11 +377,11 @@ input form.
 
 
 .. literalinclude:: bankprograms/bank06.py
-   
+
 with the following output:
 
 .. literalinclude:: bankprograms/bank06.out
-   
+
 .. ---------------------------------------------------------------
 
 
@@ -393,7 +393,7 @@ with the following output:
 ==================================
 Service Counters
 ==================================
-.. index:: 
+.. index::
    pair: Resource; queue
 
 We introduce a service counter at the Bank using a SimPy Resource.
@@ -423,12 +423,12 @@ which, in turn, provides it to each customer it creates and activates
 
 The actions involving the service counter, ``k``, in the customer's
 PEM are:
- 
+
 - the ``yield request`` statement at #3. If the server is
   free then the customer can start service immediately and the code
   moves on to #4. If the server is busy, the customer is
   automatically queued by the  Resource. When it eventually comes
-  available the PEM moves on to #4.  
+  available the PEM moves on to #4.
 
 - the ``yield hold`` statement at #5 where the operation of
   the service counter is modelled. Here the service time is a fixed
@@ -454,14 +454,14 @@ the bank before starting service.
 
 
 .. literalinclude:: bankprograms/bank07.py
-   
+
 Examining the trace we see that the first, and last, customers get instant
 service but the others have to wait. We still only have five customers
 (#7) so we cannot draw general conclusions.
 
 .. literalinclude:: bankprograms/bank07.out
-   
-.. index:: 
+
+.. index::
    Resource, Random service time, bank08
    pair: M/M/1; queue
 
@@ -485,11 +485,11 @@ number of appropriate variables and giving them values. These are in
 lines between marks #3 and #4.
 
 .. literalinclude:: bankprograms/bank08.py
-   
+
 And the output:
 
 .. literalinclude:: bankprograms/bank08.out
-   
+
 This model with random arrivals and exponential service times is an
 example of an M/M/1 queue and could rather easily be solved
 analytically to calculate the steady-state mean waiting time and other
@@ -526,16 +526,16 @@ resource correspond to the two counters. Because both clerks cannot be
 called ``Karen``, we have used a general name of ``Clerk``.
 
 .. literalinclude:: bankprograms/bank09.py
-   
+
 The waiting times in this model are very different from those for the
 single service counter. For example, none of the customers had to
 wait. But, again, we have observed too few customers to draw general
 conclusions.
 
 .. literalinclude:: bankprograms/bank09.out
-   
+
 .. ---------------------------------------------------------------
-.. index:: 
+.. index::
    pair: Several queues; Resource
    single: bank10
 
@@ -560,16 +560,16 @@ the customer arrives. We choose the shortest queue at
 The rest of the program is the same as before.
 
 .. literalinclude:: bankprograms/bank10.py
-   
+
 The results show how the customers choose the counter with the
 smallest number. Unlucky ``Customer03`` who joins the wrong queue has
 to wait until ``Customer01`` finishes before his service can be
 started. There are, however, too few arrivals in these runs, limited
 as they are to five customers, to draw any general conclusions about
 the relative efficiencies of the two systems.
-  
+
 .. literalinclude:: bankprograms/bank10.out
-   
+
 .. ---------------------------------------------------------------
 
 .. raw:: latex
@@ -629,7 +629,7 @@ customer arrives.
 
 The resulting output is as follows. The number of customers in the
 queue just as each arrives is displayed in the trace. That count does
-not include any customer in service. 
+not include any customer in service.
 
 .. literalinclude:: bankprograms/bank20.out
 
@@ -646,7 +646,7 @@ before the at ``24.083``. When ``Guido`` leaves at ``36.083``,
 A priority customer with preemption
 -----------------------------------
 
-.. index:: 
+.. index::
    single: priority: preemption
    single: bank23
 
@@ -658,7 +658,7 @@ adding the argument, ``preemptable=True`` to the ``Resource``
 statement at #1.
 
 .. literalinclude:: bankprograms/bank23.py
-   
+
 Though ``Guido`` arrives at the same time, ``23.000``, he no longer
 has to wait and immediately goes into service, displacing the
 incumbent, ``Customer01``. That customer had already completed
@@ -668,7 +668,7 @@ finishes at ``36.083``, ``Customer01`` resumes service and takes
 is the  same as before (``12.000`` minutes).
 
 .. literalinclude:: bankprograms/bank23.out
-   
+
 .. raw:: latex
 
    \newpage
@@ -686,7 +686,7 @@ customer gives up while still waiting and before being served.
 Balking customers
 -----------------
 
-.. index:: 
+.. index::
    single: balking
    single: bank24
 
@@ -708,12 +708,12 @@ incrementing a Class variable ``Customer.numBalking`` at #2 to
 get the total number balking during the run.
 
 .. literalinclude:: bankprograms/bank24.py
-   
+
 The resulting output for a run of this program showing balking
 occurring is given below:
 
 .. literalinclude:: bankprograms/bank24.out
-   
+
 When ``Customer02`` arrives, ``Customer00`` is already in service and
 ``Customer01`` is waiting. There is no room so ``Customer02``
 balks. In fact another customer, ``Customer03`` arrives and balks
@@ -721,7 +721,7 @@ before ``Customer00`` is finished.
 
 The balking pattern for python 2.x is different.
 
-.. index:: 
+.. index::
    single: reneging
    single: abandoning
    single: bank21
@@ -744,16 +744,16 @@ requesting process will renege if the wait exceeds ``maxWaitTime``.
 
 There is a complication, though. The requesting PEM must discover what
 actually happened. Did the process get the resource or did it
-renege? This involves a *mandatory* test of ``self.acquired(``\ 
+renege? This involves a *mandatory* test of ``self.acquired(``\
 *resource*\
 ``)``. In our example, this test is at #1.
 
 .. literalinclude:: bankprograms/bank21.py
-   
+
 
 
 .. literalinclude:: bankprograms/bank21.out
-   
+
 
 ``Customer02`` arrives at 16.016 but has only 12 minutes
 patience. After that time in the queue (at time 28.016) he abandons
@@ -775,7 +775,7 @@ summaries calculated.
 The bank with a monitor
 -------------------------------------
 
-.. index:: 
+.. index::
   pair: Monitored; queue
   single: bank11
 
@@ -797,7 +797,7 @@ averages: the ``Monitor`` and ``Tally`` classes. The ``Monitor``
 records the values of chosen variables as time series (but see the
 comments in `Final Remarks`_).
 
-.. index:: 
+.. index::
    single: recording average waiting times
 
 We now demonstrate a ``Monitor`` that records the average waiting
@@ -817,7 +817,7 @@ statistics are given by the Monitor methods ``count()`` and ``mean()``
 at #4.
 
 .. literalinclude:: bankprograms/bank11.py
-   
+
 
 The average waiting time for 50 customers in this 2-counter system is
 more reliable (i.e., less subject to random simulation effects) than
@@ -858,10 +858,14 @@ the end of the program (at #3).
 
 .. literalinclude:: bankprograms/bank15.py
 
-.. index:: 
+With the following output:
+
+.. literalinclude:: bankprograms/bank15.out
+
+.. index::
    single: Multiple runs, replications, bank12
    single: Random Number Seed
-   pair: model; function  
+   pair: model; function
 
 Multiple runs
 -------------
@@ -895,14 +899,14 @@ only operating for 50 customers so the system may not be in
 steady-state.
 
 .. literalinclude:: bankprograms/bank12.out
-   
 
-.. index:: 
+
+.. index::
    GUI input, Graphical Output,Statistical Output
    Priorities and Reneging,Other forms of Resource Facilities
    Advanced synchronization/scheduling commands
 
- 
+
 ==================================
 Final Remarks
 ==================================
@@ -913,7 +917,7 @@ space. I finish with a list of topics for further study:
 
 Topics not yet mentioned
 ------------------------
- 
+
 * **GUI input**. Graphical input of simulation parameters could be an
   advantage in some cases. *SimPy* allows this and programs using
   these facilities have been developed (see, for example, program
@@ -940,7 +944,7 @@ Topics not yet mentioned
   process synchronization by events and signals.
 
 
- 
+
 Acknowledgements
 -------------------------------------
 
@@ -949,7 +953,7 @@ other developers and users of SimPy for improving this document by
 sending their comments. I would be grateful for further suggestions or
 corrections. Please send them to: *vignaux* at
 *users.sourceforge.net*.
- 
+
 References
 -------------------------------------
 
