@@ -848,50 +848,35 @@ random number seeds. The result of this run is:
 Multiple runs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To get a number of independent measurements we must replicate the runs
-using different random number seeds. Each replication must be
-independent of previous ones so the Monitor and Resources must be
-nely generated for each run.
+This example demonstrates the power of the object-oriented
+approach. To get a number of independent measurements we must
+replicate the runs using different random number seeds. Each
+replication must be independent of previous ones both in the random
+numbers and in the data collection so capability of creating
+independent simulation models within one program is useful.
 
-``model()`` is run for several different random-number seeds to get a set
-of replications (lines 55-58). The seeds are stored in a list ``seedVals`` 
-(line 50). The ``for`` loop walks through this list and runs the model's ``run`` method
-for each entry.
+We do a standard ``from SimPy.Simulation import ...`` at #1. We define
+``Source`` and  ``Customer`` as subclasses of ```Process``. These
+differ in detail from the way they are defined in the classic
+procedure-oriented version of SimPy. Each must refer to the simulation
+environment it is running in, here the ``sim`` argument. Thus the
+current time is returned by the ``self.sim.now()`` method (at #5
 
-Note that the ``bankModel`` is only generated once (line 54). This 
-is sufficient, as the ``run`` method freshly generates an empty event list,
-a new counter resource, a new monitor, and a new source. This way, all
-iterations are independent of each other.
+We define a ``BankModel`` as a sub-class of ``Simulation`` (at #8) and
+create an object, ``mymodel``, of that class (at #14). A ``BankModel``
+object has a ``run`` method and this is used for each independent
+replication (at #16). Note that the ``BankModel`` is only generated
+once (line 54). This is sufficient, as the ``run`` method freshly
+generates an empty event list, a new counter resource, a new monitor,
+and a new source. This way, all iterations are independent of each
+other.
 
-..
-    To get a number of independent measurements we must replicate the runs
-    using different random number seeds. Each replication must be
-    independent of previous ones so the Monitor and Resources must be
-    redefined for each run. We can no longer allow them to be global
-    objects as we have before.
-
-
-    We will define a function, ``model`` with a parameter ``runSeed`` so
-    that the random number seed can be different for different runs (lines
-    40-50). The contents of the function are the same as the
-    ``Model/Experiment`` section in the previous program except for one
-    vital change.
-
-    This is required since the Monitor, ``wM``, is defined inside the
-    ``model`` function (line 43). A customer can no longer refer to
-    it. In the spirit of quality computer programming we will pass ``wM``
-    as a function argument. Unfortunately we have to do this in two steps,
-    first to the ``Source`` (line 48) and then from the ``Source`` to
-    the ``Customer`` (line 13).
-
-    ``model()`` is run for four different random-number seeds to get a set
-    of replications (lines 54-57).
-
+The random number seeds are stored in a list, ``seedVals`` and the
+``for`` loop walks through this list and executes ``mymodel``'s
+``run`` method for each entry to get a set of replications.
 
 .. literalinclude:: bankprograms_OO/bank12_OO.py
    
-
-
 The results show some variation. Remember, though, that the system is still
 only operating for 50 customers so the system may not be in
 steady-state.
