@@ -11,7 +11,7 @@ class Source(Process):
     def generate(self, number, interval, resource, mon):
         for i in range(number):
             c = Customer(name="Customer%02d" % (i))
-            activate(c, c.visit(b=resource, M=mon))       #1
+            activate(c, c.visit(b=resource, M=mon))     #1
             t = expovariate(1.0 / interval)
             yield hold, self, t
 
@@ -40,21 +40,22 @@ theSeed = 393939
 ## Model  ----------------------------------
 
 
-def model(runSeed=theSeed):                       #2
+def model(runSeed=theSeed):                             #2
     seed(runSeed)
     k = Resource(capacity=Nc, name="Clerk")
-    wM = Monitor()                                #3
+    wM = Monitor()                                      #3
 
     initialize()
     s = Source('Source')
     activate(s, s.generate(number=maxNumber, interval=ARRint,
                           resource=k, mon=wM), at=0.0)  #4
     simulate(until=maxTime)
-    return (wM.count(), wM.mean())                 #5
+    return (wM.count(), wM.mean())                      #5
 
 ## Experiment/Result  ----------------------------------
 
-theseeds = [393939, 31555999, 777999555, 319999771]  #6
+theseeds = [393939, 31555999, 777999555, 319999771]     #6
 for Sd in theseeds:
     result = model(Sd)
-    print("Average wait for %3d completions was %6.2f minutes." % result)  #7
+    print("Avge wait for %3d completions was %6.2f min." %
+                                            result)     #7

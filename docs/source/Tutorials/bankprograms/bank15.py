@@ -38,9 +38,9 @@ def model(SEED=393939):
              source.generate(number=5, rate=0.1), at=0.0)
     simulate(until=maxTime)
 
-    return (counter.waitMon.timeAverage(), counter.actMon.timeAverage()) #2
-
+    return (counter.waitMon.timeAverage(),
+            counter.actMon.timeAverage()) #2
 ## Experiment  ----------------------------------
 
-print('Average waiting = %6.4f\nAverage active  = %6.4f\n' % model())    #3
+print('Avge waiting = %6.4f\nAvge active = %6.4f\n'%model())    #3
 
