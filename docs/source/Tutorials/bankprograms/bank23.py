@@ -43,7 +43,6 @@ k = Resource(name="Counter", unitName="Karen",         #1
              qType=PriorityQ, preemptable=True)
 
 ## Model/Experiment ------------------------------
-#seed(787878)
 seed(989898)
 initialize()
 s = Source('Source')

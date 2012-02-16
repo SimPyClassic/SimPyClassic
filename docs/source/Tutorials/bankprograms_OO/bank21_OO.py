@@ -48,7 +48,7 @@ class BankModel(Simulation):
 
 maxTime = 400.0     # minutes
 maxWaitTime = 12.0  # minutes. maximum time to wait
-seedVal = 98989
+seedVal = 989898
 
 ## Experiment  ----------------------------------
 

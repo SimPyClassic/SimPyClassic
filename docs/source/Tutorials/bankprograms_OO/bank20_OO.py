@@ -48,10 +48,9 @@ class BankModel(Simulation):
 ## Experiment data -------------------------
 
 maxTime = 400.0  # minutes
-seedVal = 98989
+seedVal = 787878
 
 ## Experiment ---------------------------
 
 mymodel = BankModel()
 mymodel.run(aseed=seedVal)
-

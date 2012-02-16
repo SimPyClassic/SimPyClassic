@@ -65,7 +65,7 @@ class BankModel(Simulation):
 ## Experiment data -------------------------
 
 maxTime = 400.0  # minutes
-seedVal = 393939
+seedVal = 232323
 
 ## Experiment  ----------------------------------
 
