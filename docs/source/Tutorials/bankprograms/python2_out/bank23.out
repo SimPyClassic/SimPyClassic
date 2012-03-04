@@ -1,18 +1,18 @@
    0.000 Customer00: Queue is 0 on arrival
    0.000 Customer00: Waited  0.000
-   3.548 Customer01: Queue is 0 on arrival
-   9.412 Customer02: Queue is 1 on arrival
+   5.477 Customer01: Queue is 0 on arrival
+  11.978 Customer02: Queue is 1 on arrival
   12.000 Customer00: Completed
-  12.000 Customer01: Waited  8.452
-  12.299 Customer03: Queue is 1 on arrival
-  13.023 Customer04: Queue is 2 on arrival
-  23.000 Guido     : Queue is 3 on arrival
+  12.000 Customer01: Waited  6.523
+  23.000 Guido     : Queue is 1 on arrival
   23.000 Guido     : Waited  0.000
+  23.350 Customer03: Queue is 2 on arrival
   35.000 Guido     : Completed
   36.000 Customer01: Completed
-  36.000 Customer02: Waited 26.588
+  36.000 Customer02: Waited 24.022
   48.000 Customer02: Completed
-  48.000 Customer03: Waited 35.701
+  48.000 Customer03: Waited 24.650
+  56.664 Customer04: Queue is 0 on arrival
   60.000 Customer03: Completed
-  60.000 Customer04: Waited 46.977
+  60.000 Customer04: Waited  3.336
   72.000 Customer04: Completed
