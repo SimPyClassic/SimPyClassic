@@ -3,7 +3,6 @@ This is a very basic model, demonstrating the ease
 of interfacing to SimGUI.
 """
 from SimPy.Simulation  import *
-from SimPy.Monitor import *
 from random import *
 from SimPy.SimGUI import *
 
@@ -13,11 +12,11 @@ class Launcher(Process):
     nrLaunched=0
     def launch(self):
         while True:
-            gui.writeConsole("Launch at %.1f"%now())
+            gui.writeConsole("Launch at {0:.1f}".format(now()))
             Launcher.nrLaunched+=1
             gui.launchmonitor.observe(Launcher.nrLaunched)
             yield hold,self,uniform(1,gui.params.maxFlightTime)
-            gui.writeConsole("Boom!!! Aaaah!! at %.1f"%now())
+            gui.writeConsole("Boom!!! Aaaah!! at {0:.1f}".format(now()))
 
 def model():
     gui.launchmonitor=Monitor(name="Rocket counter",
@@ -29,8 +28,8 @@ def model():
         activate(lau,lau.launch())
     simulate(until=gui.params.duration)
     gui.noRunYet=False
-    gui.writeStatusLine("%s rockets launched in %.1f minutes"%
-                        (Launcher.nrLaunched,now()))
+    gui.writeStatusLine("{0} rockets launched in {1:.1f} minutes"\
+                        .format(Launcher.nrLaunched,now()))
 
 class MyGUI(SimGUI):
     def __init__(self,win,**par):

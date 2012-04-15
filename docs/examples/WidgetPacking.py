@@ -26,7 +26,7 @@ tPack=0.25      #minutes per idget
 initialSeed=1234567 #for random number stream
 simTime=100     #minutes
 
-print 'WidgetPacking'
+print('WidgetPacking')
 ################################################################
 #
 # Model 1
@@ -53,15 +53,15 @@ class WidgetPackerN(Process):
             for i in range(nWidgets):
                 yield get,self,buffer,1 #get widget
                 yield hold,self,tPack   #pack it
-            print "%s: package completed"%now()
+            print("{0}: package completed".format(now()))
 
-print "Model 1: pack %s widgets per package"%nWidgets
+print("Model 1: pack {0} widgets per package".format(nWidgets))
 initialize()
 r=random.Random()
 r.seed(initialSeed)
 wBuffer=Level(name="WidgetBuffer",capacity=500)
 for i in range(nProd):
-    wm=WidgetMakerN(name="WidgetMaker%s"%i)
+    wm=WidgetMakerN(name="WidgetMaker{0}".format(i))
     activate(wm,wm.make(wBuffer))
 wp=WidgetPackerN(name="WidgetPacker")
 activate(wp,wp.pack(wBuffer))
@@ -100,15 +100,15 @@ class WidgetPackerW(Process):
                 else:
                     weightLeft=weightReceived #for next package
                     break
-                print "%s: package completed. Weight=%6.2f kg"%(now(),packWeight)
+                print("{0}: package completed. Weight= {1:6.2f} kg".format(now(),packWeight))
 
-print "\nModel 2: pack widget up to max package weight of %s"%packMax
+print("\nModel 2: pack widget up to max package weight of {0}".format(packMax))
 initialize()
 r=random.Random()
 r.seed(initialSeed)
 wBuffer=Store(name="WidgetBuffer",capacity=500)
 for i in range(nProd):
-    wm=WidgetMakerW(name="WidgetMaker%s"%i)
+    wm=WidgetMakerW(name="WidgetMaker{0}".format(i))
     activate(wm,wm.make(wBuffer))
 wp=WidgetPackerW(name="WidgetPacker")
 activate(wp,wp.pack(wBuffer))

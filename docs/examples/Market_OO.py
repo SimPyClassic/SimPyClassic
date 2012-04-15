@@ -34,7 +34,7 @@ class Customer_Factory(Process):
 class Monitor2(Monitor):
     def __init__(self,sim):
         Monitor.__init__(self,sim=sim)
-        self.min, self.max = (sys.maxint,0)
+        self.min, self.max = (sys.maxsize,0)
     def tally(self, x):
         self.observe(x)
         self.min = min(self.min, x)
@@ -56,7 +56,7 @@ class MarketModel(Simulation):
     def runs(self):
 
         random.seed(SEED)
-        print 'Market'
+        print('Market')
         for run in range(RUNS):
             self.initialize()
             self.waittime = Monitor2(sim=self)
@@ -67,8 +67,8 @@ class MarketModel(Simulation):
             self.activate(cf, cf.run(), 0.0)
             self.simulate(until=CLOSING)
             ## Analysis/output -------------
-            print "Waiting time average: %.1f" % self.waittime.mean(), \
-                  "(std dev %.1f, maximum %.1f)" % (sqrt(self.waittime.var()),self.waittime.max)
+            FMT = "Waiting time average: {0:.1f} (std dev {1:.1f}, maximum {2:.1f})"
+            print(FMT.format(self.waittime.mean(),sqrt(self.waittime.var()),self.waittime.max))
 ## Experiment ------------------------------
 MarketModel().runs()
-print 'AISLES:', AISLES, '  ITEM TIME:', ITEMTIME
+print('AISLES:', AISLES, '  ITEM TIME:', ITEMTIME)

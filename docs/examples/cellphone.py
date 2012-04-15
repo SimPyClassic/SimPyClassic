@@ -28,7 +28,7 @@ class CallSource(Process):
       
  def execute(self, maxN, lam,cell):
     for i in range(maxN):
-         j = Call("Call%03d"%(i,))
+         j = Call("Call{0:03d}".format(i))
          activate(j,j.execute(cell))
          yield hold,self,ran.expovariate(lam)
 
@@ -51,13 +51,13 @@ class Call(Process):
                  self.trace("end   busy period++++++")
                  cell.busyEndTime = now()
                  busy = now() - cell.busyStartTime
-                 self.trace("         busy  = %9.4f"%(busy,))
+                 self.trace("         busy  = {0:9.4f}".format(busy))
                  cell.totalBusyTime +=busy
              cell.Nfree += 1
 
     def trace(self,message):
          if TRACING:
-             print "%7.4f %13s %s "%(now(), message, self.name)
+             print("{0:7.4f} {1:13s} {2} ".format(now(), message, self.name))
   
 class Cell:
     """ Holds global measurements"""
@@ -71,7 +71,7 @@ class Statistician(Process):
      
      def execute(self,Nperiods,obsPeriod,obsGap,cell):
          cell.busyEndTime = now() # simulation start time
-         if STRACING: print "Busy time Number"
+         if STRACING: print("Busy time Number")
          for i in range(Nperiods):
              yield hold,self,obsGap
              cell.totalBusyTime = 0.0
@@ -80,7 +80,7 @@ class Statistician(Process):
              yield hold,self,obsPeriod
              if cell.Nfree == 0: cell.totalBusyTime += now()-cell.busyStartTime
              if STRACING:
-                 print "%7.3f %5d"%(cell.totalBusyTime,cell.totalBusyVisits)
+                 print("{0:7.3f} {1:5d}".format(cell.totalBusyTime,cell.totalBusyVisits))
              m.tally(cell.totalBusyTime)
              bn.tally(cell.totalBusyVisits)
          stopSimulation()
@@ -118,13 +118,13 @@ activate(g,g.execute(maxN, lam,cell))
 simulate(until=10000.0)
 
 ## Output -------------------------
-print 'cellphone'
+print('cellphone')
 # input data:
-print "lambda    mu      s  Nperiods obsPeriod  obsGap"
-FMT= "%7.4f %6.4f %4d   %4d      %6.2f   %6.2f"
-print FMT%(lam,mu,NChannels,Nperiods,obsPeriod,obsGap)
+print("lambda    mu      s  Nperiods obsPeriod  obsGap")
+FMT="{0:7.4f} {1:6.4f} {2:4d}   {3:4d}      {4:6.2f}   {5:6.2f}"
+print(FMT.format(lam,mu,NChannels,Nperiods,obsPeriod,obsGap))
 
 
 sr = cell.result
-print "Busy Time:   mean = %6.3f var= %6.3f"%sr[0:2]
-print "Busy Number: mean = %6.3f var= %6.3f"%sr[2:4]
+print("Busy Time:   mean = {0:6.3f} var= {1:6.3f}".format(sr[0],sr[1]))
+print("Busy Number: mean = {0:6.3f} var= {1:6.3f}".format(sr[2],sr[3]))

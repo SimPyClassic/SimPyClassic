@@ -62,20 +62,20 @@ class Task(Process):
                 yield hold,self,CPUtime
                 yield release,self,cpu
             Task.completed += 1
-        self.debug(" completed %d tasks"%(Task.completed,))
+        self.debug(" completed {0:d} tasks".format(Task.completed))
         Task.rate = Task.completed/float(now())
 
     def debug(self,message):
-        FMT="%9.3f %s %s"
+        FMT="{0:9.3f} {1} {2}"
         if DEBUG:
-            print FMT%(now(),self.name,message)
+            print(FMT.format(now(),self.name,message))
             
     
 ## Model ------------------------------
 def main():
    initialize()
    for i in range(Nterminals):     
-       t = Task(name="task"+`i`)
+       t = Task(name="task{0}".format(i))
        activate(t,t.execute(MaxCompletions))
    simulate(until = MaxrunTime)
    return (now(),Task.rate)
@@ -102,5 +102,5 @@ result=main()
 
 ## Analysis/output -------------------------
 
-print 'centralserver'
-print '%7.4f: CPU rate = %7.4f tasks per second'%result
+print('centralserver')
+print('{0:7.4f}: CPU rate = {1:7.4f} tasks per second'.format(result[0],result[1]))

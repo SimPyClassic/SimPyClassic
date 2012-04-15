@@ -14,7 +14,7 @@ class Source(Process):
 
     def generate(self,number,interval,counter):       
         for i in range(number):
-            c = Customer(name = "Customer%02d"%(i,),sim=self.sim)
+            c = Customer(name = "Customer{0:02d}".format(i),sim=self.sim)
             self.sim.activate(c,c.visit(counter,timeInBank=12.0))
             t = expovariate(1.0/interval)
             yield hold,self,t
@@ -24,20 +24,20 @@ class Customer(Process):
         
     def visit(self,counter,timeInBank=0):       
         arrive = self.sim.now()
-        print "%7.4f %s: Here I am     "%(self.sim.now(),self.name)
+        print("{0:7.4f} {1}: Here I am     ".format(self.sim.now(),self.name))
 
         yield (request,self,counter),(hold,self,Customer.patience())
 
         if self.acquired(counter):
             wait = self.sim.now()-arrive
-            print "%7.4f %s: Waited %6.3f"%(self.sim.now(),self.name,wait)
+            print("{0:7.4f} {1}: Waited {2:6.3f}".format(self.sim.now(),self.name,wait))
             tib = expovariate(1.0/timeInBank)            
             yield hold,self,tib                          
             yield release,self,counter
-            print "%7.4f %s: Finished"%(self.sim.now(),self.name)
+            print("{0:7.4f} {1}: Finished".format(self.sim.now(),self.name))
         else:
             wait = self.sim.now()-arrive
-            print "%7.4f %s: RENEGED after %6.3f"%(self.sim.now(),self.name,wait)            
+            print("{0:7.4f} {1}: RENEGED after {2:6.3f}".format(self.sim.now(),self.name,wait))    
         
     def fpatience(minpatience=0,maxpatience=10000000000):
         while True:
@@ -67,6 +67,6 @@ IntervalCustomers = 10.0
 ## Experiment ------------------------------
 
 seed(theseed)
-print 'bank08_OO_renege'
+print('bank08_OO_renege')
 BankModel().run()                              
 

@@ -18,7 +18,7 @@ class SuperBeing(Process):
 class Man(Process):
 	ID = 0
 	def __init__(self,earth):
-		Process.__init__(self,name="Man%d"%Man.ID) # set name to ensure window title is set
+		Process.__init__(self,name="Man{0}".format(Man.ID)) # set name to ensure window title is set
 		self.earth = earth
 		self.status = "in heaven"
 		Man.ID += 1

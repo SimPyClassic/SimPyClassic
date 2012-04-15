@@ -43,15 +43,16 @@ class Show(Process):
 
     def picture(self):
         while True:
-            print "Generation %s" %now()
+            print ("Generation {0}".format(now()))
             for i in range(size):
+                cls = " "
                 for j in range(size):
                     if cells[(i,j)].state:
-                        print "*",
+                        cls += " *"
                     else:
-                        print ".",
-                print
-            print
+                        cls += " ."
+                print (cls)
+            print ("")
             yield hold,self,1
 
 size=20
@@ -83,7 +84,7 @@ cells[(11,11)].state=True
 cells[(11,12)].state=True
 cells[(11,13)].state=True
 
-print 'CellularAutomata'
+print ('CellularAutomata')
 s=Show()
 whenToStartShowing=10
 activate(s,s.picture(),delay=whenToStartShowing)

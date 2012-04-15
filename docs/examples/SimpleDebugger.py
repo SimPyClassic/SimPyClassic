@@ -5,22 +5,30 @@ under user control.
 REQUIRES SimPy 2.1
 """
 from SimPy.SimulationTrace import *
+
+from sys import version_info # Needed to determine if Python 2 or 3
+py_ver = version_info[0]
            
 def stepper():
     evlist = Globals.sim._timestamps
     while True:
         if not evlist:
-            print "No more events."
+            print("No more events.")
             break
         tEvt = evlist[0][0]
         who = evlist[0][2]
         while evlist[0][3]: #skip cancelled event notices
             step()
-        print "\nTime now: %s, next event at: %s for process: %s " %(now(),tEvt,who.name)#peekAll()[0],peekAll()[1].name)
+        print("\nTime now: {0}, next event at: {1} for process: {2} ".format(now(),tEvt,who.name))#peekAll()[0],peekAll()[1].name)
 
-        cmd = raw_input(
+        if(py_ver>2): #python3
+            cmd = input(
               "'s' next event,'r' run to end,'e' to end run, " 
               "<time> skip to event at <time>, 'l' show eventlist, 'p<name>' skip to event for <name>: ") 
+        else: #python2
+            cmd = raw_input(
+              "'s' next event,'r' run to end,'e' to end run, " 
+              "<time> skip to event at <time>, 'l' show eventlist, 'p<name>' skip to event for <name>: ")
         try:
             nexttime = float(cmd)
             while peek() < nexttime:
@@ -34,12 +42,12 @@ def stepper():
                 stopSimulation()
                 break
             elif cmd == 'l':
-                print "Events scheduled: \n%s"%allEventNotices() 
+                print("Events scheduled: \n{0}".format(allEventNotices())) 
             elif cmd[0] == 'p':
-                while evlist and evlist[0][2].name <> cmd[1:]:
+                while evlist and evlist[0][2].name != cmd[1:]:
                     step()                    
             else:
-                print "%s not a valid command" % cmd
+                print("{0} not a valid command".format(cmd))
 
 
 if __name__ == "__main__":
@@ -57,7 +65,7 @@ if __name__ == "__main__":
                 return now()>30
               
             yield waituntil,self,gt30
-            print "now() is past 30"
+            print("now() is past 30")
             stopSimulation()
             
     until = 100

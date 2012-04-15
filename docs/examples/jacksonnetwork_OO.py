@@ -49,25 +49,25 @@ class Msg(Process):
         """ executing a message """
         startTime = self.sim.now()
         Msg.noInSystem += 1
-        ##print "DEBUG noInSystm = ",Msg.noInSystem
+        ##print("DEBUG noInSystm = ",Msg.noInSystem)
         self.sim.NoInSystem.observe(Msg.noInSystem)
-        self.trace("Arrived node  %d"%(i,))
-        while i <> 3:
+        self.trace("Arrived node  {0}".format(i))
+        while i != 3:
             yield request,self,self.sim.node[i]
-            self.trace("Got node %d"%(i,))
+            self.trace("Got node {0}".format(i))
             st = ran.expovariate(1.0/mean[i])
             yield hold,self,st
             yield release,self,self.sim.node[i]
-            self.trace("Finished with %d"%(i,))
+            self.trace("Finished with {0}".format(i))
             i = choose2dA(i,P)
-            self.trace("Transfer to   %d"%(i,))
+            self.trace("Transfer to   {0}".format(i))
         self.sim.TimeInSystem.tally(self.sim.now()-startTime)        
-        self.trace(    "leaving       %d %d in system"%(i,Msg.noInSystem))
+        self.trace(    "leaving       {0} {1} in system".format(i,Msg.noInSystem))
         Msg.noInSystem -= 1
         self.sim.NoInSystem.accum(Msg.noInSystem)
         
     def trace(self,message):
-        if MTRACING: print "%7.4f %3d %10s"%(self.sim.now(),self.name, message)
+        if MTRACING: print("{0:7.4f} {1:3d} {2:10s}".format(self.sim.now(),self.name, message))
 
 
 class MsgSource(Process):
@@ -77,13 +77,13 @@ class MsgSource(Process):
        self.count=0   # hold number of messages generated
        while  (self.count < maxN):
            self.count+=1
-           p = Msg("Message %d"%(self.count,),sim=self.sim)
+           p = Msg("Message {0}".format(self.count),sim=self.sim)
            self.sim.activate(p,p.execute(i=startNode))
            yield hold,self,ran.expovariate(rate)
-       self.trace("generator finished with "+`self.count`+" ========")
+       self.trace("generator finished with {0} ========".format(self.count))
 
    def trace(self,message):
-       if GTRACING: print "%7.4f \t%s"%(self.sim.now(), message)
+       if GTRACING: print("{0:7.4f} \t{1}".format(self.sim.now(), message))
 
 ## Experiment data -------------------------
 
@@ -119,13 +119,11 @@ modl.run()
 
 ## Analysis/output -------------------------
 
-print 'jacksonnetwork'
-print "Mean number in system = %10.4f"%(modl.NoInSystem.timeAverage(),)
-print "Mean delay in system  = %10.4f"%(modl.TimeInSystem.mean(),)
-print "Total time run        = %10.4f"%(modl.now(),)
-print "Total jobs arrived    = %10d"%(modl.g.count)
-print "Total jobs completed  = %10d"%(modl.TimeInSystem.count(),)
-print "Average arrival rate  = %10.4f"%(modl.g.count/modl.now(),)
+print('jacksonnetwork')
+print("Mean number in system = {0:10.4f}".format(modl.NoInSystem.timeAverage()))
+print("Mean delay in system  = {0:10.4f}".format(modl.TimeInSystem.mean()))
+print("Total time run        = {0:10.4f}".format(modl.now()))
+print("Total jobs arrived    = {0:10d}".format(modl.g.count))
+print("Total jobs completed  = {0:10d}".format(modl.TimeInSystem.count()))
+print("Average arrival rate  = {0:10.4f}".format(modl.g.count/modl.now()))
 
-#        $Author$    $Revision$
-#        $Date$ 

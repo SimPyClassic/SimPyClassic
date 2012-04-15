@@ -4,9 +4,9 @@
 
 :Authors:  - Tony Vignaux <Vignaux@users.sourceforge.net>,
            - Klaus Muller <Muller@users.sourceforge.net>
-:SimPy version: 2.0
+:SimPy version: 2.3
 :Web-site: http://simpy.sourceforge.net/
-:Python-Version: 2.3 or later (not 3.0)
+:Python-Version: 2.6 or later 
 
 These models are examples of SimPy use written by several authors and
 usually developed for other purposes, such as teaching and
@@ -175,6 +175,9 @@ SimpleDebugger.py, SimpleDebugger_OO.py
          SimPy model interactively, event by event. Can be imported
          into any model.
 
+ExampleGUIDebug.py
+        Demonstrates capability of SimPy.SimulationGUIDebug where user
+        can step through model interactively
 
 
 :Created: 2002-December

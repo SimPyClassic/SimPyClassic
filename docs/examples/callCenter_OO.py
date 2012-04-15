@@ -64,7 +64,7 @@ class Agent(Process):
     def __init__(self,name,skills,sim):
         Process.__init__(self,name=name,sim=sim)
         self.skills=skills
-        self.busyMon=Monitor(name="Load on %s"%self.name,sim=self.sim)
+        self.busyMon=Monitor(name="Load on {0}".format(self.name),sim=self.sim)
     def work(self,callCtr):
         incoming=callCtr.calls
         def mySkills(buffer):
@@ -116,7 +116,7 @@ class CallCenterModel(Simulation):
         callC=Callcenter(name=centerName,sim=self)
         for i in nrAgents.keys(): #loop over skills
             for j in range(nrAgents[i]): # loop over nr agents of that skill
-                a=Agent(name="Agent type %s"%i,skills=aSkills[i],sim=self)
+                a=Agent(name="Agent type {0}".format(i),skills=aSkills[i],sim=self)
                 callC.agents.append(a)
                 self.activate(a,a.work(callCtr=callC))
         cg=CallGenerator(name="Call generator",center=callC,sim=self)#buffer=callC.calls)
@@ -128,18 +128,16 @@ for tImpatience in tImpatienceRange:
     ## Experiment ------------------------------------------------------------------
     callCenter=CallCenterModel().run()
     ## Analysis/output -------------------------------------------------------------
-    print "\ntImpatience=%s minutes"%tImpatience
-    print   "=================="
+    print("\ntImpatience={0} minutes".format(tImpatience))
+    print(  "==================")
     callCenter.waitMoni.setHistogram(low=0.0,high=float(tImpatience))
     try:
-        print callCenter.waitMoni.printHistogram(fmt="%6.1f")
+        print(callCenter.waitMoni.printHistogram(fmt="{0:6.1f}"))
     except:
         pass
     renegers=[1 for x in callCenter.renegeMoni.yseries() if x==renege]
-    print "\nPercentage reneging callers: %4.1f\n"\
-           %(100.0*sum(renegers)/callCenter.renegeMoni.count())
+    print("\nPercentage reneging callers: {0:4.1f}\n".format(100.0*sum(renegers)/callCenter.renegeMoni.count()))
     for agent in callCenter.agents:
-        print "Load on %s (skills= %s): %4.1f percent"\
-               %(agent.name,agent.skills,agent.busyMon.timeAverage()*100)
+        print("Load on {0} (skills= {1}): {2:4.1f} percent".format(agent.name,agent.skills,agent.busyMon.timeAverage()*100))
 
 

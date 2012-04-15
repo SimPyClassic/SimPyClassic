@@ -23,15 +23,15 @@ class Worker(Process):
             yield waituntil,self,workerNeeds
             for item in heNeeds:
                 yield request,self,item
-            print "%s %s has %s and starts job" %(now(),self.name,
-                [x.name for x in heNeeds])
+            print("{0} {1} has {2} and starts job".format(now(),self.name,
+                [x.name for x in heNeeds]))
             yield hold,self,random.uniform(10,30)
             for item in heNeeds:
                 yield release,self,item
             yield hold,self,2 #rest
     
 random.seed(111333555)
-print 'needResources'
+print('needResources')
 initialize()
 brush=Resource(capacity=1,name="brush")
 ladder=Resource(capacity=2,name="ladder")
@@ -43,4 +43,4 @@ roofer=Worker("roofer")
 activate(roofer,roofer.work([hammer,ladder,ladder]))
 treeguy=Worker("treeguy")
 activate(treeguy,treeguy.work([saw,ladder]))
-print simulate(until=9*60)
+print(simulate(until=9*60))

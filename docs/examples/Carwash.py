@@ -47,7 +47,7 @@ class Car(Process):
         yield put,self,waitingCars,[self]
         yield waitevent,self,self.doneSignal
         whichWash=self.doneSignal.signalparam
-        print "%s: %s done by %s"%(now(),self.name,whichWash)
+        print ("{0}: {1} done by {2}".format(now(),self.name,whichWash))
 
 class CarGenerator(Process):
     """Car arrival generation"""
@@ -55,31 +55,31 @@ class CarGenerator(Process):
         i=0
         while True:
             yield hold,self,r.expovariate(1.0/tInter)
-            c=Car("car%s"%i)
+            c=Car("car{0}".format(i))
             activate(c,c.lifecycle())
             i+=1
     
-print "Model 1: carwash is master"
-print   "--------------------------"
+print ("Model 1: carwash is master")
+print ( "--------------------------")
 initialize()
 r=random.Random()
 r.seed(initialSeed)
 waiting=[]
 for j in range(1,5):
-    c=Car("car%s"%-j)
+    c=Car("car-{0}".format(j))
     activate(c,c.lifecycle())
     waiting.append(c)
 waitingCars=Store(capacity=40,initialBuffered=waiting)
 cw=[]
 for i in range(2):
-    c=Carwash("Carwash %s"%`i`)
+    c=Carwash("Carwash {0}".format(i))
     cw.append(c)
     activate(c,c.lifecycle())
 cg=CarGenerator()
 activate(cg,cg.generate())
 simulate(until=simTime) 
-print "waiting cars: %s"%[x.name for x in waitingCars.theBuffer]
-print "cars being washed: %s"%[y.carBeingWashed.name for y in cw]
+print ("waiting cars: {0}".format([x.name for x in waitingCars.theBuffer]))
+print ("cars being washed: {0}".format([y.carBeingWashed.name for y in cw]))
         
 #####################################################
 ## Model 2: Car is master, carwash is slave
@@ -95,7 +95,7 @@ class CarM(Process):
         whichWash=self.got[0]
         carsBeingWashed.append(self)
         yield hold,self,washtime
-        print "%s: %s done by %s"%(now(),self.name,whichWash.name)
+        print ("{0}: {1} done by {2}".format(now(),self.name,whichWash.name))
         whichWash.doneSignal.signal()
         carsBeingWashed.remove(self)
         
@@ -113,26 +113,26 @@ class CarGenerator1(Process):
         i=0
         while True:
             yield hold,self,r.expovariate(1.0/tInter)
-            c=CarM("car%s"%i)
+            c=CarM("car{0}".format(i))
             activate(c,c.lifecycle())
             i+=1
 
-print "\nModel 2: car is master"
-print   "----------------------"
+print ("\nModel 2: car is master")
+print ( "----------------------")
 initialize()
 r=random.Random()
 r.seed(initialSeed)
 washers=Store(capacity=nrMachines)
 carsBeingWashed=[]
 for j in range(1,5):
-    c=CarM("car%s"%-j)
+    c=CarM("car-{0}".format(j))
     activate(c,c.lifecycle())
 for i in range(2):
-    cw=CarwashS("Carwash %s"%`i`)
+    cw=CarwashS("Carwash {0}".format(i))
     activate(cw,cw.lifecycle())
 cg=CarGenerator1()
 activate(cg,cg.generate())
 simulate(until=simTime)
-print "waiting cars: %s"%[x.name for x in washers.getQ] 
-print "cars being washed: %s"%[x.name for x in carsBeingWashed]           
+print ("waiting cars: {0}".format([x.name for x in washers.getQ])) 
+print ("cars being washed: {0}".format([x.name for x in carsBeingWashed]))           
 

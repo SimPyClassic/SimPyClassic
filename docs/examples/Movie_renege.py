@@ -55,7 +55,7 @@ for film in movies:
 ticketCounter=Resource(capacity=1)
 
 ## Model/Experiment ------------------------------
-print 'Movie_renege'
+print('Movie_renege')
 initialize()
 c=CustomerArrivals()
 activate(c,c.traffic())
@@ -63,6 +63,8 @@ simulate(until=120)
 
 for f in movies:
     if soldOut[f]:
-        print "Movie '%s' sold out %.0f minutes after ticket counter opening."%(f,int(whenSoldOut[f]))
-        print "\tNr people leaving queue when film '%s' sold out: %s"%(f,nrRenegers[f])
+        FMT = "Movie '{0}' sold out {1:.0f} minutes after ticket counter opening."
+        print(FMT.format(f,int(whenSoldOut[f])))
+        FMT = "\tNr people leaving queue when film '{0}' sold out: {1}"
+        print(FMT.format(f,nrRenegers[f]))
 

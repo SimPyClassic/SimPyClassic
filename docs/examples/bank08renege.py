@@ -14,7 +14,7 @@ class Source(Process):
 
     def generate(self,number,interval,counter):       
         for i in range(number):
-            c = Customer(name = "Customer%02d"%(i,))
+            c = Customer(name = "Customer{0:02d}".format(i))
             activate(c,c.visit(counter,timeInBank=12.0))
             t = expovariate(1.0/interval)
             yield hold,self,t
@@ -24,20 +24,20 @@ class Customer(Process):
         
     def visit(self,counter,timeInBank=0):       
         arrive=now()
-        print "%7.4f %s: Here I am     "%(now(),self.name)
+        print("{0:7.4f} {1}: Here I am     ".format(now(),self.name))
 
         yield (request,self,counter),(hold,self,Customer.patience())
 
         if self.acquired(counter):
             wait=now()-arrive
-            print "%7.4f %s: Waited %6.3f"%(now(),self.name,wait)
+            print("{0:7.4f} {1}: Waited {2:6.3f}".format(now(),self.name,wait))
             tib = expovariate(1.0/timeInBank)            
             yield hold,self,tib                          
             yield release,self,counter
-            print "%7.4f %s: Finished"%(now(),self.name)
+            print("{0:7.4f} {1}: Finished".format(now(),self.name))
         else:
             wait=now()-arrive
-            print "%7.4f %s: RENEGED after %6.3f"%(now(),self.name,wait)            
+            print("{0:7.4f} {1}: RENEGED after {2:6.3f}".format(now(),self.name,wait))            
         
     def fpatience(minpatience=0,maxpatience=10000000000):
         while True:
@@ -66,6 +66,6 @@ IntervalCustomers = 10.0
 ## Experiment ------------------------------
 
 seed(theseed)
-print 'bank08renege'
+print('bank08renege')
 model()                               
 

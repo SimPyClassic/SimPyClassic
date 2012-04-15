@@ -23,7 +23,7 @@ class Generator(Process):
     def execute(self,maxNumber,rate,stime):
         ''' generate Jobs at exponential intervals '''
         for i in range(maxNumber):
-            L = Job("Job "+`i`,sim=self.sim)
+            L = Job("Job {0}".format(i),sim=self.sim)
             self.sim.activate(L,L.execute(stime),delay=0)
             yield hold,self,expovariate(rate)
  
@@ -50,9 +50,9 @@ class Job(Process):
         self.trace("Geronimo   ")
        
     def trace(self,message):
-        FMT="%7.4f %6s %10s (%2d)"
+        FMT="{0:7.4f} {1:6} {2:10} {(3:2d)}"
         if TRACING:
-            print FMT%(self.sim.now(),self.name,message,Job.NoInSystem)
+            print(FMT.format(self.sim.now(),self.name,message,Job.NoInSystem))
 
 ## Experiment data -------------------------
 
@@ -83,9 +83,9 @@ model.run()
 
 ## Analysis/output -------------------------
 
-print 'MMC'
-print "%2d servers, %6.4f arrival rate,%6.4f mean service time"%(c,rate,stime)
-print "Average number in the system is %6.4f"%(model.m.timeAverage(),)
-print "Average time in the system is   %6.4f"%(model.mT.mean(),)
-print "Actual average service-time is  %6.4f"%(model.msT.mean(),)
+print('MMC')
+print("{0:2d} servers, {1:6.4f} arrival rate, {2:6.4f} mean service time".format(c,rate,stime))
+print("Average number in the system is {0:6.4f}".format(model.m.timeAverage()))
+print("Average time in the system is   {0:6.4f}".format(model.mT.mean()))
+print("Actual average service-time is  {0:6.4f}".format(model.msT.mean()))
 

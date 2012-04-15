@@ -45,7 +45,7 @@ class Car(Process):
         yield put,self,self.sim.waitingCars,[self]
         yield waitevent,self,self.doneSignal
         whichWash = self.doneSignal.signalparam
-        print "%s: %s done by %s"%(self.sim.now(),self.name,whichWash)
+        print ("{0}: {1} done by {2}".format(self.sim.now(),self.name,whichWash))
 
 class CarGenerator(Process):
     """Car arrival generation"""
@@ -53,7 +53,7 @@ class CarGenerator(Process):
         i=0
         while True:
             yield hold,self,self.sim.r.expovariate(1.0/tInter)
-            c = Car("car%s"%i,sim=self.sim)
+            c = Car("car{0}".format(i),sim=self.sim)
             self.sim.activate(c,c.lifecycle())
             i+=1
     
@@ -61,28 +61,28 @@ class CarGenerator(Process):
 
 class CarWashModel1(Simulation):
     def run(self):
-        print "Model 1: carwash is master"
-        print   "--------------------------"
+        print ("Model 1: carwash is master")
+        print ("--------------------------")
         self.initialize()
         self.r=random.Random()
         self.r.seed(initialSeed)
         waiting=[]
         for j in range(1,5):
-            c = Car("car%s"%-j,sim=self)
+            c = Car("car{0}".format(-j),sim=self)
             self.activate(c,c.lifecycle())
             waiting.append(c)
         self.waitingCars=Store(capacity=40,initialBuffered=waiting,sim=self)
         cw=[]
         for i in range(nrMachines):
-            c = Carwash("Carwash %s"%`i`,sim=self)
+            c = Carwash("Carwash {0}".format(i),sim=self)
             cw.append(c)
             self.activate(c,c.lifecycle())
         cg = CarGenerator(sim=self)
         self.activate(cg,cg.generate())
         self.simulate(until=simTime) 
         
-        print "waiting cars: %s"%[x.name for x in self.waitingCars.theBuffer]
-        print "cars being washed: %s"%[y.carBeingWashed.name for y in cw]
+        print ("waiting cars: {0}".format([x.name for x in self.waitingCars.theBuffer]))
+        print ("cars being washed: {0}".format([y.carBeingWashed.name for y in cw]))
         
 ## Experiment 1 ----------------------------
 CarWashModel1().run()
@@ -99,7 +99,7 @@ class CarM(Process):
         whichWash = self.got[0]
         self.sim.carsBeingWashed.append(self)
         yield hold,self,washtime
-        print "%s: %s done by %s"%(self.sim.now(),self.name,whichWash.name)
+        print ("{0}: {1} done by {2}".format(self.sim.now(),self.name,whichWash.name))
         whichWash.doneSignal.signal()
         self.sim.carsBeingWashed.remove(self)
         
@@ -117,7 +117,7 @@ class CarGenerator1(Process):
         i=0
         while True:
             yield hold,self,self.sim.r.expovariate(1.0/tInter)
-            c = CarM("car%s"%i,sim=self.sim)
+            c = CarM("car{0}".format(i),sim=self.sim)
             self.sim.activate(c,c.lifecycle())
             i+=1
             
@@ -125,25 +125,25 @@ class CarGenerator1(Process):
 
 class CarWashModel2(Simulation):
     def run(self):
-        print "\nModel 2: car is master"
-        print   "----------------------"
+        print ("\nModel 2: car is master")
+        print ( "----------------------")
         self.initialize()
         self.r=random.Random()
         self.r.seed(initialSeed)
         self.washers=Store(capacity=nrMachines,sim=self)
         self.carsBeingWashed=[]
         for j in range(1,5):
-            c = CarM("car%s"%-j,sim=self)
+            c = CarM("car{0}".format(-j),sim=self)
             self.activate(c,c.lifecycle())
         for i in range(2):
-            cw = CarwashS("Carwash %s"%`i`,sim=self)
+            cw = CarwashS("Carwash {0}".format(i),sim=self)
             self.activate(cw,cw.lifecycle())
         cg = CarGenerator1(sim=self)
         self.activate(cg,cg.generate())
         self.simulate(until=simTime)
         
-        print "waiting cars: %s"%[x.name for x in self.washers.getQ]
-        print "cars being washed: %s"%[x.name for x in self.carsBeingWashed] 
+        print ("waiting cars: {0}".format([x.name for x in self.washers.getQ]))
+        print ("cars being washed: {0}".format([x.name for x in self.carsBeingWashed])) 
 
 ## Experiment 1 ----------------------------
 CarWashModel2().run()

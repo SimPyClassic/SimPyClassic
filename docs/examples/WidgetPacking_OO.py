@@ -26,7 +26,7 @@ tPack=0.25      #minutes per idget
 initialSeed=1234567 #for random number stream
 simTime=100     #minutes
 
-print 'WidgetPacking'
+print('WidgetPacking')
 
 ## Model 1 components ----------------------
 
@@ -50,18 +50,18 @@ class WidgetPackerN(Process):
             for i in range(nWidgets):
                 yield get,self,buffer,1 #get widget
                 yield hold,self,tPack   #pack it
-            print "%s: package completed"%self.sim.now()
+            print("{0}: package completed".format(self.sim.now()))
 
 ## Model 1 ---------------------------------
 class WidgetPackingModel1(Simulation):
     def run(self):
-        print "Model 1: pack %s widgets per package"%nWidgets
+        print("Model 1: pack {0} widgets per package".format(nWidgets))
         self.initialize()
         self.r=random.Random()
         self.r.seed(initialSeed)
         wBuffer=Level(name="WidgetBuffer",capacity=500,sim=self)
         for i in range(nProd):
-            wm=WidgetMakerN(name="WidgetMaker%s"%i,sim=self)
+            wm=WidgetMakerN(name="WidgetMaker{0}".format(i),sim=self)
             self.activate(wm,wm.make(wBuffer))
         wp=WidgetPackerN(name="WidgetPacker",sim=self)
         self.activate(wp,wp.pack(wBuffer))
@@ -100,18 +100,18 @@ class WidgetPackerW(Process):
                 else:
                     weightLeft=weightReceived #for next package
                     break
-                print "%s: package completed. Weight=%6.2f kg"%(self.sim.now(),packWeight)
+                print("{0}: package completed. Weight= {1:6.2f} kg".format(self.sim.now(),packWeight))
 
 ## Model 2 ---------------------------------
 class WidgetPackingModel2(Simulation):
     def run(self):
-        print "\nModel 2: pack widgets up to max package weight of %s"%packMax
+        print("\nModel 2: pack widgets up to max package weight of {0}".format(packMax))
         self.initialize()
         self.r=random.Random()
         self.r.seed(initialSeed)
         wBuffer=Store(name="WidgetBuffer",capacity=500,sim=self)
         for i in range(nProd):
-            wm=WidgetMakerW(name="WidgetMaker%s"%i,sim=self)
+            wm=WidgetMakerW(name="WidgetMaker{0}".format(i),sim=self)
             self.activate(wm,wm.make(wBuffer))
         wp=WidgetPackerW(name="WidgetPacker",sim=self)
         self.activate(wp,wp.pack(wBuffer))

@@ -81,12 +81,12 @@ simTime = weeks*24*60*7 ## minutes
 ## Model
 class MachineshopModel(Simulation):
     def run(self):
-        print 'Machineshop'
+        print('Machineshop')
         self.initialize()
         self.repairman=Resource(capacity=1,qType=PriorityQ,sim=self)
         self.m={}
         for i in range(nrMachines):
-            self.m[i+1]=Machine(name="Machine %s" %(i+1),sim=self)
+            self.m[i+1]=Machine(name="Machine {0}".format(i+1),sim=self)
             self.activate(self.m[i+1],self.m[i+1].working())
         oj=OtherJobs(sim=self)
         self.activate(oj,oj.doingJobs())
@@ -98,7 +98,7 @@ model.run()
 
 ## Analysis/output -------------------------
 
-print "Machineshop results after %s weeks"%weeks
+print("Machineshop results after {0} weeks".format(weeks))
 for i in range(nrMachines):
-    print "Machine %s: %s" %(i+1,model.m[i+1].partsMade)
+    print("Machine {0}: {1}".format(i+1,model.m[i+1].partsMade))
     

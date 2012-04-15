@@ -73,15 +73,16 @@ bakMod = BakeryModel()
 for day in range(nrDays):
     bakery = bakMod.run()
 ## Analysis/output -------------------------
-print 'bakery_OO'
+print('bakery_OO')
 for cType in ["retail","restaurant"]:
-    print "Average wait for %s customers: %4.2f hours"\
-    %(cType,(1.0*sum(waits[cType]))/len(waits[cType]))
-    print "Longest wait for %s customers: %4.1f hours"%(cType,max(waits[cType]))
+    print("Average wait for {0} customers: {1:4.2f} hours"\
+        .format(cType,(1.0*sum(waits[cType]))/len(waits[cType])))
+    print("Longest wait for {0} customers: {1:4.1f} hours"\
+        .format(cType,max(waits[cType])))
     nrLong = len([1 for x in waits[cType] if x>0.25])
     nrCust = len(waits[cType])
-    print "Percentage of %s customers having to wait for more than 0.25 hours: %s"\
-           %(cType,100*nrLong/nrCust)    
+    print("Percentage of {0} customers having to wait for more than 0.25 hours: {1}"\
+        .foramt(cType,100*nrLong/nrCust))    
 
 
 if PLOTTING:

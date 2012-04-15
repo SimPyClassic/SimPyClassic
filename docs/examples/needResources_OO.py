@@ -24,8 +24,8 @@ class Worker(Process):
             yield waituntil,self,workerNeeds
             for item in heNeeds:
                 yield request,self,item
-            print "%s %s has %s and starts job" %(self.sim.now(),self.name,
-                [x.name for x in heNeeds])
+            print("{0} {1} has {2} and starts job".format(self.sim.now(),self.name,
+                [x.name for x in heNeeds]))
             yield hold,self,random.uniform(10,30)
             for item in heNeeds:
                 yield release,self,item
@@ -35,7 +35,7 @@ class Worker(Process):
 ## Model -----------------------------------
 class NeedResourcesModel(Simulation):
     def run(self):
-        print 'needResources'
+        print('needResources')
         self.initialize()
         brush=Resource(capacity=1,name="brush",sim=self)
         ladder=Resource(capacity=2,name="ladder",sim=self)
@@ -47,7 +47,7 @@ class NeedResourcesModel(Simulation):
         self.activate(roofer,roofer.work([hammer,ladder,ladder]))
         treeguy=Worker("treeguy",sim=self)
         self.activate(treeguy,treeguy.work([saw,ladder]))
-        print self.simulate(until=9*60)
+        print(self.simulate(until=9*60))
 
 ## Experiment data -------------------------
 SEED = 111333555

@@ -40,8 +40,8 @@ class Bank11(SimPlot):
                                             self.params["interval"]),0.0)
             simulate(until=self.params['endtime'])
             self.lastLeave+=now()
-        print "%s run(s) completed"%(nrRuns)
-        print("Parameters:\n%s"%self.params)
+        print("{0} run(s) completed".format(nrRuns))
+        print("Parameters:\n{0}".format(self.params))
 
 class Source(Process):
     """ Source generates customers randomly"""
@@ -53,7 +53,7 @@ class Source(Process):
     def generate(self,number,interval):       
         rv = Random(self.SEED)
         for i in range(number):
-            c = Customer(self.modInst,name = "Customer%02d"%(i,))
+            c = Customer(self.modInst,name = "Customer{0:02d}".format(i))
             activate(c,c.visit(timeInBank=12.0))
             t = rv.expovariate(1.0/interval)
             yield hold,self,t
@@ -73,7 +73,7 @@ class Customer(Process):
         yield request,self,self.modInst.counter[join]
         wait=now()-arrive
         self.modInst.waitMonitor.observe(wait,t=now())
-        ##print "%7.4f %s: Waited %6.3f"%(now(),self.name,wait)
+        ##print("{0:7.4f} {1}: Waited {2:6.3f}".format(now(),self.name,wait))
         tib = self.modInst.counterRV.expovariate(1.0/timeInBank)
         yield hold,self,tib
         yield release,self,self.modInst.counter[join]

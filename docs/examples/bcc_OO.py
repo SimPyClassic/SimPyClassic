@@ -81,7 +81,7 @@ def testHyperVariate():
     g = Random(1113355)
     for i in range(3):
         x1 = HyperVariate(p[i],1.0,10.0,g)
-        #print p[i], x1
+        #print(p[i], x1)
         assert abs(x1 - x[i]) < 0.001,'HyperVariate error'
 
 def erlangB(rho,c):
@@ -91,7 +91,7 @@ def erlangB(rho,c):
     see also SPlus and R version in que.q mmcK
     que.py has bcc.
     """
-    n = range(c+1) ; pn = range(c+1)
+    n = range(c+1) ; pn = list(range(c+1))
     term = 1
     pn[0] = 1
     sum = 1 ; term = 1.0
@@ -120,7 +120,7 @@ class JobGen(Process):
          self.trace("Job generator finished")
 
     def trace(self,message):
-        if JobGenTRACING: print "%8.4f \t%s"%(self.sim.now(), message)
+        if JobGenTRACING: print("{0:8.4f} \t{1}".format(self.sim.now(), message))
 
 class Job(Process):
     """ Jobs that are either accepted or rejected
@@ -134,7 +134,7 @@ class Job(Process):
             NoInService +=1
             if NoInService == c:
                 Busy =1
-                try: BM.accum(Busy,now())
+                try: BM.accum(Busy,self.sim.now())
                 except: "accum error BM=",BM
             #yield   hold,self,Job.g.expovariate(self.mu);           dist= "Exponential"
             yield   hold,self,ErlangVariate(1.0/mu,5);          dist= "Erlang     "
@@ -148,7 +148,7 @@ class Job(Process):
             NoRejected +=1
  
     def trace(self,message):
-        if JobTRACING: print "%8.4f \t%s"%(self.sim.now(), message)
+        if JobTRACING: print("{0:8.4f} \t{1}".format(self.sim.now(), message))
 
 
 ## Experiment data -------------------------
@@ -184,12 +184,12 @@ s.simulate(until=20000.0)
 
 ## Analysis/output -------------------------
 
-print 'bcc'
-print "time at the end =",s.now()
-print "now=",s.now(), " startTime ",BM.startTime
-print "No Rejected = %d, ratio= %s"%(NoRejected,(1.0*NoRejected)/JobMax)
-print "Busy proportion (%6s) = %8.6f"%(dist,BM.timeAverage(s.now()),)
-print "Erlang pc (th)                = %8.6f"%(erlangB(rho,c)[c],)
+print('bcc')
+print("time at the end = {0}".format(s.now()))
+print("now = {0}\tstartTime = {1}".format(s.now(),BM.startTime))
+print("No Rejected = {0:d}, ratio= {1}".format(NoRejected,(1.0*NoRejected)/JobMax))
+print("Busy proportion ({0}) = {1:8.6f}".format(dist,BM.timeAverage()))
+print("Erlang pc (th)                = {0:8.6f}".format(erlangB(rho,c)[c]))
 
 
 

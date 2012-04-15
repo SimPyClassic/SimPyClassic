@@ -46,7 +46,7 @@ movies=["Gone with the Windows","Hard Core Dump","Modern CPU Times"]
 ## Model -----------------------------------
 class MovieRenegeModel(Simulation):
     def run(self):
-        print 'Movie_renege'
+        print('Movie_renege')
         self.initialize()
         self.available = {}
         self.soldOut = {}
@@ -68,8 +68,8 @@ model.run()
 ## Analysis/output -------------------------
 for f in movies:
     if model.soldOut[f]:
-        print "Movie '%s' sold out %.0f minutes after ticket counter opening."\
-               %(f,int(model.whenSoldOut[f]))
-        print "\tNr people leaving queue when film '%s' sold out: %s"\
-               %(f,model.nrRenegers[f])
+        FMT =  "Movie '{0}' sold out {1:.0f} minutes after ticket counter opening."
+        print(FMT.format(f,int(model.whenSoldOut[f])))
+        FMT = "\tNr people leaving queue when film '{0}' sold out: {1}"
+        print(FMT.format(f,model.nrRenegers[f]))
 

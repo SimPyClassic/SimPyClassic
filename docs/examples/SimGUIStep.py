@@ -15,7 +15,7 @@ if __name__ == '__main__':
         def generate(self,number,interval):       
             rv = Random(self.SEED)
             for i in range(number):
-                c = Customer(name = "Customer%02d"%(i,))
+                c = Customer(name = "Customer{0:02d}".format(i,))
                 activate(c,c.visit(timeInBank=12.0))
                 t = rv.expovariate(1.0/interval)
                 yield hold,self,t
@@ -34,23 +34,23 @@ if __name__ == '__main__':
         def visit(self,timeInBank=0):       
             arrive=now()
             Qlength = [NoInSystem(counter[i]) for i in range(Nc)]
-            ##print "%7.4f %s: Here I am. %s   "%(now(),self.name,Qlength)
+            ##print("{0:7.4f} {1}: Here I am. {2}   ".format(now(),self.name,Qlength))
             for i in range(Nc):
                 if Qlength[i] ==0 or Qlength[i]==min(Qlength): join =i ; break
             yield request,self,counter[join]
             wait=now()-arrive
             waitMonitor.observe(wait,t=now())                                 #Lmond
-            ##print "%7.4f %s: Waited %6.3f"%(now(),self.name,wait)
+            ##print("{0:7.4f} {1}: Waited {2:6.3f}".format(now(),self.name,wait))
             tib = counterRV.expovariate(1.0/timeInBank)
             yield hold,self,tib
             yield release,self,counter[join]
             serviceMonitor.observe(now()-arrive,t=now())
             if trace:
-                gui.writeConsole("Customer leaves at %.1d"%now())
-            ##print "%7.4f %s: Finished    "%(now(),self.name)
+                gui.writeConsole("Customer leaves at {0:.1f}".format(now()))
+            ##print("{0:7.4f} {1}: Finished    ".format(now(),self.name))
                 
     def showtime():
-        gui.topconsole.config(text="time = %s"%now())
+        gui.topconsole.config(text="time = {0}".format(now()))
         gui.root.update()
 
     def runStep():
@@ -60,7 +60,7 @@ if __name__ == '__main__':
         showtime()
         a=simulateStep(until=gui.params.endtime)
         if a[1]=="notResumable":
-            gui.writeConsole(text="Run ended. Status: %s"%a[0])
+            gui.writeConsole(text="Run ended. Status: {0}".format(a[0]))
         showtime()
 
     def runNoStep():
@@ -68,7 +68,7 @@ if __name__ == '__main__':
         for i in range(gui.params.nrRuns):
             simulate(until=gui.param.sendtime)
         showtime()
-        gui.writeConsole("%s simulation run(s) completed\n"%(i+1))
+        gui.writeConsole("{0} simulation run(s) completed\n".format(i+1))
  
         
     def contStep():
@@ -85,7 +85,7 @@ if __name__ == '__main__':
             gui.noRunYet=False
             trace=gui.params.trace
             if trace:
-                gui.writeConsole(text='\n** Run %s'%(runNr+1))
+                gui.writeConsole(text='\n** Run {0}'.format(runNr+1))
             Nc = 2
             counter = [Resource(name="Clerk0"),Resource(name="Clerk1")]
             gui.waitMoni=waitMonitor = Monitor(name='Waiting Times')
@@ -100,8 +100,8 @@ if __name__ == '__main__':
             simulate(showtime,until=gui.params.endtime)
             showtime()
             lastLeave+=now()
-        gui.writeConsole("%s simulation run(s) completed\n"%nrRuns)
-        gui.writeConsole("Parameters:\n%s"%gui.params)
+        gui.writeConsole("{0} simulation run(s) completed\n".format(nrRuns))
+        gui.writeConsole("Parameters:\n{0}".format(gui.params))
 
     def modelstep():
         global Nc,counter,counterRV,waitMonitor,serviceMonitor,trace,lastLeave,noRunYet
@@ -112,7 +112,7 @@ if __name__ == '__main__':
         gui.noRunYet=True
         trace=gui.params.trace
         if trace:
-            gui.writeConsole(text='\n** Run %s'%(runNr+1))
+            gui.writeConsole(text='\n** Run {0}'.format(runNr+1))
         Nc = 2
         counter = [Resource(name="Clerk0"),Resource(name="Clerk1")]
         gui.waitMoni=waitMonitor = Monitor(name='Waiting Times')
@@ -132,8 +132,8 @@ if __name__ == '__main__':
             showwarning(title='SimPy warning',message="Run simulation first -- no data available.")
             return
         aver=lastLeave/gui.params.nrRuns
-        gui.writeConsole(text="Average time for %s customers to get through bank: %.1f\n(%s runs)\n"\
-                          %(gui.params.numberCustomers,aver,gui.params.nrRuns))
+        gui.writeConsole(text="Average time for {0} customers to get through bank: {1:.1f}\n({2} runs)\n"\
+            .format(gui.params.numberCustomers,aver,gui.params.nrRuns))
 
     __doc__="""
 Modified bank11.py (from Bank Tutorial) with GUI.

@@ -50,25 +50,25 @@ class Msg(Process):
         """ executing a message """
         startTime = now()
         Msg.noInSystem += 1
-        ##print "DEBUG noInSystm = ",Msg.noInSystem
+        ##print("DEBUG noInSystm = ",Msg.noInSystem)
         NoInSystem.observe(Msg.noInSystem)
-        self.trace("Arrived node  %d"%(i,))
-        while i <> 3:
+        self.trace("Arrived node {0}".format(i))
+        while i != 3:
             yield request,self,node[i]
-            self.trace("Got node %d"%(i,))
+            self.trace("Got node {0}".format(i))
             st = ran.expovariate(1.0/mean[i])
             yield hold,self,st
             yield release,self,node[i]
-            self.trace("Finished with %d"%(i,))
+            self.trace("Finished with {0}".format(i))
             i = choose2dA(i,P)
-            self.trace("Transfer to   %d"%(i,))
+            self.trace("Transfer to {0}".format(i))
         TimeInSystem.tally(now()-startTime)        
-        self.trace(    "leaving       %d %d in system"%(i,Msg.noInSystem))
+        self.trace(    "leaving       {0} {1} in system".format(i,Msg.noInSystem))
         Msg.noInSystem -= 1
         NoInSystem.accum(Msg.noInSystem)
         
     def trace(self,message):
-        if MTRACING: print "%7.4f %3s %10s"%(now(),self.name, message)
+        if MTRACING: print("{0:7.4f} {1:3s} {2:10s}".format(now(),self.name, message))
 
 
 class MsgSource(Process):
@@ -79,13 +79,13 @@ class MsgSource(Process):
        self.trace("starting MsgSource")
        while  (self.count < maxN):
            self.count+=1
-           p = Msg("Message %d"%(self.count,))
+           p = Msg("Message {0}".format(self.count))
            activate(p,p.execute(startNode))
            yield hold,self,ran.expovariate(rate)
-       self.trace("generator finished with "+`self.count`+" ========")
+       self.trace("generator finished with {0} ========".format(self.count))
 
    def trace(self,message):
-       if GTRACING: print "%7.4f \t%s"%(now(), message)
+       if GTRACING: print("{0:7.4f} \t{1}".format(now(), message))
 
 ## Experiment data -------------------------
 
@@ -116,17 +116,12 @@ simulate(until=5000.0)
 
 ## Analysis/output -------------------------
 
-print 'jacksonnetwork'
-print "Mean number in system = %10.4f"%(NoInSystem.timeAverage(),)
-print "Mean delay in system  = %10.4f"%(TimeInSystem.mean(),)
-print "Total time run        = %10.4f"%(now(),)
-print "Total jobs arrived    = %10d"%(g.count)
-print "Total jobs completed  = %10d"%(TimeInSystem.count(),)
-print "Average arrival rate  = %10.4f"%(g.count/now(),)
+print('jacksonnetwork')
+print("Mean number in system = {0:10.4f}".format(NoInSystem.timeAverage()))
+print("Mean delay in system  = {0:10.4f}".format(TimeInSystem.mean()))
+print("Total time run        = {0:10.4f}".format(now()))
+print("Total jobs arrived    = {0:10d}".format(g.count))
+print("Total jobs completed  = {0:10d}".format(TimeInSystem.count()))
+print("Average arrival rate  = {0:10.4f}".format(g.count/now()))
 
 
-# jacksonnetwork.py:  Jackson network Littles law
-# pyt090b.py. See sms090b.tex for simscript version
-#        updated and simplified, 2004 Dec gav
-#        $Author$    $Revision$
-#        $Date$ 
