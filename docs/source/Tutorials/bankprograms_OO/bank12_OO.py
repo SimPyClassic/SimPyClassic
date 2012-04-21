@@ -58,6 +58,6 @@ mymodel = BankModel()                                  #14
 for Sd in seedVals:                                    #15
     mymodel.run(aseed=Sd)                              #16
     moni = mymodel.wM                                  #17
-    print("Avge wait for %3d completions %6.2f min." %
+    print("Avge wait for %3d completions was %6.2f min." %
           (moni.count(), moni.mean()))
     
