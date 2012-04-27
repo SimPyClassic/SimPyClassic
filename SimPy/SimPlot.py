@@ -14,8 +14,8 @@ except:  # Python 2
     from tkMessageBox import *
     from tkSimpleDialog import askinteger, askstring, askfloat
     from tkFileDialog import *
+    from Canvas import Line, CanvasText, Rectangle
 
-from Canvas import Line, CanvasText, Rectangle
 import string, math
 from math import pi
 

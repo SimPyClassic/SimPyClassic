@@ -10,8 +10,8 @@ try:  # Python 3
 except: # Python 2
     from Tkinter import *
     from tkMessageBox import *
+    from Canvas import Line, CanvasText, Rectangle
 
-from Canvas import Line, CanvasText, Rectangle
 from SimPy import tkconsole as tkcons
 from SimPy import __version__
 
