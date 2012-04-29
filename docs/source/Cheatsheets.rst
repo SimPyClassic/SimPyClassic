@@ -7,8 +7,6 @@ them in your favorite browser.
 
 The Cheatsheet comes as a PDF or Excel:
 
-Traditional API:
-
 * `PDF A4 page`_
 * `Excel A4 page`_
 

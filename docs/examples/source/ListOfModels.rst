@@ -363,7 +363,7 @@ Here is the OO version:
 Bank Customers using SimulationStep: SimGUIStep.py
 ==================================================
 
-broken for python 2.x global name 'simulateStep' is not defined
+(broken for python 2.x global name 'simulateStep' is not defined)
 
 Another modification of the bank11 simulation this time showing the ability to
 step between events.
