@@ -1,0 +1,39 @@
+
+tImpatience=0.5 minutes
+==================
+
+Percentage reneging callers: 10.1
+
+Load on Agent type 0 (skills= ['loan']): 13.9 percent
+Load on Agent type 1 (skills= ['loan', 'credit card']): 24.1 percent
+Load on Agent type 1 (skills= ['loan', 'credit card']): 24.1 percent
+Load on Agent type 2 (skills= ['insurance']): 13.1 percent
+Load on Agent type 2 (skills= ['insurance']): 13.1 percent
+Load on Agent type 3 (skills= ['insurance', 'other']): 44.3 percent
+Load on Agent type 3 (skills= ['insurance', 'other']): 44.3 percent
+
+tImpatience=1.0 minutes
+==================
+
+Percentage reneging callers:  7.6
+
+Load on Agent type 0 (skills= ['loan']): 13.5 percent
+Load on Agent type 1 (skills= ['loan', 'credit card']): 24.4 percent
+Load on Agent type 1 (skills= ['loan', 'credit card']): 24.4 percent
+Load on Agent type 2 (skills= ['insurance']): 12.9 percent
+Load on Agent type 2 (skills= ['insurance']): 12.9 percent
+Load on Agent type 3 (skills= ['insurance', 'other']): 46.0 percent
+Load on Agent type 3 (skills= ['insurance', 'other']): 45.8 percent
+
+tImpatience=2.0 minutes
+==================
+
+Percentage reneging callers:  3.3
+
+Load on Agent type 0 (skills= ['loan']): 13.8 percent
+Load on Agent type 1 (skills= ['loan', 'credit card']): 24.8 percent
+Load on Agent type 1 (skills= ['loan', 'credit card']): 24.8 percent
+Load on Agent type 2 (skills= ['insurance']): 13.0 percent
+Load on Agent type 2 (skills= ['insurance']): 13.0 percent
+Load on Agent type 3 (skills= ['insurance', 'other']): 49.5 percent
+Load on Agent type 3 (skills= ['insurance', 'other']): 49.5 percent

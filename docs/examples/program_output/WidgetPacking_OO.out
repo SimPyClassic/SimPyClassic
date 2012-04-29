@@ -1,0 +1,103 @@
+WidgetPacking
+Model 1: pack 6 widgets per package
+6.925710569651607: package completed
+12.932859800562765: package completed
+19.296609507200795: package completed
+25.827518016011588: package completed
+32.28961167417064: package completed
+38.27653780313223: package completed
+43.516005487393166: package completed
+49.84136801349117: package completed
+56.02183282676389: package completed
+61.22427700160065: package completed
+66.78084592723073: package completed
+73.45267491487972: package completed
+78.52559623726368: package completed
+84.36238918070774: package completed
+91.00334807967428: package completed
+96.25112005144973: package completed
+
+Model 2: pack widgets up to max package weight of 120
+1.8535993255800536: package completed. Weight=  20.49 kg
+2.9447148714144333: package completed. Weight=  43.29 kg
+3.443679099583584: package completed. Weight=  60.73 kg
+5.111979202993875: package completed. Weight=  81.36 kg
+5.495036360384358: package completed. Weight= 103.32 kg
+7.53958534514355: package completed. Weight=  43.79 kg
+9.454524267565933: package completed. Weight=  62.32 kg
+9.704524267565933: package completed. Weight=  82.07 kg
+11.223206345291937: package completed. Weight= 103.55 kg
+13.534262617168128: package completed. Weight=  41.81 kg
+13.930945836966112: package completed. Weight=  62.71 kg
+15.109021173114078: package completed. Weight=  82.73 kg
+15.9312940569179: package completed. Weight= 103.41 kg
+18.483473187078456: package completed. Weight=  37.07 kg
+19.489762737880447: package completed. Weight=  56.79 kg
+20.019035270021426: package completed. Weight=  77.23 kg
+21.516971139857024: package completed. Weight=  96.93 kg
+21.922330284736397: package completed. Weight= 116.85 kg
+24.14512998963336: package completed. Weight=  37.89 kg
+24.39877824367329: package completed. Weight=  55.50 kg
+26.67484997458752: package completed. Weight=  78.46 kg
+26.92484997458752: package completed. Weight= 100.35 kg
+28.1664758950799: package completed. Weight= 117.54 kg
+29.69269527817336: package completed. Weight=  40.05 kg
+31.039995345892564: package completed. Weight=  60.53 kg
+31.416541860477725: package completed. Weight=  77.63 kg
+32.41760810512986: package completed. Weight= 100.53 kg
+32.95461868723966: package completed. Weight= 118.77 kg
+35.03241015535913: package completed. Weight=  40.09 kg
+37.13500099371781: package completed. Weight=  59.57 kg
+37.54993412593156: package completed. Weight=  76.58 kg
+39.30652910593313: package completed. Weight=  95.59 kg
+39.55652910593313: package completed. Weight= 116.49 kg
+42.0420842938092: package completed. Weight=  42.24 kg
+42.2920842938092: package completed. Weight=  63.58 kg
+43.65741443896232: package completed. Weight=  85.90 kg
+43.90741443896232: package completed. Weight= 106.78 kg
+46.0951882462178: package completed. Weight=  37.20 kg
+47.438300452780354: package completed. Weight=  58.47 kg
+47.688300452780354: package completed. Weight=  79.33 kg
+49.40690976731008: package completed. Weight= 100.51 kg
+50.09589376227701: package completed. Weight= 117.80 kg
+52.015927666123616: package completed. Weight=  37.47 kg
+53.308294328826435: package completed. Weight=  58.78 kg
+54.03538112053091: package completed. Weight=  81.10 kg
+55.13265226734849: package completed. Weight=  98.94 kg
+56.54061780546726: package completed. Weight=  39.67 kg
+58.42284478038792: package completed. Weight=  61.78 kg
+58.67284478038792: package completed. Weight=  80.36 kg
+60.363861577200076: package completed. Weight= 102.50 kg
+62.30054431149251: package completed. Weight=  38.39 kg
+62.72667501529395: package completed. Weight=  58.21 kg
+64.04176585171321: package completed. Weight=  75.31 kg
+64.78871826102055: package completed. Weight=  94.49 kg
+65.5200550350699: package completed. Weight= 113.54 kg
+67.70604486309713: package completed. Weight=  41.53 kg
+69.2327615315688: package completed. Weight=  60.57 kg
+69.64556242167215: package completed. Weight=  82.52 kg
+70.56237737140228: package completed. Weight= 104.26 kg
+72.1477929466095: package completed. Weight=  41.62 kg
+72.98432452690808: package completed. Weight=  63.88 kg
+73.5826902990221: package completed. Weight=  81.87 kg
+75.05025424304776: package completed. Weight= 101.04 kg
+77.26048662562239: package completed. Weight=  40.26 kg
+77.71710036932708: package completed. Weight=  61.69 kg
+79.75353580124: package completed. Weight=  80.72 kg
+80.12811805319318: package completed. Weight= 100.29 kg
+82.4142311699317: package completed. Weight=  39.35 kg
+83.68305885096552: package completed. Weight=  57.13 kg
+83.93305885096552: package completed. Weight=  74.55 kg
+85.85481524806448: package completed. Weight=  93.29 kg
+86.13093377784419: package completed. Weight= 115.05 kg
+87.86043544925184: package completed. Weight=  41.13 kg
+89.46190021907331: package completed. Weight=  63.30 kg
+90.40626417525424: package completed. Weight=  82.59 kg
+91.19235409838856: package completed. Weight= 105.00 kg
+92.48486291641056: package completed. Weight=  37.14 kg
+93.79148753229941: package completed. Weight=  56.83 kg
+94.19510234363693: package completed. Weight=  76.57 kg
+96.09493981469757: package completed. Weight=  94.85 kg
+96.82617211079959: package completed. Weight= 114.58 kg
+98.82720299189798: package completed. Weight=  39.12 kg
+99.94853712506526: package completed. Weight=  58.33 kg

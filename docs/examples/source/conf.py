@@ -51,9 +51,7 @@ master_doc = 'index'
 # General information about the project.
 authors = [
     u'Klaus Müller',
-    'Tony Vignaux',
-    u'Ontje Lünsdorf',
-    'Stefan Scherfke',
+    'Tony Vignaux'
 ]
 project = u'SimPy'
 copyright = '2002-2012, ' + ', '.join(authors)
@@ -126,7 +124,7 @@ html_theme = 'default'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = "_static/sm_SimPy_Logo.png"
+html_logo = "../../../docs/source/_static/sm_SimPy_Logo.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -136,7 +134,7 @@ html_logo = "_static/sm_SimPy_Logo.png"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['../source/_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.

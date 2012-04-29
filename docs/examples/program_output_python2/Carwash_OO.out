@@ -1,0 +1,93 @@
+Model 1: carwash is master
+--------------------------
+3.5: car-1 done by Carwash 0
+3.5: car-2 done by Carwash 1
+7.0: car-3 done by Carwash 0
+7.0: car-4 done by Carwash 1
+17.5: car0 done by Carwash 0
+17.5: car1 done by Carwash 1
+21.0: car2 done by Carwash 0
+21.0: car3 done by Carwash 1
+27.1467210029: car4 done by Carwash 0
+27.9660195016: car5 done by Carwash 1
+33.0926390944: car6 done by Carwash 0
+35.7222735655: car7 done by Carwash 1
+40.0238017032: car8 done by Carwash 0
+42.9716482673: car9 done by Carwash 1
+44.4089163841: car10 done by Carwash 0
+47.7718059497: car11 done by Carwash 1
+55.2086863396: car12 done by Carwash 0
+55.3894689948: car13 done by Carwash 1
+58.7086863396: car14 done by Carwash 0
+58.8894689948: car15 done by Carwash 1
+62.2086863396: car16 done by Carwash 0
+62.3894689948: car17 done by Carwash 1
+65.7086863396: car18 done by Carwash 0
+65.8894689948: car19 done by Carwash 1
+69.2086863396: car20 done by Carwash 0
+69.3894689948: car21 done by Carwash 1
+72.7086863396: car22 done by Carwash 0
+72.8894689948: car23 done by Carwash 1
+76.2086863396: car24 done by Carwash 0
+76.3894689948: car25 done by Carwash 1
+79.7086863396: car26 done by Carwash 0
+79.8894689948: car27 done by Carwash 1
+83.2086863396: car28 done by Carwash 0
+85.3794165619: car29 done by Carwash 1
+86.7086863396: car30 done by Carwash 0
+88.8794165619: car31 done by Carwash 1
+90.2086863396: car32 done by Carwash 0
+92.3794165619: car33 done by Carwash 1
+93.7086863396: car34 done by Carwash 0
+95.8794165619: car35 done by Carwash 1
+97.2086863396: car36 done by Carwash 0
+99.3794165619: car37 done by Carwash 1
+waiting cars: []
+cars being washed: ['car38', 'car39']
+
+Model 2: car is master
+----------------------
+3.5: car-1 done by Carwash 0
+3.5: car-2 done by Carwash 1
+7.0: car-3 done by Carwash 0
+7.0: car-4 done by Carwash 1
+10.5: car0 done by Carwash 0
+10.5: car1 done by Carwash 1
+14.0: car2 done by Carwash 0
+14.9351025455: car3 done by Carwash 1
+27.1467210029: car4 done by Carwash 0
+27.9660195016: car5 done by Carwash 1
+33.0926390944: car6 done by Carwash 0
+35.7222735655: car7 done by Carwash 1
+40.0238017032: car8 done by Carwash 0
+42.9716482673: car9 done by Carwash 1
+44.4089163841: car10 done by Carwash 0
+47.7718059497: car11 done by Carwash 1
+55.2086863396: car12 done by Carwash 0
+55.3894689948: car13 done by Carwash 1
+58.7086863396: car14 done by Carwash 0
+58.8894689948: car15 done by Carwash 1
+62.2086863396: car16 done by Carwash 0
+62.3894689948: car17 done by Carwash 1
+65.7086863396: car18 done by Carwash 0
+65.8894689948: car19 done by Carwash 1
+69.2086863396: car20 done by Carwash 0
+69.3894689948: car21 done by Carwash 1
+72.7086863396: car22 done by Carwash 0
+72.8894689948: car23 done by Carwash 1
+76.2086863396: car24 done by Carwash 0
+76.3894689948: car25 done by Carwash 1
+79.7086863396: car26 done by Carwash 0
+79.8894689948: car27 done by Carwash 1
+83.2086863396: car28 done by Carwash 0
+85.3794165619: car29 done by Carwash 1
+86.7086863396: car30 done by Carwash 0
+88.8794165619: car31 done by Carwash 1
+90.2086863396: car32 done by Carwash 0
+92.3794165619: car33 done by Carwash 1
+93.7086863396: car34 done by Carwash 0
+95.8794165619: car35 done by Carwash 1
+97.2086863396: car36 done by Carwash 0
+99.3794165619: car37 done by Carwash 1
+waiting cars: []
+cars being washed: ['car38', 'car39']

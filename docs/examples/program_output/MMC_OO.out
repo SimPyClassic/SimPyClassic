@@ -1,0 +1,5 @@
+MMC
+ 3 servers, 2.0000 arrival rate, 1.0000 mean service time
+Average number in the system is 2.8786
+Average time in the system is   1.4350
+Actual average service-time is  0.9837

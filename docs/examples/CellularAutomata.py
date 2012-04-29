@@ -16,7 +16,7 @@ class Autom(Process):
 
         for a_coord in coords:
             try:
-                if cells[a_coord].state: 
+                if cells[a_coord].state:
                     nr += 1
             except KeyError:
                 ## wrap around
@@ -27,7 +27,7 @@ class Autom(Process):
 
     def decide(self,nrActive):
         return  (self.state and (nrActive == 2 or nrActive == 3) or (nrActive==3))
-                
+
     def celllife(self):
         while True:
             #calculate next state

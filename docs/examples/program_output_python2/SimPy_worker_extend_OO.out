@@ -1,0 +1,7 @@
+SimPy_worker_extend
+08:30 Worker John arrives in factory
+08:30 Worker Eve arrives in factory
+17:03 Eve goes home, having built 52 widgets today.
+Worker Eve was idle waiting for foobar machine for 1.3 hours
+17:09 John goes home, having built 52 widgets today.
+Worker John was idle waiting for foobar machine for 0.8 hours

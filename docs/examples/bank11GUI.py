@@ -15,7 +15,7 @@ class Source(Process):
         Process.__init__(self)
         self.SEED = seed
 
-    def generate(self,number,interval):       
+    def generate(self,number,interval):
         rv = Random(self.SEED)
         for i in range(number):
             c = Customer(name = "Customer{0:02d}".format(i))
@@ -33,8 +33,8 @@ class Customer(Process):
     def __init__(self,name):
         Process.__init__(self)
         self.name = name
-        
-    def visit(self,timeInBank=0):       
+
+    def visit(self,timeInBank=0):
         arrive=now()
         Qlength = [NoInSystem(counter[i]) for i in range(Nc)]
         if gui.params.trace:
@@ -43,7 +43,7 @@ class Customer(Process):
             if Qlength[i] ==0 or Qlength[i]==min(Qlength): join =i ; break
         yield request,self,counter[join]
         wait=now()-arrive
-        waitMonitor.observe(wait,t=now()) 
+        waitMonitor.observe(wait,t=now())
         if gui.params.trace:
             gui.writeConsole("{0:7.4f} {1}: Waited {2:6.3f}".format(now(),self.name,wait))
         tib = counterRV.expovariate(1.0/timeInBank)
@@ -53,7 +53,7 @@ class Customer(Process):
             gui.writeConsole("{0:7.4f} {1}: Finished    ".format(now(),self.name))
 
 def model(counterseed=3939393):
-    global Nc,counter,counterRV,waitMonitor 
+    global Nc,counter,counterRV,waitMonitor
     Nc = 2
     counter = [Resource(name="Clerk0"),Resource(name="Clerk1")]
     counterRV = Random(counterseed)
@@ -67,7 +67,7 @@ def model(counterseed=3939393):
     result=simulate(until=gui.params.endtime)
     gui.writeStatusLine(text="Time at simulation end: {0:.1f} -- Customers still waiting: {1}"\
             .format(now(),len(counter[0].waitQ)+len(counter[1].waitQ)))
-    
+
 def statistics():
     if gui.noRunYet:
         showwarning(title='Model warning',
@@ -83,7 +83,7 @@ def run():
 
 def showAuthors():
     gui.showTextBox(text="Tony Vignaux\nKlaus Muller",title="Author information")
-    
+
 class MyGUI(SimGUI):
     def __init__(self,win,**p):
         SimGUI.__init__(self,win,**p)
@@ -101,7 +101,7 @@ class MyGUI(SimGUI):
                             numberCustomers=50,
                             interval=10.0,
                             trace=0)
-        
+
 root=Tk()
 gui=MyGUI(root,title="SimPy GUI example",doc=__doc__,consoleHeight=40)
 gui.mainloop()

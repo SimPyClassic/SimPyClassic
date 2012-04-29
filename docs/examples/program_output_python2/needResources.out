@@ -1,0 +1,36 @@
+needResources
+0 painter has ['brush', 'ladder'] and starts job
+16.4985835443 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+39.4154475101 treeguy has ['saw', 'ladder'] and starts job
+39.4154475101 painter has ['brush', 'ladder'] and starts job
+56.8018144643 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+75.3035974327 painter has ['brush', 'ladder'] and starts job
+75.3035974327 treeguy has ['saw', 'ladder'] and starts job
+103.081870231 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+118.178561212 painter has ['brush', 'ladder'] and starts job
+118.178561212 treeguy has ['saw', 'ladder'] and starts job
+143.251977487 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+170.865337411 treeguy has ['saw', 'ladder'] and starts job
+170.865337411 painter has ['brush', 'ladder'] and starts job
+196.374862953 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+217.842618167 treeguy has ['saw', 'ladder'] and starts job
+217.842618167 painter has ['brush', 'ladder'] and starts job
+244.369982727 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+269.86963108 painter has ['brush', 'ladder'] and starts job
+269.86963108 treeguy has ['saw', 'ladder'] and starts job
+298.281278101 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+316.836166162 treeguy has ['saw', 'ladder'] and starts job
+316.836166162 painter has ['brush', 'ladder'] and starts job
+345.424882219 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+359.255821911 painter has ['brush', 'ladder'] and starts job
+359.255821911 treeguy has ['saw', 'ladder'] and starts job
+385.709633545 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+407.436971344 painter has ['brush', 'ladder'] and starts job
+407.436971344 treeguy has ['saw', 'ladder'] and starts job
+427.564973043 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+451.615785737 painter has ['brush', 'ladder'] and starts job
+451.615785737 treeguy has ['saw', 'ladder'] and starts job
+472.973063941 roofer has ['hammer', 'ladder', 'ladder'] and starts job
+492.397618842 treeguy has ['saw', 'ladder'] and starts job
+492.397618842 painter has ['brush', 'ladder'] and starts job
+SimPy: No more events at time 515.02263946

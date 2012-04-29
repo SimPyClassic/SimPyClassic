@@ -1,0 +1,74 @@
+demoSimPyEvents
+
+ Pavlov's dogs
+0 Pavlov rings bell
+0 Dog 4 drools
+0 Dog 3 drools
+0 Dog 2 drools
+0 Dog 1 drools
+5 Pavlov rings bell
+5 Dog 1 drools
+5 Dog 2 drools
+5 Dog 3 drools
+5 Dog 4 drools
+10 Pavlov rings bell
+10 Dog 4 drools
+10 Dog 3 drools
+10 Dog 2 drools
+10 Dog 1 drools
+
+ PERT network simulation
+13 Event 'completion of Activity 6' fired
+19 Event 'completion of Activity 10' fired
+22 Event 'completion of Activity 7' fired
+42 Event 'completion of Activity 1' fired
+48 Event 'completion of Activity 4' fired
+55 Event 'completion of Activity 8' fired
+69 Event 'completion of Activity 5' fired
+83 Event 'completion of Activity 2' fired
+90 Event 'completion of Activity 9' fired
+93 Event 'completion of Activity 3' fired
+93 All done
+
+ 4-way stop intersection
+ 0.0 Car 1 waiting to enter intersection
+ 0.2 Car 2 waiting to enter intersection
+ 0.4 Car 3 waiting to enter intersection
+ 0.6 Car 4 waiting to enter intersection
+ 0.8 Car 5 waiting to enter intersection
+ 1.0 Car 6 waiting to enter intersection
+ 1.0 Car 1 crossed intersection
+ 1.2 Car 7 waiting to enter intersection
+ 1.4 Car 8 waiting to enter intersection
+ 1.6 Car 9 waiting to enter intersection
+ 1.8 Car 10 waiting to enter intersection
+ 2.0 Car 11 waiting to enter intersection
+ 2.0 Car 2 crossed intersection
+ 2.2 Car 12 waiting to enter intersection
+ 2.4 Car 13 waiting to enter intersection
+ 2.6 Car 14 waiting to enter intersection
+ 2.8 Car 15 waiting to enter intersection
+ 3.0 Car 3 crossed intersection
+ 3.0 Car 16 waiting to enter intersection
+ 3.2 Car 17 waiting to enter intersection
+ 3.4 Car 18 waiting to enter intersection
+ 3.6 Car 19 waiting to enter intersection
+ 3.8 Car 20 waiting to enter intersection
+ 4.0 Car 4 crossed intersection
+ 5.0 Car 5 crossed intersection
+ 6.0 Car 6 crossed intersection
+ 7.0 Car 7 crossed intersection
+ 8.0 Car 8 crossed intersection
+ 9.0 Car 9 crossed intersection
+10.0 Car 10 crossed intersection
+11.0 Car 11 crossed intersection
+12.0 Car 12 crossed intersection
+13.0 Car 13 crossed intersection
+14.0 Car 14 crossed intersection
+15.0 Car 15 crossed intersection
+16.0 Car 16 crossed intersection
+17.0 Car 17 crossed intersection
+18.0 Car 18 crossed intersection
+19.0 Car 19 crossed intersection
+20.0 Car 20 crossed intersection
+SimPy: No more events at time 20
