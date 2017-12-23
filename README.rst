@@ -1,5 +1,5 @@
-SimPyClassic
-============
+SimPyClassic |travis|
+=====================
 
 SimPy is a process-based discrete-event simulation language based on standard
 Python and released under the GNU LGPL.
@@ -61,3 +61,6 @@ For more help, contact the `SimPy-Users mailing list
 <mailto:simpy-users@lists.sourceforge.net>`_. SimPy users are pretty helpful.
 
 Enjoy simulation programming in SimPy!
+
+.. |travis| image:: https://travis-ci.org/SimPyClassic/SimPyClassic.svg?branch=master
+            :target: https://travis-ci.org/SimPyClassic/SimPyClassic

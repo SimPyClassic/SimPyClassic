@@ -1,0 +1,14 @@
+language: python
+python:
+    - "2.7"
+    - "3.4"
+    - "3.5"
+    - "3.6"
+install:
+  - pip install -r dev-requirements.txt
+  - pip install python-coveralls
+  - pip install .
+script:
+  - pytest --cov=SimPy --cov-report=term-missing
+after_success:
+  - coveralls
