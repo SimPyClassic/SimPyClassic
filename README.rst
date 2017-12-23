@@ -62,4 +62,5 @@ For more help, contact the `SimPy-Users mailing list
 
 Enjoy simulation programming in SimPy!
 
-.. |travis| image:: https://travis-ci.org/SimPyClassic/SimPyClassic.svg?branch=master :target: https://travis-ci.org/SimPyClassic/SimPyClassic
+.. |travis| image:: https://travis-ci.org/SimPyClassic/SimPyClassic.svg?branch=master
+            :target: https://travis-ci.org/SimPyClassic/SimPyClassic
