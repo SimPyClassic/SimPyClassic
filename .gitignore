@@ -3,5 +3,9 @@
 /bin
 /include
 /lib
+/build
+/dist
+/SimPy.egg-info
+/.cache
 pip-selfcheck.json
 *.pyc
