@@ -12,7 +12,7 @@ setup(
         'the_com at gmx.de; '
         'stefan at sofa-rockers.org'),
     description='Event discrete, process based simulation for Python.',
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst').read(),
     url='https://github.com/SimPyClassic/SimPyClassic',
     download_url='https://github.com/SimPyClassic/SimPyClassic/releases',
     license='GNU LGPL',
