@@ -7,6 +7,7 @@ python:
 install:
   - pip install -r dev-requirements.txt
   - pip install python-coveralls
+  - pip install .
 script:
   - pytest --cov=SimPy --cov-report=term-missing
 after_success:
