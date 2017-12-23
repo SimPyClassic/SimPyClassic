@@ -6,5 +6,8 @@ python:
     - "3.6"
 install:
   - pip install -r dev-requirements.txt
+  - pip install python-coveralls
 script:
-  - pytest
+  - pytest --cov=SimPy --cov-report=term-missing
+after_success:
+  - coveralls
