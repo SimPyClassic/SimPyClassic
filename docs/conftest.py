@@ -41,7 +41,7 @@ class ExampleFile(pytest.File):
     def collect(self):
         # Collect all literal includes.
         literalincludes = []
-        with self.fspath.open() as data:
+        with self.fspath.open(encoding='utf-8') as data:
             for lineno, line in enumerate(data):
                 if 'literalinclude' not in line:
                     continue
