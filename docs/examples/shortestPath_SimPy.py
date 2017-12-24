@@ -50,7 +50,7 @@ net={"Atown":(("Atown","Btown",3.5),("Atown","Ccity",1),("Atown","Atown",9),("At
      "Dpueblo":(("Dpueblo","Ccity",2),("Dpueblo","Fstadt",10)),
      "Evillage":(("Evillage","Btown",1),),
      "Fstadt":(("Fstadt","Ccity",3),)}                                                                                                        
-if DEMO: print("Search for shortest path from {0} to {1} \nin graph {2}".format("Atown","Fstadt",net))
+if DEMO: print("Search for shortest path from {0} to {1} \nin graph {2}".format("Atown","Fstadt",sorted(net.items())))
 startup=searcher(graph=net,path=[],length=0,from_node="Atown",to_node="Atown",distance=0,goal_node="Fstadt")
 activate(startup,startup.run("Atown"))
 simulate(until=10000)    
