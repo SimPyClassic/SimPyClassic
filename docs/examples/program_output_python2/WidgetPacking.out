@@ -17,7 +17,7 @@ Model 1: pack 6 widgets per package
 91.0033480797: package completed
 96.2511200514: package completed
 
-Model 2: pack widget up to max package weight of 120
+Model 2: pack widgets up to max package weight of 120
 1.85359932558: package completed. Weight=  20.49 kg
 2.94471487141: package completed. Weight=  43.29 kg
 3.44367909958: package completed. Weight=  60.73 kg

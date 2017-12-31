@@ -18,17 +18,17 @@ demoSimPyEvents
 10 Dog 1 drools
 
  PERT network simulation
-10 Event 'completion of Activity 4' fired
-15 Event 'completion of Activity 6' fired
-26 Event 'completion of Activity 8' fired
-33 Event 'completion of Activity 1' fired
-37 Event 'completion of Activity 3' fired
-43 Event 'completion of Activity 5' fired
-54 Event 'completion of Activity 10' fired
-65 Event 'completion of Activity 2' fired
-76 Event 'completion of Activity 9' fired
-89 Event 'completion of Activity 7' fired
-(89, 'All done')
+13 Event 'completion of Activity 6' fired
+19 Event 'completion of Activity 10' fired
+22 Event 'completion of Activity 7' fired
+42 Event 'completion of Activity 1' fired
+48 Event 'completion of Activity 4' fired
+55 Event 'completion of Activity 8' fired
+69 Event 'completion of Activity 5' fired
+83 Event 'completion of Activity 2' fired
+90 Event 'completion of Activity 9' fired
+93 Event 'completion of Activity 3' fired
+93 All done
 
  4-way stop intersection
  0.0 Car 1 waiting to enter intersection

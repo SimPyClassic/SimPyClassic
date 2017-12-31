@@ -1,14 +1,14 @@
 bank08_OO_renege
  0.0000 Customer00: Here I am     
  0.0000 Customer00: Waited  0.000
- 2.3055 Customer00: Finished
- 8.7558 Customer01: Here I am     
- 8.7558 Customer01: Waited  0.000
-20.8410 Customer02: Here I am     
-22.1644 Customer02: RENEGED after  1.323
-26.5324 Customer03: Here I am     
-28.3983 Customer03: RENEGED after  1.866
-28.4555 Customer01: Finished
-47.3857 Customer04: Here I am     
-47.3857 Customer04: Waited  0.000
-54.4897 Customer04: Finished
+ 0.0902 Customer00: Finished
+33.9482 Customer01: Here I am     
+33.9482 Customer01: Waited  0.000
+44.4221 Customer01: Finished
+58.1367 Customer02: Here I am     
+58.1367 Customer02: Waited  0.000
+69.2708 Customer03: Here I am     
+70.3325 Customer03: RENEGED after  1.062
+71.9733 Customer04: Here I am     
+73.6655 Customer04: RENEGED after  1.692
+75.5906 Customer02: Finished
