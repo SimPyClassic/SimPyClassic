@@ -73,10 +73,8 @@ class ExampleItem(pytest.Item):
         self.outputfile = os.path.join(self.fspath.dirname, self.output)
         # Python 2 has some differences in program output. For instace less
         # precision
-        print("y"*50)
         if sys.version_info[0] < 3:
             self.outputfile = self.outputfile.replace('program_output', 'program_output_python2')
-            print("x"*50)
 
     def runtest(self):
         # Skip if random.expovariate with the old implementation is used.
