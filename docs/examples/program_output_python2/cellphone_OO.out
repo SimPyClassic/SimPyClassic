@@ -1,16 +1,16 @@
 Busy time Number
-  3.125    11
-  1.936     9
-  2.025     9
-  1.819     5
-  1.740     5
-  0.880     3
-  1.324     5
-  7.723    14
-  0.968     7
-  6.895    12
+  5.857    15
+  2.890     6
+  1.219     4
+  1.512     7
+  4.237     5
+  1.140     1
+  3.596     8
+  3.964     8
+  4.146     9
+  2.091     5
 cellphone
 lambda    mu      s  Nperiods obsPeriod  obsGap
  1.0000 0.6667    4     10       60.00    15.00
-Busy Time:   mean =  2.843 var=  5.375
-Busy Number: mean =  8.000 var= 11.600
+Busy Time:   mean =  3.065 var=  2.193
+Busy Number: mean =  6.800 var= 12.360

@@ -102,7 +102,7 @@ class WidgetPackerW(Process):
                     break
                 print("{0}: package completed. Weight= {1:6.2f} kg".format(now(),packWeight))
 
-print("\nModel 2: pack widget up to max package weight of {0}".format(packMax))
+print("\nModel 2: pack widgets up to max package weight of {0}".format(packMax))
 initialize()
 r=random.Random()
 r.seed(initialSeed)

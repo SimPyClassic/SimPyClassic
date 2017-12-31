@@ -1,6 +1,6 @@
 bcc
-time at the end = 10025.2205059
-now = 10025.2205059	startTime = 0.0
-No Rejected = 1418, ratio= 0.1418
-Busy proportion (Erlang     ) = 0.139299
+time at the end = 10085.751052
+now = 10085.751052	startTime = 0.0
+No Rejected = 1374, ratio= 0.1374
+Busy proportion (Erlang     ) = 0.139016
 Erlang pc (th)                = 0.138462
