@@ -66,6 +66,6 @@ IntervalCustomers = 10.0
 ## Experiment ------------------------------
 
 seed(theseed)
-print('bank08_OO_renege')
+print('bank08renege')
 BankModel().run()                              
 
