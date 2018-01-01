@@ -37,7 +37,7 @@ average time jobs spend in the system.
 .. literalinclude:: ../program_output/MMC.out
 
 .. literalinclude:: ../MMC_OO.py
-.. literalinclude:: ../program_output/MMC_OO.out
+.. literalinclude:: ../program_output/MMC.out
 
 
 BCC: bcc.py, bcc_OO.py
@@ -52,7 +52,7 @@ hyperexponential. The theoretical probability is also calculated.  (TV)
 .. literalinclude:: ../program_output/bcc.out
 
 .. literalinclude:: ../bcc_OO.py
-.. literalinclude:: ../program_output/bcc_OO.out
+.. literalinclude:: ../program_output/bcc.out
 
 
 callCenter.py, callCenter_OO.py
@@ -77,7 +77,7 @@ demonstrates the use of yield get with a filter function. (KGM)
 Object Oriented version.
 
 .. literalinclude:: ../callCenter_OO.py
-.. literalinclude:: ../program_output/callCenter_OO.out
+.. literalinclude:: ../program_output/callCenter.out
 
 
 cellphone.py, cellphone_OO.py
@@ -99,7 +99,7 @@ observation periods to make each one's measurement independent.  (TV)
 Object orientated
 
 .. literalinclude:: ../cellphone_OO.py
-.. literalinclude:: ../program_output/cellphone_OO.out
+.. literalinclude:: ../program_output/cellphone.out
 
 
 Computer CPU: centralserver.py, centralserver_OO.py
@@ -131,7 +131,7 @@ The objective is to measure the throughput of the CPU (tasks per second)
 OO version
 
 .. literalinclude:: ../centralserver_OO.py
-.. literalinclude:: ../program_output/centralserver_OO.out
+.. literalinclude:: ../program_output/centralserver.out
 
 
 Messages on a Jackson Network: jacksonnetwork.py, jacksonnetwork_OO.py
@@ -150,7 +150,7 @@ with 3 nodes (computers). Each computer (node) can queue messages.
 OO version
 
 .. literalinclude:: ../jacksonnetwork_OO.py
-.. literalinclude:: ../program_output/jacksonnetwork_OO.out
+.. literalinclude:: ../program_output/jacksonnetwork.out
 
 
 Miscellaneous Models
@@ -171,7 +171,7 @@ tutorial TheBank. Customers leave if they lose patience with waiting.
 OO version
 
 .. literalinclude:: ../bank08renege_OO.py
-.. literalinclude:: ../program_output/bank08renege_OO.out
+.. literalinclude:: ../program_output/bank08renege.out
 
 
 Carwash: Carwash.py, Carwash_OO.py
@@ -188,7 +188,7 @@ cooperation, and the other with the car as master.
 Here is the OO version:
 
 .. literalinclude:: ../Carwash_OO.py
-.. literalinclude:: ../program_output/Carwash_OO.out
+.. literalinclude:: ../program_output/Carwash.out
 
 
 Game of Life: CellularAutomata.py
@@ -224,7 +224,7 @@ through a graph, seeking the shortest path. (KGM)
 Here is the OO version:
 
 .. literalinclude:: ../shortestPath_SimPy_OO.py
-.. literalinclude:: ../program_output/shortestPath_SimPy_OO.out
+.. literalinclude:: ../program_output/shortestPath_SimPy.out
 
 
 Machine Shop Model: Machineshop.py, Machineshop_OO.py
@@ -244,7 +244,7 @@ This is an example of the use of the ``interrupt()`` method. (KGM)
 Here is the OO version:
 
 .. literalinclude:: ../Machineshop_OO.py
-.. literalinclude:: ../program_output/Machineshop_OO.out
+.. literalinclude:: ../program_output/Machineshop.out
 
 Supermarket: Market.py, Market_OO.py
 ====================================
@@ -258,7 +258,7 @@ Written and analysed by David Mertz in an article for developerWorks (). (MM)
 Here is the OO version:
 
 .. literalinclude:: ../Market_OO.py
-.. literalinclude:: ../program_output/Market_OO.out
+.. literalinclude:: ../program_output/Market.out
 
 
 Movie Theatre Ticket Counter: Movie_renege.py, Movie_renege_OO.py
@@ -275,7 +275,7 @@ all people waiting to buy ticket for that movie renege (leave queue).
 Here is the OO version:
 
 .. literalinclude:: ../Movie_renege_OO.py
-.. literalinclude:: ../program_output/Movie_renege_OO.out
+.. literalinclude:: ../program_output/Movie_renege.out
 
 
 
@@ -292,7 +292,7 @@ they compete.
 Here is the OO version:
 
 .. literalinclude:: ../needResources_OO.py
-.. literalinclude:: ../program_output/needResources_OO.out
+.. literalinclude:: ../program_output/needResources.out
 
 
 Widget Factory: SimPy_worker_extend.py, SimPy_worker_extend_OO.py
@@ -306,7 +306,7 @@ Factory making widgets with queues for machines. (MM)
 Here is the OO version:
 
 .. literalinclude:: ../SimPy_worker_extend_OO.py
-.. literalinclude:: ../program_output/SimPy_worker_extend_OO.out
+.. literalinclude:: ../program_output/SimPy_worker_extend.out
 
 
 Widget Packing Machine: WidgetPacking.py, WidgetPacking_OO.py
@@ -324,7 +324,7 @@ different weight).
 Here is the OO version:
 
 .. literalinclude:: ../WidgetPacking_OO.py
-.. literalinclude:: ../program_output/WidgetPacking_OO.out
+.. literalinclude:: ../program_output/WidgetPacking.out
 
 
 GUI Input
