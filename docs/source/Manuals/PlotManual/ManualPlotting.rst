@@ -59,15 +59,11 @@ Plotting with SimPlot - an overview
 Plot types and capabilities
 ----------------------------
 
-A simple plot program using SimPlot basically looks like::
+A simple plot program using SimPlot basically looks like:
 
 
-	# Prog1.py
-	from SimPy.SimPlot import *
-	plt=SimPlot()
-	plt.plotLine([[0,0],[1,1],[2,4],[3,9]])
-	plt.mainloop()
-
+  .. include:: programs/Prog1.py
+     :literal:
 
 When running this program, the resulting output on Windows is
 (the outside frame will look different on other platforms):
@@ -91,16 +87,10 @@ Postscript file.
 
 Method *plotline* has many name parameters with default values.
 Here is an example showing some of them (they will all be discussed
-further down in this manual::
+further down in this manual:
 
-
-	# Prog2.py
-	from SimPy.SimPlot import *
-	plt=SimPlot()
-	plt.plotLine([[0,0],[1,1],[2,4],[3,9]],title="This is prettier",
-             	color="red",width=2,smooth=True)
-	plt.mainloop()
-
+  .. include:: programs/Prog2.py
+     :literal:
 
 This produces the following plot (the outside frame is not shown):
 
@@ -111,41 +101,28 @@ The plot now has a title and the curve is red, wider and smooth.
 In addition to *line plots*, there are three other plot-types available in SimPlot,
 namely *stepped line plots*, *bar charts*, and *scatter diagrams*.
 
-Here are examples of each. First, the stepped line plot::
+Here are examples of each. First, the stepped line plot:
 
-	# Prog3.py
-	from SimPy.SimPlot import *
-	plt=SimPlot()
-	plt.plotStep([[0,0],[1,1],[2,4],[3,9]],
-             	color="red",width=2)
-	plt.mainloop()
+  .. include:: programs/Prog3.py
+     :literal:
 
 which produces:
 
 .. image:: /_static/images/plot_manual/Prog3.png
 
-A bar chart program::
+A bar chart program:
 
-	# Prog4.py
-	from SimPy.SimPlot import *
-	plt=SimPlot()
-	plt.plotBars([[0,0],[1,1],[2,4],[3,9]],
-             color="blue",width=2)
-	plt.mainloop()
+  .. include:: programs/Prog4.py
+     :literal:
 
 which results in:
 
 .. image:: /_static/images/plot_manual/Prog4.png
 
-And finally, a scatter diagram::
+And finally, a scatter diagram:
 
-	# Prog5.py
-	from SimPy.SimPlot import *
-	plt=SimPlot()
-	plt.plotScatter([[0,0],[1,1],[2,4],[3,9]],
-      	       color="green",size=2,marker='triangle')
-	plt.mainloop()
-
+  .. include:: programs/Prog5.py
+     :literal:
 
 and its output:
 
@@ -169,34 +146,10 @@ Plotting Monitor instances
 Class *Monitor* is the prime data collection tool for SimPy simulations.
 SimPlot therefore caters for easy plotting from Monitor intances.
 
-Here is an example of a simple simulation using a Monitor::
+Here is an example of a simple simulation using a Monitor:
 
-	# Monitorplot.py
-	from __future__ import generators
-	from SimPy.Simulation import *
-	from SimPy.Monitor import *
-	from SimPy.SimPlot import *
-
-	class Source(Process):
-		def __init__(self,monitor):
-			Process.__init__(self)
-			self.moni=monitor
-			self.arrived=0
-		def arrivalGenerator(self):
-			while True:
-				yield hold,self,uniform(0,20)
-				self.arrived+=1
-				self.moni.observe(self.arrived)
-
-	initialize()
-	moni=Monitor(name="Arrivals",ylab="nr arrived")
-	s=Source(moni)
-	activate(s,s.arrivalGenerator())
-	simulate(until=100)
-
-	plt=SimPlot()
-	plt.plotStep(moni,color='blue')
-	plt.mainloop()
+  .. include:: programs/Monitorplot.py
+     :literal:
 
 This produces:
 
@@ -453,26 +406,10 @@ The advanced SimPlot API is more verbose than the simple one, but it offers more
 11. (optional) save plot as Postscript file
 12. start the Tk mainloop
 
-An example::
+An example:
 
-    # AdvancedAPI.py
-    from SimPy. SimPlot import *
-    plt=SimPlot()					# step 1
-    plt.root.title("Advanced API example")		# step 3
-    line=plt.makeLine([[0,42],[1,1],[4,16]])		# step 4
-    bar=plt.makeBars([[0,42],[1,1],[4,16]],
-                     color='blue')			# step 4
-    sym=plt.makeSymbols([[1,1]],marker="triangle",
-                        size=3,fillcolor="red")		# step 4
-    obj=plt.makeGraphObjects([line,bar,sym])		# step 5
-    frame=Frame(plt.root)				# step 6
-    graph=plt.makeGraphBase(frame,500,300,
-                            title="Line and bars")	# step 7
-    graph.pack()					# step 8
-    graph.draw(obj)					# step 9
-    frame.pack()					# step 10
-    graph.postscr()					# step 11
-    plt.mainloop()					# step 12
+  .. include:: programs/AdvancedAPI.py
+     :literal:
 
 Which generates:
 
