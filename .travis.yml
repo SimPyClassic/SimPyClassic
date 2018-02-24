@@ -23,6 +23,7 @@ jobs:
     install: pip install flake8
     script: flake8 docs
   - stage: deploy
+    python: 3.6
     script: skip
     deploy:
       provider: pypi
