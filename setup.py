@@ -8,10 +8,6 @@ setup(
     name='SimPyClassic',
     version=SimPy.__version__,
     author='Klaus Muller, Tony Vignaux, Ontje Lünsdorf, Stefan Scherfke',
-    author_email=('vignaux at user.sourceforge.net; '
-        'kgmuller at users.sourceforge.net; '
-        'the_com at gmx.de; '
-        'stefan at sofa-rockers.org'),
     description='Event discrete, process based simulation for Python.',
     long_description=open('README.rst').read(),
     url='https://github.com/SimPyClassic/SimPyClassic',
