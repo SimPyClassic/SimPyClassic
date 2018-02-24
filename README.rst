@@ -1,5 +1,5 @@
 SimPy Classic |travis| |appveyor| |codecov|
-==========================================
+============================================
 
 SimPy Classic is a process-based discrete-event simulation language based on
 standard Python and released under the GNU LGPL.
